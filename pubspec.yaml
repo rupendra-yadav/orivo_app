@@ -54,6 +54,7 @@ dependencies:
   qr_flutter: ^4.1.0
   google_maps_flutter: ^2.6.1
   iconsax: ^0.0.8
+  flutter_screenutil: ^5.9.3
 
 dev_dependencies:
   flutter_test:
@@ -92,11 +93,10 @@ flutter:
   uses-material-design: true
 
   #--------------- LOCAL ASSETS ------------------#
-#  assets:
-#    - assets/images/onboarding/
-#    - assets/logos/
-#    - assets/icons/
-#    - assets/images/
+  assets:
+    - assets/images/
+    - assets/logos/
+    - assets/icons/
 
 
 
