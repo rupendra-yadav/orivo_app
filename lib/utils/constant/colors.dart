@@ -11,7 +11,8 @@ class TColors {
 
 
 
-  static const Color green = Color(0xFF038800);
+  static const Color green = Color(0xFF00820D);
+  static const Color ochre = Color(0xFF9F6000);
 
   static const Color secondary = Color(0xFF0CF2E0);
   static const Color secondaryDark1 = Color(0xFF385000);
@@ -56,6 +57,7 @@ class TColors {
 
   static const Color warning = Color(0xFFF0F00A);
   static const Color warningDark = Color(0xFFA3A300);
+  static const Color warningDark1 = Color(0xFFFEB546);
   static const Color warningLight = Color(0xFFFFFFA3);
 
   static const Color info = Color(0xFF1976D2);

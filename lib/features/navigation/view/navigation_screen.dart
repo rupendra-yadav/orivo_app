@@ -1,3 +1,4 @@
+import 'package:auro/features/notificaations/view/notifications.dart';
 import 'package:auro/utils/constant/colors.dart';
 import 'package:auro/utils/constant/image_string.dart';
 import 'package:auro/utils/constant/sizes.dart';
@@ -41,7 +42,7 @@ class NavigationScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: ()  =>Get.to(()=>const Notifications()),
                     icon: const Icon(
                       Iconsax.notification,
                       color: TColors.white,

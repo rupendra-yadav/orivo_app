@@ -4,12 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../../common/widgets/buttons/Button.dart';
+import '../../../common/widgets/buttons/button.dart';
 import '../../../utils/constant/colors.dart';
 import '../../../utils/constant/image_string.dart';
 import '../../../utils/constant/text_strings.dart';
-import '../../../utils/styles/SpacingStyle.dart';
-import '../../../common/widgets/inputFields/inputText.dart';
+import '../../../utils/styles/spacing_style.dart';
+import '../../../common/widgets/inputFields/input_text.dart';
 
 class SendOtp extends StatelessWidget {
   const SendOtp({super.key});
@@ -65,7 +65,7 @@ class SendOtp extends StatelessWidget {
                 child: Button(
                   height: 54,
                   minWidth: 185,
-                  title: TTexts.SendOTP,
+                  title: TTexts.send_otp,
                   onPressed: ()=>Get.to(()=>const VerifyOtp()),
                 ),
               ),
@@ -80,7 +80,7 @@ class SendOtp extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      TTexts.DoYouHaveAccount,
+                      TTexts.doYouHaveAccount,
                       style: TextStyle(color: TColors.white, fontSize: 16),
                     ),
                     Text(

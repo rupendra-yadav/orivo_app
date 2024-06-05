@@ -10,4 +10,10 @@ class SpacingStyle {
     right: TSizes.defaultSpace,
     bottom: TSizes.defaultSpace,
   );
+  static EdgeInsetsGeometry paddingWithDefaultSpace = EdgeInsets.only(
+    top: TSizes.defaultSpace,
+    left: TSizes.defaultSpace,
+    right: TSizes.defaultSpace,
+    bottom: TSizes.defaultSpace,
+  );
 }

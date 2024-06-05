@@ -2,14 +2,14 @@ import 'package:auro/features/authentication/view/send_otp.dart';
 import 'package:auro/utils/constant/colors.dart';
 import 'package:auro/utils/constant/image_string.dart';
 import 'package:auro/utils/constant/text_strings.dart';
-import 'package:auro/utils/styles/SpacingStyle.dart';
+import 'package:auro/utils/styles/spacing_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../../common/widgets/buttons/Button.dart';
-import '../../../common/widgets/inputFields/inputText.dart';
+import '../../../common/widgets/buttons/button.dart';
+import '../../../common/widgets/inputFields/input_text.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -84,7 +84,7 @@ class Login extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      TTexts.DoYouHaveAccount,
+                      TTexts.doYouHaveAccount,
                       style: TextStyle(color: TColors.white, fontSize: 16),
                     ),
                     Text(

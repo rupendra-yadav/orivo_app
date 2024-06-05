@@ -6,11 +6,11 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-import '../../../common/widgets/buttons/Button.dart';
+import '../../../common/widgets/buttons/button.dart';
 import '../../../utils/constant/colors.dart';
 import '../../../utils/constant/image_string.dart';
 import '../../../utils/constant/text_strings.dart';
-import '../../../utils/styles/SpacingStyle.dart';
+import '../../../utils/styles/spacing_style.dart';
 
 
 class VerifyOtp extends StatelessWidget {

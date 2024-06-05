@@ -4,12 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../../common/widgets/buttons/Button.dart';
-import '../../../common/widgets/inputFields/inputText.dart';
+import '../../../common/widgets/buttons/button.dart';
+import '../../../common/widgets/inputFields/input_text.dart';
 import '../../../utils/constant/colors.dart';
 import '../../../utils/constant/image_string.dart';
 import '../../../utils/constant/text_strings.dart';
-import '../../../utils/styles/SpacingStyle.dart';
+import '../../../utils/styles/spacing_style.dart';
 
 class Register extends StatelessWidget {
   const Register({super.key});
@@ -37,7 +37,7 @@ class Register extends StatelessWidget {
               /// User login heading
               const Text(TTexts.createAccount,
                   style: TextStyle(fontSize: 24, color: TColors.white)),
-              const Text(TTexts.RegisterCred,
+              const Text(TTexts.register_cred,
                   style: TextStyle(fontSize: 12, color: TColors.lightGrey)),
               SizedBox(
                 height: 20.h,
@@ -58,6 +58,7 @@ class Register extends StatelessWidget {
                 hint: TTexts.etHintMobileNumber,
                 preFixIcon: Icon(Iconsax.call_calling),
                 keyboardType: TextInputType.number,
+                maxLength: 10,
               ),
               const PrefixInputText(
                 hint: TTexts.etHintEmailAddress,
