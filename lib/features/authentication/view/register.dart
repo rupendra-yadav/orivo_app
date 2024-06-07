@@ -27,7 +27,7 @@ class Register extends StatelessWidget {
       backgroundColor: TColors.primary,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
+          padding:  EdgeInsets.symmetric(horizontal: 20.w),
           child: SizedBox(
             height: TDeviceUtils.screenHeight,
             child: Form(

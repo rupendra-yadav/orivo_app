@@ -28,7 +28,7 @@ class Login extends StatelessWidget {
       backgroundColor: TColors.primary,
       body: SingleChildScrollView(
         child: Padding(
-          padding: SpacingStyle.paddingWithAppBarHeight,
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: SizedBox(
             height: TDeviceUtils.screenHeight,
             child: Form(
