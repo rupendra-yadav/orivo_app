@@ -1,19 +1,20 @@
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../constant/sizes.dart';
 
 class SpacingStyle {
   static EdgeInsetsGeometry paddingWithAppBarHeight = EdgeInsets.only(
-    top: TSizes.appBarHeight,
-    left: TSizes.defaultSpace,
-    right: TSizes.defaultSpace,
-    bottom: TSizes.defaultSpace,
+    top: 50.h,
+      left: 20.w,
+      right: 20.w,
+      bottom: 20.h
   );
   static EdgeInsetsGeometry paddingWithDefaultSpace = EdgeInsets.only(
-    top: TSizes.defaultSpace,
-    left: TSizes.defaultSpace,
-    right: TSizes.defaultSpace,
-    bottom: TSizes.defaultSpace,
+    top: 20.h,
+    left: 20.w,
+    right: 20.w,
+    bottom: 20.h
   );
 }

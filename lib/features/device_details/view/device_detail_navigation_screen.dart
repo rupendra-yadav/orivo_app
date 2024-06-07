@@ -30,10 +30,10 @@ class DeviceDetailsNavigationScreen extends StatelessWidget {
             unselectedItemColor: TColors.primaryLight1,
             backgroundColor: TColors.primaryDark2,
             selectedLabelStyle: TextStyle(
-                fontWeight: FontWeight.w600, fontSize: 12 * TDeviceUtils.sw),
+                fontWeight: FontWeight.w600, fontSize: 12 ),
             unselectedLabelStyle: TextStyle(
-                fontWeight: FontWeight.w600, fontSize: 10 * TDeviceUtils.sw),
-            iconSize: 25 * TDeviceUtils.sw,
+                fontWeight: FontWeight.w600, fontSize: 10 ),
+            iconSize: 25 ,
             items: const [
               BottomNavigationBarItem(
                   icon: Icon(Iconsax.home), label: TTexts.home),

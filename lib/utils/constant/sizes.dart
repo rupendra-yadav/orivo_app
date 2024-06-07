@@ -35,9 +35,9 @@ class TSizes {
   static const double imageThumbSize = 80.0;
 
   // Default spacing between sections
-  static double defaultSpace = 20.0 * TDeviceUtils.sw;
-  static  double spaceBtwItems = 15.0 * TDeviceUtils.sw;
-  static  double spaceBtwSections = 25.0 * TDeviceUtils.sw;
+  static double defaultSpace = 20.0 ;
+  static  double spaceBtwItems = 15.0 ;
+  static  double spaceBtwSections = 25.0 ;
 
   // Border radius
   static const double borderRadiusSm = 4.0;

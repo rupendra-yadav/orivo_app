@@ -118,15 +118,10 @@ class TDeviceUtils {
   }
 
 
-
-  static const double referenceWidth = 360;
-  static const double referenceHeight = 800;
-
   static double get screenWidth => MediaQuery.of(Get.context!).size.width;
   static double get screenHeight => MediaQuery.of(Get.context!).size.height;
 
-  static double get sw => screenWidth / referenceWidth;
-  static double get sh => referenceHeight / screenHeight;
+
 
 // Add more device utility methods as per your specific requirements.
 }

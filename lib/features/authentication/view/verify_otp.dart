@@ -58,7 +58,7 @@ class VerifyOtp extends StatelessWidget {
 
               /// otp input box
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding:  EdgeInsets.symmetric(horizontal: 20.w),
                 child: PinCodeTextField(
                   textStyle: const TextStyle(color: TColors.white),
                   appContext: context,
@@ -95,8 +95,8 @@ class VerifyOtp extends StatelessWidget {
               ///verify button
               Center(
                 child: Button(
-                  height: 54,
-                  minWidth: 185,
+                  height: 54.h,
+                  minWidth: 185.w,
                   title: TTexts.verify,
                   onPressed: () => Get.to(() => const Register()),
                 ),
@@ -107,7 +107,7 @@ class VerifyOtp extends StatelessWidget {
               ),
 
               /// Resend OTP
-              const Center(
+               const Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

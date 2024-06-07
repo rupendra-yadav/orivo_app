@@ -63,8 +63,8 @@ class SendOtp extends StatelessWidget {
               ///Login button
               Center(
                 child: Button(
-                  height: 54,
-                  minWidth: 185,
+                  height: 54.h,
+                  minWidth: 185.w,
                   title: TTexts.send_otp,
                   onPressed: ()=>Get.to(()=>const VerifyOtp()),
                 ),

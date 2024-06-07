@@ -1,4 +1,6 @@
+import 'package:auro/utils/validate/validate.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 
 import '../../../utils/constant/colors.dart';
 
@@ -10,6 +12,7 @@ class PrefixInputText extends StatelessWidget {
     required this.keyboardType,
     this.maxLength,
     this.suffixIcon,
+    this.controller,
   });
 
   final String hint;
@@ -17,12 +20,14 @@ class PrefixInputText extends StatelessWidget {
   final TextInputType keyboardType;
   final int? maxLength;
   final Icon? suffixIcon;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0),
-      child: TextField(
+      child: TextFormField(
+        validator: (value) => Validate.validatePhoneNumber(value),
         keyboardType: keyboardType,
         maxLength: maxLength,
         style: const TextStyle(color: TColors.white),

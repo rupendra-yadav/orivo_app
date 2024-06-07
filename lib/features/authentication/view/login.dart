@@ -12,7 +12,11 @@ import '../../../common/widgets/buttons/button.dart';
 import '../../../common/widgets/inputFields/input_text.dart';
 
 class Login extends StatelessWidget {
-  const Login({super.key});
+  Login({super.key});
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +48,8 @@ class Login extends StatelessWidget {
               ),
 
               /// email and password input
-              const PrefixInputText(
+              PrefixInputText(
+                controller: _emailController,
                 hint: TTexts.etHintLoginEmail,
                 preFixIcon: Icon(Iconsax.attach_circle),
                 keyboardType: TextInputType.text,
@@ -66,13 +71,18 @@ class Login extends StatelessWidget {
               ),
 
               ///Login button
-               Center(
+              Center(
                 child: Button(
-                  height: 54,
-                  minWidth: 185,
-                  title: TTexts.logMeIn,
-                  onPressed: () => Get.to(()=> const SendOtp()),
-                ),
+                    height: 54.h,
+                    minWidth: 185.w,
+                    title: TTexts.logMeIn,
+                    onPressed: () {
+                      // if (_formKey.currentState!.validate()) {
+                      Get.to(() => const SendOtp());
+                      // }
+                    }
+                    // => Get.to(()=> const SendOtp()),
+                    ),
               ),
               SizedBox(
                 height: 10.h,
@@ -101,5 +111,3 @@ class Login extends StatelessWidget {
     );
   }
 }
-
-

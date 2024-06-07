@@ -7,7 +7,7 @@ class TextView extends StatelessWidget {
     super.key,
     required this.text,
     this.textColor = TColors.white,
-    this.fontSize = 20,
+    this.fontSize = 16,
   });
 
   final String text;

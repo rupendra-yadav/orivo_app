@@ -76,8 +76,8 @@ class Register extends StatelessWidget {
               ///Login button
               Center(
                 child: Button(
-                  height: 54,
-                  minWidth: 185,
+                  height: 54.h,
+                  minWidth: 185.w,
                   title: TTexts.continu,
                   onPressed: () => Get.to(() => const NavigationScreen()),
                 ),

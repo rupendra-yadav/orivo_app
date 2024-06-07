@@ -13,6 +13,7 @@ class TColors {
 
   static const Color green = Color(0xFF00820D);
   static const Color ochre = Color(0xFF9F6000);
+  static const Color graphLine = Color(0xFFFEB546);
 
   static const Color secondary = Color(0xFF0CF2E0);
   static const Color secondaryDark1 = Color(0xFF385000);

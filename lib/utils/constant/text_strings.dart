@@ -47,4 +47,7 @@ class TTexts{
   static const String dailySummary  = "Daily Summary";
   static const String max_kwh_today  = "Max KWH Today";
   static const String alerts  = "Alerts";
+  static const String selectDataItems  = "Select Data item";
+  static const String uab  = "Uab (V)";
+  static const String values  = "0";
 }

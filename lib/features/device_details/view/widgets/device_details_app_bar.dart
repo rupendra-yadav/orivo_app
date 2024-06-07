@@ -1,6 +1,7 @@
 import 'package:auro/features/device_details/view/device_detail_screens/settings.dart';
 import 'package:auro/features/notificaations/view/notifications.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -20,7 +21,7 @@ class DeviceDetailsAppBar extends StatelessWidget implements PreferredSizeWidget
     return AppBar(
       backgroundColor: TColors.primaryDark2,
       titleSpacing: 0,
-      elevation: 5 * TDeviceUtils.sw,
+      elevation: 5.h,
       automaticallyImplyLeading: false,
       leading: IconButton(onPressed: ()=>Navigator.pop(context), icon: const Icon(Iconsax.arrow_left,color: TColors.secondary,size: 30,)),
       title: Container(

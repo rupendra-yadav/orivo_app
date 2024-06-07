@@ -5,6 +5,7 @@ import 'package:auro/utils/constant/sizes.dart';
 import 'package:auro/utils/constant/text_strings.dart';
 import 'package:auro/utils/device/device_utility.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -21,7 +22,7 @@ class NavigationScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: TColors.primaryDark2,
         titleSpacing: 0,
-        elevation: 5 * TDeviceUtils.sw,
+        elevation: 5.h,
         automaticallyImplyLeading: false,
         title: Container(
           height: TSizes.appBarHeight,
@@ -31,11 +32,11 @@ class NavigationScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 8.0),
+                padding:  EdgeInsets.only(left: 8.0.w),
                 child: Image(
                   image: const AssetImage(TImages.imgAppBarLogo),
-                  height: 150 * TDeviceUtils.sw,
-                  width: 80 * TDeviceUtils.sw,
+                  height: 150.h,
+                  width: 80 .w,
                 ),
               ),
               Row(
@@ -68,10 +69,10 @@ class NavigationScreen extends StatelessWidget {
             unselectedItemColor: TColors.primaryLight1,
             backgroundColor: TColors.primaryDark2,
             selectedLabelStyle: TextStyle(
-                fontWeight: FontWeight.w600, fontSize: 12 * TDeviceUtils.sw),
+                fontWeight: FontWeight.w600, fontSize: 12 ),
             unselectedLabelStyle: TextStyle(
-                fontWeight: FontWeight.w600, fontSize: 10 * TDeviceUtils.sw),
-            iconSize: 25 * TDeviceUtils.sw,
+                fontWeight: FontWeight.w600, fontSize: 10 ),
+            iconSize: 25,
             items: const [
               BottomNavigationBarItem(
                   icon: Icon(Iconsax.cloud_lightning), label: TTexts.device),
