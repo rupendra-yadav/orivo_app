@@ -61,10 +61,10 @@ class Validate{
   }
 
   ///Empty Text Validation
-  static String? validateEmptyText(String? fieldName,String? value){
+  static String? validateEmptyText(String? value){
 
     if (value == null || value.isEmpty) {
-      return '$fieldName is required.';
+      return 'it is required.';
     }
 
     return null;

@@ -13,6 +13,7 @@ class PrefixInputText extends StatelessWidget {
     this.maxLength,
     this.suffixIcon,
     this.controller,
+    this.validator,
   });
 
   final String hint;
@@ -21,13 +22,14 @@ class PrefixInputText extends StatelessWidget {
   final int? maxLength;
   final Icon? suffixIcon;
   final TextEditingController? controller;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: TextFormField(
-        validator: (value) => Validate.validatePhoneNumber(value),
+        validator: validator,
         keyboardType: keyboardType,
         maxLength: maxLength,
         style: const TextStyle(color: TColors.white),
