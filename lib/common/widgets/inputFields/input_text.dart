@@ -1,6 +1,4 @@
-import 'package:auro/utils/validate/validate.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 
 import '../../../utils/constant/colors.dart';
 
@@ -29,6 +27,7 @@ class PrefixInputText extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: TextFormField(
+        controller: controller,
         validator: validator,
         keyboardType: keyboardType,
         maxLength: maxLength,

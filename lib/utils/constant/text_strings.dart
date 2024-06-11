@@ -20,14 +20,14 @@ class TTexts{
   static const String sendOTPHead = "Let’s Get You Going";
   static const String sendOtpCred = "Please enter your credentials to continue";
   static const String signInWithPassword = "Sign in with Password";
-  static const String send_otp = "Send OTP";
+  static const String sendOtp = "Send OTP";
   static const String verifyOTP = "Verify OTP";
   static const String verify= "Verify";
   static const String verifyOtpDetails = "We have sent you a shot code to your number and email, enter it bellow to confirm its yours";
   static const String dontGetTheCode = "Didn’t get the code?";
   static const String reSendIt = " Resend It..";
   static const String createAccount = "Create Account";
-  static const String register_cred = "Please enter the details required to create your account";
+  static const String registerCred = "Please enter the details required to create your account";
   static const String device = "Device";
   static const String profile = "Profile";
   static const String history = "History";
@@ -45,9 +45,11 @@ class TTexts{
   static const String deviceDetails  = "Device Details";
   static const String machineName  = "Machine Name";
   static const String dailySummary  = "Daily Summary";
-  static const String max_kwh_today  = "Max KWH Today";
+  static const String maxKwhToday  = "Max KWH Today";
   static const String alerts  = "Alerts";
   static const String selectDataItems  = "Select Data item";
   static const String uab  = "Uab (V)";
   static const String values  = "0";
+  static const String online  = "Online";
+  static const String offline  = "Offline";
 }

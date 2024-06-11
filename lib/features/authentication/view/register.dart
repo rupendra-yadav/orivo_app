@@ -1,4 +1,5 @@
-import 'package:auro/features/navigation/view/navigation_screen.dart';
+import 'package:auro/features/authentication/contoller/register_controller.dart';
+import 'package:auro/features/authentication/view/login.dart';
 import 'package:auro/utils/device/device_utility.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,16 +11,12 @@ import '../../../common/widgets/inputFields/input_text.dart';
 import '../../../utils/constant/colors.dart';
 import '../../../utils/constant/image_string.dart';
 import '../../../utils/constant/text_strings.dart';
-import '../../../utils/styles/spacing_style.dart';
 import '../../../utils/validate/validate.dart';
 
 class Register extends StatelessWidget {
-   Register({super.key});
+  Register({super.key});
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _textController = TextEditingController();
+  final registerController = Get.put(RegisterController());
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +24,11 @@ class Register extends StatelessWidget {
       backgroundColor: TColors.primary,
       body: SingleChildScrollView(
         child: Padding(
-          padding:  EdgeInsets.symmetric(horizontal: 20.w),
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: SizedBox(
             height: TDeviceUtils.screenHeight,
             child: Form(
-              key: _formKey,
+              key: registerController.registerFormKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -51,7 +48,7 @@ class Register extends StatelessWidget {
                       /// User login heading
                       const Text(TTexts.createAccount,
                           style: TextStyle(fontSize: 24, color: TColors.white)),
-                      const Text(TTexts.register_cred,
+                      const Text(TTexts.registerCred,
                           style: TextStyle(
                               fontSize: 12, color: TColors.lightGrey)),
                       SizedBox(
@@ -59,34 +56,34 @@ class Register extends StatelessWidget {
                       ),
 
                       /// email and password input
-                       PrefixInputText(
-                        controller:_textController ,
-                        validator: Validate.validateEmptyText,
+                      PrefixInputText(
+                        controller: registerController.companyName,
+                        validator:(value) => Validate.validateEmptyText(value),
                         hint: TTexts.etHintCompanyName,
-                        preFixIcon: Icon(Iconsax.building),
+                        preFixIcon: const Icon(Iconsax.building),
                         keyboardType: TextInputType.text,
                       ),
 
-                       PrefixInputText(
-                        controller: _textController,
-                        validator: Validate.validateEmptyText,
+                      PrefixInputText(
+                        controller: registerController.fullName,
+                        validator:(value) => Validate.validateEmptyText(value),
                         hint: TTexts.etHintFullName,
-                        preFixIcon: Icon(Iconsax.profile_add),
+                        preFixIcon: const Icon(Iconsax.profile_add),
                         keyboardType: TextInputType.name,
                       ),
-                       PrefixInputText(
-                        controller: _phoneController,
-                        validator: Validate.validatePhoneNumber,
+                      PrefixInputText(
+                        controller: registerController.mobileNumber,
+                        validator:(value) => Validate.validatePhoneNumber(value),
                         hint: TTexts.etHintMobileNumber,
-                        preFixIcon: Icon(Iconsax.call_calling),
+                        preFixIcon: const Icon(Iconsax.call_calling),
                         keyboardType: TextInputType.number,
                         maxLength: 10,
                       ),
-                       PrefixInputText(
-                        controller: _emailController,
-                        validator: Validate.validateEmail,
+                      PrefixInputText(
+                        controller: registerController.emailAddress,
+                        validator:(value) => Validate.validateEmail(value),
                         hint: TTexts.etHintEmailAddress,
-                        preFixIcon: Icon(Icons.mail),
+                        preFixIcon: const Icon(Icons.mail),
                         keyboardType: TextInputType.emailAddress,
                       ),
                     ],
@@ -96,34 +93,34 @@ class Register extends StatelessWidget {
                       ///Login button
                       Center(
                         child: Button(
-                          height: 54.h,
-                          minWidth: 185.w,
-                          title: TTexts.continu,
-                          onPressed: (){
-                            if (_formKey.currentState!.validate()) {
-                              Get.to(() => const NavigationScreen());
-                            }
-                          }
-                        ),
+                            height: 54.h,
+                            minWidth: 185.w,
+                            title: TTexts.continu,
+                            onPressed: () {
+                              registerController.registerUser();
+                            }),
                       ),
                       SizedBox(
                         height: 10.h,
                       ),
 
                       /// Register here
-                      const Center(
+                      Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
+                            const Text(
                               TTexts.alreadyHasAcccount,
                               style:
                                   TextStyle(color: TColors.white, fontSize: 16),
                             ),
-                            Text(
-                              TTexts.loginHere,
-                              style: TextStyle(
-                                  color: TColors.secondary, fontSize: 16),
+                            InkWell(
+                              onTap: () => Get.to(() => Login()),
+                              child: const Text(
+                                TTexts.loginHere,
+                                style: TextStyle(
+                                    color: TColors.secondary, fontSize: 16),
+                              ),
                             ),
                           ],
                         ),

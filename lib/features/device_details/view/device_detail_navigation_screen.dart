@@ -6,17 +6,25 @@ import 'package:iconsax/iconsax.dart';
 
 import '../../../utils/constant/colors.dart';
 import '../../../utils/constant/text_strings.dart';
-import '../../../utils/device/device_utility.dart';
+import '../../navigation/view/bottom_nav_screen/model/device_list_model.dart';
 
 class DeviceDetailsNavigationScreen extends StatelessWidget {
-  const DeviceDetailsNavigationScreen({super.key});
+  const DeviceDetailsNavigationScreen({
+    super.key,
+    required this.deviceListModel,
+  });
+
+  final DeviceListModel deviceListModel;
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(DeviceDetailNavigationController());
+    controller.setDeviceId(deviceListModel.mMachineId);
     return Scaffold(
       /// App Bar
-      appBar: const DeviceDetailsAppBar(title: TTexts.machineName,),
+      appBar:  DeviceDetailsAppBar(
+        title: deviceListModel.mMachineTitle,
+      ),
 
       /// Bottom Navigation
       body: Obx(() => controller.screens[controller.selectedIndex.value]),
@@ -29,11 +37,11 @@ class DeviceDetailsNavigationScreen extends StatelessWidget {
             selectedItemColor: TColors.secondary,
             unselectedItemColor: TColors.primaryLight1,
             backgroundColor: TColors.primaryDark2,
-            selectedLabelStyle: TextStyle(
-                fontWeight: FontWeight.w600, fontSize: 12 ),
-            unselectedLabelStyle: TextStyle(
-                fontWeight: FontWeight.w600, fontSize: 10 ),
-            iconSize: 25 ,
+            selectedLabelStyle:
+                const TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
+            unselectedLabelStyle:
+                const TextStyle(fontWeight: FontWeight.w600, fontSize: 10),
+            iconSize: 25,
             items: const [
               BottomNavigationBarItem(
                   icon: Icon(Iconsax.home), label: TTexts.home),
@@ -50,5 +58,3 @@ class DeviceDetailsNavigationScreen extends StatelessWidget {
     );
   }
 }
-
-

@@ -1,7 +1,6 @@
 
 
 
-import '../device/device_utility.dart';
 
 class TSizes {
   // Padding and margin sizes

@@ -2,10 +2,22 @@ import 'package:auro/features/device_details/view/device_detail_screens/history.
 import 'package:auro/features/device_details/view/device_detail_screens/home.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/insights.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/settings.dart';
+import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 class DeviceDetailNavigationController extends GetxController {
+  static DeviceDetailNavigationController get instance => Get.find();
+
+  final RxString deviceId = "".obs;
+
+
+
+
+
+
+
+
   final Rx<int> selectedIndex = 0.obs;
 
   RxDouble xOffset = 0.0.obs;
@@ -25,6 +37,11 @@ class DeviceDetailNavigationController extends GetxController {
       scaleFactor.value = 0.4;
       isDrawerOpen.value = true;
     }
+  }
+
+
+  void setDeviceId(String id){
+    deviceId.value = id;
   }
 
   final screens = [

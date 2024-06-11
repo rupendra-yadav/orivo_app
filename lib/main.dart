@@ -1,5 +1,15 @@
 import 'package:auro/myapp.dart';
+import 'package:auro/utils/helpers/network_manager.dart';
 import 'package:flutter/material.dart';
-void main(){
-runApp(const Myapp());
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+
+import 'data/repository/authentication_repository.dart';
+
+Future<void> main() async {
+  await GetStorage.init();
+  Get.put(AuthenticationRepository());
+  Get.put(NetworkManager());
+
+  runApp(const Myapp());
 }

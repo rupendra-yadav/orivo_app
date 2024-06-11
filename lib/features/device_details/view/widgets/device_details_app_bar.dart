@@ -7,7 +7,6 @@ import 'package:iconsax/iconsax.dart';
 
 import '../../../../utils/constant/colors.dart';
 import '../../../../utils/constant/sizes.dart';
-import '../../../../utils/device/device_utility.dart';
 
 class DeviceDetailsAppBar extends StatelessWidget implements PreferredSizeWidget {
   const DeviceDetailsAppBar({

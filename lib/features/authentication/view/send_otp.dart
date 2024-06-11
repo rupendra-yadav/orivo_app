@@ -1,24 +1,22 @@
-import 'package:auro/features/authentication/view/verify_otp.dart';
+import 'package:auro/features/authentication/contoller/send_otp_controller.dart';
+import 'package:auro/features/authentication/view/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../../common/widgets/buttons/button.dart';
+import '../../../common/widgets/inputFields/input_text.dart';
 import '../../../utils/constant/colors.dart';
 import '../../../utils/constant/image_string.dart';
 import '../../../utils/constant/text_strings.dart';
 import '../../../utils/device/device_utility.dart';
-import '../../../utils/styles/spacing_style.dart';
-import '../../../common/widgets/inputFields/input_text.dart';
 import '../../../utils/validate/validate.dart';
 
 class SendOtp extends StatelessWidget {
   SendOtp({super.key});
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
+  final sendOtpController = Get.put(SendOtpController());
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +28,7 @@ class SendOtp extends StatelessWidget {
           child: SizedBox(
             height: TDeviceUtils.screenHeight,
             child: Form(
-              key: _formKey,
+              key: sendOtpController.sendOtpFormKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -59,10 +57,10 @@ class SendOtp extends StatelessWidget {
 
                       /// email input
                       PrefixInputText(
-                        controller: _phoneController,
-                        validator: Validate.validatePhoneNumber,
+                        controller: sendOtpController.mobileNumber,
+                        validator:(value) => Validate.validatePhoneNumber(value),
                         hint: TTexts.etHintLoginEmail,
-                        preFixIcon: Icon(Iconsax.attach_circle),
+                        preFixIcon: const Icon(Iconsax.attach_circle),
                         keyboardType: TextInputType.text,
                       ),
                       SizedBox(
@@ -70,9 +68,12 @@ class SendOtp extends StatelessWidget {
                       ),
 
                       /// Sign in With password
-                      const Text(TTexts.signInWithPassword,
-                          style: TextStyle(
-                              fontSize: 16, color: TColors.secondary)),
+                      InkWell(
+                        onTap: () => Get.to(Login()),
+                        child: const Text(TTexts.signInWithPassword,
+                            style: TextStyle(
+                                fontSize: 16, color: TColors.secondary)),
+                      ),
                     ],
                   ),
                   Column(
@@ -82,11 +83,9 @@ class SendOtp extends StatelessWidget {
                         child: Button(
                             height: 54.h,
                             minWidth: 185.w,
-                            title: TTexts.send_otp,
+                            title: TTexts.sendOtp,
                             onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                Get.to(() => VerifyOtp());
-                              }
+                              sendOtpController.sendOtp();
                             }),
                       ),
 

@@ -3,7 +3,6 @@ import 'package:auro/utils/constant/colors.dart';
 import 'package:auro/utils/constant/image_string.dart';
 import 'package:auro/utils/constant/sizes.dart';
 import 'package:auro/utils/constant/text_strings.dart';
-import 'package:auro/utils/device/device_utility.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -12,7 +11,9 @@ import 'package:iconsax/iconsax.dart';
 import '../contoller/navigation_controller.dart';
 
 class NavigationScreen extends StatelessWidget {
-  const NavigationScreen({super.key});
+  const NavigationScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,18 +33,18 @@ class NavigationScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding:  EdgeInsets.only(left: 8.0.w),
+                padding: EdgeInsets.only(left: 8.0.w),
                 child: Image(
                   image: const AssetImage(TImages.imgAppBarLogo),
                   height: 150.h,
-                  width: 80 .w,
+                  width: 80.w,
                 ),
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   IconButton(
-                    onPressed: ()  =>Get.to(()=>const Notifications()),
+                    onPressed: () => Get.to(() => const Notifications()),
                     icon: const Icon(
                       Iconsax.notification,
                       color: TColors.white,
@@ -68,10 +69,10 @@ class NavigationScreen extends StatelessWidget {
             selectedItemColor: TColors.secondary,
             unselectedItemColor: TColors.primaryLight1,
             backgroundColor: TColors.primaryDark2,
-            selectedLabelStyle: TextStyle(
-                fontWeight: FontWeight.w600, fontSize: 12 ),
-            unselectedLabelStyle: TextStyle(
-                fontWeight: FontWeight.w600, fontSize: 10 ),
+            selectedLabelStyle:
+                const TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
+            unselectedLabelStyle:
+                const TextStyle(fontWeight: FontWeight.w600, fontSize: 10),
             iconSize: 25,
             items: const [
               BottomNavigationBarItem(
