@@ -57,6 +57,8 @@ dependencies:
   flutter_screenutil: ^5.9.3
   draggable_bottom_sheet: ^1.0.2
   syncfusion_flutter_charts: ^25.2.7
+  shared_preferences: ^2.2.3
+  webview_flutter: ^4.8.0
 
 dev_dependencies:
   flutter_test:
@@ -84,7 +86,7 @@ flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
   remove_alpha_ios: true
-  image_path: "assets/logos/logo.png"
+  image_path: "assets/images/img_bg_login.png"
   background_color: "#ffffff"
   theme_color: "#ffffff"
   min_sdk_android: 21 # android min sdk min:16, default 21

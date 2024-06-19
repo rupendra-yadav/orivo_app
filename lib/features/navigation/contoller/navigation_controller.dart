@@ -1,6 +1,5 @@
 import 'package:auro/features/navigation/view/bottom_nav_screen/device.dart';
 import 'package:auro/features/navigation/view/bottom_nav_screen/profile.dart';
-import 'package:auro/features/navigation/view/bottom_nav_screen/setting.dart';
 import 'package:get/get.dart';
 
 class NavigationController extends GetxController {
@@ -28,6 +27,5 @@ class NavigationController extends GetxController {
   final screens = [
     const Device(),
     const Profile(),
-    const Setting(),
   ];
 }

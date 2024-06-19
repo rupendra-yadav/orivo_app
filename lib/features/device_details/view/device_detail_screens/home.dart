@@ -1,5 +1,6 @@
 import 'package:auro/features/device_details/view/device_detail_screens/controller/device_detail_controller.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/widgets/data_item_card.dart';
+import 'package:auro/features/device_details/view/device_detail_screens/widgets/device_detail_shimmer.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/widgets/graph.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/widgets/text_view_card.dart';
 import 'package:auro/utils/constant/colors.dart';
@@ -11,70 +12,80 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
+import '../../../../common/widgets/loaders/image_loader.dart';
 import '../../../../common/widgets/text/text_view.dart';
-import '../../../navigation/view/bottom_nav_screen/model/device_list_model.dart';
+import '../../../../utils/constant/image_string.dart';
 import '../../controller/device_detail_navigation_controller.dart';
 
 class Home extends StatelessWidget {
   const Home({
     super.key,
-
   });
-
-
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(DeviceDetailController());
     final navigationController = DeviceDetailNavigationController.instance;
-
     controller.getDeviceDetail(navigationController.deviceId.value);
 
     return Scaffold(
-
       backgroundColor: TColors.primary,
       body: Stack(
         children: [
           SingleChildScrollView(
             child: Padding(
               padding: SpacingStyle.paddingWithDefaultSpace,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  /// Daily Summary
-                  const TextView(
-                    text: TTexts.dailySummary,
-                  ),
+              child: Obx(() {
+                if (controller.isDeviceDetailLoading.value) {
+                  return const DeviceDetailShimmer();
+                }
 
-                  ///card
-                  TextViewCard(
-                    cardText:controller.deviceListModel.mMachineTitle,
-                    width: double.infinity,
-                  ),
+                if (controller.deviceList.isEmpty) {
+                  return const TImageLoaderWidget(
+                      text: 'Whoops! No Device available...!',
+                      animation: TImages.imgLoginBg,
+                      showAction: false);
+                }
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    /// Daily Summary
+                    const TextView(
+                      text: TTexts.dailySummary,
+                    ),
 
-                  ///Alerts
-                  const TextView(
-                    text: TTexts.alerts,
-                  ),
+                    ///card
+                    TextViewCard(
+                      cardText: controller.deviceListModel.mMachineTitle,
+                      width: double.infinity,
+                    ),
 
-                  ///cards
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextViewCard(
-                            cardText: controller.deviceListModel.mMachineTitle,
-                            width: TDeviceUtils.screenWidth / 2.w),
-                      ),
-                      SizedBox(width: 5.w),
-                      Expanded(
-                        child: TextViewCard(
-                            cardText:controller.deviceListModel.mMachineAddedon,
-                            width: TDeviceUtils.screenWidth / 2.w),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                    ///Alerts
+                    const TextView(
+                      text: TTexts.alerts,
+                    ),
+
+                    ///cards
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextViewCard(
+                              cardText:
+                                  controller.deviceListModel.mMachineTitle,
+                              width: TDeviceUtils.screenWidth / 2.w),
+                        ),
+                        SizedBox(width: 5.w),
+                        Expanded(
+                          child: TextViewCard(
+                              cardText:
+                                  controller.deviceListModel.mMachineAddedon,
+                              width: TDeviceUtils.screenWidth / 2.w),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              }),
             ),
           ),
 
@@ -86,7 +97,7 @@ class Home extends StatelessWidget {
             builder: (context, scrollController) {
               return Container(
                 decoration: const BoxDecoration(
-                    color: TColors.primaryDark2,
+                    color: TColors.primaryDark1,
                     borderRadius: BorderRadius.vertical(
                         top: Radius.circular(40), bottom: Radius.zero)),
                 child: SingleChildScrollView(
@@ -145,8 +156,5 @@ class Home extends StatelessWidget {
         ],
       ),
     );
-
-
   }
-
 }

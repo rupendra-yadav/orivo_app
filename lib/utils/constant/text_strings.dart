@@ -8,6 +8,7 @@ class TTexts{
   static const String etHintFullName = "Full name";
   static const String etHintMobileNumber = "Mobile Number";
   static const String etHintEmailAddress = "Email Address";
+  static const String etHintCreatePassword = "Create Password";
 
   static const String loginCredential = "Please enter your credentials to get you going";
   static const String signInWithOTP = "Sign in with OTP";
@@ -36,13 +37,20 @@ class TTexts{
   static const String settings = "settings";
   static const String userName = "Aditi Agrawal";
   static const String userDesignation  = "Managing Director";
+
+  ///Profile
   static const String helpSupport  = "Help & Support";
   static const String aboutUs  = "About Us";
   static const String privacyPolicy  = "Privacy Policy";
   static const String termsOfUse  = "Terms of use";
+  static const String changePassword  = "Change Password";
+
+  ///Setting
   static const String deviceSettings  = "Device Settings";
   static const String notifications  = "Notification";
   static const String deviceDetails  = "Device Details";
+
+  ///Home
   static const String machineName  = "Machine Name";
   static const String dailySummary  = "Daily Summary";
   static const String maxKwhToday  = "Max KWH Today";
@@ -52,4 +60,36 @@ class TTexts{
   static const String values  = "0";
   static const String online  = "Online";
   static const String offline  = "Offline";
+
+  ///Links
+  static const String appleLink  = "https://www.google.co.in/";
+
+
+  /// Edit Profile
+  static const String editProfile  = "Edit Profile";
+  static const String saveDetails  = "Save Details";
+
+
+  ///reset Password
+  static const String resetPassword  = "Reset Password";
+  static const String createNewPassword  = "Create New Password";
+  static const String enterNewPassword  = "Enter New Password";
+  static const String confirmNewPassword  = "Confirm New Password";
+  static const String updatePassword  = "Update Password";
+
+  ///InSights
+  static const String alarms  = "Alarms";
+  static const String typesOfAlarm  = "Types Of Alarms";
+  static const String consumptionAnalysis  = "Consumption Analysis";
+  static const String daily  = "Daily";
+  static const String monthly  = "Monthly";
+  static const String quarterly  = "Quarterly";
+  static const String yearly  = "Yearly";
+  static const String otherReports  = "Other Reports";
+  static const String pfIncentive  = "P.F Incentive";
+  static const String loadFactorIncentive  = "Load Factor Incentive";
+  static const String tariffPlanUnderstanding  = "Tariff Plan Understanding";
+  static const String other  = "Other";
+
+
 }

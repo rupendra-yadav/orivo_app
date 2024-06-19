@@ -25,9 +25,7 @@ class DeviceDetailController extends GetxController {
       final deviceLis = await _deviceReposotory.getDeviceDetail(deviceId);
 
       deviceList.assignAll(deviceLis);
-       deviceListModel = deviceList[0];
-
-
+      deviceListModel = deviceList[0];
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());

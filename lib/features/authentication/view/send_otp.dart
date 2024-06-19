@@ -69,7 +69,7 @@ class SendOtp extends StatelessWidget {
 
                       /// Sign in With password
                       InkWell(
-                        onTap: () => Get.to(Login()),
+                        onTap: () => Get.to(const Login()),
                         child: const Text(TTexts.signInWithPassword,
                             style: TextStyle(
                                 fontSize: 16, color: TColors.secondary)),

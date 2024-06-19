@@ -23,7 +23,7 @@ class DeviceList extends StatelessWidget {
 
       if (controller.deviceList.isEmpty) {
         return const TImageLoaderWidget(
-            text: 'Whoops! No therapists available for chat...',
+            text: 'Whoops! No Device available...!',
             animation: TImages.imgLoginBg,
             showAction: false);
       }

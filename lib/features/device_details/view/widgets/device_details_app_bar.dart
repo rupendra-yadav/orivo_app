@@ -1,4 +1,4 @@
-import 'package:auro/features/device_details/view/device_detail_screens/settings.dart';
+
 import 'package:auro/features/notificaations/view/notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -44,15 +44,7 @@ class DeviceDetailsAppBar extends StatelessWidget implements PreferredSizeWidget
                   icon: const Icon(
                     Iconsax.notification,
                     color: TColors.white,
-                    size: 22,
-                  ),
-                ),
-                IconButton(
-                  onPressed: () =>Get.to(()=>const Settings()),
-                  icon: const Icon(
-                    Iconsax.setting_2,
-                    color: TColors.white,
-                    size: 22,
+                    size: 25,
                   ),
                 ),
               ],

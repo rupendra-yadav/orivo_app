@@ -7,4 +7,7 @@ class TImages {
 
   /// Device Image Path
   static const String deviceImagePath = "https://webdevelopercg.com/electricity/myadmin/uploads/machine/";
+
+  ///reset password
+  static const String resetPasswordImagePath = "assets/images/img_reset_passwod.png";
 }

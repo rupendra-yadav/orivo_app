@@ -7,7 +7,7 @@ import '../../../../../utils/constant/sizes.dart';
 
 class DeviceListShimmer extends StatelessWidget {
   const DeviceListShimmer({
-    super.key,  this.itemCount = 6,
+    super.key,  this.itemCount = 3,
   });
 
   final int itemCount;

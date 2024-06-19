@@ -1,4 +1,3 @@
-/*
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefs {
@@ -44,4 +43,3 @@ class SharedPrefs {
 
   static Future<void> reload() async => await _prefs.reload();
 }
-*/

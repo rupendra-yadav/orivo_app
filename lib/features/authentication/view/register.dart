@@ -55,7 +55,8 @@ class Register extends StatelessWidget {
                         height: 10.h,
                       ),
 
-                      /// email and password input
+                      ///  Input Fields
+                      ///  Company name
                       PrefixInputText(
                         controller: registerController.companyName,
                         validator:(value) => Validate.validateEmptyText(value),
@@ -63,7 +64,7 @@ class Register extends StatelessWidget {
                         preFixIcon: const Icon(Iconsax.building),
                         keyboardType: TextInputType.text,
                       ),
-
+                      /// Full Name
                       PrefixInputText(
                         controller: registerController.fullName,
                         validator:(value) => Validate.validateEmptyText(value),
@@ -71,6 +72,8 @@ class Register extends StatelessWidget {
                         preFixIcon: const Icon(Iconsax.profile_add),
                         keyboardType: TextInputType.name,
                       ),
+                      ///Mobile Number
+
                       PrefixInputText(
                         controller: registerController.mobileNumber,
                         validator:(value) => Validate.validatePhoneNumber(value),
@@ -79,12 +82,22 @@ class Register extends StatelessWidget {
                         keyboardType: TextInputType.number,
                         maxLength: 10,
                       ),
+                      ///Email Address
                       PrefixInputText(
                         controller: registerController.emailAddress,
                         validator:(value) => Validate.validateEmail(value),
                         hint: TTexts.etHintEmailAddress,
                         preFixIcon: const Icon(Icons.mail),
                         keyboardType: TextInputType.emailAddress,
+                      ),
+                      /// Password
+                      PrefixInputText(
+                        controller: registerController.password,
+                        validator:(value) => Validate.validatePassword(value),
+                        hint: TTexts.etHintCreatePassword,
+                        preFixIcon: const Icon(Iconsax.key),
+                        obscureText: true,
+                        keyboardType: TextInputType.visiblePassword,
                       ),
                     ],
                   ),
@@ -115,7 +128,7 @@ class Register extends StatelessWidget {
                                   TextStyle(color: TColors.white, fontSize: 16),
                             ),
                             InkWell(
-                              onTap: () => Get.to(() => Login()),
+                              onTap: () => Get.to(() => const Login()),
                               child: const Text(
                                 TTexts.loginHere,
                                 style: TextStyle(

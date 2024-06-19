@@ -1,11 +1,16 @@
 import 'package:auro/features/navigation/view/bottom_nav_screen/widgets/profile_options.dart';
+import 'package:auro/features/navigation/view/user_edits/view/edit_profile.dart';
+import 'package:auro/features/navigation/view/user_edits/view/reset_password.dart';
 import 'package:auro/utils/constant/colors.dart';
 import 'package:auro/utils/constant/image_string.dart';
 import 'package:auro/utils/constant/text_strings.dart';
 import 'package:auro/utils/device/device_utility.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+
+import '../../../web_view/webview.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
@@ -67,7 +72,7 @@ class Profile extends StatelessWidget {
                       // Pushes the IconButton to the right
 
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () => Get.to(() => const EditProfile()),
                         icon: const Icon(
                           Iconsax.edit_2,
                           color: TColors.white,
@@ -86,24 +91,39 @@ class Profile extends StatelessWidget {
             /// Options
             Container(
               color: TColors.primaryDark1,
-              child: const Column(
+              child: Column(
                 children: [
-                  ProfileOptions(title: TTexts.helpSupport,),
-                  Divider(
-                    height: 1,
-                    color: TColors.primaryLight1,
+                  ProfileOptions(
+                      title: TTexts.helpSupport,
+                      onPressed: () => Get.to(() => const CustomWebView(
+                            initialUrl: TTexts.appleLink,
+                            title: TTexts.helpSupport,
+                          ))),
+                  const Divider(height: 1, color: TColors.primaryLight1),
+                  ProfileOptions(
+                    title: TTexts.aboutUs,
+                    onPressed: () => Get.to(() => const CustomWebView(
+                        initialUrl: TTexts.appleLink, title: TTexts.aboutUs)),
                   ),
-                  ProfileOptions(title: TTexts.aboutUs,),
-                  Divider(
-                    height: 1,
-                    color: TColors.primaryLight1,
+                  const Divider(height: 1, color: TColors.primaryLight1),
+                  ProfileOptions(
+                    title: TTexts.privacyPolicy,
+                    onPressed: () => Get.to(() => const CustomWebView(
+                        initialUrl: TTexts.appleLink,
+                        title: TTexts.privacyPolicy)),
                   ),
-                  ProfileOptions(title: TTexts.privacyPolicy,),
-                  Divider(
-                    height: 1,
-                    color: TColors.primaryLight1,
+                  const Divider(height: 1, color: TColors.primaryLight1),
+                  ProfileOptions(
+                    title: TTexts.termsOfUse,
+                    onPressed: () => Get.to(() => const CustomWebView(
+                        initialUrl: TTexts.appleLink,
+                        title: TTexts.privacyPolicy)),
                   ),
-                  ProfileOptions(title: TTexts.termsOfUse,),
+                  const Divider(height: 1, color: TColors.primaryLight1),
+                  ProfileOptions(
+                    title: TTexts.changePassword,
+                    onPressed: () => Get.to(() => const ResetPassword()),
+                  ),
                 ],
               ),
             ),
@@ -125,4 +145,3 @@ class Profile extends StatelessWidget {
     );
   }
 }
-

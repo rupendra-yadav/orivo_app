@@ -15,12 +15,13 @@ import '../../../common/widgets/inputFields/input_text.dart';
 import '../contoller/login_controller.dart';
 
 class Login extends StatelessWidget {
-  Login({super.key});
-
-  final loginController = Get.put(LoginController());
+  const Login({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final loginController = Get.put(LoginController());
+    loginController.screenRedirect();
+
     return Scaffold(
       backgroundColor: TColors.primary,
       body: SingleChildScrollView(
@@ -57,6 +58,7 @@ class Login extends StatelessWidget {
                       ),
 
                       /// email and password input
+                      /// Email Input
                       PrefixInputText(
                         controller: loginController.phoneNumber,
                         validator:(value) => Validate.validatePhoneNumber(value),
@@ -64,10 +66,12 @@ class Login extends StatelessWidget {
                         preFixIcon: const Icon(Iconsax.attach_circle),
                         keyboardType: TextInputType.text,
                       ),
+                      ///password input
                       PrefixInputText(
                         controller: loginController.password,
                         validator: (value) => Validate.validatePassword(value),
                         hint: TTexts.etHintLoginPass,
+                        obscureText: true,
                         preFixIcon: const Icon(Iconsax.lock),
                         keyboardType: TextInputType.text,
                       ),

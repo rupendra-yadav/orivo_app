@@ -18,6 +18,7 @@ class RegisterController extends GetxController {
   final fullName = TextEditingController();
   final emailAddress = TextEditingController();
   final companyName = TextEditingController();
+  final password = TextEditingController();
 
   GlobalKey<FormState> registerFormKey = GlobalKey<FormState>();
 
@@ -40,10 +41,12 @@ class RegisterController extends GetxController {
       }
 
       final response = await _repository.registerUser(
-          companyName.text.trim(),
-          fullName.text.trim(),
-          mobileNumber.text.trim(),
-          emailAddress.text.trim());
+        companyName.text.trim(),
+        fullName.text.trim(),
+        mobileNumber.text.trim(),
+        emailAddress.text.trim(),
+        password.text.trim(),
+      );
 
       TFullScreenLoader.stopLoading();
 

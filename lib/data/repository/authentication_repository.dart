@@ -50,13 +50,14 @@ class AuthenticationRepository extends GetxController {
 
   ///-----Register User
   Future<Map<String, dynamic>> registerUser(
-      String companyName, fullName, mobileNumber, emailAddress) async {
+      String companyName, fullName, mobileNumber, emailAddress,userPassword) async {
     try {
       Map<String, dynamic> data = {
         'user_company': companyName,
         'user_name': fullName,
         'user_mobile': mobileNumber,
         'user_email': emailAddress,
+        'user_pass':userPassword,
       };
       Map<String, dynamic> response =
           await THttpHelper.post('signup_user', data);

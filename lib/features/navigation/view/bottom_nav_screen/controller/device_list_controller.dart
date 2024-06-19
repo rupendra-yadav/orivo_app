@@ -21,7 +21,6 @@ class DeviceListController extends GetxController {
 
       deviceList.assignAll(deviceLis);
 
-
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());

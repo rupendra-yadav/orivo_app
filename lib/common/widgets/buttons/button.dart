@@ -8,13 +8,13 @@ class Button extends StatelessWidget {
     super.key,
     required this.height,
     required this.minWidth,
-    this.onPressed,
+    required this.onPressed,
     required this.title,
   });
 
   final double height;
   final double minWidth;
-  final void Function()? onPressed;
+  final void Function() onPressed;
   final String title;
 
   @override
