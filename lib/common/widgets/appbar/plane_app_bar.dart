@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../../utils/constant/colors.dart';
@@ -8,21 +7,29 @@ class PlainAppBar extends StatelessWidget implements PreferredSizeWidget {
   const PlainAppBar({
     super.key,
     required this.title,
+    this.colorTitle = TColors.white,
+    this.colorIcon = TColors.secondary,
+    this.colorAppBar = TColors.primary,
+    this.sizeIcon = 30,
+    this.sizeTitle = 22,
   });
 
   final String title;
+  final Color colorTitle, colorIcon, colorAppBar;
+  final double sizeIcon, sizeTitle;
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: TColors.primaryDark2,
+      backgroundColor: colorAppBar,
       automaticallyImplyLeading: false,
       leading: IconButton(
         onPressed: () => Navigator.pop(context),
-        icon: Icon(Iconsax.arrow_left, size: 30.h, color: TColors.secondary),
+        icon: Icon(Iconsax.arrow_left, size: sizeIcon, color: colorIcon),
       ),
       title: Text(
         title,
-        style: const TextStyle(color: TColors.white, fontSize: 20),
+        style: TextStyle(color: colorTitle, fontSize: sizeTitle),
       ),
     );
   }

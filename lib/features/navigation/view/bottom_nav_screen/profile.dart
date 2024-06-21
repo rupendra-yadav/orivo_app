@@ -38,20 +38,20 @@ class Profile extends StatelessWidget {
                   right: 20.w, // Adjust the position as needed
                   child: Row(
                     children: [
-                      const CircleAvatar(
+                      CircleAvatar(
                         backgroundColor: TColors.primaryLight1,
-                        minRadius: 60,
+                        minRadius: 50.r,
                         // Adjusted the radius to fit the image better
-                        maxRadius: 60,
+                        maxRadius: 50.r,
                         // Adjusted the radius to fit the image better
                         child: Image(
                           image: AssetImage(TImages.imgUser),
-                          height: 180, // Adjusted to fit the CircleAvatar
-                          width: 180, // Adjusted to fit the CircleAvatar
+                          height: 180.h, // Adjusted to fit the CircleAvatar
+                          width: 180.w, // Adjusted to fit the CircleAvatar
                           fit: BoxFit.cover,
                         ),
                       ),
-                      const SizedBox(width: 10),
+                      SizedBox(width: 10.w),
                       // Added space between avatar and text
                       const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,27 +99,27 @@ class Profile extends StatelessWidget {
                             initialUrl: TTexts.appleLink,
                             title: TTexts.helpSupport,
                           ))),
-                  const Divider(height: 1, color: TColors.primaryLight1),
+                   Divider(height: 1.h, color: TColors.primaryLight1),
                   ProfileOptions(
                     title: TTexts.aboutUs,
                     onPressed: () => Get.to(() => const CustomWebView(
                         initialUrl: TTexts.appleLink, title: TTexts.aboutUs)),
                   ),
-                  const Divider(height: 1, color: TColors.primaryLight1),
+                   Divider(height: 1.h, color: TColors.primaryLight1),
                   ProfileOptions(
                     title: TTexts.privacyPolicy,
                     onPressed: () => Get.to(() => const CustomWebView(
                         initialUrl: TTexts.appleLink,
                         title: TTexts.privacyPolicy)),
                   ),
-                  const Divider(height: 1, color: TColors.primaryLight1),
+                   Divider(height: 1.h, color: TColors.primaryLight1),
                   ProfileOptions(
                     title: TTexts.termsOfUse,
                     onPressed: () => Get.to(() => const CustomWebView(
                         initialUrl: TTexts.appleLink,
                         title: TTexts.privacyPolicy)),
                   ),
-                  const Divider(height: 1, color: TColors.primaryLight1),
+                   Divider(height: 1.h, color: TColors.primaryLight1),
                   ProfileOptions(
                     title: TTexts.changePassword,
                     onPressed: () => Get.to(() => const ResetPassword()),
@@ -133,7 +133,7 @@ class Profile extends StatelessWidget {
                 padding: EdgeInsets.only(
                     top: TDeviceUtils.getBottomNavigationBarHeight()),
                 child: const Text(
-                  "Version 1.01\nDesigned & Developed By Logixhunt",
+                  TTexts.versionAndDevelopedBy,
                   textAlign: TextAlign.center,
                   style: TextStyle(color: TColors.primaryLight1, fontSize: 10),
                 ),

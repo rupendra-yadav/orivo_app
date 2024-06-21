@@ -67,7 +67,7 @@ class LoginController extends GetxController {
 
       if (response['success'] == true) {
 
-        // this is to Access data
+        /// this is to Access data
         Map<String, dynamic> userDataMap =
             _localStorage.readData(_userDataKey) ?? {};
         UserDetail user = UserDetail.fromJson(userDataMap);

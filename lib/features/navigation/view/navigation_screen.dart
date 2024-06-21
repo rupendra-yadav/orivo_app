@@ -25,13 +25,13 @@ class NavigationScreen extends StatelessWidget {
 
       /// App bar
       appBar: AppBar(
-        backgroundColor: TColors.primaryDark2,
+        backgroundColor: TColors.primary,
         titleSpacing: 0,
         elevation: 5.h,
         automaticallyImplyLeading: false,
         title: Container(
           height: TSizes.appBarHeight,
-          color: TColors.primaryDark2,
+          color: TColors.primary,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

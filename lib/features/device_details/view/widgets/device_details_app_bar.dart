@@ -1,4 +1,3 @@
-
 import 'package:auro/features/notificaations/view/notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,24 +7,51 @@ import 'package:iconsax/iconsax.dart';
 import '../../../../utils/constant/colors.dart';
 import '../../../../utils/constant/sizes.dart';
 
-class DeviceDetailsAppBar extends StatelessWidget implements PreferredSizeWidget {
+class DeviceDetailsAppBar extends StatelessWidget
+    implements PreferredSizeWidget {
   const DeviceDetailsAppBar({
     super.key,
     required this.title,
+     this.colorAppBar = TColors.primary,
+     this.colorTitleContainer = TColors.primary,
+     this.colorText = TColors.white,
+     this.colorNotification = TColors.white,
+     this.colorBackArrow = TColors.secondary,
+     this.sizeTitleSpacing = 0,
+     this.sizeBackArrow = 30,
+     this.sizeTitle = 22,
+     this.sizeNotificationIcon =25,
   });
 
   final String title;
+  final Color colorAppBar,
+      colorTitleContainer,
+      colorText,
+      colorNotification,
+      colorBackArrow;
+
+  final double sizeTitleSpacing,
+      sizeBackArrow,
+      sizeTitle,
+      sizeNotificationIcon;
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: TColors.primaryDark2,
-      titleSpacing: 0,
+      backgroundColor: colorAppBar,
+      titleSpacing: sizeTitleSpacing,
       elevation: 5.h,
       automaticallyImplyLeading: false,
-      leading: IconButton(onPressed: ()=>Navigator.pop(context), icon: const Icon(Iconsax.arrow_left,color: TColors.secondary,size: 30,)),
+      leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon:  Icon(
+            Iconsax.arrow_left,
+            color: colorBackArrow,
+            size: sizeBackArrow,
+          )),
       title: Container(
         height: TSizes.appBarHeight,
-        color: TColors.primaryDark2,
+        color: colorTitleContainer,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -33,18 +59,18 @@ class DeviceDetailsAppBar extends StatelessWidget implements PreferredSizeWidget
             Center(
               child: Text(
                 title,
-                style: const TextStyle(color: TColors.white, fontSize: 22),
+                style:  TextStyle(color: colorText, fontSize: sizeTitle),
               ),
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 IconButton(
-                  onPressed: ()  =>Get.to(()=>const Notifications()),
-                  icon: const Icon(
+                  onPressed: () => Get.to(() => const Notifications()),
+                  icon: Icon(
                     Iconsax.notification,
-                    color: TColors.white,
-                    size: 25,
+                    color: colorNotification,
+                    size: sizeNotificationIcon,
                   ),
                 ),
               ],

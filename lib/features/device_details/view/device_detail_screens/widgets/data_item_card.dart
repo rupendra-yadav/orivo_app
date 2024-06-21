@@ -9,16 +9,18 @@ class DataItemCard extends StatelessWidget {
     super.key,
     required this.title,
     required this.value,
+    this.colorContainer = TColors.primary,
   });
 
   final String title;
   final String value;
+  final Color colorContainer;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: TColors.primary,
+          color: colorContainer,
           borderRadius: BorderRadius.circular(10)),
       child: Padding(
         padding: EdgeInsets.symmetric(

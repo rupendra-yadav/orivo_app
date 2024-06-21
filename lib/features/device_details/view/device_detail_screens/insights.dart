@@ -1,68 +1,132 @@
-import 'package:auro/common/widgets/text/text_view.dart';
+import 'package:auro/features/device_details/view/device_detail_screens/widgets/insights_cards.dart';
+import 'package:auro/utils/constant/image_string.dart';
 import 'package:auro/utils/constant/text_strings.dart';
+import 'package:auro/utils/device/device_utility.dart';
 import 'package:auro/utils/styles/spacing_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../utils/constant/colors.dart';
+
 class Insights extends StatelessWidget {
   const Insights({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       backgroundColor: TColors.primary,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: SpacingStyle.paddingWithDefaultSpace,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const TextView(text: TTexts.alarms),
-              const InsightCards(titleCard: TTexts.typesOfAlarm,),
+      body: Stack(
+        children: [
+          Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Image(
+                  width: TDeviceUtils.screenWidth,
+                  height: 140.h,
+                  fit: BoxFit.cover,
+                  image: AssetImage(TImages.imgProfileBg))),
 
-              SizedBox(height: 30.h,),
-              const TextView(text: TTexts.consumptionAnalysis),
-              const InsightCards(titleCard: TTexts.daily,),
-              const InsightCards(titleCard: TTexts.monthly,),
-              const InsightCards(titleCard: TTexts.quarterly,),
-              const InsightCards(titleCard: TTexts.yearly,),
+          /// Content above the Image
+          SafeArea(
+            child: Column(
+              children: [
+                Container(
+                  child: DefaultTabController(
+                    length: 3,
+                    child: Column(
+                      children: [
+                        TabBar(
+                          indicatorColor: TColors.secondary,
+                          indicatorSize: TabBarIndicatorSize.tab,
+                          labelColor: TColors.secondary,
+                          unselectedLabelColor: TColors.primaryLight1,
+                          dividerColor: TColors.primaryLight1,
+                          dividerHeight: 2.h,
+                          tabs: const [
+                            Tab(text: TTexts.alarms),
+                            Tab(text: TTexts.consumption),
+                            Tab(text: TTexts.other),
+                          ],
+                        ),
+                        Container(
+                          decoration: const BoxDecoration(),
+                          height: TDeviceUtils.screenHeight - 335.h,
+                          child: TabBarView(
+                            children: [
+                              ///Alarms
 
-              SizedBox(height: 30.h,),
-              const TextView(text: TTexts.otherReports),
-              const InsightCards(titleCard: TTexts.pfIncentive,),
-              const InsightCards(titleCard: TTexts.loadFactorIncentive,),
-              const InsightCards(titleCard: TTexts.tariffPlanUnderstanding,),
-              const InsightCards(titleCard: TTexts.other,),
-            ],
+                              Padding(
+                                padding: SpacingStyle.paddingWithDefaultSpace,
+                                child: GridView.builder(
+                                  scrollDirection: Axis.vertical,
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 2,
+                                          mainAxisSpacing: 10.w,
+                                          crossAxisSpacing: 10.h,
+                                          childAspectRatio: 3),
+                                  itemCount: 4,
+                                  itemBuilder: (context, index) {
+                                    return const InsightsCards(
+                                      text: TTexts.pf,
+                                    );
+                                  },
+                                ),
+                              ),
+
+                              ///Consumption
+
+                              Padding(
+                                padding: SpacingStyle.paddingWithDefaultSpace,
+                                child: GridView.builder(
+                                  scrollDirection: Axis.vertical,
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 2,
+                                          mainAxisSpacing: 10.w,
+                                          crossAxisSpacing: 10.h,
+                                          childAspectRatio: 3),
+                                  itemCount: 4,
+                                  itemBuilder: (context, index) {
+                                    return const InsightsCards(
+                                      text: TTexts.pf,
+                                    );
+                                  },
+                                ),
+                              ),
+
+                              /// Other
+
+                              Padding(
+                                padding: SpacingStyle.paddingWithDefaultSpace,
+                                child: GridView.builder(
+                                  scrollDirection: Axis.vertical,
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 2,
+                                          mainAxisSpacing: 10.w,
+                                          crossAxisSpacing: 10.h,
+                                          childAspectRatio: 3),
+                                  itemCount: 4,
+                                  itemBuilder: (context, index) {
+                                    return const InsightsCards(
+                                      text: TTexts.pf,
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class InsightCards extends StatelessWidget {
-  const InsightCards({
-    super.key, required this.titleCard,
-  });
-
-  final String titleCard;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Container(
-      height: 50.h,
-        decoration: BoxDecoration(color: TColors.primaryDark1,borderRadius: BorderRadius.circular(15.r)),
-        child: Padding(
-          padding:  EdgeInsets.only(left: 10.0.w),
-          child: Row(
-            children: [
-              Text(titleCard,style: const TextStyle(color: TColors.primaryLight1),)
-            ],
-          ),
-        ),
+        ],
       ),
     );
   }

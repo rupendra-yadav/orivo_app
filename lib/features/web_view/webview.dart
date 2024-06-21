@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../utils/constant/colors.dart';
 
-
 class CustomWebView extends StatelessWidget {
-  const CustomWebView(
-      {super.key, required this.initialUrl, required this.title});
+  const CustomWebView({
+    super.key,
+    required this.initialUrl,
+    required this.title,
+    this.colorAppBar = TColors.primary,
+    this.colorIcon = TColors.secondary,
+    this.sizeIcon = 30,
+    this.sizeTitle = 22,
+    this.colorTitle = TColors.white ,
+  });
 
   final String title;
   final String initialUrl;
+  final Color colorAppBar, colorIcon, colorTitle;
+  final double sizeIcon, sizeTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -19,15 +29,9 @@ class CustomWebView extends StatelessWidget {
       ..setBackgroundColor(const Color(0x00000000))
       ..setNavigationDelegate(
         NavigationDelegate(
-          onProgress: (int progress) {
-
-          },
-          onPageStarted: (String url) {
-
-          },
-          onPageFinished: (String url) {
-
-          },
+          onProgress: (int progress) {},
+          onPageStarted: (String url) {},
+          onPageFinished: (String url) {},
           onWebResourceError: (WebResourceError error) {},
           onNavigationRequest: (NavigationRequest request) {
             if (request.url.startsWith('https://www.youtube.com/')) {
@@ -41,16 +45,20 @@ class CustomWebView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: TColors.darkGrey,
+        backgroundColor: colorAppBar,
         leading: IconButton(
             onPressed: () => Get.back(),
-            icon: const Icon(Icons.arrow_back_ios_new, color: TColors.primary)),
+            icon: Icon(
+              Iconsax.arrow_left,
+              color: colorIcon,
+              size: sizeIcon,
+            )),
         title: Text(title,
             maxLines: 1,
-            style: const TextStyle(
-                color: TColors.black,
+            style: TextStyle(
+                color: colorTitle,
                 fontWeight: FontWeight.w700,
-                fontSize: 18)),
+                fontSize: sizeTitle)),
         titleSpacing: 0,
       ),
       body: WebViewWidget(controller: controller),

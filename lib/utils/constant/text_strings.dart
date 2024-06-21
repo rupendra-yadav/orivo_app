@@ -44,11 +44,23 @@ class TTexts{
   static const String privacyPolicy  = "Privacy Policy";
   static const String termsOfUse  = "Terms of use";
   static const String changePassword  = "Change Password";
+  static const String versionAndDevelopedBy  = "Version 1.01\nDesigned & Developed By Logixhunt";
 
   ///Setting
   static const String deviceSettings  = "Device Settings";
   static const String notifications  = "Notification";
   static const String deviceDetails  = "Device Details";
+  static const String deviceAInfo  = "Device Info";
+  static const String deviceAName  = "Device Name";
+  static const String a_  = ":";
+  static const String installationDate  = "Installation Date";
+  static const String deviceModalNumber  = "Device Modal Number";
+  static const String date_27_01_2024  = "27-01-2024";
+  static const String modelNumber  = "123456890ds";
+  static const String notification  = "Notifications";
+  static const String dumNumber  = "9784561322";
+  static const String clickToAddNumber  = "Click To Add Number";
+
 
   ///Home
   static const String machineName  = "Machine Name";
@@ -80,16 +92,27 @@ class TTexts{
   ///InSights
   static const String alarms  = "Alarms";
   static const String typesOfAlarm  = "Types Of Alarms";
-  static const String consumptionAnalysis  = "Consumption Analysis";
+  static const String consumption  = "Consumption";
   static const String daily  = "Daily";
   static const String monthly  = "Monthly";
   static const String quarterly  = "Quarterly";
   static const String yearly  = "Yearly";
   static const String otherReports  = "Other Reports";
-  static const String pfIncentive  = "P.F Incentive";
+  static const String pf = "PF";
   static const String loadFactorIncentive  = "Load Factor Incentive";
   static const String tariffPlanUnderstanding  = "Tariff Plan Understanding";
   static const String other  = "Other";
 
+  ///History
+  static const String day1  = "1 Day";
+  static const String week1  = "1 Week";
+  static const String month1  = "1 Month";
+  static const String year1  = "1 Year";
+  static const String years5  = "5 Years";
+  static const String all  = "All";
+  static const String selectDataItem  = "Select Data Items";
+  static const String parameters  = "Parameters";
+  static const String selectDate  = "Select Date";
+  static const String apply  = "Apply";
 
 }
