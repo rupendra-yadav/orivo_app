@@ -13,25 +13,30 @@ import '../../../utils/constant/image_string.dart';
 import '../../../utils/constant/text_strings.dart';
 
 class VerifyOtp extends StatelessWidget {
-  VerifyOtp({super.key});
+  VerifyOtp({super.key,
+    required this.resetPass,});
 
   final verifyOtpController = Get.put(VerifyOtpController());
 
+  final int resetPass;
+
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
           leading: Padding(
-        padding: EdgeInsets.only(left: 20.0.w),
-        child: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: const Icon(
-            Iconsax.arrow_left,
-            color: TColors.secondary,
-            size: 35,
-          ),
-        ),
-      )),
+            padding: EdgeInsets.only(left: 20.0.w),
+            child: IconButton(
+              onPressed: () => Navigator.pop(context),
+              icon: const Icon(
+                Iconsax.arrow_left,
+                color: TColors.secondary,
+                size: 35,
+              ),
+            ),
+          )),
       backgroundColor: TColors.primary,
       body: SingleChildScrollView(
         child: Padding(
@@ -46,6 +51,7 @@ class VerifyOtp extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+
                       /// BackButton
                       // MaterialButton(
                       //   minWidth: 3.w,
@@ -109,6 +115,7 @@ class VerifyOtp extends StatelessWidget {
                   ),
                   Column(
                     children: [
+
                       ///verify button
                       Center(
                         child: Button(
@@ -116,7 +123,7 @@ class VerifyOtp extends StatelessWidget {
                             minWidth: 185.w,
                             title: TTexts.verify,
                             onPressed: () {
-                              verifyOtpController.verifyOtp();
+                              verifyOtpController.verifyOtp(resetPass);
                             }),
                       ),
 
@@ -132,10 +139,10 @@ class VerifyOtp extends StatelessWidget {
                             const Text(
                               TTexts.dontGetTheCode,
                               style:
-                                  TextStyle(color: TColors.white, fontSize: 16),
+                              TextStyle(color: TColors.white, fontSize: 16),
                             ),
                             InkWell(
-                              onTap: () => Get.off(SendOtp()),
+                              onTap: () => Get.off(SendOtp(resetPass: 0,)),
                               child: const Text(
                                 TTexts.reSendIt,
                                 style: TextStyle(

@@ -31,7 +31,7 @@ class Setting extends StatelessWidget {
                     width: TDeviceUtils.screenWidth,
                     fit: BoxFit.cover,
                     height: 140.h,
-                    image: AssetImage(TImages.imgProfileBg))),
+                    image: const AssetImage(TImages.imgProfileBg))),
 
             /// Content
             SafeArea(

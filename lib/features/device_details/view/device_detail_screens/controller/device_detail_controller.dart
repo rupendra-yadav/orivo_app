@@ -13,8 +13,6 @@ class DeviceDetailController extends GetxController {
 
   late DeviceListModel deviceListModel;
 
-  Rx<DeviceListModel> deviceListModel2 = DeviceListModel.fromJson({}).obs;
-
   final isDeviceDetailLoading = false.obs;
 
   ///Device Detail

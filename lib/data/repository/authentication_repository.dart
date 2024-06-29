@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 import '../../utils/local_storage/storage_utility.dart';
-import '../../utils/preferences/cache_manager.dart';
 import '../http/http_client.dart';
 
 class AuthenticationRepository extends GetxController {
@@ -35,8 +34,6 @@ class AuthenticationRepository extends GetxController {
           Map<String, dynamic> userData = userDataList.first;
           UserDetail user = UserDetail.fromJson(userData);
           _localStorage.saveData(_userDataKey, user.toJson());
-
-          SharedPrefs.setBool("isLoggedIn", true);
 
           return {'success': true, 'message': 'Logged in successfully'};
         } else {
@@ -94,8 +91,7 @@ class AuthenticationRepository extends GetxController {
   }
 
   ///-----Send OTP
-  Future<Map<String, dynamic>> sendOtp(
-      mobileNumber) async {
+  Future<Map<String, dynamic>> sendOtp(mobileNumber) async {
     try {
       Map<String, dynamic> data = {
         'user_mobile': mobileNumber

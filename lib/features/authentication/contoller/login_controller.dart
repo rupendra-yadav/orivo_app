@@ -1,7 +1,5 @@
 import 'package:auro/features/authentication/model/user_detail.dart';
-import 'package:auro/features/authentication/view/login.dart';
 import 'package:auro/features/navigation/view/navigation_screen.dart';
-import 'package:auro/utils/preferences/cache_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -27,19 +25,6 @@ class LoginController extends GetxController {
 
   final _repository = AuthenticationRepository.instance;
 
-
-  screenRedirect() async {
-    Future.delayed(const Duration(seconds: 5), () {
-
-      if (SharedPrefs.getBool('isLoggedIn') == true) {
-        Get.offAll(const NavigationScreen());
-      } else {
-        Get.offAll( const Login()); //Redirect to login screen if not the first time
-      }
-    });
-  }
-
-
   Future<void> userLogin() async {
     try {
 
@@ -53,7 +38,6 @@ class LoginController extends GetxController {
       }
 
       //form validation
-
       if (!loginFormKey.currentState!.validate()) {
         TFullScreenLoader.stopLoading();
         return;
@@ -72,7 +56,6 @@ class LoginController extends GetxController {
             _localStorage.readData(_userDataKey) ?? {};
         UserDetail user = UserDetail.fromJson(userDataMap);
         try {
-
           if (kDebugMode) {
             print(user.mCustName);
           }

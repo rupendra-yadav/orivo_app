@@ -20,7 +20,7 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loginController = Get.put(LoginController());
-    loginController.screenRedirect();
+    // loginController.screenRedirect();
 
     return Scaffold(
       backgroundColor: TColors.primary,
@@ -81,7 +81,7 @@ class Login extends StatelessWidget {
 
                       /// Sign in With OTP
                       InkWell(
-                        onTap: ()=>Get.to(()=>SendOtp()),
+                        onTap: ()=>Get.to(()=>SendOtp(resetPass: 0,)),
                         child: const Text(TTexts.signInWithOTP,
                             style: TextStyle(
                                 fontSize: 16, color: TColors.secondary)),

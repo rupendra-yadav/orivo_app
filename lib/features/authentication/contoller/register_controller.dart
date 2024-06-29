@@ -53,7 +53,7 @@ class RegisterController extends GetxController {
       if (response['success'] == true) {
         TLoaders.successSnackBar(
             title: 'Success', message: response['message']);
-        Get.to(() => SendOtp());
+        Get.to(() => SendOtp(resetPass: 0,));
       } else {
         TLoaders.errorSnackBar(title: 'Error', message: response['message']);
         if (kDebugMode) {

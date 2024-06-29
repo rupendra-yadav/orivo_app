@@ -25,7 +25,7 @@ class Insights extends StatelessWidget {
                   width: TDeviceUtils.screenWidth,
                   height: 140.h,
                   fit: BoxFit.cover,
-                  image: AssetImage(TImages.imgProfileBg))),
+                  image: const AssetImage(TImages.imgProfileBg))),
 
           /// Content above the Image
           SafeArea(

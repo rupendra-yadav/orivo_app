@@ -14,8 +14,10 @@ import '../../../utils/device/device_utility.dart';
 import '../../../utils/validate/validate.dart';
 
 class SendOtp extends StatelessWidget {
-  SendOtp({super.key});
+  SendOtp({super.key,
+    required this.resetPass});
 
+  final int resetPass;
   final sendOtpController = Get.put(SendOtpController());
 
   @override
@@ -85,7 +87,7 @@ class SendOtp extends StatelessWidget {
                             minWidth: 185.w,
                             title: TTexts.sendOtp,
                             onPressed: () {
-                              sendOtpController.sendOtp();
+                              sendOtpController.sendOtp(resetPass);
                             }),
                       ),
 

@@ -7,7 +7,6 @@ class DeviceRepository extends GetxController {
   static DeviceRepository get instance => Get.find();
 
   ///Device List
-
   Future<List<DeviceListModel>> getDeviceList() async {
     try {
 
@@ -36,6 +35,7 @@ class DeviceRepository extends GetxController {
     }
   }
 
+  ///Device Details
   Future<List<DeviceListModel>> getDeviceDetail(String deviceId) async {
     try {
 

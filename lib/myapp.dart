@@ -1,10 +1,10 @@
+import 'package:auro/features/authentication/view/splash.dart';
 import 'package:auro/utils/constant/text_strings.dart';
 import 'package:auro/utils/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import 'features/authentication/view/login.dart';
 
 class Myapp extends StatelessWidget {
   const Myapp({super.key});
@@ -21,7 +21,7 @@ class Myapp extends StatelessWidget {
         theme: TAppTheme.lightTheme,
         darkTheme: TAppTheme.darkTheme,
         debugShowCheckedModeBanner: true,
-        home: const Login(),
+        home: const Splash(),
       ),
     );
   }
