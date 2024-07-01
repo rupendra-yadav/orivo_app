@@ -1,6 +1,7 @@
 class UserDetail {
   String mCustId;
   String mCustName;
+  String mCustUniqueId;
   String mCustDesig;
   String mCustMobile;
   String mCustEmail;
@@ -11,7 +12,12 @@ class UserDetail {
   String mCustCompany;
   String mCustState;
   String mCustCity;
+  String mCustAddress;
   String mCustPincode;
+  String mCustCompanyType;
+  String mCustOwnerName;
+  String mCustGstno;
+  String mCustFcmtoken;
   String mCustStatus;
   String mCustAddedon;
   String mCustUpdatedon;
@@ -19,6 +25,7 @@ class UserDetail {
   UserDetail(
       {required this.mCustId,
       required this.mCustName,
+      required this.mCustUniqueId,
       required this.mCustDesig,
       required this.mCustMobile,
       required this.mCustEmail,
@@ -29,7 +36,12 @@ class UserDetail {
       required this.mCustCompany,
       required this.mCustState,
       required this.mCustCity,
+      required this.mCustAddress,
       required this.mCustPincode,
+      required this.mCustCompanyType,
+      required this.mCustOwnerName,
+      required this.mCustGstno,
+      required this.mCustFcmtoken,
       required this.mCustStatus,
       required this.mCustAddedon,
       required this.mCustUpdatedon});
@@ -38,6 +50,7 @@ class UserDetail {
     return UserDetail(
       mCustId: json['m_cust_id'] ?? '',
       mCustName: json['m_cust_name'] ?? '',
+      mCustUniqueId: json['m_cust_unique_id'] ?? '',
       mCustDesig: json['m_cust_desig'] ?? '',
       mCustMobile: json['m_cust_mobile'] ?? '',
       mCustEmail: json['m_cust_email'] ?? '',
@@ -48,7 +61,12 @@ class UserDetail {
       mCustCompany: json['m_cust_company'] ?? '',
       mCustState: json['m_cust_state'] ?? '',
       mCustCity: json['m_cust_city'] ?? '',
+      mCustAddress: json['m_cust_address'] ?? '',
       mCustPincode: json['m_cust_pincode'] ?? '',
+      mCustCompanyType: json['m_cust_company_type'] ?? '',
+      mCustOwnerName: json['m_cust_owner_name'] ?? '',
+      mCustGstno: json['m_cust_gstno'] ?? '',
+      mCustFcmtoken: json['m_cust_fcmtoken'] ?? '',
       mCustStatus: json['m_cust_status'] ?? '',
       mCustAddedon: json['m_cust_addedon'] ?? '',
       mCustUpdatedon: json['m_cust_updatedon'] ?? '',
@@ -59,6 +77,7 @@ class UserDetail {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['m_cust_id'] = mCustId;
     data['m_cust_name'] = mCustName;
+    data['m_cust_unique_id'] = mCustUniqueId;
     data['m_cust_desig'] = mCustDesig;
     data['m_cust_mobile'] = mCustMobile;
     data['m_cust_email'] = mCustEmail;
@@ -69,7 +88,12 @@ class UserDetail {
     data['m_cust_company'] = mCustCompany;
     data['m_cust_state'] = mCustState;
     data['m_cust_city'] = mCustCity;
+    data['m_cust_address'] = mCustAddress;
     data['m_cust_pincode'] = mCustPincode;
+    data['m_cust_company_type'] = mCustCompanyType;
+    data['m_cust_owner_name'] = mCustOwnerName;
+    data['m_cust_gstno'] = mCustGstno;
+    data['m_cust_fcmtoken'] = mCustFcmtoken;
     data['m_cust_status'] = mCustStatus;
     data['m_cust_addedon'] = mCustAddedon;
     data['m_cust_updatedon'] = mCustUpdatedon;

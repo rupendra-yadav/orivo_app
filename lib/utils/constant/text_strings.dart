@@ -78,6 +78,10 @@ class TTexts {
 
   ///Links
   static const String appleLink = "https://www.google.co.in/";
+  static const String termsOfUseLink = "https://webdevelopercg.com/electricity/terms.php";
+  static const String privacyPolicyLink = "https://webdevelopercg.com/electricity/privacy.php";
+  static const String aboutUsLink = "https://webdevelopercg.com/electricity/about-us.php";
+  static const String contactUsLink = "https://webdevelopercg.com/electricity/contact-us.php";
 
   /// Edit Profile
   static const String editProfile = "Edit Profile";

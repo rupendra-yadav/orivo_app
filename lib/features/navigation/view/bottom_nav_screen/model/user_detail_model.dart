@@ -75,29 +75,29 @@ class UserModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['m_cust_id'] = this.mCustId;
-    data['m_cust_name'] = this.mCustName;
-    data['m_cust_unique_id'] = this.mCustUniqueId;
-    data['m_cust_desig'] = this.mCustDesig;
-    data['m_cust_mobile'] = this.mCustMobile;
-    data['m_cust_email'] = this.mCustEmail;
-    data['m_cust_image'] = this.mCustImage;
-    data['m_cust_dob'] = this.mCustDob;
-    data['m_cust_pass'] = this.mCustPass;
-    data['m_cust_otp'] = this.mCustOtp;
-    data['m_cust_company'] = this.mCustCompany;
-    data['m_cust_state'] = this.mCustState;
-    data['m_cust_city'] = this.mCustCity;
-    data['m_cust_address'] = this.mCustAddress;
-    data['m_cust_pincode'] = this.mCustPincode;
-    data['m_cust_company_type'] = this.mCustCompanyType;
-    data['m_cust_owner_name'] = this.mCustOwnerName;
-    data['m_cust_gstno'] = this.mCustGstno;
-    data['m_cust_fcmtoken'] = this.mCustFcmtoken;
-    data['m_cust_status'] = this.mCustStatus;
-    data['m_cust_addedon'] = this.mCustAddedon;
-    data['m_cust_updatedon'] = this.mCustUpdatedon;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['m_cust_id'] = mCustId;
+    data['m_cust_name'] = mCustName;
+    data['m_cust_unique_id'] = mCustUniqueId;
+    data['m_cust_desig'] = mCustDesig;
+    data['m_cust_mobile'] = mCustMobile;
+    data['m_cust_email'] = mCustEmail;
+    data['m_cust_image'] = mCustImage;
+    data['m_cust_dob'] = mCustDob;
+    data['m_cust_pass'] = mCustPass;
+    data['m_cust_otp'] = mCustOtp;
+    data['m_cust_company'] = mCustCompany;
+    data['m_cust_state'] = mCustState;
+    data['m_cust_city'] = mCustCity;
+    data['m_cust_address'] = mCustAddress;
+    data['m_cust_pincode'] = mCustPincode;
+    data['m_cust_company_type'] = mCustCompanyType;
+    data['m_cust_owner_name'] = mCustOwnerName;
+    data['m_cust_gstno'] = mCustGstno;
+    data['m_cust_fcmtoken'] = mCustFcmtoken;
+    data['m_cust_status'] = mCustStatus;
+    data['m_cust_addedon'] = mCustAddedon;
+    data['m_cust_updatedon'] = mCustUpdatedon;
     return data;
   }
 }

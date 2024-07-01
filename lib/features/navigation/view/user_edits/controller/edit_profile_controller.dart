@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auro/features/navigation/view/navigation_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +37,7 @@ class EditProfileController extends GetxController {
 
   RxList<UserModel> userModel = <UserModel>[].obs;
 
-  RxString imageData = ''.obs;
+  File? imageData;
 
   Future<void> updateProfile() async {
     //check internet Connection
@@ -45,10 +47,10 @@ class EditProfileController extends GetxController {
       return;
     }
     //form validation
-    if (!updateProfileFormKey.currentState!.validate()) {
-      TFullScreenLoader.stopLoading();
-      return;
-    }
+    // if (!updateProfileFormKey.currentState!.validate()) {
+    //   TFullScreenLoader.stopLoading();
+    //   return;
+    // }
 
     Map<String, dynamic> userDataMap =
         _localStorage.readData(_userDataKey) ?? {};
@@ -56,19 +58,20 @@ class EditProfileController extends GetxController {
     try {
       final response = await _repository.updateUserData(
           user.mCustId,
-          name.text.trim(),
-          state.text.trim(),
-          city.text.trim(),
-          address.text.trim(),
-          companyName.text.trim(),
-          companyType.text.trim(),
-          ownersName.text.trim(),
-          gstNumber.text.trim(),
-          "");
+          name.text.trim().isEmpty?user.mCustName:name.text.trim(),
+          state.text.trim().isEmpty?user.mCustState:state.text.trim(),
+          city.text.trim().isEmpty?user.mCustCity:city.text.trim(),
+          address.text.trim().isEmpty?user.mCustAddress:address.text.trim(),
+          companyName.text.trim().isEmpty?user.mCustCompany:companyName.text.trim(),
+          companyType.text.trim().isEmpty?user.mCustCompanyType:companyType.text.trim(),
+          ownersName.text.trim().isEmpty?user.mCustOwnerName:ownersName.text.trim(),
+          gstNumber.text.trim().isEmpty?user.mCustGstno:gstNumber.text.trim(),
+          imageData!);
 
       TFullScreenLoader.stopLoading();
 
       userModel.assignAll(response);
+      TLoaders.successSnackBar(title: "Success",message: "Profile Updated successfully...!");
       Get.offAll(const NavigationScreen());
     } catch (e) {
       if (kDebugMode) {
@@ -77,24 +80,20 @@ class EditProfileController extends GetxController {
     } finally {}
   }
 
-  /// Function to request and check permissions
   Future<void> cameraPermission(BuildContext context) async {
     if (kDebugMode) {
       print("Checking camera permissions");
     }
-    // Check if permission is granted
+
     PermissionStatus permissionStatus = await Permission.camera.status;
     if (permissionStatus.isGranted) {
       print("Camera permission granted");
-      // Permission is already granted, proceed with calling selectImage
       sendImageMessage(true);
     } else {
       print("Requesting camera permission");
-      // Permission is not granted, request permission
       permissionStatus = await Permission.camera.request();
       if (permissionStatus.isGranted) {
         print("Camera permission granted after request");
-        // Permission granted, proceed with calling selectImage
         sendImageMessage(true);
       } else {
         print("Camera permission denied");
@@ -106,23 +105,21 @@ class EditProfileController extends GetxController {
     }
   }
 
-  /// Function to request and check permissions
   Future<void> galleryPermission(BuildContext context) async {
     print("Checking gallery permissions");
-    // Check if permission is granted
+
+    // Check for storage permission for older Android versions
     PermissionStatus permissionStatus = await Permission.photos.status;
     if (permissionStatus.isGranted) {
       print("Gallery permission granted");
-      // Permission is already granted, proceed with calling selectImage
-      sendImageMessage(false);
+      await sendImageMessage(false);
     } else {
       print("Requesting gallery permission");
-      // Permission is not granted, request permission
       permissionStatus = await Permission.photos.request();
+
       if (permissionStatus.isGranted) {
         print("Gallery permission granted after request");
-        // Permission granted, proceed with calling selectImage
-        sendImageMessage(false);
+        await sendImageMessage(false);
       } else {
         print("Gallery permission denied");
         TLoaders.errorSnackBar(
@@ -133,7 +130,7 @@ class EditProfileController extends GetxController {
     }
   }
 
-  ///send Image Message
+
   Future<void> sendImageMessage(bool isCamera) async {
     print("Opening ${isCamera ? 'camera' : 'gallery'}");
     final picker = ImagePicker();
@@ -145,18 +142,16 @@ class EditProfileController extends GetxController {
     );
 
     if (image != null) {
-      print("Image selected: ${image.path}");
-      // imageData.value = image.path;
-      // Implement your image upload and messaging logic here
-      // For example:
-      // final imageUrl = await _messageRepository.uploadImage('Chats/Images/', image);
-      // await _messageRepository.sendImageMessage(userData().userId, therapistId, imageUrl);
-      Future.delayed(
-        const Duration(seconds: 1),
-        () {} /*=> scrollDown()*/,
-      );
+      if (kDebugMode) {
+        print("Image selected: ${image.path}");
+      }
+      imageData = File(image.path);
+      TLoaders.successSnackBar(title: "Image Selected..!", message: "Image Selected Successfully..!");
+      // Correctly cast to File
     } else {
-      print("No image selected");
+      if (kDebugMode) {
+        print("No image selected");
+      }
       TLoaders.errorSnackBar(
         title: 'No Image Selected',
         message: "Please select an image.",

@@ -1,6 +1,10 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:auro/features/navigation/view/bottom_nav_screen/model/user_detail_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
 import '../http/http_client.dart';
 
@@ -62,39 +66,59 @@ class ProfileRepository extends GetxController {
     }
   }
 
-
   ///Update user data
-  Future<List<UserModel>> updateUserData(String userId,userName,userState,userCity,userAddress,userCompany,userCompanyType,usrOwnerName,userGstNo,userPic) async {
+  Future<List<UserModel>> updateUserData(
+      String userId,
+      String userName,
+      String userState,
+      String userCity,
+      String userAddress,
+      String userCompany,
+      String userCompanyType,
+      String userOwnerName,
+      String userGstNo,
+      File userPic) async {
     try {
-      Map<String, dynamic> request = {
-        'user_id': userId,
-        'user_name': userName,
-        'user_state': userState,
-        'user_city': userCity,
-        'user_address': userAddress,
-        'user_company': userCompany,
-        'user_company_type': userCompanyType,
-        'user_owner_name': usrOwnerName,
-        'user_gstno': userGstNo,
-        'user_pic': userPic,
-      };
+      var request = http.MultipartRequest(
+          'POST', Uri.parse('https://webdevelopercg.com/electricity/myadmin/Api/update_profile'));
 
-      Map<String, dynamic> response =
-      await THttpHelper.post('update_profile', request);
+      // Add text fields to the request
+      request.fields['user_id'] = userId;
+      request.fields['user_name'] = userName;
+      request.fields['user_state'] = userState;
+      request.fields['user_city'] = userCity;
+      request.fields['user_address'] = userAddress;
+      request.fields['user_company'] = userCompany;
+      request.fields['user_company_type'] = userCompanyType;
+      request.fields['user_owner_name'] = userOwnerName;
+      request.fields['user_gstno'] = userGstNo;
 
-      if (kDebugMode) {
-        print('update_profile  Response: $response');
-      }
+      // Add the image file to the request
+      request.files
+          .add(await http.MultipartFile.fromPath('user_pic', userPic.path));
 
-      if (response['response'] == 'success') {
-        List<dynamic> useData = response['data'];
+      // Send the request and get the response
+      var response = await request.send();
 
-        List<UserModel> userDetails =
-        useData.map((data) => UserModel.fromJson(data)).toList();
+      // Check for response status and handle the response
+      if (response.statusCode == 200) {
+        var responseData = await response.stream.bytesToString();
+        var jsonResponse = json.decode(responseData);
 
-        return userDetails;
+        if (kDebugMode) {
+          print('update_profile Response: $jsonResponse');
+        }
+
+        if (jsonResponse['response'] == 'success') {
+          List<dynamic> useData = jsonResponse['data'];
+          List<UserModel> userDetails =
+              useData.map((data) => UserModel.fromJson(data)).toList();
+          return userDetails;
+        } else {
+          throw Exception(jsonResponse['message']);
+        }
       } else {
-        throw Exception(response['message']);
+        throw Exception('Failed to update profile');
       }
     } catch (e) {
       throw Exception(e.toString());

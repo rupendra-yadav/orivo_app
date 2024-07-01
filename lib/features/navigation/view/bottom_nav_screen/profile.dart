@@ -29,7 +29,7 @@ class Profile extends StatelessWidget {
       body: SingleChildScrollView(
         child: Obx(() {
           if (controller.isUserDataLoading.value) {
-            return  const ProfileShimmer();
+            return const ProfileShimmer();
           }
 
           if (controller.userModel.isEmpty) {
@@ -62,15 +62,17 @@ class Profile extends StatelessWidget {
                           minRadius: 50.r,
 // Adjusted the radius to fit the image better
                           maxRadius: 50.r,
+                          foregroundImage: NetworkImage(TImages.userImagePath +
+                              controller.userModel_data.mCustImage),
 // Adjusted the radius to fit the image better
 // backgroundImage: NetworkImage(TImages.userImagePath + controller.userModel_data.mCustImage),
-                          child: Image(
-                            image: NetworkImage(TImages.userImagePath +
-                                controller.userModel_data.mCustImage),
-                            height: 180.h, // Adjusted to fit the CircleAvatar
-                            width: 180.w, // Adjusted to fit the CircleAvatar
-                            fit: BoxFit.cover,
-                          ),
+//                           child: Image(
+//                             image: NetworkImage(TImages.userImagePath +
+//                                 controller.userModel_data.mCustImage),
+//                             height: 180.h, // Adjusted to fit the CircleAvatar
+//                             width: 180.w, // Adjusted to fit the CircleAvatar
+//                             fit: BoxFit.cover,
+//                           ),
                         ),
                         SizedBox(width: 10.w),
 // Added space between avatar and text
@@ -79,8 +81,8 @@ class Profile extends StatelessWidget {
                           children: [
                             Text(
                               controller.userModel_data.mCustName,
-                              style:
-                                  const TextStyle(color: TColors.white, fontSize: 24),
+                              style: const TextStyle(
+                                  color: TColors.white, fontSize: 24),
                             ),
                             Text(
                               controller.userModel_data.mCustCompany,
@@ -93,7 +95,9 @@ class Profile extends StatelessWidget {
 // Pushes the IconButton to the right
 
                         IconButton(
-                          onPressed: () => Get.to(() =>  EditProfile(userModel: controller.userModel_data,)),
+                          onPressed: () => Get.to(() => EditProfile(
+                                userModel: controller.userModel_data,
+                              )),
                           icon: const Icon(
                             Iconsax.edit_2,
                             color: TColors.white,
@@ -108,6 +112,7 @@ class Profile extends StatelessWidget {
               SizedBox(
                 height: 50.h,
               ),
+
               /// Options
               Container(
                 color: TColors.primaryDark1,
@@ -116,36 +121,35 @@ class Profile extends StatelessWidget {
                     ProfileOptions(
                         title: TTexts.helpSupport,
                         onPressed: () => Get.to(() => const CustomWebView(
-                              initialUrl: TTexts.appleLink,
+                              initialUrl: TTexts.contactUsLink,
                               title: TTexts.helpSupport,
                             ))),
                     Divider(height: 1.h, color: TColors.primaryLight1),
                     ProfileOptions(
                       title: TTexts.aboutUs,
                       onPressed: () => Get.to(() => const CustomWebView(
-                          initialUrl: TTexts.appleLink, title: TTexts.aboutUs)),
+                          initialUrl: TTexts.aboutUsLink, title: TTexts.aboutUs)),
                     ),
                     Divider(height: 1.h, color: TColors.primaryLight1),
                     ProfileOptions(
                       title: TTexts.privacyPolicy,
                       onPressed: () => Get.to(() => const CustomWebView(
-                          initialUrl: TTexts.appleLink,
+                          initialUrl: TTexts.privacyPolicyLink,
                           title: TTexts.privacyPolicy)),
                     ),
                     Divider(height: 1.h, color: TColors.primaryLight1),
                     ProfileOptions(
                       title: TTexts.termsOfUse,
                       onPressed: () => Get.to(() => const CustomWebView(
-                          initialUrl: TTexts.appleLink,
+                          initialUrl: TTexts.termsOfUseLink,
                           title: TTexts.privacyPolicy)),
                     ),
                     Divider(height: 1.h, color: TColors.primaryLight1),
                     ProfileOptions(
                       title: TTexts.changePassword,
-                      ///button
-                      onPressed: () =>
-                        Get.to(() => SendOtp(resetPass: 1)),
 
+                      ///button
+                      onPressed: () => Get.to(() => SendOtp(resetPass: 1)),
                     ),
                     Divider(height: 1.h, color: TColors.primaryLight1),
                     ProfileOptions(
@@ -178,4 +182,3 @@ class Profile extends StatelessWidget {
     );
   }
 }
-

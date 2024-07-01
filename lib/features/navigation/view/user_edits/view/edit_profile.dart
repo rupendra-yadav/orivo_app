@@ -14,7 +14,6 @@ import '../../../../../common/widgets/appbar/plane_app_bar.dart';
 import '../../../../../common/widgets/buttons/button.dart';
 import '../../../../../common/widgets/inputFields/input_text.dart';
 import '../../../../../utils/constant/image_string.dart';
-import '../../../../../utils/validate/validate.dart';
 import '../../bottom_nav_screen/model/user_detail_model.dart';
 
 class EditProfile extends StatelessWidget {
@@ -48,18 +47,21 @@ class EditProfile extends StatelessWidget {
                       Row(
                         children: [
                           ///Profile Image
-                          const CircleAvatar(
+                           CircleAvatar(
                             backgroundColor: TColors.primaryLight1,
                             minRadius: 50,
                             // Adjusted the radius to fit the image better
                             maxRadius: 50,
+
+                            foregroundImage: NetworkImage(TImages.userImagePath + userModel.mCustImage),
+
                             // Adjusted the radius to fit the image better
-                            child: Image(
+                            /*child: Image(
                               image: AssetImage(TImages.imgUser),
                               height: 180, // Adjusted to fit the CircleAvatar
                               width: 180, // Adjusted to fit the CircleAvatar
                               fit: BoxFit.cover,
-                            ),
+                            ),*/
                           ),
 
                           ///TextButton
@@ -156,7 +158,7 @@ class EditProfile extends StatelessWidget {
                       /// Full Name
                       PrefixInputText(
                         controller: editProfileController.name,
-                        validator: (value) => Validate.validateEmptyText(value),
+                        // validator: (value) => Validate.validateEmptyText(value),
                         hint: userModel.mCustName.isNotEmpty
                             ? userModel.mCustName
                             : TTexts.etHintFullName,
@@ -167,7 +169,7 @@ class EditProfile extends StatelessWidget {
                       /// State
                       PrefixInputText(
                         controller: editProfileController.state,
-                        validator: (value) => Validate.validateEmptyText(value),
+                        // validator: (value) => Validate.validateEmptyText(value),
                         hint: userModel.mCustState.isNotEmpty
                             ? userModel.mCustState
                             : TTexts.state,
@@ -178,7 +180,7 @@ class EditProfile extends StatelessWidget {
                       /// City
                       PrefixInputText(
                         controller: editProfileController.city,
-                        validator: (value) => Validate.validateEmptyText(value),
+                        // validator: (value) => Validate.validateEmptyText(value),
                         hint: userModel.mCustCity.isNotEmpty
                             ? userModel.mCustCity
                             : TTexts.city,
@@ -189,7 +191,7 @@ class EditProfile extends StatelessWidget {
                       ///Address
                       PrefixInputText(
                         controller: editProfileController.address,
-                        validator: (value) => Validate.validateEmptyText(value),
+                        // validator: (value) => Validate.validateEmptyText(value),
                         hint: userModel.mCustAddress.isNotEmpty
                             ? userModel.mCustAddress
                             : TTexts.address,
@@ -200,7 +202,7 @@ class EditProfile extends StatelessWidget {
                       ///Company Name
                       PrefixInputText(
                         controller: editProfileController.companyName,
-                        validator: (value) => Validate.validateEmptyText(value),
+                        // validator: (value) => Validate.validateEmptyText(value),
                         hint: userModel.mCustCompany.isNotEmpty
                             ? userModel.mCustCompany
                             : TTexts.etHintCompanyName,
@@ -211,7 +213,7 @@ class EditProfile extends StatelessWidget {
                       ///Company type
                       PrefixInputText(
                         controller: editProfileController.companyType,
-                        validator: (value) => Validate.validateEmptyText(value),
+                        // validator: (value) => Validate.validateEmptyText(value),
                         hint: userModel.mCustCompanyType.isNotEmpty
                             ? userModel.mCustCompanyType
                             : TTexts.companyType,
@@ -222,7 +224,7 @@ class EditProfile extends StatelessWidget {
                       ///GST Number
                       PrefixInputText(
                         controller: editProfileController.gstNumber,
-                        validator: (value) => Validate.validateEmptyText(value),
+                        // validator: (value) => Validate.validateEmptyText(value),
                         hint: userModel.mCustGstno.isNotEmpty
                             ? userModel.mCustGstno
                             : TTexts.gstNo,
@@ -233,7 +235,7 @@ class EditProfile extends StatelessWidget {
                       ///Owners Name
                       PrefixInputText(
                         controller: editProfileController.ownersName,
-                        validator: (value) => Validate.validateEmptyText(value),
+                        // validator: (value) => Validate.validateEmptyText(value),
                         hint: userModel.mCustOwnerName.isNotEmpty
                             ? userModel.mCustOwnerName
                             : TTexts.ownersName,
