@@ -1,6 +1,7 @@
 import 'package:auro/features/device_details/view/device_detail_screens/controller/device_detail_controller.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/widgets/data_item_card.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/widgets/device_detail_shimmer.dart';
+import 'package:auro/features/device_details/view/device_detail_screens/widgets/device_details_itme.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/widgets/graph.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/widgets/text_view_card.dart';
 import 'package:auro/utils/constant/colors.dart';
@@ -13,6 +14,7 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../../../common/widgets/loaders/image_loader.dart';
+import '../../../../common/widgets/shimmer/shimmer.dart';
 import '../../../../common/widgets/text/text_view.dart';
 import '../../../../utils/constant/image_string.dart';
 import '../../controller/device_detail_navigation_controller.dart';
@@ -27,6 +29,8 @@ class Home extends StatelessWidget {
     final controller = Get.put(DeviceDetailController());
     final navigationController = DeviceDetailNavigationController.instance;
     controller.getDeviceDetail(navigationController.deviceId.value);
+    controller.getDeviceDataItems();
+    controller.getDeviceGraphData();
 
     return Scaffold(
       backgroundColor: TColors.primary,
@@ -114,7 +118,7 @@ class Home extends StatelessWidget {
                       ),
 
                       ///Graph
-                      const Graph(),
+                       Graph(controller.graphDataList),
 
                       /// Select Data item
                       const Center(
@@ -125,28 +129,41 @@ class Home extends StatelessWidget {
                       ),
 
                       /// list view and card
-                      Padding(
-                        padding: SpacingStyle.paddingWithDefaultSpace,
-                        child: SizedBox(
-                          height: 400.h,
-                          child: GridView.builder(
-                            scrollDirection: Axis.horizontal,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3,
-                                    mainAxisSpacing: 10.w,
-                                    crossAxisSpacing: 10.h,
-                                    childAspectRatio: 1),
-                            itemCount: 24,
-                            itemBuilder: (context, index) {
-                              return const DataItemCard(
-                                title: TTexts.uab,
-                                value: TTexts.values,
-                              );
-                            },
-                          ),
-                        ),
-                      ),
+                     Obx((){
+
+                       if (controller.isDeviceDataItemsLoading.value) {
+                         return   const DeviceItemShimmer();();
+                       }
+
+                       if (controller.dataIts.isEmpty) {
+                         return const TImageLoaderWidget(
+                             text: 'Whoops! No Device available...!',
+                             animation: TImages.imgLoginBg,
+                             showAction: false);
+                       }
+
+                       return  Padding(
+                         padding: SpacingStyle.paddingWithDefaultSpace,
+                         child: SizedBox(
+                           height: 400.h,
+                           child: GridView.builder(
+                             scrollDirection: Axis.horizontal,
+                             gridDelegate:
+                             SliverGridDelegateWithFixedCrossAxisCount(
+                                 crossAxisCount: 3,
+                                 mainAxisSpacing: 10.w,
+                                 crossAxisSpacing: 10.h,
+                                 childAspectRatio: 1),
+                             itemCount: controller.dataIts.length,
+                             itemBuilder: (_, index) {
+                               return DataItemCard(
+                                 dataItems: controller.dataIts[index],
+                               );
+                             },
+                           ),
+                         ),
+                       );
+                     })
                     ],
                   ),
                 ),
@@ -158,3 +175,5 @@ class Home extends StatelessWidget {
     );
   }
 }
+
+

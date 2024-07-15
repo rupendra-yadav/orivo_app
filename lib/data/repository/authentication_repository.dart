@@ -1,4 +1,5 @@
 import 'package:auro/features/authentication/model/user_detail.dart';
+import 'package:auro/utils/constant/api_constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
@@ -20,7 +21,7 @@ class AuthenticationRepository extends GetxController {
         "user_pass": password
       };
       Map<String, dynamic> response =
-          await THttpHelper.post('user_login', data);
+          await THttpHelper.post(APIKeys.userLoginEND, data);
 
       if (kDebugMode) {
         print('user_login Response: $response');
@@ -60,7 +61,7 @@ class AuthenticationRepository extends GetxController {
         'user_pass':userPassword,
       };
       Map<String, dynamic> response =
-          await THttpHelper.post('signup_user', data);
+          await THttpHelper.post(APIKeys.signupUserEND, data);
 
       if (kDebugMode) {
         print('signup_user Response: $response');
@@ -97,7 +98,7 @@ class AuthenticationRepository extends GetxController {
         'user_mobile': mobileNumber
       };
       Map<String, dynamic> response =
-      await THttpHelper.post('send_otp', data);
+      await THttpHelper.post(APIKeys.sendOtpEND, data);
 
       if (kDebugMode) {
         print('send_otp Response: $response');
@@ -125,7 +126,7 @@ class AuthenticationRepository extends GetxController {
 
       };
       Map<String, dynamic> response =
-      await THttpHelper.post('verify_otp', data);
+      await THttpHelper.post(APIKeys.verifyOtpEND, data);
 
       if (kDebugMode) {
         print('verify_otp Response: $response');

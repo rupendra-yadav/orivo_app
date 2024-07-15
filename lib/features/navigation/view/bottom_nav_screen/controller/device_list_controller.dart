@@ -30,4 +30,6 @@ class DeviceListController extends GetxController {
       isDeviceLoading.value = false;
     }
   }
+
+
 }

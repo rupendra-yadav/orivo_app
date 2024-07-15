@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:auro/features/navigation/view/bottom_nav_screen/model/user_detail_model.dart';
+import 'package:auro/utils/constant/api_constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -17,7 +18,7 @@ class ProfileRepository extends GetxController {
       Map<String, dynamic> request = {'user_id': userId};
 
       Map<String, dynamic> response =
-          await THttpHelper.post('user_details', request);
+          await THttpHelper.post(APIKeys.userDetailsEND, request);
 
       if (kDebugMode) {
         print('user_details  Response: $response');
@@ -49,7 +50,7 @@ class ProfileRepository extends GetxController {
       };
 
       Map<String, dynamic> response =
-          await THttpHelper.post('update_password', request);
+          await THttpHelper.post(APIKeys.updatePasswordEND, request);
 
       if (kDebugMode) {
         print('update_password  Response: $response');

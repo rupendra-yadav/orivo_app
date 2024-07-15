@@ -83,11 +83,9 @@ class History extends StatelessWidget {
                               ),
                               itemCount: 24,
                               itemBuilder: (context, index) {
-                                return const DataItemCard(
-                                  title: TTexts.uab,
-                                  value: TTexts.values,
-                                  colorContainer: TColors.primaryDark1,
-                                );
+                                // return const DataItemCard(
+                                //   colorContainer: TColors.primaryDark1,
+                                // );
                               },
                             ),
                           ),

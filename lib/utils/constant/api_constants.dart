@@ -1,3 +1,23 @@
 
-const String tBaseUrl = "https://webdevelopercg.com/electricity/myadmin/Api";
+const String tBaseUrl = "https://webdevelopercg.com/electricity/myadmin";
 const String tBaseImageUrl = "";
+
+
+///End Keys
+class APIKeys{
+  static const String userLoginEND = "Api/user_login";
+  static const String signupUserEND = "Api/signup_user";
+  static const String sendOtpEND = "Api/send_otp";
+  static const String verifyOtpEND = "Api/verify_otp";
+
+  static const String userDetailsEND = "Api/user_details";
+  static const String updatePasswordEND = "Api/update_password";
+
+  static const String machineEND = "Api/machine";
+  static const String machineDetailsEND = "Api/machine_details";
+  static const String machineDetailsDataItemsEND = "readflux.php";
+  static const String machineDetailsGraphDataEND = "readfieldwisedata.php";
+}
+
+
+
