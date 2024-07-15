@@ -11,11 +11,11 @@ import '../model/graph_data_model_api.dart';
 
 class Graph extends StatelessWidget {
   const Graph({
-    super.key, required this.graphData,
+    super.key,
   });
 
 
-  final GraphData graphData;
+  // final GraphData graphData;
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +107,6 @@ class Graph extends StatelessWidget {
 
  List<SalesData> chartData1 = [
   SalesData(2010, 1),
-  SalesData(graphData.value, 1),
 
 ];
 

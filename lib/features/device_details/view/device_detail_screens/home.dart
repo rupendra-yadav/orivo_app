@@ -118,7 +118,7 @@ class Home extends StatelessWidget {
                       ),
 
                       ///Graph
-                       Graph(controller.graphDataList),
+                       Graph(),
 
                       /// Select Data item
                       const Center(
