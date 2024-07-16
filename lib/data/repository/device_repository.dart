@@ -11,10 +11,11 @@ class DeviceRepository extends GetxController {
   static DeviceRepository get instance => Get.find();
 
   ///Device List
-  Future<List<DeviceListModel>> getDeviceList() async {
+  Future<List<DeviceListModel>> getDeviceList(String userId) async {
     try {
 
       Map<String, dynamic> request = {
+        "user_id":userId
       };
 
       Map<String, dynamic> response = await THttpHelper.post(APIKeys.machineEND, request);
