@@ -25,7 +25,7 @@ class History extends StatelessWidget {
           child: Column(
             children: [
               /// Graph
-              const Graph(),
+               const Graph(),
 
               /// Graph Filter
               SingleChildScrollView(

@@ -2,10 +2,13 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../utils/constant/colors.dart';
 import '../../../../../utils/styles/spacing_style.dart';
+import '../controller/device_detail_controller.dart';
 import '../model/graph_data_model.dart';
 import '../model/graph_data_model_api.dart';
 
@@ -14,11 +17,10 @@ class Graph extends StatelessWidget {
     super.key,
   });
 
-
-  // final GraphData graphData;
-
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(DeviceDetailController());
+
     return Padding(
       padding: SpacingStyle.paddingWithDefaultSpace,
       child: SfCartesianChart(
@@ -43,22 +45,22 @@ class Graph extends StatelessWidget {
         ),
         series: <CartesianSeries>[
           // Graph1
-          SplineSeries<SalesData, num>(
+          SplineSeries<GraphData, num>(
             animationDuration: 2000,
-            dataSource: chartData1,
-            xValueMapper: (SalesData sales, _) => sales.year,
-            yValueMapper: (SalesData sales, _) => sales.sales,
+            dataSource: controller.graphDataList,
+            xValueMapper: (GraphData sales, _) => sales.value,
+            yValueMapper: (GraphData sales, _) => sales.label,
             color: TColors.graphLine,
 
             /// marker Setting to get dots in the graph
             markerSettings: MarkerSettings(
               isVisible: true,
               shape: DataMarkerType.circle,
-              color: TColors.graphLine,
+              color: TColors.error,
               height: 6.h,
               width: 6.w,
               borderWidth: 0,
-              borderColor: TColors.graphLine,
+              borderColor: TColors.error,
             ),
           ),
           // Graph2
@@ -105,10 +107,7 @@ class Graph extends StatelessWidget {
   }
 }
 
- List<SalesData> chartData1 = [
-  SalesData(2010, 1),
 
-];
 
 /*final List<SalesData> chartData2 = [
   SalesData(2010, 1),

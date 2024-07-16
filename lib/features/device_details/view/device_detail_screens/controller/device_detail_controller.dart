@@ -16,6 +16,7 @@ class DeviceDetailController extends GetxController {
   RxList<GraphData> graphDataList = <GraphData>[].obs;
 
   late DeviceListModel deviceListModel;
+  late GraphData graphDataModel;
 
   final isDeviceDetailLoading = false.obs;
   final isDeviceDataItemsLoading = false.obs;
@@ -66,7 +67,7 @@ class DeviceDetailController extends GetxController {
       final graph = await _deviceReposotory.getGraphData();
 
       graphDataList.assignAll(graph);
-
+      graphDataModel = graphDataList[0];
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());

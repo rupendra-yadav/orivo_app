@@ -1,3 +1,4 @@
+import 'package:auro/common/widgets/shimmer/shimmer.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/controller/device_detail_controller.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/widgets/data_item_card.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/widgets/device_detail_shimmer.dart';
@@ -14,7 +15,6 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../../../common/widgets/loaders/image_loader.dart';
-import '../../../../common/widgets/shimmer/shimmer.dart';
 import '../../../../common/widgets/text/text_view.dart';
 import '../../../../utils/constant/image_string.dart';
 import '../../controller/device_detail_navigation_controller.dart';
@@ -118,7 +118,20 @@ class Home extends StatelessWidget {
                       ),
 
                       ///Graph
-                       Graph(),
+                      Obx(() {
+                        if (controller.isDeviceGraphDataLoading.value) {
+                          return const GraphShimmer();
+                        }
+
+                        if (controller.graphDataList.isEmpty) {
+                          return const TImageLoaderWidget(
+                              text: 'Whoops! No Device available...!',
+                              animation: TImages.imgLoginBg,
+                              showAction: false);
+                        }
+
+                        return const Graph();
+                      }),
 
                       /// Select Data item
                       const Center(
@@ -129,41 +142,41 @@ class Home extends StatelessWidget {
                       ),
 
                       /// list view and card
-                     Obx((){
+                      Obx(() {
+                        if (controller.isDeviceDataItemsLoading.value) {
+                          return const DeviceItemShimmer();
+                          ();
+                        }
 
-                       if (controller.isDeviceDataItemsLoading.value) {
-                         return   const DeviceItemShimmer();();
-                       }
+                        if (controller.dataIts.isEmpty) {
+                          return const TImageLoaderWidget(
+                              text: 'Whoops! No Device available...!',
+                              animation: TImages.imgLoginBg,
+                              showAction: false);
+                        }
 
-                       if (controller.dataIts.isEmpty) {
-                         return const TImageLoaderWidget(
-                             text: 'Whoops! No Device available...!',
-                             animation: TImages.imgLoginBg,
-                             showAction: false);
-                       }
-
-                       return  Padding(
-                         padding: SpacingStyle.paddingWithDefaultSpace,
-                         child: SizedBox(
-                           height: 400.h,
-                           child: GridView.builder(
-                             scrollDirection: Axis.horizontal,
-                             gridDelegate:
-                             SliverGridDelegateWithFixedCrossAxisCount(
-                                 crossAxisCount: 3,
-                                 mainAxisSpacing: 10.w,
-                                 crossAxisSpacing: 10.h,
-                                 childAspectRatio: 1),
-                             itemCount: controller.dataIts.length,
-                             itemBuilder: (_, index) {
-                               return DataItemCard(
-                                 dataItems: controller.dataIts[index],
-                               );
-                             },
-                           ),
-                         ),
-                       );
-                     })
+                        return Padding(
+                          padding: SpacingStyle.paddingWithDefaultSpace,
+                          child: SizedBox(
+                            height: 400.h,
+                            child: GridView.builder(
+                              scrollDirection: Axis.horizontal,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 3,
+                                      mainAxisSpacing: 10.w,
+                                      crossAxisSpacing: 10.h,
+                                      childAspectRatio: 1),
+                              itemCount: controller.dataIts.length-1,
+                              itemBuilder: (_, index) {
+                                return DataItemCard(
+                                  dataItems: controller.dataIts[index+1],
+                                );
+                              },
+                            ),
+                          ),
+                        );
+                      }),
                     ],
                   ),
                 ),
@@ -176,4 +189,13 @@ class Home extends StatelessWidget {
   }
 }
 
+class GraphShimmer extends StatelessWidget {
+  const GraphShimmer({
+    super.key,
+  });
 
+  @override
+  Widget build(BuildContext context) {
+    return Padding(padding: SpacingStyle.paddingWithDefaultSpace,child: TShimmerEffect(width: 300.w, height: 250.h),);
+  }
+}
