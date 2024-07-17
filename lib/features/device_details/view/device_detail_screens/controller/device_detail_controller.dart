@@ -60,11 +60,11 @@ class DeviceDetailController extends GetxController {
   }
 
   ///--------Device Graph Data
-  Future<void> getDeviceGraphData() async {
+  Future<void> getDeviceGraphData(String fieldName,deviceId,rangeValue) async {
     try {
       isDeviceGraphDataLoading.value = true;
 
-      final graph = await _deviceReposotory.getGraphData();
+      final graph = await _deviceReposotory.getGraphData(fieldName,deviceId,rangeValue);
 
       graphDataList.assignAll(graph);
       graphDataModel = graphDataList[0];

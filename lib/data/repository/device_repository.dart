@@ -100,10 +100,14 @@ class DeviceRepository extends GetxController {
 
 
   ///Device Graph data
-  Future<List<GraphData>> getGraphData() async {
+  Future<List<GraphData>> getGraphData(String field,deviceId,range) async {
     try {
 
-      Map<String, dynamic> request = {};
+      Map<String, dynamic> request = {
+        "field":field,
+        "deviceid":deviceId,
+        "range":range
+      };
 
       Map<String, dynamic> response = await THttpHelper.post(APIKeys.machineDetailsGraphDataEND, request);
 

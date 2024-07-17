@@ -4,6 +4,7 @@ import 'package:auro/features/device_details/view/device_detail_screens/widgets/
 import 'package:auro/features/device_details/view/device_detail_screens/widgets/device_detail_shimmer.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/widgets/device_details_itme.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/widgets/graph.dart';
+import 'package:auro/features/device_details/view/device_detail_screens/widgets/graph_shimmer.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/widgets/text_view_card.dart';
 import 'package:auro/utils/constant/colors.dart';
 import 'package:auro/utils/constant/text_strings.dart';
@@ -19,19 +20,42 @@ import '../../../../common/widgets/text/text_view.dart';
 import '../../../../utils/constant/image_string.dart';
 import '../../controller/device_detail_navigation_controller.dart';
 
-class Home extends StatelessWidget {
-  const Home({
-    super.key,
-  });
+class Home extends StatefulWidget {
+  const Home({super.key});
+
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  final DeviceDetailController controller = Get.put(DeviceDetailController());
+  final DeviceDetailNavigationController navigationController = DeviceDetailNavigationController.instance;
+
+  List<int> selectedIndices = [];
+
+  void handleCardTap(int index) {
+    setState(() {
+      if (selectedIndices.contains(index)) {
+        selectedIndices.remove(index);
+      } else {
+        if (selectedIndices.length >= 4) {
+          selectedIndices.removeAt(0);
+        }
+        selectedIndices.add(index);
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    controller.getDeviceDetail(navigationController.deviceId.value);
+    controller.getDeviceDataItems();
+    controller.getDeviceGraphData("f","3071123300001","-0d");
+  }
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(DeviceDetailController());
-    final navigationController = DeviceDetailNavigationController.instance;
-    controller.getDeviceDetail(navigationController.deviceId.value);
-    controller.getDeviceDataItems();
-    controller.getDeviceGraphData();
-
     return Scaffold(
       backgroundColor: TColors.primary,
       body: Stack(
@@ -53,36 +77,27 @@ class Home extends StatelessWidget {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    /// Daily Summary
                     const TextView(
                       text: TTexts.dailySummary,
                     ),
-
-                    ///card
                     TextViewCard(
                       cardText: controller.deviceListModel.mMachineTitle,
                       width: double.infinity,
                     ),
-
-                    ///Alerts
                     const TextView(
                       text: TTexts.alerts,
                     ),
-
-                    ///cards
                     Row(
                       children: [
                         Expanded(
                           child: TextViewCard(
-                              cardText:
-                                  controller.deviceListModel.mMachineTitle,
+                              cardText: controller.deviceListModel.mMachineTitle,
                               width: TDeviceUtils.screenWidth / 2.w),
                         ),
                         SizedBox(width: 5.w),
                         Expanded(
                           child: TextViewCard(
-                              cardText:
-                                  controller.deviceListModel.mMachineAddedon,
+                              cardText: controller.deviceListModel.mMachineAddedon,
                               width: TDeviceUtils.screenWidth / 2.w),
                         ),
                       ],
@@ -92,8 +107,6 @@ class Home extends StatelessWidget {
               }),
             ),
           ),
-
-          /// Draggable Scroll View
           DraggableScrollableSheet(
             initialChildSize: 0.4,
             minChildSize: 0.4,
@@ -108,7 +121,6 @@ class Home extends StatelessWidget {
                   controller: scrollController,
                   child: Column(
                     children: [
-                      ///icon to Drag
                       const Center(
                         child: Icon(
                           Iconsax.minus,
@@ -116,8 +128,6 @@ class Home extends StatelessWidget {
                           size: 70,
                         ),
                       ),
-
-                      ///Graph
                       Obx(() {
                         if (controller.isDeviceGraphDataLoading.value) {
                           return const GraphShimmer();
@@ -125,27 +135,22 @@ class Home extends StatelessWidget {
 
                         if (controller.graphDataList.isEmpty) {
                           return const TImageLoaderWidget(
-                              text: 'Whoops! No Device available...!',
+                              text: 'Whoops! No Graph available...!',
                               animation: TImages.imgLoginBg,
                               showAction: false);
                         }
 
                         return const Graph();
                       }),
-
-                      /// Select Data item
                       const Center(
                         child: TextView(
                           text: TTexts.selectDataItems,
                           fontSize: 14,
                         ),
                       ),
-
-                      /// list view and card
                       Obx(() {
                         if (controller.isDeviceDataItemsLoading.value) {
                           return const DeviceItemShimmer();
-                          ();
                         }
 
                         if (controller.dataIts.isEmpty) {
@@ -161,16 +166,22 @@ class Home extends StatelessWidget {
                             height: 400.h,
                             child: GridView.builder(
                               scrollDirection: Axis.horizontal,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 3,
-                                      mainAxisSpacing: 10.w,
-                                      crossAxisSpacing: 10.h,
-                                      childAspectRatio: 1),
-                              itemCount: controller.dataIts.length-1,
+                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3,
+                                  mainAxisSpacing: 10.w,
+                                  crossAxisSpacing: 10.h,
+                                  childAspectRatio: 1),
+                              itemCount: controller.dataIts.length - 1,
                               itemBuilder: (_, index) {
                                 return DataItemCard(
-                                  dataItems: controller.dataIts[index+1],
+                                  dataItems: controller.dataIts[index + 1],
+                                  isSelected: selectedIndices.contains(index),
+                                  onTap: () {
+                                    handleCardTap(index);
+                                  },
+                                  range: '-0d',
+                                  deviceId: controller.deviceListModel.mMachineId,
+
                                 );
                               },
                             ),
@@ -186,16 +197,5 @@ class Home extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-class GraphShimmer extends StatelessWidget {
-  const GraphShimmer({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(padding: SpacingStyle.paddingWithDefaultSpace,child: TShimmerEffect(width: 300.w, height: 250.h),);
   }
 }

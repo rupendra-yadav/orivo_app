@@ -30,7 +30,7 @@ class TImageLoaderWidget extends StatelessWidget {
            SizedBox(height: TSizes.defaultSpace),
           Text(
             text,
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: const TextStyle(color: TColors.white),
             textAlign: TextAlign.center,
           ),
            SizedBox(height: TSizes.defaultSpace),
