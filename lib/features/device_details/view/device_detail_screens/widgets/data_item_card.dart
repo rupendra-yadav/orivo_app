@@ -14,28 +14,27 @@ class DataItemCard extends StatelessWidget {
     required this.dataItems,
     required this.isSelected,
     required this.onTap,
-    required this.range,
-    required this.deviceId,
+    // required this.range,
+    // required this.deviceId,
   });
 
   final Color colorContainer;
   final DataItems dataItems;
   final bool isSelected;
   final void Function() onTap;
-  final String range, deviceId;
+  // final String range, deviceId;
 
   @override
   Widget build(BuildContext context) {
     final DeviceDetailController controller = Get.put(DeviceDetailController());
-    void runAPIGraph() {
-      controller.getDeviceGraphData(dataItems.field, deviceId, range);
-    }
+    // void runAPIGraph() {
+    //   controller.getDeviceGraphData(dataItems.field, deviceId, range);
+    // }
 
     return InkWell(
-      onTap: () {
-        onTap;
-        isSelected ? runAPIGraph() : null;
-      },
+      onTap: onTap
+        // isSelected ? runAPIGraph() : null;
+      ,
       child: Container(
         decoration: BoxDecoration(
           color: isSelected ? TColors.primaryLight1 : colorContainer,
