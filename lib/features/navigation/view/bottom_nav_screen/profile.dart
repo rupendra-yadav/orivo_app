@@ -63,7 +63,7 @@ class Profile extends StatelessWidget {
 // Adjusted the radius to fit the image better
                           maxRadius: 50.r,
                           foregroundImage: NetworkImage(TImages.userImagePath +
-                              controller.userModel_data.mCustImage),
+                              controller.userModelData.mCustImage),
 // Adjusted the radius to fit the image better
 // backgroundImage: NetworkImage(TImages.userImagePath + controller.userModel_data.mCustImage),
 //                           child: Image(
@@ -80,12 +80,12 @@ class Profile extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              controller.userModel_data.mCustName,
+                              controller.userModelData.mCustName,
                               style: const TextStyle(
                                   color: TColors.white, fontSize: 24),
                             ),
                             Text(
-                              controller.userModel_data.mCustCompany,
+                              controller.userModelData.mCustCompany,
                               style: const TextStyle(
                                   color: TColors.secondary, fontSize: 12),
                             ),
@@ -96,7 +96,7 @@ class Profile extends StatelessWidget {
 
                         IconButton(
                           onPressed: () => Get.to(() => EditProfile(
-                                userModel: controller.userModel_data,
+                                userModel: controller.userModelData,
                               )),
                           icon: const Icon(
                             Iconsax.edit_2,
@@ -128,7 +128,8 @@ class Profile extends StatelessWidget {
                     ProfileOptions(
                       title: TTexts.aboutUs,
                       onPressed: () => Get.to(() => const CustomWebView(
-                          initialUrl: TTexts.aboutUsLink, title: TTexts.aboutUs)),
+                          initialUrl: TTexts.aboutUsLink,
+                          title: TTexts.aboutUs)),
                     ),
                     Divider(height: 1.h, color: TColors.primaryLight1),
                     ProfileOptions(

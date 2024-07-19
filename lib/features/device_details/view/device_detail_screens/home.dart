@@ -177,6 +177,8 @@ class _HomeState extends State<Home> {
                                   dataItems: controller.dataIts[index + 1],
                                   isSelected: selectedIndices.contains(index),
                                   onTap: () =>handleCardTap(index),
+                                    // controller.getDeviceGraphData("f","3071123300001","-0d");
+
                                   // range: '-0d',
                                   // deviceId: controller.deviceListModel.mMachineId,
 

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../../../../data/repository/device_repository.dart';
 import '../../../../navigation/view/bottom_nav_screen/model/device_list_model.dart';
 import '../model/dart_items.dart';
+import '../model/graph_data_model.dart';
 
 class DeviceDetailController extends GetxController {
   static DeviceDetailController get instance => Get.find();

@@ -1,9 +1,6 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../utils/constant/colors.dart';
@@ -20,6 +17,13 @@ class Graph extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(DeviceDetailController());
+
+    for (int i = 0; i < controller.graphDataList.length; i++) {
+      final List<GraphDataInput> chartData2 = [
+        GraphDataInput(controller.graphDataList[i].value,
+            controller.graphDataList[i].label as num)
+      ];
+    }
 
     return Padding(
       padding: SpacingStyle.paddingWithDefaultSpace,
@@ -48,8 +52,8 @@ class Graph extends StatelessWidget {
           SplineSeries<GraphData, num>(
             animationDuration: 2000,
             dataSource: controller.graphDataList,
-            xValueMapper: (GraphData sales, _) => sales.value,
-            yValueMapper: (GraphData sales, _) => sales.label,
+            xValueMapper: (GraphData sales, _) => sales.label,
+            yValueMapper: (GraphData sales, _) => sales.value,
             color: TColors.graphLine,
 
             /// marker Setting to get dots in the graph
@@ -63,51 +67,11 @@ class Graph extends StatelessWidget {
               borderColor: TColors.error,
             ),
           ),
-          // Graph2
-          /*SplineSeries<SalesData, double>(
-            animationDuration: 2000,
-            dataSource: chartData2,
-            xValueMapper: (SalesData sales, _) => sales.year,
-            yValueMapper: (SalesData sales, _) => sales.sales,
-            color: TColors.green,
-
-            /// marker Setting to get dots in the graph
-            markerSettings: MarkerSettings(
-              isVisible: true,
-              shape: DataMarkerType.circle,
-              color: TColors.green,
-              height: 6.h,
-              width: 6.w,
-              borderWidth: 0,
-              borderColor: TColors.graphLine,
-            ),
-          ),*/
-          // Graph3
-          /*SplineSeries<SalesData, double>(
-            animationDuration: 2000,
-            dataSource: chartData3,
-            xValueMapper: (SalesData sales, _) => sales.year,
-            yValueMapper: (SalesData sales, _) => sales.sales,
-            color: TColors.error,
-
-            /// marker Setting to get dots in the graph
-            markerSettings: MarkerSettings(
-              isVisible: true,
-              shape: DataMarkerType.circle,
-              color: TColors.error,
-              height: 6.h,
-              width: 6.w,
-              borderWidth: 0,
-              borderColor: TColors.graphLine,
-            ),
-          ),*/
         ],
       ),
     );
   }
 }
-
-
 
 /*final List<SalesData> chartData2 = [
   SalesData(2010, 1),

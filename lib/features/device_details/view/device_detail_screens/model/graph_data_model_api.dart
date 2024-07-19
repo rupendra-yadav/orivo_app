@@ -1,7 +1,7 @@
 
 class GraphData {
   num value;
-  num label;
+  String label;
 
   GraphData({required this.value, required this.label});
 

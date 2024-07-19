@@ -87,16 +87,24 @@ class EditProfileController extends GetxController {
 
     PermissionStatus permissionStatus = await Permission.camera.status;
     if (permissionStatus.isGranted) {
-      print("Camera permission granted");
+      if (kDebugMode) {
+        print("Camera permission granted");
+      }
       sendImageMessage(true);
     } else {
-      print("Requesting camera permission");
+      if (kDebugMode) {
+        print("Requesting camera permission");
+      }
       permissionStatus = await Permission.camera.request();
       if (permissionStatus.isGranted) {
-        print("Camera permission granted after request");
+        if (kDebugMode) {
+          print("Camera permission granted after request");
+        }
         sendImageMessage(true);
       } else {
-        print("Camera permission denied");
+        if (kDebugMode) {
+          print("Camera permission denied");
+        }
         TLoaders.errorSnackBar(
           title: 'Permission Denied',
           message: "Permission required to capture photos.",
@@ -106,22 +114,32 @@ class EditProfileController extends GetxController {
   }
 
   Future<void> galleryPermission(BuildContext context) async {
-    print("Checking gallery permissions");
+    if (kDebugMode) {
+      print("Checking gallery permissions");
+    }
 
     // Check for storage permission for older Android versions
     PermissionStatus permissionStatus = await Permission.photos.status;
     if (permissionStatus.isGranted) {
-      print("Gallery permission granted");
+      if (kDebugMode) {
+        print("Gallery permission granted");
+      }
       await sendImageMessage(false);
     } else {
-      print("Requesting gallery permission");
+      if (kDebugMode) {
+        print("Requesting gallery permission");
+      }
       permissionStatus = await Permission.photos.request();
 
       if (permissionStatus.isGranted) {
-        print("Gallery permission granted after request");
+        if (kDebugMode) {
+          print("Gallery permission granted after request");
+        }
         await sendImageMessage(false);
       } else {
-        print("Gallery permission denied");
+        if (kDebugMode) {
+          print("Gallery permission denied");
+        }
         TLoaders.errorSnackBar(
           title: 'Permission Denied',
           message: "Permission required to access photos.",
@@ -132,7 +150,9 @@ class EditProfileController extends GetxController {
 
 
   Future<void> sendImageMessage(bool isCamera) async {
-    print("Opening ${isCamera ? 'camera' : 'gallery'}");
+    if (kDebugMode) {
+      print("Opening ${isCamera ? 'camera' : 'gallery'}");
+    }
     final picker = ImagePicker();
     final image = await picker.pickImage(
       source: isCamera ? ImageSource.camera : ImageSource.gallery,

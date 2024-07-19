@@ -12,7 +12,7 @@ class ProfileDetailController extends GetxController {
 
   final _profileRepository = Get.put(ProfileRepository());
   RxList<UserModel> userModel = <UserModel>[].obs;
-  late UserModel userModel_data;
+  late UserModel userModelData;
   final isUserDataLoading = false.obs;
 
 
@@ -31,7 +31,7 @@ class ProfileDetailController extends GetxController {
         isUserDataLoading.value = true;
         final userModelResponse = await _profileRepository.getUserData(user.mCustId);
         userModel.assignAll(userModelResponse);
-        userModel_data =userModel[0];
+        userModelData =userModel[0];
       } catch (e) {
 
         TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
