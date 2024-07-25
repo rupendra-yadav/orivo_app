@@ -1,3 +1,7 @@
+import 'dart:ffi';
+
+import 'package:auro/utils/popups/loaders.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -18,12 +22,19 @@ class Graph extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(DeviceDetailController());
 
-    for (int i = 0; i < controller.graphDataList.length; i++) {
-      final List<GraphDataInput> chartData2 = [
-        GraphDataInput(controller.graphDataList[i].value,
-            controller.graphDataList[i].label as num)
-      ];
-    }
+    // List<GraphDataInput> chartData2 = [];
+
+  /*  if (controller.graphDataList.isEmpty) {
+      return TLoaders.customToast(message: "Something Went Wrong...!");
+    }else{
+      for (int i = 0; i < controller.graphDataList.length; i++) {
+        chartData2.add(GraphDataInput(controller.graphDataList[i].value, controller.graphDataList[i].label));
+        if (kDebugMode) {
+          print(controller.graphDataList[i].value);
+          print(controller.graphDataList[i].label);
+        }
+      }
+    }*/
 
     return Padding(
       padding: SpacingStyle.paddingWithDefaultSpace,
@@ -34,10 +45,9 @@ class Graph extends StatelessWidget {
           enablePinching: true, // Enables pinch zooming
           enablePanning: true, // Enables panning
           enableDoubleTapZooming: true, // Enables double-tap zooming
-          enableMouseWheelZooming:
-              true, // Enables mouse wheel zooming (for web)
+          enableMouseWheelZooming: true, // Enables mouse wheel zooming (for web)
         ),
-        primaryXAxis: const NumericAxis(
+        primaryXAxis: const CategoryAxis(
           axisLine: AxisLine(color: TColors.primaryLight2),
           labelStyle: TextStyle(color: TColors.primaryLight2, fontSize: 6),
           majorGridLines: MajorGridLines(color: TColors.primaryLight2),
@@ -46,10 +56,11 @@ class Graph extends StatelessWidget {
           axisLine: AxisLine(color: TColors.primaryLight2),
           labelStyle: TextStyle(color: TColors.primaryLight2, fontSize: 6),
           majorGridLines: MajorGridLines(color: TColors.primaryLight2),
+          // minimum: 0,
         ),
         series: <CartesianSeries>[
           // Graph1
-          SplineSeries<GraphData, num>(
+          SplineSeries<GraphData, String>(
             animationDuration: 2000,
             dataSource: controller.graphDataList,
             xValueMapper: (GraphData sales, _) => sales.label,
@@ -72,39 +83,3 @@ class Graph extends StatelessWidget {
     );
   }
 }
-
-/*final List<SalesData> chartData2 = [
-  SalesData(2010, 1),
-  SalesData(2011, 5),
-  SalesData(2012, 5),
-  SalesData(2013, 8),
-  SalesData(2014, 15),
-  SalesData(2015, 46),
-  SalesData(2016, 98),
-  SalesData(2017, 2),
-  SalesData(2018, 72),
-  SalesData(2019, 90),
-  SalesData(2020, 50),
-  SalesData(2021, 39),
-  SalesData(2022, 35),
-  SalesData(2023, 40),
-  SalesData(2024, 100)
-];
-
-final List<SalesData> chartData3 = [
-  SalesData(2010, 1),
-  SalesData(2011, 2),
-  SalesData(2012, 3),
-  SalesData(2013, 4),
-  SalesData(2014, 5),
-  SalesData(2015, 6),
-  SalesData(2016, 7),
-  SalesData(2017, 8),
-  SalesData(2018, 9),
-  SalesData(2019, 10),
-  SalesData(2020, 11),
-  SalesData(2021, 34),
-  SalesData(2022, 32),
-  SalesData(2023, 40),
-  SalesData(2024, 40)
-];*/

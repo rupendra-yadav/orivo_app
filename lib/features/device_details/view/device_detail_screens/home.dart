@@ -9,7 +9,9 @@ import 'package:auro/features/device_details/view/device_detail_screens/widgets/
 import 'package:auro/utils/constant/colors.dart';
 import 'package:auro/utils/constant/text_strings.dart';
 import 'package:auro/utils/device/device_utility.dart';
+import 'package:auro/utils/popups/loaders.dart';
 import 'package:auro/utils/styles/spacing_style.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -31,7 +33,7 @@ class _HomeState extends State<Home> {
   final DeviceDetailController controller = Get.put(DeviceDetailController());
   final DeviceDetailNavigationController navigationController = DeviceDetailNavigationController.instance;
 
-  List<int> selectedIndices = [];
+  List<int> selectedIndices = [0];
 
   void handleCardTap(int index) {
     setState(() {
@@ -52,6 +54,10 @@ class _HomeState extends State<Home> {
     controller.getDeviceDetail(navigationController.deviceId.value);
     controller.getDeviceDataItems();
     controller.getDeviceGraphData("f","3071123300001","-0d");
+    if (kDebugMode) {
+      print("raveena");
+      print(navigationController.deviceId.value);
+    }
   }
 
   @override
@@ -176,12 +182,15 @@ class _HomeState extends State<Home> {
                                 return DataItemCard(
                                   dataItems: controller.dataIts[index + 1],
                                   isSelected: selectedIndices.contains(index),
-                                  onTap: () =>handleCardTap(index),
-                                    // controller.getDeviceGraphData("f","3071123300001","-0d");
+                                  onTap: () {
+                                    handleCardTap(index);
+                                    if(selectedIndices.contains(index)){
+                                      controller.getDeviceGraphData(controller.dataIts[index + 1].field,navigationController.deviceId.value,"-0d");
 
-                                  // range: '-0d',
-                                  // deviceId: controller.deviceListModel.mMachineId,
+                                      TLoaders.customToast(message: navigationController.deviceId.value +"\n"+ controller.dataIts[index + 1].field);
 
+                                    }
+                                    },
                                 );
                               },
                             ),

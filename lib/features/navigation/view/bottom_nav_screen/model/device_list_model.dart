@@ -1,5 +1,7 @@
 class DeviceListModel {
   String mMachineId;
+  String mMachineUniqueId;
+  String mMachineModelNumber;
   String mMachineTitle;
   String mMachineType;
   String mMachineImage;
@@ -19,6 +21,8 @@ class DeviceListModel {
 
   DeviceListModel(
       {required this.mMachineId,
+      required this.mMachineUniqueId,
+      required this.mMachineModelNumber,
       required this.mMachineTitle,
       required this.mMachineType,
       required this.mMachineImage,
@@ -35,6 +39,9 @@ class DeviceListModel {
       required this.mMtStatus,
       required this.mMtAddedon,
       required this.mMtUpdatedon});
+
+/*  "m_machine_unique_id": "mch789",
+  "m_machine_model_no": "mfeir8766",*/
 
   factory DeviceListModel.fromJson(Map<String, dynamic> json) {
     return DeviceListModel(
@@ -55,6 +62,9 @@ class DeviceListModel {
       mMtStatus: json['m_mt_status'] ?? '',
       mMtAddedon: json['m_mt_addedon'] ?? '',
       mMtUpdatedon: json['m_mt_updatedon'] ?? '',
+      mMachineUniqueId: json['m_machine_unique_id'] ?? '',
+      mMachineModelNumber: json['m_machine_model_no'] ?? '',
+
     );
   }
 
@@ -77,6 +87,8 @@ class DeviceListModel {
     data['m_mt_status'] = mMtStatus;
     data['m_mt_addedon'] = mMtAddedon;
     data['m_mt_updatedon'] = mMtUpdatedon;
+    data['m_machine_unique_id'] = mMachineUniqueId;
+    data['m_machine_model_no'] = mMachineModelNumber;
     return data;
   }
 }

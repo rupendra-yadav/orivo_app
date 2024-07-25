@@ -71,7 +71,7 @@ class DeviceCard extends StatelessWidget {
                               style: TextStyle(color: TColors.warningDark1),
                             ),
                             Text(
-                              deviceListModel.mMachineId,
+                              deviceListModel.mMachineUniqueId,
                               style: const TextStyle(color: TColors.warningDark1),
                             ),
                           ],
