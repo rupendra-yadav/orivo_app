@@ -10,8 +10,8 @@ class DataItems {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['field'] = this.field;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['field'] = field;
     return data;
   }
 }

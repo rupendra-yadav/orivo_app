@@ -10,6 +10,9 @@ class TColors {
   static const Color primaryLight2 = Color(0xFFADC5EB);
 
 
+  static const Color barColors = Color(0xFF344BFD);
+
+
 
   static const Color green = Color(0xFF00820D);
   static const Color ochre = Color(0xFF9F6000);

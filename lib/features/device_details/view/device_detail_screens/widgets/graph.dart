@@ -1,7 +1,4 @@
-import 'dart:ffi';
 
-import 'package:auro/utils/popups/loaders.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -10,7 +7,6 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../../../../utils/constant/colors.dart';
 import '../../../../../utils/styles/spacing_style.dart';
 import '../controller/device_detail_controller.dart';
-import '../model/graph_data_model.dart';
 import '../model/graph_data_model_api.dart';
 
 class Graph extends StatelessWidget {

@@ -6,15 +6,24 @@ import 'package:auro/utils/constant/text_strings.dart';
 import 'package:auro/utils/styles/spacing_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 import '../../../../utils/constant/image_string.dart';
 import '../../../../utils/device/device_utility.dart';
+import '../../controller/device_detail_navigation_controller.dart';
+import 'controller/device_detail_controller.dart';
 
 class Setting extends StatelessWidget {
   const Setting({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final DeviceDetailController controller = Get.put(DeviceDetailController());
+    final DeviceDetailNavigationController navigationController =
+        DeviceDetailNavigationController.instance;
+
+    controller.getDeviceDetail(navigationController.deviceId.value);
+
     return Scaffold(
       backgroundColor: TColors.primary,
       body: SizedBox(
@@ -38,39 +47,67 @@ class Setting extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Padding(
                   padding: SpacingStyle.paddingWithDefaultSpace,
-                  child: const Column(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TextView(
+
+                      /// DeviceInfo
+                      const TextView(
                         text: TTexts.deviceAInfo,
                         fontSize: 20,
                       ),
                       SettingDeviceDetailCard(
                         title: TTexts.deviceAName,
-                        text: TTexts.deviceAName,
+                        text: controller.deviceListModel.mMachineTitle,
                       ),
                       SettingDeviceDetailCard(
                         title: TTexts.installationDate,
-                        text: TTexts.date_27_01_2024,
+                        text: controller.deviceListModel.mMachineAddedon,
                       ),
                       SettingDeviceDetailCard(
                         title: TTexts.deviceModalNumber,
-                        text: TTexts.modelNumber,
+                        text: controller.deviceListModel.mMachineModelNumber,
                       ),
-                      TextView(
+                      SizedBox(height: 20.h,),
+
+                      ///User Details
+                      const TextView(
+                        text: TTexts.userDetails,
+                        fontSize: 20,
+                      ),
+                      const SettingDeviceDetailCard(
+                        title: TTexts.deviceAName,
+                        text:  TTexts.totalLoad
+                      ),
+                      SettingDeviceDetailCard(
+                        title: TTexts.installationDate,
+                        text: controller.deviceListModel.mMachineAddedon,
+                      ),
+                      SettingDeviceDetailCard(
+                        title: TTexts.deviceModalNumber,
+                        text: controller.deviceListModel.mMachineModelNumber,
+                      ),
+                      SettingDeviceDetailCard(
+                        title: TTexts.deviceModalNumber,
+                        text: controller.deviceListModel.mMachineModelNumber,
+                      ),
+                      SizedBox(height: 20.h,),
+
+                      /// Notifications Settings
+                      const TextView(
                         text: TTexts.notification,
                         fontSize: 20,
                       ),
-                      SettingNotificationDetailsCard(
+                      const SettingNotificationDetailsCard(
                         title: TTexts.dumNumber,
                       ),
-                      SettingNotificationDetailsCard(
+                      const SettingNotificationDetailsCard(
                         title: TTexts.clickToAddNumber,
                       ),
-                      SettingNotificationDetailsCard(
+                      const SettingNotificationDetailsCard(
                         title: TTexts.clickToAddNumber,
                       ),
-                      SettingNotificationDetailsCard(
+                      const SettingNotificationDetailsCard(
                         title: TTexts.dumNumber,
                       ),
                     ],

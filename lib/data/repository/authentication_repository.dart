@@ -50,7 +50,7 @@ class AuthenticationRepository extends GetxController {
   }
 
   ///-----Register User
-  Future<Map<String, dynamic>> registerUser(
+  Future<Map<String, dynamic>>  registerUser(
       String companyName, fullName, mobileNumber, emailAddress,userPassword) async {
     try {
       Map<String, dynamic> data = {

@@ -34,6 +34,7 @@ class DeviceList extends StatelessWidget {
           itemCount: controller.deviceList.length,
           scrollDirection: Axis.vertical,
           itemBuilder: (_, index) {
+            ///
             return DeviceCard(
               deviceListModel: controller.deviceList[index],
               onPressed: () {

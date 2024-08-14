@@ -64,6 +64,15 @@ class TTexts {
   static const String notification = "Notifications";
   static const String dumNumber = "9784561322";
   static const String clickToAddNumber = "Click To Add Number";
+  static const String userDetails = "User Details";
+  static const String totalLoad = "Total Load";
+  static const String tariffPlan = "Tariff Plan";
+  static const String bPNumber = "B.P Number";
+  static const String cSPDCLpassword = "CSPDCL password";
+  static const String kva800 = "800 Kva";
+  static const String hV4 = "HV4";
+  static const String num10023457 = "10023457";
+  static const String stars = "********";
 
   ///Home
   static const String machineName = "Machine Name";
@@ -75,6 +84,22 @@ class TTexts {
   static const String values = "0";
   static const String online = "Online";
   static const String offline = "Offline";
+  static const String energyConsumption = "Energy Consumption";
+  static const String costEstimation = "Cost Estimate";
+  static const String frequency = "Frequency";
+  static const String totalVoltage = "Total Voltage";
+  static const String totalCurrent = "Total Current";
+  static const String totalHD = "Total H.D";
+  static const String cardValue1 = "50Hz";
+  static const String cardValue2 = "440 V";
+  static const String cardValue3 = "45 A";
+  static const String cardValue4 = "0.75";
+  static const String avgValue1 = "Avg 45 Hz";
+  static const String avgValue2 = "Avg 220V";
+  static const String avgValue3 = "Avg 45";
+  static const String avgValue4 = "Avg 0.66";
+  static const String totalPowerFactors = "Total Power Factor";
+  static const String zero96 = "0.96";
 
   ///Links
   static const String appleLink = "https://www.google.co.in/";
@@ -117,7 +142,8 @@ class TTexts {
   static const String all = "All";
   static const String selectDataItem = "Select Data Items";
   static const String parameters = "Parameters";
-  static const String selectDate = "Select Date";
+  static const String selectFromDate = "Select From Date";
+  static const String selectToDate = "Select To Date";
   static const String apply = "Apply";
 
   ///Edit Profile
@@ -130,4 +156,19 @@ class TTexts {
   static const String gstNo = "GST.no";
   static const String ownersName = "Owners Name";
   static const String changeImageText = "Click here to change\nprofile image";
+
+  ///Energy Consumption Detail
+  static const String energyConsumptionDetail = "Energy Consumption Detail";
+  static const String dateRange = "1 August 2024 - 10 August 2024";
+  static const String onPeak = "On Peak : ";
+  static const String offPeak = "Off Peak : ";
+  static const String normal = "Normal : ";
+  static const String timeRange = "6 AM to 12 PM";
+
+
+  /// Cost Estimate Details
+
+  static const String costEstimate = "Cost Estimate";
+
+
 }

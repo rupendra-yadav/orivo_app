@@ -1,6 +1,5 @@
 import 'package:auro/features/device_details/view/device_detail_screens/history.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/home.dart';
-import 'package:auro/features/device_details/view/device_detail_screens/insights.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/setting.dart';
 import 'package:get/get.dart';
 
@@ -33,7 +32,7 @@ class DeviceDetailNavigationController extends GetxController {
   final screens = [
     const Home(),
     const History(),
-    const Insights(),
+    // const Insights(),
     const Setting(),
 
   ];

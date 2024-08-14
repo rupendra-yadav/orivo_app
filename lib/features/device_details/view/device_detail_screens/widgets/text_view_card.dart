@@ -9,23 +9,34 @@ class TextViewCard extends StatelessWidget {
     super.key,
     required this.cardText,
     required this.width,
+    required this.cardValue,
+    required this.cardAvg,
   });
 
-  final String cardText;
+  final String cardText,cardValue,cardAvg;
   final double width;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:  EdgeInsets.symmetric(vertical: 10.h),
+      padding:  EdgeInsets.symmetric(vertical: 10.h,horizontal: 5.w),
       child: Container(
         width: width,
         decoration: BoxDecoration(
             color: TColors.primaryDark1,
             borderRadius: BorderRadius.circular(10.r)),
         child: Padding(
-          padding:  EdgeInsets.symmetric(vertical: 50.0.h, horizontal: 5.w),
-          child: TextView(text: cardText),
+          padding:  EdgeInsets.symmetric(vertical: 10.0.h, horizontal: 10.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextView(text: cardText),
+              SizedBox(height: 5.h,),
+              TextView(text: cardValue,fontSize: 30,),
+              SizedBox(height: 5.h,),
+              TextView(text: cardAvg),
+            ],
+          ),
         ),
       ),
     );
