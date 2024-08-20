@@ -13,6 +13,10 @@ class TColors {
   static const Color barColors = Color(0xFF344BFD);
   static const Color downGraphLine = Color(0xFFFD5634);
   static const Color demandGraphLine = Color(0xFF4CDFE8);
+  static const Color totalPowerFactorGraphLine1 = Color(0xFFF7577B);
+  static const Color totalPowerFactorGraphLine2 = Color(0xFF466DE3);
+  static const Color totalPowerFactorGraphLine3 = Color(0xFF72C031);
+  static const Color totalPowerFactorGraphLine4 = Color(0xFF6123FF);
 
 
 

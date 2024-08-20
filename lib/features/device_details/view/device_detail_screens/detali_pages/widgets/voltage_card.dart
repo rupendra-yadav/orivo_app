@@ -4,11 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../../common/widgets/text/text_view.dart';
 import '../../../../../../utils/constant/colors.dart';
 import '../../../../../../utils/constant/text_strings.dart';
-import '../../widgets/custom_bars.dart';
+import 'multi_line_total_power_factor_graph.dart';
 
-
-class DemandEstimateCard extends StatelessWidget {
-  const DemandEstimateCard({
+class VoltageCard extends StatelessWidget {
+  const VoltageCard({
     super.key,
   });
 
@@ -21,34 +20,31 @@ class DemandEstimateCard extends StatelessWidget {
       child: Padding(
         padding:
         EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
-        child: Column(
+        child: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const TextView(text: TTexts.demandEstimate),
-            SizedBox(
-              height: 15.h,
-            ),
-            const TextView(
-              text: TTexts.three20,
-              fontSize: 30,
+            TextView(
+              text: TTexts.voltage,
+              fontSize: 20,
               bold: true,
             ),
-            SizedBox(
-              height: 10.h,
+
+            TextView(
+              text: TTexts.powerQuality096,
+              fontSize: 30,
+              bold: true,
+              textColor: TColors.green,
             ),
-            const CustomBar(),
-            SizedBox(
-              height: 10.h,
+
+            TextView(
+              text: TTexts.averagePF,
+              fontSize: 20,
+              bold: true,
             ),
-            const TextView(text: TTexts.averageKva),
-            SizedBox(
-              height: 10.h,
-            ),
-            const TextView(text: TTexts.highestKva),
-            SizedBox(
-              height: 10.h,
-            ),
-            const TextView(text: TTexts.loadFactor),
+
+            ///Multile Graph
+
+            MultiLineTotalPowerFactorGraph(),
           ],
         ),
       ),

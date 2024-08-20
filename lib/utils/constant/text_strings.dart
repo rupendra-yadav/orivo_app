@@ -173,7 +173,6 @@ class TTexts {
 
 
   /// Cost Estimate Details
-
   static const String costEstimate = "Cost Estimate";
 
 
@@ -185,5 +184,14 @@ class TTexts {
   static const String averageKva = "Average KvA : 320 KvA";
   static const String highestKva = "Higest Kva : 600 KvA";
   static const String loadFactor = "Load Factor : 70 %";
+
+
+
+  /// Power Quality
+  static const String powerQuality = "Power Quality";
+  static const String powerQuality096 = "0.96";
+  static const String averagePF = "Average P.F ----------0.94";
+  static const String voltage = "Voltage";
+
 
 }

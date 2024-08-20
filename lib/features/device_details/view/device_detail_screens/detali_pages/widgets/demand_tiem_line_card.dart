@@ -23,7 +23,7 @@ class DemandTimeLineCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextView(
+            const TextView(
               text: TTexts.demandTimeLine,
               bold: true,
               fontSize: 20,
@@ -31,7 +31,7 @@ class DemandTimeLineCard extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-            Container(height: 170.h, child: DemandTimelineGraph()),
+            SizedBox(height: 170.h, child: const DemandTimelineGraph()),
           ],
         ),
       ),

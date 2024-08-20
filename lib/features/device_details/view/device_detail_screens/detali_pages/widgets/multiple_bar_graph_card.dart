@@ -23,9 +23,9 @@ class MultipleBarGraphCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           /// On-Peak Bar Graph
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
+            children: [
               TextView(text: TTexts.onPeak),
               TextView(text: TTexts.timeRange),
             ],
@@ -34,9 +34,9 @@ class MultipleBarGraphCard extends StatelessWidget {
           SizedBox(height: 10.h),
 
           /// Off-Peak Bar Graph
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
+            children: [
               TextView(text: TTexts.offPeak),
               TextView(text: TTexts.timeRange),
             ],
@@ -45,9 +45,9 @@ class MultipleBarGraphCard extends StatelessWidget {
           SizedBox(height: 10.h),
 
           /// Normal Bar Graph
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
+            children: [
               TextView(text: TTexts.normal),
               TextView(text: TTexts.timeRange),
             ],

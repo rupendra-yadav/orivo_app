@@ -4,15 +4,17 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../../../../../utils/constant/colors.dart';
 
 class DemandTimelineGraph extends StatelessWidget {
+  const DemandTimelineGraph({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SfCartesianChart(
       backgroundColor: Colors.transparent,
-      primaryXAxis: CategoryAxis(
+      primaryXAxis: const CategoryAxis(
         labelStyle: TextStyle(color: Colors.white),
         majorGridLines: MajorGridLines(width: 0),
       ),
-      primaryYAxis: NumericAxis(
+      primaryYAxis: const NumericAxis(
         labelStyle: TextStyle(color: Colors.white),
         minimum: 10,
         maximum: 40,

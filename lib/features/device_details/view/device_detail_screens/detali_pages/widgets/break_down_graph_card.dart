@@ -24,20 +24,20 @@ class BreakDownGraphCard extends StatelessWidget {
           borderWidth: 0,
           plotAreaBorderWidth: 0,
 
-          title: ChartTitle(
+          title: const ChartTitle(
             text: TTexts.breakDownCardTitle,
-            textStyle: const TextStyle(
+            textStyle: TextStyle(
                 color: Colors.white,
                 fontSize: 16,
                 fontWeight: FontWeight.bold),
           ),
 
-          primaryXAxis: CategoryAxis(
-            labelStyle: const TextStyle(color: Colors.white),
-            majorGridLines: const MajorGridLines(width: 0),
-            axisLine: const AxisLine(width: 0),
+          primaryXAxis: const CategoryAxis(
+            labelStyle: TextStyle(color: Colors.white),
+            majorGridLines: MajorGridLines(width: 0),
+            axisLine: AxisLine(width: 0),
           ),
-          primaryYAxis: NumericAxis(
+          primaryYAxis: const NumericAxis(
             isVisible: false, // Hide Y axis
           ),
 

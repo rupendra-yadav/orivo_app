@@ -9,10 +9,12 @@ import '../../../../../utils/constant/text_strings.dart';
 import 'custom_bars.dart';
 
 class PowerDemandCard extends StatelessWidget {
+  const PowerDemandCard({super.key});
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => (Get.to(() => DemandEstimateDetail())),
+      onTap: () => (Get.to(() => const DemandEstimateDetail())),
       child: Container(
         width: double.infinity,
         padding: EdgeInsets.symmetric(vertical: 10.h),
@@ -25,7 +27,7 @@ class PowerDemandCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextView(
+              const TextView(
                 text: TTexts.demand,
                 bold: true,
                 fontSize: 20,
@@ -33,7 +35,7 @@ class PowerDemandCard extends StatelessWidget {
 
               const SizedBox(height: 8),
 
-              TextView(
+              const TextView(
                 text: TTexts.kva,
                 bold: true,
                 fontSize: 35,
@@ -43,12 +45,12 @@ class PowerDemandCard extends StatelessWidget {
 
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.w),
-                child: CustomBar(),
+                child: const CustomBar(),
               ), // Custom progress bar
 
               const SizedBox(height: 8),
 
-              TextView(
+              const TextView(
                 text: TTexts.averageDemand,
                 bold: false,
                 fontSize: 20,

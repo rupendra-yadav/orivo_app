@@ -1,5 +1,4 @@
 import 'package:auro/common/widgets/text/text_view.dart';
-import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/bar_graph.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/break_down_graph_card.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/device_card_details_app_bar.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/multiple_bar_graph_card.dart';
@@ -10,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pie_chart/pie_chart.dart' as pie_chart;
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../widgets/pie_card.dart';
 
@@ -54,12 +52,12 @@ class EnergyConsumptionDetail extends StatelessWidget {
               SizedBox(height: 20.h),
 
               /// Bar Graphs Section
-              MultipleBarGraphCard(),
+              const MultipleBarGraphCard(),
 
               SizedBox(height: 20.h),
 
               /// Breakdown Card
-              BreakDownGraphCard(),
+              const BreakDownGraphCard(),
             ],
           ),
         ),

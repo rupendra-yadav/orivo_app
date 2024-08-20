@@ -1,5 +1,4 @@
 import 'package:auro/features/device_details/view/device_detail_screens/controller/device_detail_controller.dart';
-import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/cost_estimate_detail.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/energy_consumption_detail.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/widgets/cost_estimate_card.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/widgets/device_detail_shimmer.dart';
@@ -16,10 +15,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pie_chart/pie_chart.dart';
-import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 import '../../../../common/widgets/loaders/image_loader.dart';
-import '../../../../common/widgets/text/text_view.dart';
 import '../../../../utils/constant/image_string.dart';
 import '../../controller/device_detail_navigation_controller.dart';
 
@@ -110,11 +107,11 @@ class _HomeState extends State<Home> {
                     ///Demand
                     Padding(
                       padding:  EdgeInsets.symmetric(vertical: 10.h),
-                      child: PowerDemandCard(),
+                      child: const PowerDemandCard(),
                     ),
                     ///Total Power Factors
 
-                    TotalPowerFactorsCard(),
+                    const TotalPowerFactorsCard(),
 
                     /// this is the device detail data
                     Row(
