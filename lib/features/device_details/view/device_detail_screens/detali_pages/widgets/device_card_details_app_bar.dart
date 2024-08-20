@@ -6,7 +6,8 @@ import 'package:iconsax/iconsax.dart';
 import '../../../../../../utils/constant/colors.dart';
 import '../../../../../../utils/constant/sizes.dart';
 
-class DeviceCardDetailsAppBar extends StatefulWidget implements PreferredSizeWidget {
+class DeviceCardDetailsAppBar extends StatefulWidget
+    implements PreferredSizeWidget {
   const DeviceCardDetailsAppBar({
     super.key,
     required this.title,
@@ -28,13 +29,11 @@ class DeviceCardDetailsAppBar extends StatefulWidget implements PreferredSizeWid
       colorNotification,
       colorBackArrow;
 
-  final double sizeTitleSpacing,
-      sizeBackArrow,
-      sizeTitle,
-      sizeNotificationIcon;
+  final double sizeTitleSpacing, sizeBackArrow, sizeTitle, sizeNotificationIcon;
 
   @override
-  _DeviceCardDetailsAppBarState createState() => _DeviceCardDetailsAppBarState();
+  _DeviceCardDetailsAppBarState createState() =>
+      _DeviceCardDetailsAppBarState();
 
   @override
   Size get preferredSize => const Size.fromHeight(TSizes.appBarHeight);
@@ -98,7 +97,8 @@ class _DeviceCardDetailsAppBarState extends State<DeviceCardDetailsAppBar> {
             Center(
               child: Text(
                 widget.title,
-                style: TextStyle(color: widget.colorText, fontSize: widget.sizeTitle),
+                style: TextStyle(
+                    color: widget.colorText, fontSize: widget.sizeTitle),
               ),
             ),
             Row(
@@ -112,7 +112,7 @@ class _DeviceCardDetailsAppBarState extends State<DeviceCardDetailsAppBar> {
                     size: widget.sizeNotificationIcon,
                   ),
                 ),
-               /* if (_dates.length == 2 && _dates[0] != null && _dates[1] != null)
+                /* if (_dates.length == 2 && _dates[0] != null && _dates[1] != null)
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0),
                     child: Text(
