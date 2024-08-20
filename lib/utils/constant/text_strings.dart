@@ -100,6 +100,11 @@ class TTexts {
   static const String avgValue4 = "Avg 0.66";
   static const String totalPowerFactors = "Total Power Factor";
   static const String zero96 = "0.96";
+  static const String bad = "Bad";
+  static const String good = "Good";
+  static const String demand = "Demand";
+  static const String kva = "4000KvA";
+  static const String averageDemand = "Avg Demand : 300Kva";
 
   ///Links
   static const String appleLink = "https://www.google.co.in/";
@@ -158,17 +163,27 @@ class TTexts {
   static const String changeImageText = "Click here to change\nprofile image";
 
   ///Energy Consumption Detail
-  static const String energyConsumptionDetail = "Energy Consumption Detail";
+  static const String energyConsumptionDetail = "Energy Consumption";
   static const String dateRange = "1 August 2024 - 10 August 2024";
   static const String onPeak = "On Peak : ";
   static const String offPeak = "Off Peak : ";
   static const String normal = "Normal : ";
   static const String timeRange = "6 AM to 12 PM";
+  static const String breakDownCardTitle = "Light off/Breakdown/Down Time";
 
 
   /// Cost Estimate Details
 
   static const String costEstimate = "Cost Estimate";
 
+
+
+  /// Demand Estimate Details
+  static const String demandEstimate = "Demand Estimate";
+  static const String demandTimeLine = "Demand Timeline";
+  static const String three20 = "320KvA";
+  static const String averageKva = "Average KvA : 320 KvA";
+  static const String highestKva = "Higest Kva : 600 KvA";
+  static const String loadFactor = "Load Factor : 70 %";
 
 }

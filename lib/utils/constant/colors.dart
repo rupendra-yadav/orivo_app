@@ -11,6 +11,8 @@ class TColors {
 
 
   static const Color barColors = Color(0xFF344BFD);
+  static const Color downGraphLine = Color(0xFFFD5634);
+  static const Color demandGraphLine = Color(0xFF4CDFE8);
 
 
 

@@ -37,7 +37,7 @@ class DeviceCardDetailsAppBar extends StatefulWidget implements PreferredSizeWid
   _DeviceCardDetailsAppBarState createState() => _DeviceCardDetailsAppBarState();
 
   @override
-  Size get preferredSize => Size.fromHeight(TSizes.appBarHeight);
+  Size get preferredSize => const Size.fromHeight(TSizes.appBarHeight);
 }
 
 class _DeviceCardDetailsAppBarState extends State<DeviceCardDetailsAppBar> {
@@ -51,8 +51,8 @@ class _DeviceCardDetailsAppBarState extends State<DeviceCardDetailsAppBar> {
           child: CalendarDatePicker2(
             config: CalendarDatePicker2Config(
               calendarType: CalendarDatePicker2Type.range,
-              selectedDayTextStyle: TextStyle(color: Colors.white),
-              dayTextStyle: TextStyle(color: Colors.black),
+              selectedDayTextStyle: const TextStyle(color: Colors.white),
+              dayTextStyle: const TextStyle(color: Colors.black),
               // Customize other properties as needed
             ),
             value: _dates,

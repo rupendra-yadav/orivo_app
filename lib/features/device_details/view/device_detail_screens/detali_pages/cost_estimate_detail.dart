@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:pie_chart/pie_chart.dart';
 
 import '../../../../../common/widgets/text/text_view.dart';
@@ -18,7 +17,7 @@ class CostEstimate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: DeviceCardDetailsAppBar(title: TTexts.costEstimate),
+        appBar: const DeviceCardDetailsAppBar(title: TTexts.costEstimate),
         backgroundColor: TColors.primary,
         body: Padding(
           padding: SpacingStyle.paddingWithDefaultSpace,
@@ -33,7 +32,7 @@ class CostEstimate extends StatelessWidget {
                     child: Padding(
                       padding:
                       EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
-                      child: TextView(text: TTexts.dateRange),
+                      child: const TextView(text: TTexts.dateRange),
                     ),
                   ),
                 ),
@@ -42,7 +41,7 @@ class CostEstimate extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 20.h),
                   child: InkWell(
-                    onTap: () => Get.to(() => CostEstimate()),
+                    onTap: () => Get.to(() => const CostEstimate()),
                     child: Container(
                         decoration: BoxDecoration(
                           color: TColors.primaryDark1,
@@ -54,7 +53,7 @@ class CostEstimate extends StatelessWidget {
                               vertical: 20.h, horizontal: 10.w),
                           child: Column(
                             children: [
-                              TextView(text: TTexts.costEstimation),
+                              const TextView(text: TTexts.costEstimation),
 
                               SizedBox(
                                 height: 20.h,
@@ -64,7 +63,7 @@ class CostEstimate extends StatelessWidget {
                               PieChart(
                                 dataMap: updatedDataMap2,
                                 animationDuration:
-                                Duration(milliseconds: 800),
+                                const Duration(milliseconds: 800),
                                 chartLegendSpacing: 32.w,
                                 chartRadius:
                                 MediaQuery.of(context).size.width / 3.2,
@@ -79,17 +78,17 @@ class CostEstimate extends StatelessWidget {
                                       color: TColors.primaryDark1,
                                       borderRadius:
                                       BorderRadius.circular(100.r)),
-                                  child: Center(
+                                  child: const Center(
                                     child: TextView(
                                       text: "500",
                                       textColor: Colors.white,
                                     ),
                                   ),
                                 ),
-                                legendOptions: LegendOptions(
+                                legendOptions: const LegendOptions(
                                   showLegends: false
                                 ),
-                                chartValuesOptions: ChartValuesOptions(
+                                chartValuesOptions: const ChartValuesOptions(
                                   showChartValueBackground: true,
                                   showChartValues: false,
                                   showChartValuesInPercentage: false,
@@ -144,10 +143,10 @@ class LegendCard extends StatelessWidget {
   final Color legendColor;
 
   const LegendCard({
-    Key? key,
+    super.key,
     required this.legendText,
     required this.legendColor,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -178,8 +177,8 @@ class LegendCard extends StatelessWidget {
               ),
             ),
 
-            Spacer(),
-            Icon(PhosphorIcons.arrow_right_thin,color: Colors.white,)////////////////////
+            const Spacer(),
+            const Icon(PhosphorIcons.arrow_right_thin,color: Colors.white,)////////////////////
           ],
         ),
       ),
