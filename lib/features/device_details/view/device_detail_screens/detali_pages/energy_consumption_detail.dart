@@ -8,18 +8,27 @@ import 'package:auro/utils/styles/spacing_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:intl/intl.dart';
 import 'package:pie_chart/pie_chart.dart' as pie_chart;
 
 import '../widgets/pie_card.dart';
 
-class EnergyConsumptionDetail extends StatelessWidget {
+class EnergyConsumptionDetail extends StatefulWidget {
   const EnergyConsumptionDetail({super.key});
+
+  @override
+  State<EnergyConsumptionDetail> createState() => _EnergyConsumptionDetailState();
+}
+
+class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
+  String _selectedDateRange = TTexts.chooseDateRange;
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-      const DeviceCardDetailsAppBar(title: TTexts.energyConsumptionDetail),
+     appBar:  const DeviceCardDetailsAppBar(title: TTexts.energyConsumptionDetail),
       backgroundColor: TColors.primary,
       body: Padding(
         padding: SpacingStyle.paddingWithDefaultSpace,
@@ -27,15 +36,77 @@ class EnergyConsumptionDetail extends StatelessWidget {
           child: Column(
             children: [
               /// Date Range Section
-              Center(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: TColors.primaryDark1,
-                    borderRadius: BorderRadius.circular(20.r),
+              GestureDetector(
+                onTap: () async {
+                  // Open the DateRangePickerDialog
+                  DateTimeRange? pickedDateRange = await showDateRangePicker(
+                    context: context,
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2100),
+                    initialDateRange: DateTimeRange(
+                      start: DateTime.now(),
+                      end: DateTime.now(),
+                    ),
+                    builder: (context, child) {
+                      return Theme(
+                        data: Theme.of(context).copyWith(
+                          colorScheme: ColorScheme.light(
+                            primary: TColors.primaryDark2,
+                            onPrimary: Colors.white,
+                            onSurface: Colors.black,
+                          ),
+                          textButtonTheme: TextButtonThemeData(
+                            style: TextButton.styleFrom(
+                              foregroundColor: TColors.primaryDark1,
+                            ),
+                          ),
+                        ),
+                        child: child!,
+                      );
+                    },
+                  );
+
+                  if (pickedDateRange != null) {
+                    // Formatting the date to 1-08-2024 format
+                    String formattedStartDate =
+                    DateFormat('d-MM-yyyy').format(pickedDateRange.start);
+                    String formattedEndDate =
+                    DateFormat('d-MM-yyyy').format(pickedDateRange.end);
+
+                    setState(() {
+                      _selectedDateRange =
+                      "From $formattedStartDate To $formattedEndDate";
+                    });
+                  }
+                },
+                child: Center(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: Container(
+
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: TColors.primaryDark1,
+                        borderRadius: BorderRadius.circular(20.r),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 5.h,horizontal: 10.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Iconsax.calendar_2,
+                              color: Colors.white,
+                            ),
+                            SizedBox(
+                              width: 5.w,
+                            ),
+                            TextView(text: _selectedDateRange),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
-                  padding:
-                  EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
-                  child: const TextView(text: TTexts.dateRange),
                 ),
               ),
 

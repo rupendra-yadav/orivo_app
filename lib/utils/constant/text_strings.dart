@@ -165,6 +165,7 @@ class TTexts {
   ///Energy Consumption Detail
   static const String energyConsumptionDetail = "Energy Consumption";
   static const String dateRange = "1 August 2024 - 10 August 2024";
+  static const String chooseDateRange = "Choose Date Range";
   static const String onPeak = "On Peak : ";
   static const String offPeak = "Off Peak : ";
   static const String normal = "Normal : ";

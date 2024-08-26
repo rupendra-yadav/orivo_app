@@ -190,7 +190,7 @@ Map<String, double> originalDataMap2 = {
   "Flutter": 30,
   "java": 50,
   "React Native": 70,
-  "kuch Nahi": 100,
+  "Python": 100,
 };
 Map<String, double> updatedDataMap2 = {};
 final colorList2 = <Color>[
