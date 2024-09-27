@@ -53,6 +53,7 @@ class _HomeState extends State<Home> {
     controller.getDeviceDetail(navigationController.deviceId.value);
     controller.getDeviceDataItems();
     controller.getDeviceGraphData("f", "3071123300001", "-0d");
+    controller.getEnergyConsumption("2024-09-09", "3071123300001");
     if (kDebugMode) {
       print(navigationController.deviceId.value);
     }
@@ -94,21 +95,34 @@ class _HomeState extends State<Home> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ///Energy Consumption
-                    PieCard(
-                      totalCount: totalCount,
-                      legendPosition: LegendPosition.right,
-                      onPressed: () =>
-                          Get.to(() => const EnergyConsumptionDetail()),
-                    ),
+
+                    Obx(() {
+                      if (controller.isEnergyConsumptionLoading.value) {
+                        return const DeviceDetailShimmer();
+                      }
+                      if (controller.deviceList.isEmpty) {
+                        return const TImageLoaderWidget(
+                            text: 'Whoops! No Device available...!',
+                            animation: TImages.imgLoginBg,
+                            showAction: false);
+                      }
+                      return PieCard(
+                        totalCount: totalCount,
+                        legendPosition: LegendPosition.right,
+                        onPressed: () =>
+                            Get.to(() => const EnergyConsumptionDetail()),
+                      );
+                    }),
 
                     ///Cost Estimate
                     CostEstimateCard(totalCount: totalCount),
 
                     ///Demand
                     Padding(
-                      padding:  EdgeInsets.symmetric(vertical: 10.h),
+                      padding: EdgeInsets.symmetric(vertical: 10.h),
                       child: const PowerDemandCard(),
                     ),
+
                     ///Total Power Factors
 
                     const TotalPowerFactorsCard(),
@@ -167,15 +181,14 @@ class _HomeState extends State<Home> {
   }
 }
 
-
 /////////////////////////////////////////////////////
 
 ///Below data is for the pie charts
 
 Map<String, double> originalDataMap = {
-  "Flutter": 30,
-  "java": 50,
-  "React Native": 70,
+  "On Peak": 30,
+  "Off Peak": 50,
+  "Normal": 70,
 };
 
 Map<String, double> updatedDataMap = {};
@@ -187,10 +200,9 @@ final colorList = <Color>[
 ];
 
 Map<String, double> originalDataMap2 = {
-  "Flutter": 30,
-  "java": 50,
-  "React Native": 70,
-  "Python": 100,
+  "On Peak": 30,
+  "Off Peak": 50,
+  "Normal": 70,
 };
 Map<String, double> updatedDataMap2 = {};
 final colorList2 = <Color>[

@@ -46,7 +46,7 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
                     builder: (context, child) {
                       return Theme(
                         data: Theme.of(context).copyWith(
-                          colorScheme: ColorScheme.light(
+                          colorScheme: const ColorScheme.light(
                             primary: TColors.primaryDark2,
                             onPrimary: Colors.white,
                             onSurface: Colors.black,
@@ -90,7 +90,7 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(
+                            const Icon(
                               Iconsax.calendar_2,
                               color: Colors.white,
                             ),

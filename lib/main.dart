@@ -1,7 +1,6 @@
 import 'package:auro/myapp.dart';
 import 'package:auro/utils/helpers/network_manager.dart';
 import 'package:auro/utils/preferences/cache_manager.dart';
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';

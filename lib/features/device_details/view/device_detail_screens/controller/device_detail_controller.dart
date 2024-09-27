@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../../../../data/repository/device_repository.dart';
 import '../../../../navigation/view/bottom_nav_screen/model/device_list_model.dart';
 import '../model/dart_items.dart';
+import '../model/energy_consumption_model.dart';
 
 class DeviceDetailController extends GetxController {
   static DeviceDetailController get instance => Get.find();
@@ -14,6 +15,8 @@ class DeviceDetailController extends GetxController {
   RxList<DeviceListModel> deviceList = <DeviceListModel>[].obs;
   RxList<DataItems> dataIts = <DataItems>[].obs;
   RxList<GraphData> graphDataList = <GraphData>[].obs;
+  Rx<EnergyConsumptionModel> energyConsumptionData =
+      EnergyConsumptionModel().obs;
 
   late DeviceListModel deviceListModel;
   late GraphData graphDataModel;
@@ -21,6 +24,7 @@ class DeviceDetailController extends GetxController {
   final isDeviceDetailLoading = false.obs;
   final isDeviceDataItemsLoading = false.obs;
   final isDeviceGraphDataLoading = false.obs;
+  final isEnergyConsumptionLoading = false.obs;
 
   ///Device Detail Data
   Future<void> getDeviceDetail(String deviceId) async {
@@ -48,23 +52,23 @@ class DeviceDetailController extends GetxController {
       final dataItems = await _deviceReposotory.getDataItems();
 
       dataIts.assignAll(dataItems);
-
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());
       }
-    }
-    finally{
+    } finally {
       isDeviceDataItemsLoading.value = false;
     }
   }
 
   ///--------Device Graph Data
-  Future<void> getDeviceGraphData(String fieldName,deviceId,rangeValue) async {
+  Future<void> getDeviceGraphData(
+      String fieldName, deviceId, rangeValue) async {
     try {
       isDeviceGraphDataLoading.value = true;
 
-      final graph = await _deviceReposotory.getGraphData(fieldName,deviceId,rangeValue);
+      final graph =
+          await _deviceReposotory.getGraphData(fieldName, deviceId, rangeValue);
 
       graphDataList.assignAll(graph);
       graphDataModel = graphDataList[0];
@@ -72,9 +76,27 @@ class DeviceDetailController extends GetxController {
       if (kDebugMode) {
         print(e.toString());
       }
-    }
-    finally{
+    } finally {
       isDeviceGraphDataLoading.value = false;
+    }
+  }
+
+  ///--------Device Energy Consumption
+  Future<void> getEnergyConsumption(String date, deviceId) async {
+    try {
+      isEnergyConsumptionLoading.value = true;
+
+      final Map<String, dynamic> responsee = await _deviceReposotory.getEnergyConsumption(date, deviceId);
+      final energyConsumption = EnergyConsumptionModel.fromJson(responsee);
+
+      // Assign the object to the Rx variable
+      energyConsumptionData.value = energyConsumption;
+    } catch (e) {
+      if (kDebugMode) {
+        print(e.toString());
+      }
+    } finally {
+      isEnergyConsumptionLoading.value = false;
     }
   }
 }

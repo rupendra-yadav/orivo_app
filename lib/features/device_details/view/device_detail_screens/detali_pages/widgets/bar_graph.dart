@@ -1,8 +1,13 @@
+import 'dart:convert';
+import 'dart:developer';
+
+import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/break_down_graph_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../../utils/constant/colors.dart';
+import 'dart:developer';
 
 class BarGraph extends StatelessWidget {
   const BarGraph({
@@ -11,22 +16,39 @@ class BarGraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    print("Chart Data: ");
+
+    for (var data in chartData) {
+      print("x: ${data.x}, y: ${data.y}");
+    }
+
+    print(chartData.length);
+    print(chartData.hashCode);
+    print(chartData.first);
+    print(chartData.iterator);
+    print(chartData.last);
+
     return SizedBox(
       height: 90.h,
-      child:SfCartesianChart(
+      child: SfCartesianChart(
         borderWidth: 0,
         plotAreaBorderWidth: 0,
         primaryXAxis: const CategoryAxis(
           majorGridLines: MajorGridLines(width: 0),
-          majorTickLines: MajorTickLines(width: 0),  // Hide major tick lines
-          axisLine: AxisLine(width: 0),  // Hide the x-axis line
+          majorTickLines: MajorTickLines(width: 0), // Hide major tick lines
+          axisLine: AxisLine(width: 0), // Hide the x-axis line
         ),
         primaryYAxis: const NumericAxis(
-          majorGridLines: MajorGridLines(width: 0),  // Hide major grid lines
-          minorGridLines: MinorGridLines(width: 0),  // Hide minor grid lines
-          axisLine: AxisLine(width: 0),  // Hide the y-axis line
-          labelStyle: TextStyle(color: Colors.transparent),  // Hide y-axis labels
-          majorTickLines: MajorTickLines(width: 0),  // Hide y-axis tick lines
+          majorGridLines: MajorGridLines(width: 0),
+          // Hide major grid lines
+          minorGridLines: MinorGridLines(width: 0),
+          // Hide minor grid lines
+          axisLine: AxisLine(width: 0),
+          // Hide the y-axis line
+          labelStyle: TextStyle(color: Colors.transparent),
+          // Hide y-axis labels
+          majorTickLines: MajorTickLines(width: 0), // Hide y-axis tick lines
         ),
         series: <CartesianSeries>[
           ColumnSeries<ChartSampleData, double>(
@@ -41,8 +63,9 @@ class BarGraph extends StatelessWidget {
     );
   }
 }
+
 //Initialize the data source.
-List<ChartSampleData > chartData = <ChartSampleData>[
+List<ChartSampleData> chartData = <ChartSampleData>[
   ChartSampleData(x: 1, y: 0.541),
   ChartSampleData(x: 2, y: 0.818),
   ChartSampleData(x: 3, y: 1.51),
@@ -54,5 +77,6 @@ List<ChartSampleData > chartData = <ChartSampleData>[
 class ChartSampleData {
   final double x;
   final double y;
+
   ChartSampleData({required this.x, required this.y});
 }
