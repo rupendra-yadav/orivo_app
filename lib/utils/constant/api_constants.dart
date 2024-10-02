@@ -23,6 +23,9 @@ class APIKeys{
 ///End Keys
 class APIKeys2{
   static const String energyConsumption = "energy-consumption";
+  static const String energyConsumptionDetails = "energy-consumption-details";
+  static const String demand = "demand";
+  // static const String energyConsumption = "energy-consumption";
 }
 
 

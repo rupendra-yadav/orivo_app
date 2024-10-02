@@ -6,33 +6,34 @@ import '../../../../../common/widgets/text/text_view.dart';
 import '../../../../../utils/constant/colors.dart';
 import '../../../../../utils/constant/text_strings.dart';
 import '../home.dart';
+import '../model/consumption_detail_model.dart';
 import '../model/energy_consumption_model.dart';
 
-class PieCard extends StatelessWidget {
-  const PieCard({
+class DetailPieCard extends StatelessWidget {
+  const DetailPieCard({
     super.key,
     required this.totalCount,
     required this.legendPosition,
     required this.onPressed,
     this.showLegendsInRow = false,
-    required this.energyConsumptionModel,
+    required this.consumptionDetail,
   });
 
   final double totalCount;
   final void Function() onPressed;
   final bool showLegendsInRow;
-  final EnergyConsumptionModel energyConsumptionModel;
+  final ConsumptionDetail consumptionDetail;
 
   final LegendPosition legendPosition;
 
   @override
   Widget build(BuildContext context) {
     Map<String, double> originalDataMap = {
-      "On Peak": energyConsumptionModel.onPeakUnit?.value ?? 0.0,
+      "On Peak": consumptionDetail.onPeakUnit?.value ?? 0.0,
       // Handle null with ?? 0.0
-      "Off Peak": energyConsumptionModel.offPeakUnit?.value ?? 0.0,
+      "Off Peak": consumptionDetail.offPeakUnit?.value ?? 0.0,
       // Same for Off Peak
-      "Normal": energyConsumptionModel.normalUnit?.value ?? 0.0,
+      "Normal": consumptionDetail.normalUnit?.value ?? 0.0,
       // Same for Normal
     };
 
@@ -44,8 +45,6 @@ class PieCard extends StatelessWidget {
     });
 
     print(updatedDataMap);
-
-
 
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10.h),
@@ -88,6 +87,7 @@ class PieCard extends StatelessWidget {
                       child: TextView(
                         text: "${totalCount.toString()}\nTotal",
                         textColor: Colors.black,
+
                       ),
                     ),
                   ),

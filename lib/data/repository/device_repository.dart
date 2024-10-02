@@ -7,6 +7,8 @@ import 'package:get/get.dart';
 
 import '../../features/device_details/view/device_detail_screens/model/dart_items.dart';
 import '../../features/device_details/view/device_detail_screens/model/graph_data_model_api.dart';
+import 'package:http/http.dart' as http;
+
 
 class DeviceRepository extends GetxController {
   static DeviceRepository get instance => Get.find();
@@ -130,14 +132,15 @@ class DeviceRepository extends GetxController {
       String date, String deviceId) async {
     try {
       Map<String, dynamic> request = {
-        "start": date.toString(),
-        "device_id": deviceId.toString(),
+        "device_id": deviceId,
+        "start": date,
       };
 
       print("CheckRequest");
       print(request);
-      final response = await THttpHelper2.post(APIKeys2.energyConsumption, request);
+      final response = await THttpHelper2.redirectPost(APIKeys2.energyConsumption, request,);
 
+      print(response);
       if (kDebugMode) {
         print('energy-consumption  Response: $response');
       }
@@ -147,12 +150,51 @@ class DeviceRepository extends GetxController {
 
         // Map<String, dynamic> deviceGraphData = response['data'];
 
-        return response;
+        return response["data"];
       } else {
+        print("error On status");
         throw Exception(response['message']);
       }
     } catch (e) {
-      throw Exception(e. toString());
+      print("error Try  Catch");
+      print(e.toString());
+      throw Exception(e.toString());
     }
   }
+
+  ///Energy Detail Consumption
+  Future<Map<String, dynamic>> getEnergyDetailConsumption(
+      String date, String deviceId, String stop) async {
+    try {
+      Map<String, dynamic> request = {
+        "device_id": deviceId,
+        "start": date,
+        "stop": stop,
+      };
+
+      print("CheckRequest");
+      print(request);
+      final response = await THttpHelper2.redirectPost(APIKeys2.energyConsumptionDetails, request,);
+
+      print(response);
+      if (kDebugMode) {
+        print('energy-consumption  Response: $response');
+      }
+
+      if (response['status'] == 'success') {
+
+        return response["data"];
+      } else {
+        print("error On status");
+        throw Exception(response['message']);
+      }
+    } catch (e) {
+      print("error Try  Catch");
+      print(e.toString());
+      throw Exception(e.toString());
+    }
+  }
+
+
+
 }

@@ -12,23 +12,31 @@ import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:pie_chart/pie_chart.dart' as pie_chart;
 
+import '../controller/device_detail_controller.dart';
+import '../widgets/detail_pie_card.dart';
+import '../widgets/device_detail_shimmer.dart';
 import '../widgets/pie_card.dart';
 
 class EnergyConsumptionDetail extends StatefulWidget {
   const EnergyConsumptionDetail({super.key});
 
   @override
-  State<EnergyConsumptionDetail> createState() => _EnergyConsumptionDetailState();
+  State<EnergyConsumptionDetail> createState() =>
+      _EnergyConsumptionDetailState();
 }
 
 class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
+  final DeviceDetailController controller = Get.put(DeviceDetailController());
+  
   String _selectedDateRange = TTexts.chooseDateRange;
-
-
+  
+  
   @override
   Widget build(BuildContext context) {
+    controller.getEnergyDetailsConsumption("2024-08-01", "3071123300001", "2024-08-03");
     return Scaffold(
-     appBar:  const DeviceCardDetailsAppBar(title: TTexts.energyConsumptionDetail),
+      appBar:
+          const DeviceCardDetailsAppBar(title: TTexts.energyConsumptionDetail),
       backgroundColor: TColors.primary,
       body: Padding(
         padding: SpacingStyle.paddingWithDefaultSpace,
@@ -69,13 +77,13 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
                   if (pickedDateRange != null) {
                     // Formatting the date to 1-08-2024 format
                     String formattedStartDate =
-                    DateFormat('d-MM-yyyy').format(pickedDateRange.start);
+                        DateFormat('d-MM-yyyy').format(pickedDateRange.start);
                     String formattedEndDate =
-                    DateFormat('d-MM-yyyy').format(pickedDateRange.end);
+                        DateFormat('d-MM-yyyy').format(pickedDateRange.end);
 
                     setState(() {
                       _selectedDateRange =
-                      "From $formattedStartDate To $formattedEndDate";
+                          "From $formattedStartDate To $formattedEndDate";
                     });
                   }
                 },
@@ -83,14 +91,14 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.w),
                     child: Container(
-
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         color: TColors.primaryDark1,
                         borderRadius: BorderRadius.circular(20.r),
                       ),
                       child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 5.h,horizontal: 10.w),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 5.h, horizontal: 10.w),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -110,25 +118,50 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
                 ),
               ),
 
-              SizedBox(height: 20.h),
+              Obx(() {
+                if (controller.isEnergyConsumptionDetailLoading.value) {
+                  return const DeviceDetailShimmer();
+                }
 
-              /// Pie Chart Section
-              PieCard(
-                totalCount: 100,
-                legendPosition: pie_chart.LegendPosition.bottom,
-                showLegendsInRow: true,
-                onPressed: () => Get.to(() => const EnergyConsumptionDetail()),
-              ),
+                double onPeak = controller.consumptionDetails.value.onPeakUnit?.value?? 0.0;
+                double offPeak = controller.consumptionDetails.value.offPeakUnit?.value?? 0.0;
+                double normal  = controller.consumptionDetails.value.normalUnit?.value?? 0.0;
+                double totalCount =  onPeak + offPeak + normal;
 
-              SizedBox(height: 20.h),
 
-              /// Bar Graphs Section
-              const MultipleBarGraphCard(),
+                /* if (controller.energyConsumptionData.value.normalUnit != null) {
+                        return const TImageLoaderWidget(
+                            text: 'Whoops! No Device available...!',
+                            animation: TImages.imgLoginBg,
+                            showAction: false);
+                      }*/
 
-              SizedBox(height: 20.h),
+                return Column(
+                  children: [
+                    SizedBox(height: 20.h),
 
-              /// Breakdown Card
-              const BreakDownGraphCard(),
+                    /// Pie Chart Section
+                    DetailPieCard(
+                      totalCount: totalCount,
+                      legendPosition: pie_chart.LegendPosition.bottom,
+                      showLegendsInRow: true,
+                      onPressed: () =>
+                          Get.to(() => const EnergyConsumptionDetail()),
+                      consumptionDetail: controller.consumptionDetails.value,
+                    ),
+
+                    SizedBox(height: 20.h),
+
+                    /// Bar Graphs Section
+                     MultipleBarGraphCard(consumptionDetail: controller.consumptionDetails.value, ),
+
+                    SizedBox(height: 20.h),
+
+                    /// Breakdown Card
+                    const BreakDownGraphCard(),
+                  ],
+                );
+              }),
             ],
           ),
         ),
@@ -136,5 +169,3 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
     );
   }
 }
-
-

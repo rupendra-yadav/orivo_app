@@ -52,7 +52,7 @@ class _HomeState extends State<Home> {
     super.initState();
     controller.getDeviceDetail(navigationController.deviceId.value);
     controller.getDeviceDataItems();
-    controller.getDeviceGraphData("f", "3071123300001", "-0d");
+    // controller.getDeviceGraphData("f", "3071123300001", "-0d");
     controller.getEnergyConsumption("2024-09-09", "3071123300001");
     if (kDebugMode) {
       print(navigationController.deviceId.value);
@@ -61,16 +61,14 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    originalDataMap.forEach((key, value) {
-      updatedDataMap['$key: $value'] = value;
-    });
+
 
     originalDataMap2.forEach((key, value) {
       updatedDataMap2['$key: $value'] = value;
     });
 
-    double totalCount =
-        updatedDataMap.values.reduce((a, b) => a + b); // Calculate total count
+
+
     double totalCount2 =
         updatedDataMap2.values.reduce((a, b) => a + b); // Calculate total count
     return Scaffold(
@@ -100,13 +98,21 @@ class _HomeState extends State<Home> {
                       if (controller.isEnergyConsumptionLoading.value) {
                         return const DeviceDetailShimmer();
                       }
-                      if (controller.deviceList.isEmpty) {
+
+                      double onPeak = controller.energyConsumptionData.value.onPeakUnit?.value?? 0.0;
+                      double offPeak = controller.energyConsumptionData.value.offPeakUnit?.value?? 0.0;
+                      double normal  = controller.energyConsumptionData.value.normalUnit?.value?? 0.0;
+                      double totalCount =  onPeak + offPeak + normal;
+
+
+                     /* if (controller.energyConsumptionData.value.normalUnit != null) {
                         return const TImageLoaderWidget(
                             text: 'Whoops! No Device available...!',
                             animation: TImages.imgLoginBg,
                             showAction: false);
-                      }
+                      }*/
                       return PieCard(
+                        energyConsumptionModel: controller.energyConsumptionData.value,
                         totalCount: totalCount,
                         legendPosition: LegendPosition.right,
                         onPressed: () =>
@@ -115,7 +121,7 @@ class _HomeState extends State<Home> {
                     }),
 
                     ///Cost Estimate
-                    CostEstimateCard(totalCount: totalCount),
+                    CostEstimateCard(totalCount: 2000),
 
                     ///Demand
                     Padding(
@@ -185,13 +191,7 @@ class _HomeState extends State<Home> {
 
 ///Below data is for the pie charts
 
-Map<String, double> originalDataMap = {
-  "On Peak": 30,
-  "Off Peak": 50,
-  "Normal": 70,
-};
 
-Map<String, double> updatedDataMap = {};
 
 final colorList = <Color>[
   const Color(0xff8f8eff),

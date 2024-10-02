@@ -1,60 +1,51 @@
-import 'dart:convert';
-import 'dart:developer';
-
-import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/break_down_graph_card.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:auro/utils/constant/colors.dart';
 
-import '../../../../../../utils/constant/colors.dart';
-import 'dart:developer';
+import '../../model/consumption_detail_graph_model.dart';  // Assuming this is your custom color import
 
 class BarGraph extends StatelessWidget {
   const BarGraph({
-    super.key,
+    super.key, this.onPeakGraph,
   });
+
+  final List<NormalGraph>? onPeakGraph;
 
   @override
   Widget build(BuildContext context) {
 
-    print("Chart Data: ");
+    List<ChartSampleData> chartData = <ChartSampleData>[];
 
-    for (var data in chartData) {
-      print("x: ${data.x}, y: ${data.y}");
-    }
+// Assuming onPeakGraph is a List of data points
+    onPeakGraph?.forEach((graph) {
+      chartData.add(ChartSampleData(x: graph?.y ?? 0.0, y: graph?.x ?? ""));
+    });
 
-    print(chartData.length);
-    print(chartData.hashCode);
-    print(chartData.first);
-    print(chartData.iterator);
-    print(chartData.last);
+
 
     return SizedBox(
       height: 90.h,
       child: SfCartesianChart(
         borderWidth: 0,
         plotAreaBorderWidth: 0,
-        primaryXAxis: const CategoryAxis(
+        primaryXAxis: CategoryAxis(  // Treat x-axis as categories (dates)
           majorGridLines: MajorGridLines(width: 0),
           majorTickLines: MajorTickLines(width: 0), // Hide major tick lines
           axisLine: AxisLine(width: 0), // Hide the x-axis line
         ),
-        primaryYAxis: const NumericAxis(
-          majorGridLines: MajorGridLines(width: 0),
-          // Hide major grid lines
-          minorGridLines: MinorGridLines(width: 0),
-          // Hide minor grid lines
-          axisLine: AxisLine(width: 0),
-          // Hide the y-axis line
-          labelStyle: TextStyle(color: Colors.transparent),
-          // Hide y-axis labels
+        primaryYAxis: NumericAxis(  // Numeric values on y-axis
+          majorGridLines: MajorGridLines(width: 0), // Hide major grid lines
+          axisLine: AxisLine(width: 0), // Hide the y-axis line
           majorTickLines: MajorTickLines(width: 0), // Hide y-axis tick lines
+          labelStyle: TextStyle(color: Colors.transparent), // Hide y-axis labels
         ),
         series: <CartesianSeries>[
-          ColumnSeries<ChartSampleData, double>(
-            dataSource: chartData,
-            xValueMapper: (ChartSampleData data, _) => data.x,
-            yValueMapper: (ChartSampleData data, _) => data.y,
+          ColumnSeries<ChartSampleData, String>(  // Use String for x values
+            dataSource: chartData,  // Pass your chart data
+            xValueMapper: (ChartSampleData data, _) => data.y,  // Map date to x
+            yValueMapper: (ChartSampleData data, _) => data.x,  // Map numeric value to y
             borderRadius: BorderRadius.all(Radius.circular(5.r)),
             color: TColors.barColors,
           ),
@@ -64,19 +55,10 @@ class BarGraph extends StatelessWidget {
   }
 }
 
-//Initialize the data source.
-List<ChartSampleData> chartData = <ChartSampleData>[
-  ChartSampleData(x: 1, y: 0.541),
-  ChartSampleData(x: 2, y: 0.818),
-  ChartSampleData(x: 3, y: 1.51),
-  ChartSampleData(x: 4, y: 1.302),
-  ChartSampleData(x: 5, y: 2.017),
-  ChartSampleData(x: 6, y: 1.683),
-];
 
 class ChartSampleData {
-  final double x;
-  final double y;
+  final double x;  // The numeric value (y-axis)
+  final String y;  // The date (x-axis)
 
   ChartSampleData({required this.x, required this.y});
 }

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../../../../data/repository/device_repository.dart';
 import '../../../../navigation/view/bottom_nav_screen/model/device_list_model.dart';
+import '../model/consumption_detail_model.dart';
 import '../model/dart_items.dart';
 import '../model/energy_consumption_model.dart';
 
@@ -15,8 +16,8 @@ class DeviceDetailController extends GetxController {
   RxList<DeviceListModel> deviceList = <DeviceListModel>[].obs;
   RxList<DataItems> dataIts = <DataItems>[].obs;
   RxList<GraphData> graphDataList = <GraphData>[].obs;
-  Rx<EnergyConsumptionModel> energyConsumptionData =
-      EnergyConsumptionModel().obs;
+  Rx<EnergyConsumptionModel> energyConsumptionData = EnergyConsumptionModel().obs;
+  Rx<ConsumptionDetail> consumptionDetails = ConsumptionDetail().obs;
 
   late DeviceListModel deviceListModel;
   late GraphData graphDataModel;
@@ -25,6 +26,7 @@ class DeviceDetailController extends GetxController {
   final isDeviceDataItemsLoading = false.obs;
   final isDeviceGraphDataLoading = false.obs;
   final isEnergyConsumptionLoading = false.obs;
+  final isEnergyConsumptionDetailLoading = false.obs;
 
   ///Device Detail Data
   Future<void> getDeviceDetail(String deviceId) async {
@@ -87,16 +89,34 @@ class DeviceDetailController extends GetxController {
       isEnergyConsumptionLoading.value = true;
 
       final Map<String, dynamic> responsee = await _deviceReposotory.getEnergyConsumption(date, deviceId);
-      final energyConsumption = EnergyConsumptionModel.fromJson(responsee);
-
       // Assign the object to the Rx variable
-      energyConsumptionData.value = energyConsumption;
+      energyConsumptionData.value = EnergyConsumptionModel.fromJson(responsee);
     } catch (e) {
-      if (kDebugMode) {
+
+        print("dataSetModel");
         print(e.toString());
-      }
+
     } finally {
       isEnergyConsumptionLoading.value = false;
     }
   }
+
+  ///--------Device Energy Details Consumption
+  Future<void> getEnergyDetailsConsumption(String date, deviceId,String stop) async {
+    try {
+      isEnergyConsumptionDetailLoading.value = true;
+
+      final Map<String, dynamic> responsee = await _deviceReposotory.getEnergyDetailConsumption(date, deviceId,stop);
+      // Assign the object to the Rx variable
+      consumptionDetails.value = ConsumptionDetail.fromJson(responsee);
+    } catch (e) {
+
+      print("dataSetModel");
+      print(e.toString());
+
+    } finally {
+      isEnergyConsumptionDetailLoading.value = false;
+    }
+  }
+
 }

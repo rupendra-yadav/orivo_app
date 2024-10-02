@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../../../../../../common/widgets/text/text_view.dart';
 import '../../../../../../utils/constant/colors.dart';
 import '../../../../../../utils/constant/text_strings.dart';
+import '../../model/consumption_detail_model.dart';
 import 'bar_graph.dart';
 
 class MultipleBarGraphCard extends StatelessWidget {
   const MultipleBarGraphCard({
-    super.key,
+    super.key, required this.consumptionDetail,
   });
+
+  final ConsumptionDetail consumptionDetail;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +33,7 @@ class MultipleBarGraphCard extends StatelessWidget {
               TextView(text: TTexts.timeRange),
             ],
           ),
-          const BarGraph(),
+           BarGraph(onPeakGraph: consumptionDetail.onPeakGraph),
           SizedBox(height: 10.h),
 
           /// Off-Peak Bar Graph
