@@ -43,7 +43,7 @@ class MultipleBarGraphCard extends StatelessWidget {
               TextView(text: TTexts.timeRange),
             ],
           ),
-          const BarGraph(),
+           BarGraph(onPeakGraph: consumptionDetail.offPeakGraph),
           SizedBox(height: 10.h),
 
           /// Normal Bar Graph
@@ -53,7 +53,7 @@ class MultipleBarGraphCard extends StatelessWidget {
               TextView(text: TTexts.timeRange),
             ],
           ),
-          const BarGraph(),
+           BarGraph(onPeakGraph: consumptionDetail.normalGraph),
         ],
       ),
     );

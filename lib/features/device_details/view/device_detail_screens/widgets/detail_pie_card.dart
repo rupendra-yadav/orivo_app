@@ -85,7 +85,7 @@ class DetailPieCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(100.r)),
                     child: Center(
                       child: TextView(
-                        text: "${totalCount.toString()}\nTotal",
+                        text: "${totalCount.toStringAsFixed(2)}\nTotal",
                         textColor: Colors.black,
 
                       ),

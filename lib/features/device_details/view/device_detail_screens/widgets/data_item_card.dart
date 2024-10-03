@@ -6,6 +6,7 @@ import '../../../../../common/widgets/text/text_view.dart';
 import '../../../../../utils/constant/colors.dart';
 import '../controller/device_detail_controller.dart';
 import '../model/dart_items.dart';
+import '../model/history_filter_model.dart';
 
 class DataItemCard extends StatelessWidget {
   const DataItemCard({
@@ -19,7 +20,7 @@ class DataItemCard extends StatelessWidget {
   });
 
   final Color colorContainer;
-  final DataItems dataItems;
+  final Filters dataItems;
   final bool isSelected;
   final void Function() onTap;
   // final String range, deviceId;
@@ -45,16 +46,18 @@ class DataItemCard extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextView(
-                text: dataItems.field,
-                textColor:
-                    isSelected ? TColors.secondary : TColors.primaryLight1,
+              Center(
+                child: TextView(
+                  text: dataItems.name ?? '',
+                  textColor:
+                      isSelected ? TColors.secondary : TColors.primaryLight1,
+                ),
               ),
-              TextView(
+              /*TextView(
                 text: "0",
                 textColor:
                     isSelected ? TColors.secondary : TColors.primaryLight1,
-              ),
+              ),*/
             ],
           ),
         ),

@@ -6,10 +6,13 @@ import 'package:get/get.dart';
 import '../../../../../common/widgets/text/text_view.dart';
 import '../../../../../utils/constant/colors.dart';
 import '../../../../../utils/constant/text_strings.dart';
+import '../model/demand_model.dart';
 import 'custom_bars.dart';
 
 class PowerDemandCard extends StatelessWidget {
-  const PowerDemandCard({super.key});
+  const PowerDemandCard({super.key, required this.demandModel});
+
+  final DemandModel demandModel;
 
   @override
   Widget build(BuildContext context) {
@@ -32,26 +35,35 @@ class PowerDemandCard extends StatelessWidget {
                 bold: true,
                 fontSize: 20,
               ),
-
               const SizedBox(height: 8),
-
-              const TextView(
-                text: TTexts.kva,
+              TextView(
+                text: demandModel.currentDemand!.value.toString() +
+                    "" +
+                    demandModel.currentDemand!.unit.toString(),
                 bold: true,
                 fontSize: 35,
               ),
-
               const SizedBox(height: 8),
-
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.w),
-                child: const CustomBar(),
-              ), // Custom progress bar
-
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10.w),
+                      child: CustomBar(
+                        max: demandModel.avgDemand?.value?.toInt() ?? 0,
+                        value: demandModel.currentDemand?.value?.toInt() ?? 0,
+                      ),
+                    ),
+                    // Other widgets can be added here
+                  ],
+                ),
+              ),
               const SizedBox(height: 8),
-
-              const TextView(
-                text: TTexts.averageDemand,
+              TextView(
+                text: "Avg Demand : ${demandModel.avgDemand?.value?.round().toString() ??
+                        '0'} ${demandModel.avgDemand?.unit?.toString() ?? ''}",
+                // Ensure unit is also handled
                 bold: false,
                 fontSize: 20,
               ),

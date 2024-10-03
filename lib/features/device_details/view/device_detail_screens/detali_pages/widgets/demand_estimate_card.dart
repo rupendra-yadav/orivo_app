@@ -4,17 +4,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../../common/widgets/text/text_view.dart';
 import '../../../../../../utils/constant/colors.dart';
 import '../../../../../../utils/constant/text_strings.dart';
+import '../../model/demand_detail_model.dart';
 import '../../widgets/custom_bars.dart';
 
 
 class DemandEstimateCard extends StatelessWidget {
   const DemandEstimateCard({
     super.key,
+    required this.demandDetailModel,
   });
+
+  final DemandDetailModel demandDetailModel;
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       decoration: BoxDecoration(
           color: TColors.primaryDark1,
           borderRadius: BorderRadius.circular(20.r)),
@@ -28,27 +33,40 @@ class DemandEstimateCard extends StatelessWidget {
             SizedBox(
               height: 15.h,
             ),
-            const TextView(
-              text: TTexts.three20,
+             TextView(
+              text:  "${demandDetailModel.currentDemand?.value?.round().toString() ??
+                  '0'} ${demandDetailModel.currentDemand?.unit?.toString() ?? ''}",
               fontSize: 30,
               bold: true,
             ),
             SizedBox(
               height: 10.h,
             ),
-            const CustomBar(),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  CustomBar(
+                    max: demandDetailModel.highestDemand?.value?.toInt() ?? 0,
+                    value: demandDetailModel.currentDemand?.value?.toInt() ?? 0,
+                  ),
+                  // Add more widgets here as needed
+                ],
+              ),
+            ),
             SizedBox(
               height: 10.h,
             ),
-            const TextView(text: TTexts.averageKva),
+             TextView(text: "Average ${demandDetailModel.avgDemand?.unit?.toString() ?? ''} : ${demandDetailModel.avgDemand?.value?.round().toString() ?? ''} ${demandDetailModel.avgDemand?.unit?.toString() ?? ''}"),
             SizedBox(
               height: 10.h,
             ),
-            const TextView(text: TTexts.highestKva),
+            TextView(text: "Highest ${demandDetailModel.highestDemand?.unit?.toString() ?? ''} : ${demandDetailModel.highestDemand?.value?.round().toString() ?? ''} ${demandDetailModel.highestDemand?.unit?.toString() ?? ''}"),
+
             SizedBox(
               height: 10.h,
             ),
-            const TextView(text: TTexts.loadFactor),
+            TextView(text: "Load Factor ${demandDetailModel.loadFactor?.unit?.toString() ?? ''} : ${demandDetailModel.loadFactor?.value?.round().toString() ?? ''} ${demandDetailModel.loadFactor?.unit?.toString() ?? ''}"),
           ],
         ),
       ),

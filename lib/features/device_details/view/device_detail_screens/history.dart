@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../../../common/widgets/buttons/text_button.dart';
@@ -54,9 +55,15 @@ class _HistoryState extends State<History> {
   @override
   void initState() {
     super.initState();
-    controller.getDeviceDetail(navigationController.deviceId.value);
+
+    controller.getDeviceDetail(navigationController.deviceId.value,"");
+
     controller.getDeviceDataItems();
+
     controller.getDeviceGraphData("f", "3071123300001", "-0d");
+
+    controller.getHistoryFields();
+
     if (kDebugMode) {
       print(navigationController.deviceId.value);
     }
@@ -131,16 +138,16 @@ class _HistoryState extends State<History> {
                         children: [
                           ///select data items Page
                           Obx(() {
-                            if (controller.isDeviceDataItemsLoading.value) {
+                            if (controller.isHistoryFieldLoading.value) {
                               return const DeviceItemShimmer();
                             }
 
-                            if (controller.dataIts.isEmpty) {
+                           /* if (controller.dataIts.isEmpty) {
                               return const TImageLoaderWidget(
                                   text: 'Whoops! No Device available...!',
                                   animation: TImages.imgLoginBg,
                                   showAction: false);
-                            }
+                            }*/
 
                             return Padding(
                               padding: SpacingStyle.paddingWithDefaultSpace,
@@ -153,11 +160,13 @@ class _HistoryState extends State<History> {
                                       mainAxisSpacing: 10.w,
                                       crossAxisSpacing: 10.h,
                                       childAspectRatio: 1),
-                                  itemCount: controller.dataIts.length - 1,
+                                  itemCount: controller.historyFieldModel.value.filters?.length != null
+                                      ? (controller.historyFieldModel.value.filters!.length - 1)
+                                      : 0,
                                   itemBuilder: (_, index) {
                                     return DataItemCard(
                                       colorContainer: TColors.primaryDark2,
-                                      dataItems: controller.dataIts[index + 1],
+                                      dataItems: controller.historyFieldModel.value.filters![index + 1],
                                       isSelected: selectedIndices.contains(index),
                                       onTap: () => handleCardTap(index),
                                     );

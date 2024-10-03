@@ -3,6 +3,8 @@ import 'package:auro/features/device_details/view/device_detail_screens/detali_p
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/device_card_details_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 
@@ -10,6 +12,8 @@ import '../../../../../common/widgets/text/text_view.dart';
 import '../../../../../utils/constant/colors.dart';
 import '../../../../../utils/constant/text_strings.dart';
 import '../../../../../utils/styles/spacing_style.dart';
+import '../controller/device_detail_controller.dart';
+import '../widgets/device_detail_shimmer.dart';
 
 class DemandEstimateDetail extends StatefulWidget {
   const DemandEstimateDetail({super.key});
@@ -19,6 +23,23 @@ class DemandEstimateDetail extends StatefulWidget {
 }
 
 class _DemandEstimateDetailState extends State<DemandEstimateDetail> {
+  final DeviceDetailController controller = Get.put(DeviceDetailController());
+
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Get the current date and format it
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('yyyy-MM-dd').format(now);
+
+    // Call the API with the current date
+    controller.getDemandDetail(formattedDate, controller.deviceListModel.mMachineUniqueId, "");
+  }
+
+
+
   String _selectedDateRange = TTexts.chooseDateRange;
 
   @override
@@ -64,14 +85,18 @@ class _DemandEstimateDetailState extends State<DemandEstimateDetail> {
 
                   if (pickedDateRange != null) {
                     // Formatting the date to 1-08-2024 format
-                    String formattedStartDate =
-                    DateFormat('d-MM-yyyy').format(pickedDateRange.start);
-                    String formattedEndDate =
-                    DateFormat('d-MM-yyyy').format(pickedDateRange.end);
+                    String formattedStartDate = DateFormat('d-MM-yyyy').format(pickedDateRange.start);
+                    String formattedStartDateInYears = DateFormat('yyyy-MM-d').format(pickedDateRange.start);
+
+                    String formattedEndDate = DateFormat('d-MM-yyyy').format(pickedDateRange.end);
+                    String formattedEndDateInYears = DateFormat('yyyy-MM-d').format(pickedDateRange.end);
 
                     setState(() {
                       _selectedDateRange =
                       "From $formattedStartDate To $formattedEndDate";
+
+                      controller.getDemandDetail(formattedStartDateInYears, controller.deviceListModel.mMachineUniqueId, formattedEndDateInYears);
+
                     });
                   }
                 },
@@ -110,8 +135,23 @@ class _DemandEstimateDetailState extends State<DemandEstimateDetail> {
                 height: 20.h,
               ),
 
-              /// Demand Estimate
-              const DemandEstimateCard(),
+              Obx((){
+
+                if (controller.isDemandDetailLoading.value) {
+                  return const DeviceDetailShimmer();
+                }
+
+                /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
+                        return const TImageLoaderWidget(
+                            text: 'Whoops! No Device available...!',
+                            animation: TImages.imgLoginBg,
+                            showAction: false);
+                      }*/
+
+                return  /// Demand Estimate
+                  DemandEstimateCard(demandDetailModel: controller.demandDetailModel.value,);
+              }),
+
 
               SizedBox(
                 height: 20.h,

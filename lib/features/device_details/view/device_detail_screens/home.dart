@@ -14,6 +14,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:pie_chart/pie_chart.dart';
 
 import '../../../../common/widgets/loaders/image_loader.dart';
@@ -50,24 +51,31 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    controller.getDeviceDetail(navigationController.deviceId.value);
+
+    DateTime now = DateTime.now();
+    // Create a UTC DateTime
+    DateTime utcNow = now.toUtc();
+
+    // Format the date to the desired format
+    String formattedDate =
+        DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(utcNow);
+
+    // Now you can use the formattedDate
+    controller.getDeviceDetail(
+        navigationController.deviceId.value, formattedDate);
     controller.getDeviceDataItems();
-    // controller.getDeviceGraphData("f", "3071123300001", "-0d");
-    controller.getEnergyConsumption("2024-09-09", "3071123300001");
+
     if (kDebugMode) {
       print(navigationController.deviceId.value);
+      print(formattedDate); // Print the formatted date for debugging
     }
   }
 
   @override
   Widget build(BuildContext context) {
-
-
     originalDataMap2.forEach((key, value) {
       updatedDataMap2['$key: $value'] = value;
     });
-
-
 
     double totalCount2 =
         updatedDataMap2.values.reduce((a, b) => a + b); // Calculate total count
@@ -99,13 +107,18 @@ class _HomeState extends State<Home> {
                         return const DeviceDetailShimmer();
                       }
 
-                      double onPeak = controller.energyConsumptionData.value.onPeakUnit?.value?? 0.0;
-                      double offPeak = controller.energyConsumptionData.value.offPeakUnit?.value?? 0.0;
-                      double normal  = controller.energyConsumptionData.value.normalUnit?.value?? 0.0;
-                      double totalCount =  onPeak + offPeak + normal;
+                      double onPeak = controller
+                              .energyConsumptionData.value.onPeakUnit?.value ??
+                          0.0;
+                      double offPeak = controller
+                              .energyConsumptionData.value.offPeakUnit?.value ??
+                          0.0;
+                      double normal = controller
+                              .energyConsumptionData.value.normalUnit?.value ??
+                          0.0;
+                      double totalCount = onPeak + offPeak + normal;
 
-
-                     /* if (controller.energyConsumptionData.value.normalUnit != null) {
+                      /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
                         return const TImageLoaderWidget(
                             text: 'Whoops! No Device available...!',
                             animation: TImages.imgLoginBg,
@@ -120,62 +133,160 @@ class _HomeState extends State<Home> {
                       );
                     }),
 
+
                     ///Cost Estimate
-                    CostEstimateCard(totalCount: 2000),
+                    Obx(() {
+                      if (controller.isCostEstimateLoading.value) {
+                        return const DeviceDetailShimmer();
+                      }
 
-                    ///Demand
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10.h),
-                      child: const PowerDemandCard(),
-                    ),
 
-                    ///Total Power Factors
+                      double energy = controller
+                          .costEstimateModel.value.normEnergy?.value ??
+                          0.0;
+                      double govt = controller
+                          .costEstimateModel.value.govCost?.value ??
+                          0.0;
+                      double demand = controller
+                          .costEstimateModel.value.demand?.value ??
+                          0.0;
+                      double others = controller
+                          .costEstimateModel.value.other?.value ??
+                          0.0;
+                      double totalCont = energy + govt + demand+ others;
 
-                    const TotalPowerFactorsCard(),
 
-                    /// this is the device detail data
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextViewCard(
-                            cardText: TTexts.frequency,
-                            width: TDeviceUtils.screenWidth / 2,
-                            cardValue: TTexts.cardValue1,
-                            cardAvg: TTexts.avgValue1,
-                          ),
+                      /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
+                        return const TImageLoaderWidget(
+                            text: 'Whoops! No Device available...!',
+                            animation: TImages.imgLoginBg,
+                            showAction: false);
+                      }*/
+
+                      return
+
+                          CostEstimateCard(
+                              costEstimateModel: controller.costEstimateModel.value,
+                              totalCount: totalCont);
+                    }),
+
+                    Obx(() {
+                      if (controller.isDemandLoading.value) {
+                        return const DeviceDetailShimmer();
+                      }
+
+                      /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
+                        return const TImageLoaderWidget(
+                            text: 'Whoops! No Device available...!',
+                            animation: TImages.imgLoginBg,
+                            showAction: false);
+                      }*/
+
+                      return
+
+                          ///Demand
+                          Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10.h),
+                        child: PowerDemandCard(
+                          demandModel: controller.demandModel.value,
                         ),
-                        SizedBox(width: 5.w),
-                        Expanded(
-                          child: TextViewCard(
-                            cardText: TTexts.totalVoltage,
-                            width: TDeviceUtils.screenWidth / 2,
-                            cardValue: TTexts.cardValue2,
-                            cardAvg: TTexts.avgValue2,
+                      );
+                    }),
+
+                    Obx(() {
+                      if (controller.isPowerFactorLoading.value) {
+                        return const DeviceDetailShimmer();
+                      }
+
+                      /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
+                        return const TImageLoaderWidget(
+                            text: 'Whoops! No Device available...!',
+                            animation: TImages.imgLoginBg,
+                            showAction: false);
+                      }*/
+
+                      ///Total Power Factors
+                      return TotalPowerFactorsCard(
+                        powerFactorModel: controller.powerFactorModel.value,
+                      );
+                    }),
+
+                    Obx(() {
+                      if (controller.isPowerFactorLoading.value) {
+                        return const DeviceDetailShimmer();
+                      }
+
+                      /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
+                        return const TImageLoaderWidget(
+                            text: 'Whoops! No Device available...!',
+                            animation: TImages.imgLoginBg,
+                            showAction: false);
+                      }*/
+
+                      return
+
+                          /// this is the device detail data
+                          Row(
+                        children: [
+                          Expanded(
+                              child: TextViewCard(
+                                  cardText: TTexts.frequency,
+                                  width: TDeviceUtils.screenWidth / 2,
+                                  cardValue:
+                                      "${controller.powerFactorModel.value.freq?.value?.toStringAsFixed(2) ?? "0.0"}${controller.powerFactorModel.value.freq?.unit?.toString() ?? "0.0"}",
+                                  cardAvg:
+                                      "${controller.powerFactorModel.value.avgFreq?.value?.toStringAsFixed(2) ?? "0.0"}${controller.powerFactorModel.value.avgFreq?.unit?.toString() ?? "0.0"}")),
+                          SizedBox(width: 5.w),
+                          Expanded(
+                            child: TextViewCard(
+                              cardText: TTexts.totalVoltage,
+                              width: TDeviceUtils.screenWidth / 2,
+                              cardValue:
+                                  "${controller.powerFactorModel.value.volt?.value?.toStringAsFixed(2) ?? "0.0"}${controller.powerFactorModel.value.volt?.unit?.toString() ?? "0.0"}",
+                              cardAvg:
+                                  "${controller.powerFactorModel.value.avgVolt?.value?.toStringAsFixed(2) ?? "0.0"}${controller.powerFactorModel.value.avgVolt?.unit?.toString() ?? "0.0"}",
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextViewCard(
-                            cardText: TTexts.totalCurrent,
-                            width: TDeviceUtils.screenWidth / 2,
-                            cardValue: TTexts.cardValue3,
-                            cardAvg: TTexts.avgValue3,
+                        ],
+                      );
+                    }),
+
+                    Obx(() {
+                      if (controller.isPowerFactorLoading.value) {
+                        return const DeviceDetailShimmer();
+                      }
+
+                      /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
+                        return const TImageLoaderWidget(
+                            text: 'Whoops! No Device available...!',
+                            animation: TImages.imgLoginBg,
+                            showAction: false);
+                      }*/
+
+                      return Row(
+                        children: [
+                          Expanded(
+                            child: TextViewCard(
+                              cardText: TTexts.totalCurrent,
+                              width: TDeviceUtils.screenWidth / 2,
+                              cardValue:
+                                  "${(controller.powerFactorModel.value.current?.value ?? 0.0).toStringAsFixed(1)}${controller.powerFactorModel.value.current?.unit?.toString() ?? "0.0"}",
+                              cardAvg:
+                                  "${controller.powerFactorModel.value.avgCurrent?.value?.toStringAsFixed(2) ?? "0.0"}${controller.powerFactorModel.value.avgCurrent?.unit?.toString() ?? "0.0"}",
+                            ),
                           ),
-                        ),
-                        SizedBox(width: 5.w),
-                        Expanded(
-                          child: TextViewCard(
-                            cardText: TTexts.totalHD,
-                            width: TDeviceUtils.screenWidth / 2,
-                            cardValue: TTexts.cardValue4,
-                            cardAvg: TTexts.avgValue4,
+                          SizedBox(width: 5.w),
+                          Expanded(
+                            child: TextViewCard(
+                              cardText: TTexts.totalHD,
+                              width: TDeviceUtils.screenWidth / 2,
+                              cardValue:  "${(controller.powerFactorModel.value.totalPf?.value ?? 0.0).toStringAsFixed(1)}${controller.powerFactorModel.value.totalPf?.unit?.toString() ?? "0.0"}",
+                              cardAvg:  "${(controller.powerFactorModel.value.avgPf?.value ?? 0.0).toStringAsFixed(1)}${controller.powerFactorModel.value.avgPf?.unit?.toString() ?? "0.0"}",
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
+                        ],
+                      );
+                    }),
                   ],
                 );
               }),
@@ -190,8 +301,6 @@ class _HomeState extends State<Home> {
 /////////////////////////////////////////////////////
 
 ///Below data is for the pie charts
-
-
 
 final colorList = <Color>[
   const Color(0xff8f8eff),

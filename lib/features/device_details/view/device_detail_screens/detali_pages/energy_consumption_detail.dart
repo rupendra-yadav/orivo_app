@@ -29,11 +29,24 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
   final DeviceDetailController controller = Get.put(DeviceDetailController());
   
   String _selectedDateRange = TTexts.chooseDateRange;
-  
-  
+
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Get the current date and format it
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('yyyy-MM-dd').format(now);
+
+    // Call the API with the current date
+    controller.getEnergyDetailsConsumption(formattedDate, controller.deviceListModel.mMachineUniqueId, "");
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    controller.getEnergyDetailsConsumption("2024-08-01", "3071123300001", "2024-08-03");
+    //controller.getEnergyDetailsConsumption("2024-08-01", "3071123300001", "2024-08-03");
     return Scaffold(
       appBar:
           const DeviceCardDetailsAppBar(title: TTexts.energyConsumptionDetail),
@@ -76,14 +89,17 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
 
                   if (pickedDateRange != null) {
                     // Formatting the date to 1-08-2024 format
-                    String formattedStartDate =
-                        DateFormat('d-MM-yyyy').format(pickedDateRange.start);
-                    String formattedEndDate =
-                        DateFormat('d-MM-yyyy').format(pickedDateRange.end);
+                    String formattedStartDate = DateFormat('d-MM-yyyy').format(pickedDateRange.start);
+                    String formattedStartDateInYears = DateFormat('yyyy-MM-d').format(pickedDateRange.start);
+
+                    String formattedEndDate = DateFormat('d-MM-yyyy').format(pickedDateRange.end);
+                    String formattedEndDateInYears = DateFormat('yyyy-MM-d').format(pickedDateRange.end);
 
                     setState(() {
                       _selectedDateRange =
                           "From $formattedStartDate To $formattedEndDate";
+
+                      controller.getEnergyDetailsConsumption(formattedStartDateInYears, controller.deviceListModel.mMachineUniqueId, formattedEndDateInYears);
                     });
                   }
                 },

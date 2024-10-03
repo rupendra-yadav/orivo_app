@@ -8,18 +8,37 @@ import '../../../../../utils/constant/colors.dart';
 import '../../../../../utils/constant/text_strings.dart';
 import '../detali_pages/cost_estimate_detail.dart';
 import '../home.dart';
+import '../model/cost_estimate_model.dart';
 
 
 class CostEstimateCard extends StatelessWidget {
   const CostEstimateCard({
     super.key,
     required this.totalCount,
+    required this.costEstimateModel,
   });
 
   final double totalCount;
+  final CostEstimateModel costEstimateModel;
 
   @override
   Widget build(BuildContext context) {
+
+    Map<String, double> originalDataMap = {
+      "Energy": costEstimateModel.normEnergy?.value ?? 0.0,
+      "Govt": costEstimateModel.govCost?.value ?? 0.0,
+      "Demand": costEstimateModel.demand?.value ?? 0.0,
+      "Other": costEstimateModel.other?.value ?? 0.0,
+    };
+
+    Map<String, double> updatedDataMap = {};
+
+    originalDataMap.forEach((key, value) {
+      updatedDataMap['$key: $value'] = value;
+    });
+
+    print(updatedDataMap);
+
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10.h),
       child: InkWell(
@@ -44,7 +63,7 @@ class CostEstimateCard extends StatelessWidget {
                   ///Pie Chart
 
                   PieChart(
-                    dataMap: updatedDataMap2,
+                    dataMap: updatedDataMap,
                     animationDuration:
                     const Duration(milliseconds: 800),
                     chartLegendSpacing: 32.w,
@@ -65,7 +84,7 @@ class CostEstimateCard extends StatelessWidget {
                       child: Center(
                         child: TextView(
                           text:
-                          "${totalCount.toStringAsFixed(0)} Rs",
+                          "${totalCount.toStringAsFixed(2)} Rs",
                           textColor: Colors.white,
                         ),
                       ),

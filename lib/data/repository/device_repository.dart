@@ -178,7 +178,7 @@ class DeviceRepository extends GetxController {
 
       print(response);
       if (kDebugMode) {
-        print('energy-consumption  Response: $response');
+        print('energy-consumption_details  Response: $response');
       }
 
       if (response['status'] == 'success') {
@@ -195,6 +195,177 @@ class DeviceRepository extends GetxController {
     }
   }
 
+
+  /// Demand
+  Future<Map<String, dynamic>> getDemand(
+      String date, String deviceId, String stop) async {
+    try {
+      Map<String, dynamic> request = {
+        "device_id": deviceId,
+        "start": date,
+        "stop": stop,
+      };
+
+      print("CheckRequest");
+      print(request);
+      final response = await THttpHelper2.redirectPost(APIKeys2.demand, request,);
+
+      print(response);
+      if (kDebugMode) {
+        print('demand  Response: $response');
+      }
+
+      if (response['status'] == 'success') {
+
+        return response["data"];
+      } else {
+        print("error On status");
+        throw Exception(response['message']);
+      }
+    } catch (e) {
+      print("error Try  Catch");
+      print(e.toString());
+      throw Exception(e.toString());
+    }
+  }
+
+
+
+  /// Demand Details
+  Future<Map<String, dynamic>> getDemandDetails(
+      String date, String deviceId, String stop) async {
+    try {
+      Map<String, dynamic> request = {
+        "device_id": deviceId,
+        "start": date,
+        "stop": stop,
+      };
+
+      print("CheckRequest");
+      print(request);
+      final response = await THttpHelper2.redirectPost(APIKeys2.demandDetail, request,);
+
+      print(response);
+      if (kDebugMode) {
+        print('demandDetails  Response: $response');
+      }
+
+      if (response['status'] == 'success') {
+
+        return response["data"];
+      } else {
+        print("error On status");
+        throw Exception(response['message']);
+      }
+    } catch (e) {
+      print("error Try  Catch");
+      print(e.toString());
+      throw Exception(e.toString());
+    }
+  }
+
+
+  /// Total Power Factors
+  Future<Map<String, dynamic>> getTotalPowerFactors(
+      String date, String deviceId, String stop) async {
+    try {
+      Map<String, dynamic> request = {
+        "device_id": deviceId,
+        "start": date,
+        "stop": stop,
+      };
+
+      print("CheckRequest");
+      print(request);
+      final response = await THttpHelper2.redirectPost(APIKeys2.powerQuality, request,);
+
+      print(response);
+      if (kDebugMode) {
+        print('powerFactors  Response: $response');
+      }
+
+      if (response['status'] == 'success') {
+
+        return response["data"];
+      } else {
+        print("error On status");
+        throw Exception(response['message']);
+      }
+    } catch (e) {
+      print("error Try  Catch");
+      print(e.toString());
+      throw Exception(e.toString());
+    }
+  }
+
+
+  /// Cost Estimate
+  Future<Map<String, dynamic>> getCostEstimate(
+      String date, String deviceId, String stop) async {
+    try {
+      Map<String, dynamic> request = {
+        "device_id": deviceId,
+        "start": date,
+        "stop": stop,
+      };
+
+      print("CheckRequest");
+      print(request);
+      final response = await THttpHelper2.redirectPost(APIKeys2.costEstimate, request,);
+
+      print(response);
+      if (kDebugMode) {
+        print('coat Estimate  Response: $response');
+      }
+
+      if (response['status'] == 'success') {
+
+        return response["data"];
+      } else {
+        print("error On status");
+        throw Exception(response['message']);
+      }
+    } catch (e) {
+      print("error Try  Catch");
+      print(e.toString());
+      throw Exception(e.toString());
+    }
+  }
+
+  /// History Fields
+  Future<Map<String, dynamic>> getHistoryFields() async {
+    try {
+      // Build query parameters
+      Map<String, dynamic> queryParams = {
+      };
+
+      if (kDebugMode) {
+        print("CheckRequest Query Params:");
+        print(queryParams);
+      }
+
+      // Send the GET request with the query parameters
+      final response = await THttpHelper2.get(
+        APIKeys2.historyFields,
+        queryParams: queryParams,
+      );
+
+      if (kDebugMode) {
+        print('History Fields Response: $response');
+      }
+
+      if (response['status'] == 'success') {
+        return response["data"];
+      } else {
+        print("Error in status response");
+        throw Exception(response['message']);
+      }
+    } catch (e) {
+      print("Error in Try-Catch block");
+      print(e.toString());
+      throw Exception(e.toString());
+    }
+  }
 
 
 }
