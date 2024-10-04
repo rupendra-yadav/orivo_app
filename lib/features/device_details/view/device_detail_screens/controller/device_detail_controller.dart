@@ -258,7 +258,7 @@ class DeviceDetailController extends GetxController {
       // Use modulo to reset indexPos for values greater than 3
       int normalizedIndex = indexPos % 4;
 
-      TLoaders.customToast(message: normalizedIndex.toString());
+      // TLoaders.customToast(message: normalizedIndex.toString());
 
       switch (normalizedIndex) {
         case 0:
