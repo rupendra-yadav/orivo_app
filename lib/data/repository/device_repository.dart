@@ -367,5 +367,48 @@ class DeviceRepository extends GetxController {
     }
   }
 
+  /// History Graph
+  Future<Map<String, dynamic>> getHistory(
+      String date, String deviceId, String stop, String fieldName, String duration) async {
+    try {
+      Map<String, dynamic> request = {
+        "device_id": deviceId,
+        "field_name": fieldName,
+        "start": date,
+        "stop": stop,
+        "duration": duration,
+      };
+
+      print("CheckRequest");
+      print(request);
+
+      final response = await THttpHelper2.redirectPost(APIKeys2.history, request);
+
+      if (response == null) {
+        throw Exception("No response from server");
+      }
+
+      print(response);
+
+      if (response is! Map<String, dynamic>) {
+        // The server may have returned an HTML error page
+        print("Response is not a JSON object. Possible server error.");
+        throw Exception("Invalid response format");
+      }
+
+      if (response['status'] == 'success') {
+        return response["data"];
+      } else {
+        print("Error on status");
+        throw Exception(response['message']);
+      }
+    } catch (e) {
+      print("Error in Try-Catch");
+      print(e.toString());
+      throw Exception(e.toString());
+    }
+  }
+
+
 
 }

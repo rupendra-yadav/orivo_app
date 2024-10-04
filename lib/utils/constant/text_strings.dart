@@ -144,6 +144,9 @@ class TTexts {
   static const String month1 = "1 Month";
   static const String year1 = "1 Year";
   static const String years5 = "5 Years";
+  static const String minute1 = "1 Minute";
+  static const String hour1 = "1 Hour";
+
   static const String all = "All";
   static const String selectDataItem = "Select Data Items";
   static const String parameters = "Parameters";

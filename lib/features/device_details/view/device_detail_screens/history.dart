@@ -1,4 +1,5 @@
 import 'package:auro/common/widgets/buttons/button.dart';
+import 'package:auro/common/widgets/text/text_view.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/widgets/data_item_card.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/widgets/device_details_itme.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/widgets/graph.dart';
@@ -7,17 +8,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../common/widgets/buttons/text_button.dart';
-import '../../../../common/widgets/inputFields/input_text.dart';
 import '../../../../common/widgets/loaders/image_loader.dart';
 import '../../../../utils/constant/colors.dart';
 import '../../../../utils/constant/image_string.dart';
 import '../../../../utils/constant/text_strings.dart';
 import '../../../../utils/styles/spacing_style.dart';
-import '../../../../utils/validate/validate.dart';
 import '../../controller/device_detail_navigation_controller.dart';
 import 'controller/device_detail_controller.dart';
 
@@ -30,44 +29,84 @@ class History extends StatefulWidget {
 
 class _HistoryState extends State<History> {
   final DeviceDetailController controller = Get.put(DeviceDetailController());
-  final DeviceDetailNavigationController navigationController = DeviceDetailNavigationController.instance;
+  final DeviceDetailNavigationController navigationController =
+      DeviceDetailNavigationController.instance;
 
-  List<int> selectedIndices = [0];
+  List<int> selectedIndices = [0]; // Track selected data items
+  int selectedTimeIndex = 0; // Track selected time filter
+
+  late String fieldName = "";
+  late String duration = "-1m";
+  late String startDate = "";
+  late String endDate = "";
+  late String pickedDate = "";
+  late int indexPos ;
+
+  String _selectedStartDate = TTexts.selectFromDate;
+  String _selectedEndDate = TTexts.selectToDate;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller.getDeviceDetail(navigationController.deviceId.value, "");
+
+    controller.getDeviceDataItems();
+
+    controller.getDeviceGraphData("f", "3071123300001", "-0d");
+
+    DateTime now = DateTime.now();
+    DateTime utcNow = now.toUtc();
+
+    String formattedDate =
+        DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(utcNow);
+
+    controller.getHistoryFields(formattedDate);
+
+    startDate = formattedDate;
+
+    if (kDebugMode) {
+      print(navigationController.deviceId.value);
+    }
+  }
 
   void handleCardTap(int index) {
     setState(() {
       if (selectedIndices.contains(index)) {
         selectedIndices.remove(index);
       } else {
-        if (selectedIndices.length >= 4) {
+        if (selectedIndices.length >=3) {
           selectedIndices.removeAt(0);
         }
         selectedIndices.add(index);
+        String fieldId = controller.historyFieldModel.value.filters![index].id!;
+        fieldName = fieldId;
       }
     });
 
     if (selectedIndices.contains(index)) {
-      controller.getDeviceGraphData(controller.dataIts[index + 1].field, "3071123300001", "-0d");
-      // TLoaders.customToast(message: navigationController.deviceId.value + "\n" +controller.dataIts[index + 1].field);
+      DateTime now = DateTime.now();
+      DateTime utcNow = now.toUtc();
+      String formattedDate =
+          DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(utcNow);
+
+      if (controller.historyFieldModel.value.filters![index].name != null) {
+        String fieldId = controller.historyFieldModel.value.filters![index].id!;
+        fieldName = fieldId;
+        controller.getHistory(formattedDate, "", controller.deviceListModel.mMachineUniqueId, fieldId, duration,index);
+      }
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
+  void handleTimeFilterTap(int index, String timeValue) {
+    setState(() {
+      selectedTimeIndex = index;
+      indexPos = index; // Initialize indexPos here
+    });
 
-    controller.getDeviceDetail(navigationController.deviceId.value,"");
-
-    controller.getDeviceDataItems();
-
-    controller.getDeviceGraphData("f", "3071123300001", "-0d");
-
-    controller.getHistoryFields();
-
-    if (kDebugMode) {
-      print(navigationController.deviceId.value);
-    }
+    controller.getHistory(startDate, endDate, controller.deviceListModel.mMachineUniqueId, fieldName, timeValue, indexPos);
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -80,11 +119,11 @@ class _HistoryState extends State<History> {
             children: [
               /// Graph
               Obx(() {
-                if (controller.isDeviceGraphDataLoading.value) {
+                if (controller.isHistoryLoading.value) {
                   return const GraphShimmer();
                 }
 
-                if (controller.graphDataList.isEmpty) {
+                if (controller.historyModel.value.filters?.isEmpty ?? true) {
                   return const TImageLoaderWidget(
                       text: 'Whoops! No Graph available...!',
                       animation: TImages.imgLoginBg,
@@ -95,22 +134,54 @@ class _HistoryState extends State<History> {
               }),
 
               /// Graph Filter
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    TextButtonWithContainer(
-                        text: TTexts.day1, onPressed: () {}),
-                    TextButtonWithContainer(
-                        text: TTexts.week1, onPressed: () {}),
-                    TextButtonWithContainer(
-                        text: TTexts.month1, onPressed: () {}),
-                    TextButtonWithContainer(
-                        text: TTexts.year1, onPressed: () {}),
-                    TextButtonWithContainer(
-                        text: TTexts.years5, onPressed: () {}),
-                    TextButtonWithContainer(text: TTexts.all, onPressed: () {}),
-                  ],
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      TextButtonWithContainer(
+                        text: TTexts.minute1,
+                        isSelected: selectedTimeIndex == 0,
+                        onPressed: () {
+                          duration = "-1m";
+                          handleTimeFilterTap(0, "-1m");
+                        },
+                      ),
+                      TextButtonWithContainer(
+                        text: TTexts.hour1,
+                        isSelected: selectedTimeIndex == 1,
+                        onPressed: () {
+                          duration = "-1h";
+                          handleTimeFilterTap(1, "-1h");
+                        },
+                      ),
+                      TextButtonWithContainer(
+                        text: TTexts.day1,
+                        isSelected: selectedTimeIndex == 2,
+                        onPressed: () {
+                          duration = "-1d";
+                          handleTimeFilterTap(2, "-1d");
+                        },
+                      ),
+                      TextButtonWithContainer(
+                        text: TTexts.week1,
+                        isSelected: selectedTimeIndex == 3,
+                        onPressed: () {
+                          duration = "-1w";
+                          handleTimeFilterTap(3, "-1w");
+                        },
+                      ),
+                      TextButtonWithContainer(
+                        text: TTexts.month1,
+                        isSelected: selectedTimeIndex == 4,
+                        onPressed: () {
+                          duration = "-30d";
+                          handleTimeFilterTap(4, "-30d");
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
 
@@ -142,33 +213,35 @@ class _HistoryState extends State<History> {
                               return const DeviceItemShimmer();
                             }
 
-                           /* if (controller.dataIts.isEmpty) {
-                              return const TImageLoaderWidget(
-                                  text: 'Whoops! No Device available...!',
-                                  animation: TImages.imgLoginBg,
-                                  showAction: false);
-                            }*/
-
                             return Padding(
                               padding: SpacingStyle.paddingWithDefaultSpace,
                               child: SizedBox(
                                 height: 400.h,
                                 child: GridView.builder(
                                   scrollDirection: Axis.horizontal,
-                                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 3,
-                                      mainAxisSpacing: 10.w,
-                                      crossAxisSpacing: 10.h,
-                                      childAspectRatio: 1),
-                                  itemCount: controller.historyFieldModel.value.filters?.length != null
-                                      ? (controller.historyFieldModel.value.filters!.length - 1)
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 3,
+                                          mainAxisSpacing: 10.w,
+                                          crossAxisSpacing: 10.h,
+                                          childAspectRatio: 1),
+                                  itemCount: controller.historyFieldModel.value
+                                              .filters?.length !=
+                                          null
+                                      ? (controller.historyFieldModel.value
+                                              .filters!.length -
+                                          1)
                                       : 0,
                                   itemBuilder: (_, index) {
                                     return DataItemCard(
                                       colorContainer: TColors.primaryDark2,
-                                      dataItems: controller.historyFieldModel.value.filters![index + 1],
-                                      isSelected: selectedIndices.contains(index),
-                                      onTap: () => handleCardTap(index),
+                                      dataItems: controller.historyFieldModel
+                                          .value.filters![index],
+                                      isSelected:
+                                          selectedIndices.contains(index),
+                                      onTap: () {
+                                        handleCardTap(index);
+                                      },
                                     );
                                   },
                                 ),
@@ -181,32 +254,179 @@ class _HistoryState extends State<History> {
                             padding: SpacingStyle.paddingWithDefaultSpace,
                             child: Column(
                               children: [
-                                PrefixInputText(
-                                  // controller: registerController.password,
-                                  validator: (value) =>
-                                      Validate.validateEmptyText(value),
-                                  hint: TTexts.selectFromDate,
-                                  preFixIcon: const Icon(Iconsax.calendar_2),
-                                  obscureText: false,
-                                  keyboardType: TextInputType.datetime,
+                                /// Start Date
+                                GestureDetector(
+                                  onTap: () async {
+                                    // Open the DatePicker to pick a single date
+                                    DateTime? pickedDate = await showDatePicker(
+                                      context: context,
+                                      firstDate: DateTime(2000),
+                                      lastDate: DateTime(2100),
+                                      initialDate: DateTime.now(),
+                                      builder: (context, child) {
+                                        return Theme(
+                                          data: Theme.of(context).copyWith(
+                                            colorScheme:
+                                                const ColorScheme.light(
+                                              primary: TColors.primaryDark2,
+                                              // Header background color
+                                              onPrimary: Colors.white,
+                                              // Header text color
+                                              onSurface: Colors
+                                                  .black, // Body text color
+                                            ),
+                                            textButtonTheme:
+                                                TextButtonThemeData(
+                                              style: TextButton.styleFrom(
+                                                foregroundColor: TColors
+                                                    .primaryDark1, // Button text color
+                                              ),
+                                            ),
+                                          ),
+                                          child: child!,
+                                        );
+                                      },
+                                    );
+
+                                    if (pickedDate != null) {
+                                      // Formatting the selected date to the format '1-08-2024'
+                                      String formattedDate =
+                                          DateFormat('d-MM-yyyy')
+                                              .format(pickedDate);
+
+                                      startDate = formattedDate;
+
+                                      setState(() {
+                                        _selectedStartDate = formattedDate;
+                                      });
+                                    }
+                                  },
+                                  child: Center(
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 20.w),
+                                      child: Container(
+                                        alignment: Alignment.centerLeft,
+                                        decoration: BoxDecoration(
+                                          color: TColors.primaryDark1,
+                                          borderRadius:
+                                              BorderRadius.circular(20.r),
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 20.h, horizontal: 20.w),
+                                          child: Row(
+                                            children: [
+                                              const Icon(
+                                                Iconsax.calendar_2,
+                                                color: Colors.white,
+                                              ),
+                                              SizedBox(width: 5.w),
+                                              TextView(
+                                                text: _selectedStartDate,
+                                                fontSize: 20,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ),
 
-                                PrefixInputText(
-                                  // controller: registerController.password,
-                                  validator: (value) =>
-                                      Validate.validateEmptyText(value),
-                                  hint: TTexts.selectToDate,
-                                  preFixIcon: const Icon(Iconsax.calendar_2),
-                                  obscureText: false,
-                                  keyboardType: TextInputType.datetime,
+                                SizedBox(
+                                  height: 20.h,
                                 ),
+
+                                /// End Date
+                                GestureDetector(
+                                  onTap: () async {
+                                    // Open the DatePicker to pick a single date
+                                    DateTime? pickedDate = await showDatePicker(
+                                      context: context,
+                                      firstDate: DateTime(2000),
+                                      lastDate: DateTime(2100),
+                                      initialDate: DateTime.now(),
+                                      builder: (context, child) {
+                                        return Theme(
+                                          data: Theme.of(context).copyWith(
+                                            colorScheme:
+                                                const ColorScheme.light(
+                                              primary: TColors.primaryDark2,
+                                              // Header background color
+                                              onPrimary: Colors.white,
+                                              // Header text color
+                                              onSurface: Colors
+                                                  .black, // Body text color
+                                            ),
+                                            textButtonTheme:
+                                                TextButtonThemeData(
+                                              style: TextButton.styleFrom(
+                                                foregroundColor: TColors
+                                                    .primaryDark1, // Button text color
+                                              ),
+                                            ),
+                                          ),
+                                          child: child!,
+                                        );
+                                      },
+                                    );
+
+                                    if (pickedDate != null) {
+                                      // Formatting the selected date to the format '1-08-2024'
+                                      String formattedDate =
+                                          DateFormat('d-MM-yyyy')
+                                              .format(pickedDate);
+
+                                      endDate = formattedDate;
+
+                                      setState(() {
+                                        _selectedEndDate = formattedDate;
+                                      });
+                                    }
+                                  },
+                                  child: Center(
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 20.w),
+                                      child: Container(
+                                        alignment: Alignment.centerLeft,
+                                        decoration: BoxDecoration(
+                                          color: TColors.primaryDark1,
+                                          borderRadius:
+                                              BorderRadius.circular(20.r),
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 20.h, horizontal: 20.w),
+                                          child: Row(
+                                            children: [
+                                              const Icon(
+                                                Iconsax.calendar_2,
+                                                color: Colors.white,
+                                              ),
+                                              SizedBox(width: 5.w),
+                                              TextView(
+                                                text: _selectedEndDate,
+                                                fontSize: 20,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+
                                 SizedBox(
                                   height: 40.h,
                                 ),
                                 Button(
                                     height: 45.h,
                                     minWidth: 100.w,
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      controller.getHistory(startDate, endDate, controller.deviceListModel.mMachineUniqueId, fieldName, duration,indexPos);
+                                    },
                                     title: TTexts.apply)
                               ],
                             ),

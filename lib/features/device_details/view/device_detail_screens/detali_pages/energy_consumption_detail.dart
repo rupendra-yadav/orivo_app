@@ -174,7 +174,7 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
                     SizedBox(height: 20.h),
 
                     /// Breakdown Card
-                    const BreakDownGraphCard(),
+                    //const BreakDownGraphCard(),
                   ],
                 );
               }),

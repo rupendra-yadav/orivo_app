@@ -162,14 +162,12 @@ class _HomeState extends State<Home> {
                             animation: TImages.imgLoginBg,
                             showAction: false);
                       }*/
-
-                      return
-
-                          CostEstimateCard(
+                      return CostEstimateCard(
                               costEstimateModel: controller.costEstimateModel.value,
                               totalCount: totalCont);
                     }),
 
+                    ///Demand
                     Obx(() {
                       if (controller.isDemandLoading.value) {
                         return const DeviceDetailShimmer();
@@ -184,7 +182,7 @@ class _HomeState extends State<Home> {
 
                       return
 
-                          ///Demand
+
                           Padding(
                         padding: EdgeInsets.symmetric(vertical: 10.h),
                         child: PowerDemandCard(
@@ -193,6 +191,7 @@ class _HomeState extends State<Home> {
                       );
                     }),
 
+                    ///Total Power Factors
                     Obx(() {
                       if (controller.isPowerFactorLoading.value) {
                         return const DeviceDetailShimmer();
@@ -205,12 +204,13 @@ class _HomeState extends State<Home> {
                             showAction: false);
                       }*/
 
-                      ///Total Power Factors
+
                       return TotalPowerFactorsCard(
                         powerFactorModel: controller.powerFactorModel.value,
                       );
                     }),
 
+                    /// this is the device detail data
                     Obx(() {
                       if (controller.isPowerFactorLoading.value) {
                         return const DeviceDetailShimmer();
@@ -223,10 +223,7 @@ class _HomeState extends State<Home> {
                             showAction: false);
                       }*/
 
-                      return
-
-                          /// this is the device detail data
-                          Row(
+                      return Row(
                         children: [
                           Expanded(
                               child: TextViewCard(
@@ -251,6 +248,8 @@ class _HomeState extends State<Home> {
                       );
                     }),
 
+
+                    ///Power Factors Data
                     Obx(() {
                       if (controller.isPowerFactorLoading.value) {
                         return const DeviceDetailShimmer();

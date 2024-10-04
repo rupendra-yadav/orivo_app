@@ -8,6 +8,7 @@ import '../../../../../utils/constant/colors.dart';
 import '../../../../../utils/styles/spacing_style.dart';
 import '../controller/device_detail_controller.dart';
 import '../model/graph_data_model_api.dart';
+import '../model/history_filter_data_model.dart';
 
 class Graph extends StatelessWidget {
   const Graph({
@@ -17,20 +18,6 @@ class Graph extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(DeviceDetailController());
-
-    // List<GraphDataInput> chartData2 = [];
-
-  /*  if (controller.graphDataList.isEmpty) {
-      return TLoaders.customToast(message: "Something Went Wrong...!");
-    }else{
-      for (int i = 0; i < controller.graphDataList.length; i++) {
-        chartData2.add(GraphDataInput(controller.graphDataList[i].value, controller.graphDataList[i].label));
-        if (kDebugMode) {
-          print(controller.graphDataList[i].value);
-          print(controller.graphDataList[i].label);
-        }
-      }
-    }*/
 
     return Padding(
       padding: SpacingStyle.paddingWithDefaultSpace,
@@ -56,11 +43,11 @@ class Graph extends StatelessWidget {
         ),
         series: <CartesianSeries>[
           // Graph1
-          SplineSeries<GraphData, String>(
+          SplineSeries<Filters, String>(
             animationDuration: 2000,
-            dataSource: controller.graphDataList,
-            xValueMapper: (GraphData sales, _) => sales.label,
-            yValueMapper: (GraphData sales, _) => sales.value,
+            dataSource: controller.historyModel.value.filters,
+            xValueMapper: (Filters sales, _) => sales.x,
+            yValueMapper: (Filters sales, _) => sales.y,
             color: TColors.graphLine,
 
             /// marker Setting to get dots in the graph
@@ -74,7 +61,66 @@ class Graph extends StatelessWidget {
               borderColor: TColors.error,
             ),
           ),
+
+          SplineSeries<Filters, String>(
+            animationDuration: 2000,
+            dataSource: controller.historyModel1.value.filters,
+            xValueMapper: (Filters sales, _) => sales.x,
+            yValueMapper: (Filters sales, _) => sales.y,
+            color: TColors.primaryLight2,
+
+            /// marker Setting to get dots in the graph
+            markerSettings: MarkerSettings(
+              isVisible: true,
+              shape: DataMarkerType.circle,
+              color: TColors.error,
+              height: 6.h,
+              width: 6.w,
+              borderWidth: 0,
+              borderColor: TColors.error,
+            ),
+          ),
+
+          SplineSeries<Filters, String>(
+            animationDuration: 2000,
+            dataSource: controller.historyModel2.value.filters,
+            xValueMapper: (Filters sales, _) => sales.x,
+            yValueMapper: (Filters sales, _) => sales.y,
+            color: TColors.accent,
+
+            /// marker Setting to get dots in the graph
+            markerSettings: MarkerSettings(
+              isVisible: true,
+              shape: DataMarkerType.circle,
+              color: TColors.error,
+              height: 6.h,
+              width: 6.w,
+              borderWidth: 0,
+              borderColor: TColors.error,
+            ),
+          ),
+
+          SplineSeries<Filters, String>(
+            animationDuration: 2000,
+            dataSource: controller.historyModel3.value.filters,
+            xValueMapper: (Filters sales, _) => sales.x,
+            yValueMapper: (Filters sales, _) => sales.y,
+            color: TColors.error,
+
+            /// marker Setting to get dots in the graph
+            markerSettings: MarkerSettings(
+              isVisible: true,
+              shape: DataMarkerType.circle,
+              color: TColors.error,
+              height: 6.h,
+              width: 6.w,
+              borderWidth: 0,
+              borderColor: TColors.error,
+            ),
+          ),
+
         ],
+
       ),
     );
   }

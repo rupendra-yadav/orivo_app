@@ -29,6 +29,7 @@ class APIKeys2{
   static const String powerQuality = "power-quality";
   static const String costEstimate = "cost-estimate";
   static const String historyFields = "history-field";
+  static const String history = "history";
 }
 
 

@@ -1,6 +1,7 @@
 import 'package:auro/features/device_details/view/device_detail_screens/model/demand_detail_model.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/model/demand_model.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/model/graph_data_model_api.dart';
+import 'package:auro/utils/popups/loaders.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
@@ -11,6 +12,7 @@ import '../model/cost_estimate_model.dart';
 import '../model/dart_items.dart';
 import '../model/energy_consumption_model.dart';
 import '../model/history_field_modle.dart';
+import '../model/history_model.dart';
 import '../model/power_factor_model.dart';
 
 class DeviceDetailController extends GetxController {
@@ -21,13 +23,18 @@ class DeviceDetailController extends GetxController {
   RxList<DeviceListModel> deviceList = <DeviceListModel>[].obs;
   RxList<DataItems> dataIts = <DataItems>[].obs;
   RxList<GraphData> graphDataList = <GraphData>[].obs;
-  Rx<EnergyConsumptionModel> energyConsumptionData = EnergyConsumptionModel().obs;
+  Rx<EnergyConsumptionModel> energyConsumptionData =
+      EnergyConsumptionModel().obs;
   Rx<ConsumptionDetail> consumptionDetails = ConsumptionDetail().obs;
   Rx<DemandModel> demandModel = DemandModel().obs;
   Rx<DemandDetailModel> demandDetailModel = DemandDetailModel().obs;
   Rx<PowerFactorModel> powerFactorModel = PowerFactorModel().obs;
   Rx<CostEstimateModel> costEstimateModel = CostEstimateModel().obs;
   Rx<HistoryFieldModel> historyFieldModel = HistoryFieldModel().obs;
+  Rx<HistoryModel> historyModel = HistoryModel().obs;
+  Rx<HistoryModel> historyModel1 = HistoryModel().obs;
+  Rx<HistoryModel> historyModel2 = HistoryModel().obs;
+  Rx<HistoryModel> historyModel3 = HistoryModel().obs;
 
   late DeviceListModel deviceListModel;
   late GraphData graphDataModel;
@@ -46,9 +53,10 @@ class DeviceDetailController extends GetxController {
 
   final isCostEstimateLoading = false.obs;
   final isHistoryFieldLoading = false.obs;
+  final isHistoryLoading = false.obs;
 
   ///Device Detail Data
-  Future<void> getDeviceDetail(String deviceId,String startDate ) async {
+  Future<void> getDeviceDetail(String deviceId, String startDate) async {
     try {
       isDeviceDetailLoading.value = true;
 
@@ -57,15 +65,14 @@ class DeviceDetailController extends GetxController {
       deviceList.assignAll(deviceLis);
       deviceListModel = deviceList[0];
 
-      getEnergyConsumption(startDate,  deviceListModel.mMachineUniqueId);
+      getEnergyConsumption(startDate, deviceListModel.mMachineUniqueId);
 
-      getCostEstimate("2024-10-01", deviceListModel.mMachineUniqueId, "2024-10-03");
+      getCostEstimate(
+          "2024-10-01", deviceListModel.mMachineUniqueId, "2024-10-03");
 
       getDemand("2024-10-01", deviceListModel.mMachineUniqueId, "2024-10-03");
 
-      getTotalPowerFactors(startDate,  deviceListModel.mMachineUniqueId,"");
-
-
+      getTotalPowerFactors(startDate, deviceListModel.mMachineUniqueId, "");
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());
@@ -117,86 +124,83 @@ class DeviceDetailController extends GetxController {
     try {
       isEnergyConsumptionLoading.value = true;
 
-      final Map<String, dynamic> responsee = await _deviceReposotory.getEnergyConsumption(date, deviceId);
+      final Map<String, dynamic> responsee =
+          await _deviceReposotory.getEnergyConsumption(date, deviceId);
       // Assign the object to the Rx variable
       energyConsumptionData.value = EnergyConsumptionModel.fromJson(responsee);
     } catch (e) {
-
-        print("dataSetModel");
-        print(e.toString());
-
+      print("dataSetModel");
+      print(e.toString());
     } finally {
       isEnergyConsumptionLoading.value = false;
     }
   }
 
   ///--------Device Energy Details Consumption
-  Future<void> getEnergyDetailsConsumption(String date, deviceId,String stop) async {
+  Future<void> getEnergyDetailsConsumption(
+      String date, deviceId, String stop) async {
     try {
       isEnergyConsumptionDetailLoading.value = true;
 
-      final Map<String, dynamic> responsee = await _deviceReposotory.getEnergyDetailConsumption(date, deviceId,stop);
+      final Map<String, dynamic> responsee = await _deviceReposotory
+          .getEnergyDetailConsumption(date, deviceId, stop);
       // Assign the object to the Rx variable
       consumptionDetails.value = ConsumptionDetail.fromJson(responsee);
     } catch (e) {
-
       print("dataSetModel");
       print(e.toString());
-
     } finally {
       isEnergyConsumptionDetailLoading.value = false;
     }
   }
 
   ///--------Device Demand
-  Future<void> getDemand(String date, deviceId,String stop) async {
+  Future<void> getDemand(String date, deviceId, String stop) async {
     try {
       isDemandLoading.value = true;
 
-      final Map<String, dynamic> responsee = await _deviceReposotory.getDemand(date, deviceId,stop);
+      final Map<String, dynamic> responsee =
+          await _deviceReposotory.getDemand(date, deviceId, stop);
       // Assign the object to the Rx variable
       demandModel.value = DemandModel.fromJson(responsee);
     } catch (e) {
-
       print("dataSetModel");
       print(e.toString());
-
     } finally {
       isDemandLoading.value = false;
     }
   }
 
   ///--------Device Demand Detail
-  Future<void> getDemandDetail(String date, deviceId,String stop) async {
+  Future<void> getDemandDetail(String date, deviceId, String stop) async {
     try {
       isDemandDetailLoading.value = true;
 
-      final Map<String, dynamic> responsee = await _deviceReposotory.getDemandDetails(date, deviceId,stop);
+      final Map<String, dynamic> responsee =
+          await _deviceReposotory.getDemandDetails(date, deviceId, stop);
       // Assign the object to the Rx variable
       demandDetailModel.value = DemandDetailModel.fromJson(responsee);
     } catch (e) {
-
       print("DemanddataSetModel");
       print(e.toString());
-
     } finally {
       isDemandDetailLoading.value = false;
     }
   }
 
   ///--------Total Power Factors
-  Future<void> getTotalPowerFactors(String date, deviceId, String endDate) async {
+  Future<void> getTotalPowerFactors(
+      String date, deviceId, String endDate) async {
     try {
       isPowerFactorLoading.value = true;
 
-      final Map<String, dynamic> responsee = await _deviceReposotory.getTotalPowerFactors(date, deviceId,endDate);
+      final Map<String, dynamic> responsee =
+          await _deviceReposotory.getTotalPowerFactors(date, deviceId, endDate);
       // Assign the object to the Rx variable
       powerFactorModel.value = PowerFactorModel.fromJson(responsee);
     } catch (e) {
-
       print("Power_dataSetModel");
       print(e.toString());
-
     } finally {
       isPowerFactorLoading.value = false;
     }
@@ -207,36 +211,76 @@ class DeviceDetailController extends GetxController {
     try {
       isCostEstimateLoading.value = true;
 
-      final Map<String, dynamic> responsee = await _deviceReposotory.getCostEstimate(date, deviceId,endDate);
+      final Map<String, dynamic> responsee =
+          await _deviceReposotory.getCostEstimate(date, deviceId, endDate);
       // Assign the object to the Rx variable
       costEstimateModel.value = CostEstimateModel.fromJson(responsee);
     } catch (e) {
-
       print("cost Estimate SetModel");
       print(e.toString());
-
     } finally {
       isCostEstimateLoading.value = false;
     }
   }
 
   ///-------- History Fields
-  Future<void> getHistoryFields() async {
+  Future<void> getHistoryFields(String startDate) async {
     try {
       isHistoryFieldLoading.value = true;
 
-      final Map<String, dynamic> responsee = await _deviceReposotory.getHistoryFields();
+      final Map<String, dynamic> responsee =
+          await _deviceReposotory.getHistoryFields();
       // Assign the object to the Rx variable
       historyFieldModel.value = HistoryFieldModel.fromJson(responsee);
-    } catch (e) {
 
+      getHistory(startDate, "", deviceListModel.mMachineUniqueId,
+          historyFieldModel.value.filters![0].id!, "-1m", 0);
+    } catch (e) {
       print("historyFields SetModel");
       print(e.toString());
-
     } finally {
       isHistoryFieldLoading.value = false;
     }
   }
 
+  Future<void> getHistory(String startDate, String endDate, String deviceId,
+      String fieldName, String duration, int indexPos) async {
+    try {
+      isHistoryLoading.value = true;
 
+      final Map<String, dynamic> responsee = await _deviceReposotory.getHistory(
+          startDate, deviceId, endDate, fieldName, duration);
+
+      // Assign the object to the Rx variable
+      historyModel.value = HistoryModel.fromJson(responsee);
+
+
+      // Use modulo to reset indexPos for values greater than 3
+      int normalizedIndex = indexPos % 4;
+
+      TLoaders.customToast(message: normalizedIndex.toString());
+
+      switch (normalizedIndex) {
+        case 0:
+          historyModel.value = HistoryModel.fromJson(responsee);
+          break;
+        case 1:
+          historyModel1.value = HistoryModel.fromJson(responsee);
+          break;
+        case 2:
+          historyModel2.value = HistoryModel.fromJson(responsee);
+          break;
+        case 3:
+          historyModel3.value = HistoryModel.fromJson(responsee);
+          break;
+        default:
+        // Handle any other cases if needed
+      }
+    } catch (e) {
+      print("historyGraph SetModel");
+      print(e.toString());
+    } finally {
+      isHistoryLoading.value = false;
+    }
+  }
 }
