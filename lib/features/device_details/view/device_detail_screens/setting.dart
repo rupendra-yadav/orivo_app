@@ -1,4 +1,5 @@
 import 'package:auro/common/widgets/text/text_view.dart';
+import 'package:auro/features/device_details/view/device_detail_screens/electric_bill/electric_bill.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/widgets/setting_device_details_card.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/widgets/setting_notification_detjails_card.dart';
 import 'package:auro/utils/constant/colors.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../../../common/widgets/buttons/button.dart';
 import '../../../../utils/constant/image_string.dart';
 import '../../../../utils/device/device_utility.dart';
 import '../../controller/device_detail_navigation_controller.dart';
@@ -50,6 +52,13 @@ class Setting extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+
+                      ///Electric Bill Button
+                     GestureDetector(
+                         onTap: () => Get.to(() => const ElectricBill()),
+                         child: const TextView(text: "Eletricity Bill",fontSize: 25,textColor: TColors.accent,)),
+
+                      SizedBox(height: 20,),
 
                       /// DeviceInfo
                       const TextView(
