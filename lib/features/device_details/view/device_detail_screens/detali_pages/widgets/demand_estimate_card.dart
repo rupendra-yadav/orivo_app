@@ -54,19 +54,6 @@ class DemandEstimateCard extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
-              height: 10.h,
-            ),
-             TextView(text: "Average ${demandDetailModel.avgDemand?.unit?.toString() ?? ''} : ${demandDetailModel.avgDemand?.value?.round().toString() ?? ''} ${demandDetailModel.avgDemand?.unit?.toString() ?? ''}"),
-            SizedBox(
-              height: 10.h,
-            ),
-            TextView(text: "Highest ${demandDetailModel.highestDemand?.unit?.toString() ?? ''} : ${demandDetailModel.highestDemand?.value?.round().toString() ?? ''} ${demandDetailModel.highestDemand?.unit?.toString() ?? ''}"),
-
-            SizedBox(
-              height: 10.h,
-            ),
-            TextView(text: "Load Factor ${demandDetailModel.loadFactor?.unit?.toString() ?? ''} : ${demandDetailModel.loadFactor?.value?.round().toString() ?? ''} ${demandDetailModel.loadFactor?.unit?.toString() ?? ''}"),
           ],
         ),
       ),

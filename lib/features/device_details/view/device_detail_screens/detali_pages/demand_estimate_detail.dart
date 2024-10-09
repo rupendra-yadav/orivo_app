@@ -135,6 +135,7 @@ class _DemandEstimateDetailState extends State<DemandEstimateDetail> {
                 height: 20.h,
               ),
 
+              /// Demand Estimate
               Obx((){
 
                 if (controller.isDemandDetailLoading.value) {
@@ -148,8 +149,7 @@ class _DemandEstimateDetailState extends State<DemandEstimateDetail> {
                             showAction: false);
                       }*/
 
-                return  /// Demand Estimate
-                  DemandEstimateCard(demandDetailModel: controller.demandDetailModel.value,);
+                return DemandEstimateCard(demandDetailModel: controller.demandDetailModel.value,);
               }),
 
 
@@ -158,7 +158,20 @@ class _DemandEstimateDetailState extends State<DemandEstimateDetail> {
               ),
 
               /// Demand Time Line
-              const DemandTimeLineCard(),
+              Obx((){
+                if (controller.isDemandDetailLoading.value) {
+                  return const DeviceDetailShimmer();
+                }
+
+                /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
+                        return const TImageLoaderWidget(
+                            text: 'Whoops! No Device available...!',
+                            animation: TImages.imgLoginBg,
+                            showAction: false);
+                      }*/
+
+                return DemandTimeLineCard(demandDetailModel: controller.demandDetailModel.value,);
+              })
             ],
           ),
         ),

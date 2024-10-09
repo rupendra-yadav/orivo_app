@@ -22,8 +22,6 @@ class DropDownCard extends StatefulWidget {
   _DropDownCardState createState() => _DropDownCardState();
 }
 
-
-
 class _DropDownCardState extends State<DropDownCard> {
   bool _isDetailVisible = false; // To control the visibility of the details
 
@@ -69,7 +67,7 @@ class _DropDownCardState extends State<DropDownCard> {
             /// Details - Only visible if _isDetailVisible is true
             if (_isDetailVisible)
               Card(
-                color: TColors.primaryDark2,
+                color: TColors.primaryDark3,
                 elevation: 5.h,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.r),

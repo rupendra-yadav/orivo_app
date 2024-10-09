@@ -49,6 +49,13 @@ class TTexts {
   static const String changePassword = "Change Password";
   static const String logout = "Logout";
   static const String versionAndDevelopedBy = "Version 1.01\nDesigned & Developed By Logixhunt";
+  static const String dialogLogout = "Logout...!";
+  static const String dialogMessage = "Are You Sure You Want To Logout...?";
+  static const String dialogOk = "Ok";
+  static const String dialogCancel = "Cancel";
+  static const String transactions = "Transactions";
+  static const String noActiveSubscription = "No Active Subscription";
+  static const String subscribe = "Subscribe";
 
   ///Setting
   static const String deviceSettings = "Device Settings";
@@ -113,10 +120,6 @@ class TTexts {
   static const String aboutUsLink = "https://webdevelopercg.com/electricity/about-us.php";
   static const String contactUsLink = "https://webdevelopercg.com/electricity/contact-us.php";
 
-  /// Edit Profile
-  static const String editProfile = "Edit Profile";
-  static const String saveDetails = "Save Details";
-
   ///reset Password
   static const String resetPassword = "Reset Password";
   static const String createNewPassword = "Create New Password";
@@ -164,6 +167,9 @@ class TTexts {
   static const String gstNo = "GST.no";
   static const String ownersName = "Owners Name";
   static const String changeImageText = "Click here to change\nprofile image";
+  static const String editProfile = "Edit Profile";
+  static const String saveDetails = "Save Details";
+
 
   ///Energy Consumption Detail
   static const String energyConsumptionDetail = "Energy Consumption";
@@ -196,6 +202,15 @@ class TTexts {
   static const String powerQuality096 = "0.96";
   static const String averagePF = "Average P.F ----------0.94";
   static const String voltage = "Voltage";
+
+
+  ///Electricity Bill
+  static const String downloadElectricityBill = "Download Electricity Bill";
+  static const String electricityBill = "Electricity Bill";
+
+  /// Transactions
+  static const String transactionsTitle = "Transactions";
+
 
 
 }

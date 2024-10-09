@@ -1,12 +1,15 @@
+import 'package:auro/common/widgets/text/text_view.dart';
 import 'package:auro/features/authentication/view/login.dart';
 import 'package:auro/features/navigation/view/bottom_nav_screen/controller/profile_detail_cotroller.dart';
 import 'package:auro/features/navigation/view/bottom_nav_screen/widgets/profile_options.dart';
 import 'package:auro/features/navigation/view/bottom_nav_screen/widgets/profile_shimmer.dart';
 import 'package:auro/features/navigation/view/user_edits/view/edit_profile.dart';
+import 'package:auro/features/navigation/view/user_edits/view/transactions_page.dart';
 import 'package:auro/utils/constant/colors.dart';
 import 'package:auro/utils/constant/image_string.dart';
 import 'package:auro/utils/constant/text_strings.dart';
 import 'package:auro/utils/device/device_utility.dart';
+import 'package:auro/utils/styles/spacing_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -52,30 +55,20 @@ class Profile extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                   Positioned(
-                    bottom: 10.h, // Adjust the position as needed
-                    left: 20.w, // Adjust the position as needed
-                    right: 20.w, // Adjust the position as needed
+                    bottom: 10.h,
+                    left: 20.w,
+                    right: 20.w,
                     child: Row(
                       children: [
                         CircleAvatar(
                           backgroundColor: TColors.primaryLight1,
                           minRadius: 50.r,
-// Adjusted the radius to fit the image better
                           maxRadius: 50.r,
                           foregroundImage: NetworkImage(TImages.userImagePath +
                               controller.userModelData.mCustImage),
-// Adjusted the radius to fit the image better
-// backgroundImage: NetworkImage(TImages.userImagePath + controller.userModel_data.mCustImage),
-//                           child: Image(
-//                             image: NetworkImage(TImages.userImagePath +
-//                                 controller.userModel_data.mCustImage),
-//                             height: 180.h, // Adjusted to fit the CircleAvatar
-//                             width: 180.w, // Adjusted to fit the CircleAvatar
-//                             fit: BoxFit.cover,
-//                           ),
+
                         ),
                         SizedBox(width: 10.w),
-// Added space between avatar and text
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -92,7 +85,6 @@ class Profile extends StatelessWidget {
                           ],
                         ),
                         const Spacer(),
-// Pushes the IconButton to the right
 
                         IconButton(
                           onPressed: () => Get.to(() => EditProfile(
@@ -109,8 +101,32 @@ class Profile extends StatelessWidget {
                 ],
               ),
 
+
+              Padding(
+                padding: SpacingStyle.paddingWithDefaultSpace,
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(color: TColors.primaryDark1,borderRadius: BorderRadius.circular(10.r)),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 10.h),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding:  EdgeInsets.only(left: 7.w,top: 7.h),
+                          child: const TextView(text: TTexts.noActiveSubscription,bold: true,fontSize: 20,),
+                        ),
+
+                        TextButton(onPressed: (){}, child: TextView(text: TTexts.subscribe,textColor: TColors.secondary,bold: true,))
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+
+
               SizedBox(
-                height: 50.h,
+                height: 20.h,
               ),
 
               /// Options
@@ -118,6 +134,23 @@ class Profile extends StatelessWidget {
                 color: TColors.primaryDark1,
                 child: Column(
                   children: [
+
+                    /// Transaction Option
+                    ProfileOptions(
+                      title: TTexts.transactions,
+                      onPressed: () {
+
+
+                 Get.to(()=>TransactionsPage());
+
+
+
+
+                      },
+                    ),
+                    Divider(height: 1.h, color: TColors.primaryLight1),
+
+                    /// Help & Support
                     ProfileOptions(
                         title: TTexts.helpSupport,
                         onPressed: () => Get.to(() => const CustomWebView(
@@ -125,6 +158,8 @@ class Profile extends StatelessWidget {
                               title: TTexts.helpSupport,
                             ))),
                     Divider(height: 1.h, color: TColors.primaryLight1),
+
+                    /// About Us
                     ProfileOptions(
                       title: TTexts.aboutUs,
                       onPressed: () => Get.to(() => const CustomWebView(
@@ -132,6 +167,8 @@ class Profile extends StatelessWidget {
                           title: TTexts.aboutUs)),
                     ),
                     Divider(height: 1.h, color: TColors.primaryLight1),
+
+                    /// Privacy Policy
                     ProfileOptions(
                       title: TTexts.privacyPolicy,
                       onPressed: () => Get.to(() => const CustomWebView(
@@ -139,6 +176,8 @@ class Profile extends StatelessWidget {
                           title: TTexts.privacyPolicy)),
                     ),
                     Divider(height: 1.h, color: TColors.primaryLight1),
+
+                    ///Terms Of Use
                     ProfileOptions(
                       title: TTexts.termsOfUse,
                       onPressed: () => Get.to(() => const CustomWebView(
@@ -146,6 +185,8 @@ class Profile extends StatelessWidget {
                           title: TTexts.privacyPolicy)),
                     ),
                     Divider(height: 1.h, color: TColors.primaryLight1),
+
+                    /// Change Password
                     ProfileOptions(
                       title: TTexts.changePassword,
 
@@ -153,16 +194,21 @@ class Profile extends StatelessWidget {
                       onPressed: () => Get.to(() => SendOtp(resetPass: 1)),
                     ),
                     Divider(height: 1.h, color: TColors.primaryLight1),
+
+                    ///Logout
                     ProfileOptions(
                       title: TTexts.logout,
                       onPressed: () {
-                        SharedPrefs.setBool("isLoggedIn", false);
-                        Get.offAll(() => const Login());
+                        showMyDialog(
+                            context); // Show the dialog when button is pressed
                       },
                     ),
                   ],
                 ),
               ),
+
+
+              /// Bottom Label
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Padding(
@@ -182,4 +228,57 @@ class Profile extends StatelessWidget {
       ),
     );
   }
+}
+
+/// function for Logout Dialog
+
+showMyDialog(BuildContext context) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: true, // Prevents closing the dialog by tapping outside
+    builder: (BuildContext context) {
+      return AlertDialog(
+        backgroundColor: TColors.primaryLight1,
+        title: TextView(
+          text: TTexts.dialogLogout,
+          textColor: TColors.primary,
+          fontSize: 25,
+          bold: true,
+        ),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              TextView(
+                text: TTexts.dialogMessage,
+                textColor: TColors.primary,
+              ),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: TextView(
+              text: TTexts.dialogOk,
+              textColor: TColors.primaryDark2,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+              SharedPrefs.setBool("isLoggedIn", false);
+              Get.offAll(() => const Login());
+              // Handle OK action
+            },
+          ),
+          TextButton(
+            child: TextView(
+              text: TTexts.dialogCancel,
+              textColor: TColors.accentDark1,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop(); // Close the dialog
+            },
+          ),
+        ],
+      );
+    },
+  );
 }
