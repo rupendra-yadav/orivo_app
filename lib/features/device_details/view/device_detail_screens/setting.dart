@@ -24,7 +24,7 @@ class Setting extends StatelessWidget {
     final DeviceDetailNavigationController navigationController =
         DeviceDetailNavigationController.instance;
 
-    controller.getDeviceDetail(navigationController.deviceId.value,"");
+    controller.getDeviceDetail(navigationController.deviceId.value,"","");
 
     return Scaffold(
       backgroundColor: TColors.primary,

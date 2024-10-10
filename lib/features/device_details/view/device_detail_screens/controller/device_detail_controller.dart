@@ -56,7 +56,7 @@ class DeviceDetailController extends GetxController {
   final isHistoryLoading = false.obs;
 
   ///Device Detail Data
-  Future<void> getDeviceDetail(String deviceId, String startDate) async {
+  Future<void> getDeviceDetail(String deviceId, String startDate,String startDatePrep) async {
     try {
       isDeviceDetailLoading.value = true;
 
@@ -67,12 +67,11 @@ class DeviceDetailController extends GetxController {
 
       getEnergyConsumption(startDate, deviceListModel.mMachineUniqueId);
 
-      getCostEstimate(
-          "2024-10-01", deviceListModel.mMachineUniqueId, "2024-10-03");
+      getCostEstimate(startDatePrep, deviceListModel.mMachineUniqueId, startDate);
 
-      getDemand("2024-10-01", deviceListModel.mMachineUniqueId, "2024-10-03");
+      getDemand(startDatePrep, deviceListModel.mMachineUniqueId, startDate);
 
-      getTotalPowerFactors(startDate, deviceListModel.mMachineUniqueId, "");
+      getTotalPowerFactors(startDatePrep, deviceListModel.mMachineUniqueId, startDate);
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());

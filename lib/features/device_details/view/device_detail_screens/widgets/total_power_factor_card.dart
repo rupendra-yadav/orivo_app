@@ -106,7 +106,7 @@ class TotalPowerFactorsCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                TextView(text: powerFactorModel.avgPf?.value?.toString() ?? '0.0'),
+                TextView(text: powerFactorModel.avgPf?.value?.toStringAsFixed(4) ?? '0.0'),
               ],
             ),
           ),

@@ -53,23 +53,28 @@ class _HomeState extends State<Home> {
     super.initState();
 
     DateTime now = DateTime.now();
-    // Create a UTC DateTime
     DateTime utcNow = now.toUtc();
 
-    // Format the date to the desired format
-    String formattedDate =
-        DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(utcNow);
+    // Set the time to 00:00:00 (midnight) for the same date
+    DateTime utcMidnight = DateTime.utc(utcNow.year, utcNow.month, utcNow.day);
 
-    // Now you can use the formattedDate
+    // Format the date to the desired format
+    String formattedDateMidNight = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(utcMidnight);
+
+    String formattedDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(utcNow);
+
     controller.getDeviceDetail(
-        navigationController.deviceId.value, formattedDate);
+        navigationController.deviceId.value, formattedDate,formattedDateMidNight);
     controller.getDeviceDataItems();
 
     if (kDebugMode) {
       print(navigationController.deviceId.value);
-      print(formattedDate); // Print the formatted date for debugging
+      print("checkDateOutCome");
+      print(formattedDate);
+      print(formattedDateMidNight);
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -275,14 +280,14 @@ class _HomeState extends State<Home> {
                             ),
                           ),
                           SizedBox(width: 5.w),
-                          Expanded(
+                         /* Expanded(
                             child: TextViewCard(
                               cardText: TTexts.totalHD,
                               width: TDeviceUtils.screenWidth / 2,
                               cardValue:  "${(controller.powerFactorModel.value.totalPf?.value ?? 0.0).toStringAsFixed(1)}${controller.powerFactorModel.value.totalPf?.unit?.toString() ?? "0.0"}",
                               cardAvg:  "${(controller.powerFactorModel.value.avgPf?.value ?? 0.0).toStringAsFixed(1)}${controller.powerFactorModel.value.avgPf?.unit?.toString() ?? "0.0"}",
                             ),
-                          ),
+                          ),*/
                         ],
                       );
                     }),

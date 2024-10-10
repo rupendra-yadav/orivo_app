@@ -49,7 +49,7 @@ class _HistoryState extends State<History> {
   void initState() {
     super.initState();
 
-    controller.getDeviceDetail(navigationController.deviceId.value, "");
+    controller.getDeviceDetail(navigationController.deviceId.value, "","");
 
     controller.getDeviceDataItems();
 
