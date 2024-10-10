@@ -65,7 +65,7 @@ class DeviceDetailController extends GetxController {
       deviceList.assignAll(deviceLis);
       deviceListModel = deviceList[0];
 
-      getEnergyConsumption(startDate, deviceListModel.mMachineUniqueId);
+      getEnergyConsumption(startDatePrep, deviceListModel.mMachineUniqueId);
 
       getCostEstimate(startDatePrep, deviceListModel.mMachineUniqueId, startDate);
 
