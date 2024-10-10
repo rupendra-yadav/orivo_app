@@ -77,44 +77,44 @@ class ConsumptionDetail {
     final Map<String, dynamic> data = <String, dynamic>{};
 
     // Handle breakTime (replace with appropriate data if needed)
-    if (this.breakTime != null) {
-      data['break_time'] = this.breakTime;
+    if (breakTime != null) {
+      data['break_time'] = breakTime;
     }
 
     // Serialize normalGraph
-    if (this.normalGraph != null) {
-      data['normal_graph'] = this.normalGraph!.map((v) => v.toJson()).toList();
+    if (normalGraph != null) {
+      data['normal_graph'] = normalGraph!.map((v) => v.toJson()).toList();
     }
 
     // Serialize normalUnit
-    if (this.normalUnit != null) {
-      data['normal_unit'] = this.normalUnit!.toJson();
+    if (normalUnit != null) {
+      data['normal_unit'] = normalUnit!.toJson();
     }
 
     // Serialize offPeakGraph
-    if (this.offPeakGraph != null) {
+    if (offPeakGraph != null) {
       data['off_peak_graph'] =
-          this.offPeakGraph!.map((v) => v.toJson()).toList();
+          offPeakGraph!.map((v) => v.toJson()).toList();
     }
 
     // Serialize offPeakUnit
-    if (this.offPeakUnit != null) {
-      data['off_peak_unit'] = this.offPeakUnit!.toJson();
+    if (offPeakUnit != null) {
+      data['off_peak_unit'] = offPeakUnit!.toJson();
     }
 
     // Serialize onPeakGraph
-    if (this.onPeakGraph != null) {
-      data['on_peak_graph'] = this.onPeakGraph!.map((v) => v.toJson()).toList();
+    if (onPeakGraph != null) {
+      data['on_peak_graph'] = onPeakGraph!.map((v) => v.toJson()).toList();
     }
 
     // Serialize onPeakUnit
-    if (this.onPeakUnit != null) {
-      data['on_peak_unit'] = this.onPeakUnit!.toJson();
+    if (onPeakUnit != null) {
+      data['on_peak_unit'] = onPeakUnit!.toJson();
     }
 
     // Serialize totalUnit
-    if (this.totalUnit != null) {
-      data['total_unit'] = this.totalUnit!.toJson();
+    if (totalUnit != null) {
+      data['total_unit'] = totalUnit!.toJson();
     }
 
     return data;

@@ -7,7 +7,6 @@ import '../../../../../utils/constant/colors.dart';
 import '../../../../../utils/constant/text_strings.dart';
 import '../home.dart';
 import '../model/consumption_detail_model.dart';
-import '../model/energy_consumption_model.dart';
 
 class DetailPieCard extends StatelessWidget {
   const DetailPieCard({

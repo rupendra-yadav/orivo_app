@@ -12,8 +12,8 @@ class NormalGraph {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['x'] = this.x;
-    data['y'] = this.y;
+    data['x'] = x;
+    data['y'] = y;
     return data;
   }
 }

@@ -8,20 +8,20 @@ class DemandModel {
 
   DemandModel.fromJson(Map<String, dynamic> json) {
     avgDemand = json['avg_demand'] != null
-        ? new AvgDemand.fromJson(json['avg_demand'])
+        ? AvgDemand.fromJson(json['avg_demand'])
         : null;
     currentDemand = json['current_demand'] != null
-        ? new AvgDemand.fromJson(json['current_demand'])
+        ? AvgDemand.fromJson(json['current_demand'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.avgDemand != null) {
-      data['avg_demand'] = this.avgDemand!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (avgDemand != null) {
+      data['avg_demand'] = avgDemand!.toJson();
     }
-    if (this.currentDemand != null) {
-      data['current_demand'] = this.currentDemand!.toJson();
+    if (currentDemand != null) {
+      data['current_demand'] = currentDemand!.toJson();
     }
     return data;
   }

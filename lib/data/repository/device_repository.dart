@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 
 import '../../features/device_details/view/device_detail_screens/model/dart_items.dart';
 import '../../features/device_details/view/device_detail_screens/model/graph_data_model_api.dart';
-import 'package:http/http.dart' as http;
 
 
 class DeviceRepository extends GetxController {
@@ -384,17 +383,7 @@ class DeviceRepository extends GetxController {
 
       final response = await THttpHelper2.redirectPost(APIKeys2.history, request);
 
-      if (response == null) {
-        throw Exception("No response from server");
-      }
-
       print(response);
-
-      if (response is! Map<String, dynamic>) {
-        // The server may have returned an HTML error page
-        print("Response is not a JSON object. Possible server error.");
-        throw Exception("Invalid response format");
-      }
 
       if (response['status'] == 'success') {
         return response["data"];

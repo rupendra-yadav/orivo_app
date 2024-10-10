@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
 import '../../../../../common/widgets/text/text_view.dart';
 import '../../../../../utils/constant/colors.dart';
-import '../controller/device_detail_controller.dart';
-import '../model/dart_items.dart';
 import '../model/history_filter_model.dart';
 
 class DataItemCard extends StatelessWidget {
@@ -27,7 +24,7 @@ class DataItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DeviceDetailController controller = Get.put(DeviceDetailController());
+    //final DeviceDetailController controller = Get.put(DeviceDetailController());
     // void runAPIGraph() {
     //   controller.getDeviceGraphData(dataItems.field, deviceId, range);
     // }

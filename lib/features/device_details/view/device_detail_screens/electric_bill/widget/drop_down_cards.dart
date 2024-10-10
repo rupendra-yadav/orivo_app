@@ -47,7 +47,7 @@ class _DropDownCardState extends State<DropDownCard> {
                 ),
                 const Spacer(),
                 if(_isDetailVisible)
-                Icon(Icons.info_outline, color: Colors.white),
+                const Icon(Icons.info_outline, color: Colors.white),
                 IconButton(
                   onPressed: () {
                     setState(() {
@@ -111,7 +111,7 @@ class _DropDownCardState extends State<DropDownCard> {
               color: Colors.white70,
             ),
           ),
-        Spacer(),
+        const Spacer(),
           Text(
             value,
             style: TextStyle(

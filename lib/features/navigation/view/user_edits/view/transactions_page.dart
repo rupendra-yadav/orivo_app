@@ -27,14 +27,14 @@ class TransactionsPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TextView(text: "Gold Subscription",bold: true,fontSize: 20,),
-                TextView(text: "Date : 16-09-2024",textColor: TColors.secondary,),
+                const TextView(text: "Gold Subscription",bold: true,fontSize: 20,),
+                const TextView(text: "Date : 16-09-2024",textColor: TColors.secondary,),
 
                 Row(
                   children: [
-                    TextButton(onPressed: (){}, child: TextView(text: "Download Invoice",bold: true,fontSize: 20,textColor: TColors.secondary,),),
-                    Spacer(),
-                    TextView(text: "Rs 15000",fontSize: 20,),
+                    TextButton(onPressed: (){}, child: const TextView(text: "Download Invoice",bold: true,fontSize: 20,textColor: TColors.secondary,),),
+                    const Spacer(),
+                    const TextView(text: "Rs 15000",fontSize: 20,),
                   ],
                 )
               ],

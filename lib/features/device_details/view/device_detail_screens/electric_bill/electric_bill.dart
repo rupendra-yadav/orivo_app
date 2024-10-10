@@ -4,17 +4,14 @@ import 'package:auro/utils/styles/spacing_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../../common/widgets/text/text_view.dart';
 import '../../../../../utils/constant/colors.dart';
-import '../../../../../utils/constant/image_string.dart';
 import '../../../../../utils/constant/sizes.dart';
 import '../../../../../utils/constant/text_strings.dart';
 import '../../../../notificaations/view/notifications.dart';
-import '../detali_pages/widgets/legend_name_card.dart';
 
 class ElectricBill extends StatefulWidget {
   const ElectricBill({super.key});
@@ -41,7 +38,7 @@ class _ElectricBillState extends State<ElectricBill> {
         automaticallyImplyLeading: false,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
-          icon: Icon(
+          icon: const Icon(
             Iconsax.arrow_left,
             color: TColors.accent,
             size: 30,
@@ -54,7 +51,7 @@ class _ElectricBillState extends State<ElectricBill> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Center(
+              const Center(
                 child: Text(
                   TTexts.electricityBill,
                   style: TextStyle(color: TColors.white, fontSize: 22),
@@ -65,7 +62,7 @@ class _ElectricBillState extends State<ElectricBill> {
               children: [
                 IconButton(
                   onPressed:() => Get.to(() => const Notifications()),
-                  icon: Icon(
+                  icon: const Icon(
                     Iconsax.notification,
                     color: TColors.white,
                     size: 25,
@@ -169,19 +166,19 @@ class _ElectricBillState extends State<ElectricBill> {
               SizedBox(height: 10.h,),
 
               ///Connection Info
-              DropDownCard(cardTitle: 'KVA Info', field1: 'On Peak M.D', field2: 'Off Peak M.D', field3: 'Normal M.D', field4: 'Units', value4: '0.456', value3: '0.8541', value1: '0.300', value2: '0.3123',),
+              const DropDownCard(cardTitle: 'KVA Info', field1: 'On Peak M.D', field2: 'Off Peak M.D', field3: 'Normal M.D', field4: 'Units', value4: '0.456', value3: '0.8541', value1: '0.300', value2: '0.3123',),
               SizedBox(height: 10.h,),
 
               ///Kva Info
-              DropDownCard(cardTitle: 'KVA Info', field1: 'On Peak M.D', field2: 'Off Peak M.D', field3: 'Normal M.D', field4: 'Units', value4: '0.456', value3: '0.8541', value1: '0.300', value2: '0.3123',),
+              const DropDownCard(cardTitle: 'KVA Info', field1: 'On Peak M.D', field2: 'Off Peak M.D', field3: 'Normal M.D', field4: 'Units', value4: '0.456', value3: '0.8541', value1: '0.300', value2: '0.3123',),
               SizedBox(height: 10.h,),
 
               ///KVAH info
-              DropDownCard(cardTitle: 'KVA Info', field1: 'On Peak M.D', field2: 'Off Peak M.D', field3: 'Normal M.D', field4: 'Units', value4: '0.456', value3: '0.8541', value1: '0.300', value2: '0.3123',),
+              const DropDownCard(cardTitle: 'KVA Info', field1: 'On Peak M.D', field2: 'Off Peak M.D', field3: 'Normal M.D', field4: 'Units', value4: '0.456', value3: '0.8541', value1: '0.300', value2: '0.3123',),
               SizedBox(height: 10.h,),
 
               ///Cost Details
-              DropDownCard(cardTitle: 'KVA Info', field1: 'On Peak M.D', field2: 'Off Peak M.D', field3: 'Normal M.D', field4: 'Units', value4: '0.456', value3: '0.8541', value1: '0.300', value2: '0.3123',),
+              const DropDownCard(cardTitle: 'KVA Info', field1: 'On Peak M.D', field2: 'Off Peak M.D', field3: 'Normal M.D', field4: 'Units', value4: '0.456', value3: '0.8541', value1: '0.300', value2: '0.3123',),
               SizedBox(height: 50.h,),
 
               ///Download button

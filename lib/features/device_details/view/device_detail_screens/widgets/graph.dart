@@ -7,7 +7,6 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../../../../utils/constant/colors.dart';
 import '../../../../../utils/styles/spacing_style.dart';
 import '../controller/device_detail_controller.dart';
-import '../model/graph_data_model_api.dart';
 import '../model/history_filter_data_model.dart';
 
 class Graph extends StatelessWidget {

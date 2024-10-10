@@ -1,7 +1,6 @@
 import 'package:auro/features/device_details/view/device_detail_screens/model/demand_detail_model.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/model/demand_model.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/model/graph_data_model_api.dart';
-import 'package:auro/utils/popups/loaders.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 

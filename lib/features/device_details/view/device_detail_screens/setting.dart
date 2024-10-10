@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../../common/widgets/buttons/button.dart';
 import '../../../../utils/constant/image_string.dart';
 import '../../../../utils/device/device_utility.dart';
 import '../../controller/device_detail_navigation_controller.dart';
@@ -58,7 +57,7 @@ class Setting extends StatelessWidget {
                          onTap: () => Get.to(() => const ElectricBill()),
                          child: const TextView(text: "Eletricity Bill",fontSize: 25,textColor: TColors.accent,)),
 
-                      SizedBox(height: 20,),
+                      const SizedBox(height: 20,),
 
                       /// DeviceInfo
                       const TextView(

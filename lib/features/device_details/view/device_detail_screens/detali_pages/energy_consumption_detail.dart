@@ -1,5 +1,4 @@
 import 'package:auro/common/widgets/text/text_view.dart';
-import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/break_down_graph_card.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/device_card_details_app_bar.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/multiple_bar_graph_card.dart';
 import 'package:auro/utils/constant/colors.dart';
@@ -15,7 +14,6 @@ import 'package:pie_chart/pie_chart.dart' as pie_chart;
 import '../controller/device_detail_controller.dart';
 import '../widgets/detail_pie_card.dart';
 import '../widgets/device_detail_shimmer.dart';
-import '../widgets/pie_card.dart';
 
 class EnergyConsumptionDetail extends StatefulWidget {
   const EnergyConsumptionDetail({super.key});

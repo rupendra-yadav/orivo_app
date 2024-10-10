@@ -1,4 +1,3 @@
-import 'package:get_storage/get_storage.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,7 +19,7 @@ class BarGraph extends StatelessWidget {
 
 // Assuming onPeakGraph is a List of data points
     onPeakGraph?.forEach((graph) {
-      chartData.add(ChartSampleData(x: graph?.y ?? 0.0, y: graph?.x ?? ""));
+      chartData.add(ChartSampleData(x: graph.y ?? 0.0, y: graph.x ?? ""));
     });
 
 
@@ -30,12 +29,12 @@ class BarGraph extends StatelessWidget {
       child: SfCartesianChart(
         borderWidth: 0,
         plotAreaBorderWidth: 0,
-        primaryXAxis: CategoryAxis(  // Treat x-axis as categories (dates)
+        primaryXAxis: const CategoryAxis(  // Treat x-axis as categories (dates)
           majorGridLines: MajorGridLines(width: 0),
           majorTickLines: MajorTickLines(width: 0), // Hide major tick lines
           axisLine: AxisLine(width: 0), // Hide the x-axis line
         ),
-        primaryYAxis: NumericAxis(  // Numeric values on y-axis
+        primaryYAxis: const NumericAxis(  // Numeric values on y-axis
           majorGridLines: MajorGridLines(width: 0), // Hide major grid lines
           axisLine: AxisLine(width: 0), // Hide the y-axis line
           majorTickLines: MajorTickLines(width: 0), // Hide y-axis tick lines

@@ -26,64 +26,64 @@ class CostEstimateModel {
 
   CostEstimateModel.fromJson(Map<String, dynamic> json) {
     demand =
-    json['demand'] != null ? new Demand.fromJson(json['demand']) : null;
+    json['demand'] != null ? Demand.fromJson(json['demand']) : null;
     govCost = json['gov_cost'] != null
-        ? new Demand.fromJson(json['gov_cost'])
+        ? Demand.fromJson(json['gov_cost'])
         : null;
     normEnergy = json['norm_energy'] != null
-        ? new Demand.fromJson(json['norm_energy'])
+        ? Demand.fromJson(json['norm_energy'])
         : null;
     normEnergyRate = json['norm_energy_rate'] != null
-        ? new Demand.fromJson(json['norm_energy_rate'])
+        ? Demand.fromJson(json['norm_energy_rate'])
         : null;
     offPeak = json['off_peak'] != null
-        ? new Demand.fromJson(json['off_peak'])
+        ? Demand.fromJson(json['off_peak'])
         : null;
     offPeakRate = json['off_peak_rate'] != null
-        ? new Demand.fromJson(json['off_peak_rate'])
+        ? Demand.fromJson(json['off_peak_rate'])
         : null;
     onPeak =
-    json['on_peak'] != null ? new Demand.fromJson(json['on_peak']) : null;
+    json['on_peak'] != null ? Demand.fromJson(json['on_peak']) : null;
     onPeakRate = json['on_peak_rate'] != null
-        ? new Demand.fromJson(json['on_peak_rate'])
+        ? Demand.fromJson(json['on_peak_rate'])
         : null;
-    other = json['other'] != null ? new Demand.fromJson(json['other']) : null;
+    other = json['other'] != null ? Demand.fromJson(json['other']) : null;
     totalEnergyCost = json['total_energy_cost'] != null
-        ? new Demand.fromJson(json['total_energy_cost'])
+        ? Demand.fromJson(json['total_energy_cost'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.demand != null) {
-      data['demand'] = this.demand!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (demand != null) {
+      data['demand'] = demand!.toJson();
     }
-    if (this.govCost != null) {
-      data['gov_cost'] = this.govCost!.toJson();
+    if (govCost != null) {
+      data['gov_cost'] = govCost!.toJson();
     }
-    if (this.normEnergy != null) {
-      data['norm_energy'] = this.normEnergy!.toJson();
+    if (normEnergy != null) {
+      data['norm_energy'] = normEnergy!.toJson();
     }
-    if (this.normEnergyRate != null) {
-      data['norm_energy_rate'] = this.normEnergyRate!.toJson();
+    if (normEnergyRate != null) {
+      data['norm_energy_rate'] = normEnergyRate!.toJson();
     }
-    if (this.offPeak != null) {
-      data['off_peak'] = this.offPeak!.toJson();
+    if (offPeak != null) {
+      data['off_peak'] = offPeak!.toJson();
     }
-    if (this.offPeakRate != null) {
-      data['off_peak_rate'] = this.offPeakRate!.toJson();
+    if (offPeakRate != null) {
+      data['off_peak_rate'] = offPeakRate!.toJson();
     }
-    if (this.onPeak != null) {
-      data['on_peak'] = this.onPeak!.toJson();
+    if (onPeak != null) {
+      data['on_peak'] = onPeak!.toJson();
     }
-    if (this.onPeakRate != null) {
-      data['on_peak_rate'] = this.onPeakRate!.toJson();
+    if (onPeakRate != null) {
+      data['on_peak_rate'] = onPeakRate!.toJson();
     }
-    if (this.other != null) {
-      data['other'] = this.other!.toJson();
+    if (other != null) {
+      data['other'] = other!.toJson();
     }
-    if (this.totalEnergyCost != null) {
-      data['total_energy_cost'] = this.totalEnergyCost!.toJson();
+    if (totalEnergyCost != null) {
+      data['total_energy_cost'] = totalEnergyCost!.toJson();
     }
     return data;
   }

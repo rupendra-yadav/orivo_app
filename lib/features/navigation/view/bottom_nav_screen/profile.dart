@@ -117,7 +117,7 @@ class Profile extends StatelessWidget {
                           child: const TextView(text: TTexts.noActiveSubscription,bold: true,fontSize: 20,),
                         ),
 
-                        TextButton(onPressed: (){}, child: TextView(text: TTexts.subscribe,textColor: TColors.secondary,bold: true,))
+                        TextButton(onPressed: (){}, child: const TextView(text: TTexts.subscribe,textColor: TColors.secondary,bold: true,))
                       ],
                     ),
                   ),
@@ -141,7 +141,7 @@ class Profile extends StatelessWidget {
                       onPressed: () {
 
 
-                 Get.to(()=>TransactionsPage());
+                 Get.to(()=>const TransactionsPage());
 
 
 
@@ -239,13 +239,13 @@ showMyDialog(BuildContext context) async {
     builder: (BuildContext context) {
       return AlertDialog(
         backgroundColor: TColors.primaryLight1,
-        title: TextView(
+        title: const TextView(
           text: TTexts.dialogLogout,
           textColor: TColors.primary,
           fontSize: 25,
           bold: true,
         ),
-        content: SingleChildScrollView(
+        content: const SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
               TextView(
@@ -257,7 +257,7 @@ showMyDialog(BuildContext context) async {
         ),
         actions: <Widget>[
           TextButton(
-            child: TextView(
+            child: const TextView(
               text: TTexts.dialogOk,
               textColor: TColors.primaryDark2,
             ),
@@ -269,7 +269,7 @@ showMyDialog(BuildContext context) async {
             },
           ),
           TextButton(
-            child: TextView(
+            child: const TextView(
               text: TTexts.dialogCancel,
               textColor: TColors.accentDark1,
             ),
