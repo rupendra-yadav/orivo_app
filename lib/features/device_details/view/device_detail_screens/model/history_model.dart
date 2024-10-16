@@ -6,9 +6,9 @@ class HistoryModel {
   HistoryModel({this.filters});
 
   HistoryModel.fromJson(Map<String, dynamic> json) {
-    if (json['filters'] != null) {
+    if (json['value'] != null) {
       filters = <Filters>[];
-      json['filters'].forEach((v) {
+      json['value'].forEach((v) {
         filters!.add(Filters.fromJson(v));
       });
     }
@@ -17,7 +17,7 @@ class HistoryModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (filters != null) {
-      data['filters'] = filters!.map((v) => v.toJson()).toList();
+      data['value'] = filters!.map((v) => v.toJson()).toList();
     }
     return data;
   }

@@ -7,6 +7,7 @@ import 'package:syncfusion_flutter_gauges/gauges.dart';
 import '../../../../../common/widgets/text/text_view.dart';
 import '../../../../../utils/constant/colors.dart';
 import '../../../../../utils/constant/text_strings.dart';
+import '../model/pf_model.dart';
 import '../model/power_factor_model.dart';
 
 class TotalPowerFactorsCard extends StatelessWidget {
@@ -14,7 +15,7 @@ class TotalPowerFactorsCard extends StatelessWidget {
     super.key, required this.powerFactorModel,
   });
 
-  final PowerFactorModel powerFactorModel;
+  final PfModel powerFactorModel;
 
 
   @override
@@ -42,7 +43,7 @@ class TotalPowerFactorsCard extends StatelessWidget {
                      Expanded(
                         flex: 1,
                         child: TextView(
-                          text: (powerFactorModel.totalPf?.value?.toString() ?? '0.0'),
+                          text: (powerFactorModel.pf?.value?.toString() ?? '0.0'),
                           fontSize: 25,
                           textColor: TColors.green,
                         )),
@@ -106,7 +107,7 @@ class TotalPowerFactorsCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                TextView(text: powerFactorModel.avgPf?.value?.toStringAsFixed(4) ?? '0.0'),
+                TextView(text: powerFactorModel.pf?.value?.toStringAsFixed(4) ?? '0.0'),
               ],
             ),
           ),

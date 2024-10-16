@@ -276,7 +276,7 @@ class DeviceRepository extends GetxController {
 
       print("CheckRequest");
       print(request);
-      final response = await THttpHelper2.redirectPost(APIKeys2.powerQuality, request,);
+      final response = await THttpHelper2.redirectPost(APIKeys2.pf, request,);
 
       print(response);
       if (kDebugMode) {
@@ -398,6 +398,37 @@ class DeviceRepository extends GetxController {
     }
   }
 
+  /// Cost Estimate Details
+  Future<Map<String, dynamic>> getCostEstimateDetails(
+      String date, String deviceId, String stop) async {
+    try {
+      Map<String, dynamic> request = {
+        "device_id": deviceId,
+        "start": date,
+        "stop": stop,
+      };
 
+      print("CheckRequest");
+      print(request);
+      final response = await THttpHelper2.redirectPost(APIKeys2.costEstimateDetail, request,);
+
+      print(response);
+      if (kDebugMode) {
+        print('coat Estimate Details Response: $response');
+      }
+
+      if (response['status'] == 'success') {
+
+        return response["data"];
+      } else {
+        print("error On status");
+        throw Exception(response['message']);
+      }
+    } catch (e) {
+      print("error Try  Catch");
+      print(e.toString());
+      throw Exception(e.toString());
+    }
+  }
 
 }

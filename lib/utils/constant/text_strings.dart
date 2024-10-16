@@ -170,7 +170,6 @@ class TTexts {
   static const String editProfile = "Edit Profile";
   static const String saveDetails = "Save Details";
 
-
   ///Energy Consumption Detail
   static const String energyConsumptionDetail = "Energy Consumption";
   static const String dateRange = "1 August 2024 - 10 August 2024";
@@ -181,11 +180,8 @@ class TTexts {
   static const String timeRange = "6 AM to 12 PM";
   static const String breakDownCardTitle = "Light off/Breakdown/Down Time";
 
-
   /// Cost Estimate Details
   static const String costEstimate = "Cost Estimate";
-
-
 
   /// Demand Estimate Details
   static const String demandEstimate = "Demand Estimate";
@@ -195,14 +191,11 @@ class TTexts {
   static const String highestKva = "Higest Kva : 600 KvA";
   static const String loadFactor = "Load Factor : 70 %";
 
-
-
   /// Power Quality
   static const String powerQuality = "Power Quality";
   static const String powerQuality096 = "0.96";
   static const String averagePF = "Average P.F ----------0.94";
   static const String voltage = "Voltage";
-
 
   ///Electricity Bill
   static const String downloadElectricityBill = "Download Electricity Bill";
@@ -210,7 +203,17 @@ class TTexts {
 
   /// Transactions
   static const String transactionsTitle = "Transactions";
+  static const String goldSubscription = "Gold Subscription";
+  static const String date16_09_2024 = "Date : 16-09-2024";
+  static const String rs_15000 = "Rs 15000";
 
-
+  /// Subscription
+  static const String subscriptionTitle = "Subscription";
+  static const String disc1 = "All Silver Package Features";
+  static const String disc2 = "Whatsapp Updates";
+  static const String disc3 = "Unlimited Data Backup";
+  static const String disc4 = "Analysis and Machine Learning";
+  static const String subscribeButton = "Subscribe";
+  static const String gold = "Gold";
 
 }

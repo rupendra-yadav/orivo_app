@@ -6,8 +6,8 @@ import '../../../../../../common/widgets/text/text_view.dart';
 import '../../../../../../utils/constant/colors.dart';
 import '../../model/cost_estimate_detail_model.dart';
 
-class LegendNameCard extends StatefulWidget {
-  const LegendNameCard({
+class LegendNameCardGovt extends StatefulWidget {
+  const LegendNameCardGovt({
     super.key,
     required this.costEstimateDetailModel,
   });
@@ -15,10 +15,10 @@ class LegendNameCard extends StatefulWidget {
   final CostEstimateDetailModel costEstimateDetailModel;
 
   @override
-  _LegendNameCardState createState() => _LegendNameCardState();
+  _LegendNameCardGovtState createState() => _LegendNameCardGovtState();
 }
 
-class _LegendNameCardState extends State<LegendNameCard> {
+class _LegendNameCardGovtState extends State<LegendNameCardGovt> {
   bool _isDetailVisible = false;
 
   @override
@@ -37,20 +37,20 @@ class _LegendNameCardState extends State<LegendNameCard> {
                   width: 20.w,
                   height: 20.h,
                   decoration: BoxDecoration(
-                    color: TColors.green,
+                    color: TColors.blue,
                     borderRadius: BorderRadius.circular(50.r),
                   ),
                 ),
                 SizedBox(width: 5.w),
-                const TextView(text: "Energy : ", fontSize: 20),
+                const TextView(text: "Govt : ", fontSize: 20),
                 TextView(
-                  text: (widget.costEstimateDetailModel.totalEnergyCost
-                              ?.value ??
-                          0.0)
+                  text: (widget.costEstimateDetailModel.govCost
+                      ?.value ??
+                      0.0)
                       .toStringAsFixed(2),
                   // Referencing widget.titleValue
                   fontSize: 20,
-                  textColor: TColors.green,
+                  textColor: TColors.blue,
                 ),
                 const TextView(text: " Rs", fontSize: 20),
                 const Spacer(),
@@ -77,106 +77,74 @@ class _LegendNameCardState extends State<LegendNameCard> {
               padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
               child: Column(
                 children: [
-                  /// On Peak
+                  /// Normal FPPAS
                   Row(
                     children: [
-                      const TextView(text: "On Peak Unit"),
+                      const TextView(text: "Normal FPPAS"),
                       SizedBox(width: 10.w),
-                      const TextView(text: "Per Unit Cost"),
+                      const TextView(text: ""),
                     ],
                   ),
                   Row(
                     children: [
                       TextView(
-                        text: (widget.costEstimateDetailModel.onPeak
-                                    ?.value ??
-                                0.0)
+                        text: (widget.costEstimateDetailModel.normalFpps
+                            ?.value ??
+                            0.0)
                             .toStringAsFixed(2),
                         // Referencing widget.onPeakValue
-                        textColor: TColors.green,
+                        textColor: TColors.blue,
                       ),
                       Spacer(),
                       TextView(text: "x", fontSize: 15),
                       Spacer(),
                       TextView(
-                        text: (widget.costEstimateDetailModel.onPeakRate
-                                    ?.value ??
-                                0.0)
+                        text: (widget.costEstimateDetailModel.fppsRate
+                            ?.value ??
+                            0.0)
                             .toStringAsFixed(2),
                         // Referencing widget.onPeakRate
-                        textColor: TColors.green,
+                        textColor: TColors.blue,
                       ),
                       Spacer(),
                       TextView(
-                          text: ((widget.costEstimateDetailModel.onPeak?.value ?? 0.0) * (widget.costEstimateDetailModel.onPeakRate?.value ?? 0.0)).toStringAsFixed(2),
-                          textColor: TColors.green),
+                          text: ((widget.costEstimateDetailModel.normalFpps?.value ?? 0.0) * (widget.costEstimateDetailModel.fppsRate?.value ?? 0.0)).toStringAsFixed(2),
+                          textColor: TColors.blue),
                     ],
                   ),
 
-                  /// Off Peak
+                  /// Cess
                   SizedBox(
                     height: 10.h,
                   ),
                   Row(
                     children: [
-                      const TextView(text: "Off Peak Unit"),
+                      const TextView(text: "Cess"),
                       SizedBox(width: 10.w),
-                      const TextView(text: "Per Unit Cost"),
+                      const TextView(text: ""),
                     ],
                   ),
                   Row(
                     children: [
                       TextView(
-                        text: (widget.costEstimateDetailModel.offPeak
-                                    ?.value ??
-                                0.0)
+                        text: (widget.costEstimateDetailModel.cess
+                            ?.value ??
+                            0.0)
                             .toStringAsFixed(2),
                         // Referencing widget.offPeakValue
-                        textColor: TColors.green,
+                        textColor: TColors.blue,
                       ),
                       Spacer(),
                       TextView(text: "x", fontSize: 15),
                       Spacer(),
                       TextView(
-                        text: (widget.costEstimateDetailModel.offPeakRate?.value ?? 0.0).toStringAsFixed(2),
+                        text: (widget.costEstimateDetailModel.cessRate?.value ?? 0.0).toStringAsFixed(2),
                         // Referencing widget.offPeakRate
-                        textColor: TColors.green,
+                        textColor: TColors.blue,
                       ),
                       Spacer(),
                       TextView(
-                          text: ((widget.costEstimateDetailModel.offPeak?.value ?? 0.0) * (widget.costEstimateDetailModel.offPeakRate?.value ?? 0.0)).toStringAsFixed(2), textColor: TColors.green),
-                    ],
-                  ),
-
-                  /// Normal
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  Row(
-                    children: [
-                      const TextView(text: "Normal Units"),
-                      SizedBox(width: 10.w),
-                      const TextView(text: "Per Unit Cost"),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      TextView(
-                        text: (widget.costEstimateDetailModel.normEnergy?.value ?? 0.0).toStringAsFixed(2),
-                        // Referencing widget.offPeakValue
-                        textColor: TColors.green,
-                      ),
-                      Spacer(),
-                      TextView(text: "x", fontSize: 15),
-                      Spacer(),
-                      TextView(
-                        text: (widget.costEstimateDetailModel.normEnergyRate?.value ?? 0.0).toStringAsFixed(2),
-                        // Referencing widget.offPeakRate
-                        textColor: TColors.green,
-                      ),
-                      Spacer(),
-                      TextView(
-                          text: ((widget.costEstimateDetailModel.normEnergy?.value ?? 0.0)*(widget.costEstimateDetailModel.normEnergyRate?.value ?? 0.0)).toStringAsFixed(2), textColor: TColors.green),
+                          text: ((widget.costEstimateDetailModel.cess?.value ?? 0.0) * (widget.costEstimateDetailModel.cessRate?.value ?? 0.0)).toStringAsFixed(2), textColor: TColors.blue),
                     ],
                   ),
 
@@ -193,12 +161,11 @@ class _LegendNameCardState extends State<LegendNameCard> {
                       ),
                       Spacer(),
                       TextView(
-                        text:(((widget.costEstimateDetailModel.onPeak?.value ?? 0.0) * (widget.costEstimateDetailModel.onPeakRate?.value ?? 0.0))+
-                            ((widget.costEstimateDetailModel.offPeak?.value ?? 0.0) * (widget.costEstimateDetailModel.offPeakRate?.value ?? 0.0))+
-                            ((widget.costEstimateDetailModel.normEnergy?.value ?? 0.0)*(widget.costEstimateDetailModel.normEnergyRate?.value ?? 0.0))).toStringAsFixed(2),
+                        text:(((widget.costEstimateDetailModel.normalFpps?.value ?? 0.0) * (widget.costEstimateDetailModel.fppsRate?.value ?? 0.0))+
+                            ((widget.costEstimateDetailModel.cess?.value ?? 0.0)*(widget.costEstimateDetailModel.cessRate?.value ?? 0.0))).toStringAsFixed(2),
                         fontSize: 20,
                         bold: true,
-                        textColor: TColors.green,
+                        textColor: TColors.blue,
                       ),
                     ],
                   )

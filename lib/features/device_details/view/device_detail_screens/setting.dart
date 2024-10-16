@@ -23,7 +23,7 @@ class Setting extends StatelessWidget {
     final DeviceDetailNavigationController navigationController =
         DeviceDetailNavigationController.instance;
 
-    controller.getDeviceDetail(navigationController.deviceId.value,"","");
+    controller.getDeviceDetail(navigationController.deviceId.value, "", "");
 
     return Scaffold(
       backgroundColor: TColors.primary,
@@ -51,13 +51,18 @@ class Setting extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
                       ///Electric Bill Button
-                     GestureDetector(
-                         onTap: () => Get.to(() => const ElectricBill()),
-                         child: const TextView(text: "Eletricity Bill",fontSize: 25,textColor: TColors.accent,)),
+                      GestureDetector(
+                          onTap: () => Get.to(() => const ElectricBill()),
+                          child: const TextView(
+                            text: "Eletricity Bill",
+                            fontSize: 25,
+                            textColor: TColors.secondary,
+                          )),
 
-                      const SizedBox(height: 20,),
+                      const SizedBox(
+                        height: 20,
+                      ),
 
                       /// DeviceInfo
                       const TextView(
@@ -76,7 +81,9 @@ class Setting extends StatelessWidget {
                         title: TTexts.deviceModalNumber,
                         text: controller.deviceListModel.mMachineModelNumber,
                       ),
-                      SizedBox(height: 20.h,),
+                      SizedBox(
+                        height: 20.h,
+                      ),
 
                       ///User Details
                       const TextView(
@@ -84,9 +91,7 @@ class Setting extends StatelessWidget {
                         fontSize: 20,
                       ),
                       const SettingDeviceDetailCard(
-                        title: TTexts.deviceAName,
-                        text:  TTexts.totalLoad
-                      ),
+                          title: TTexts.deviceAName, text: TTexts.totalLoad),
                       SettingDeviceDetailCard(
                         title: TTexts.installationDate,
                         text: controller.deviceListModel.mMachineAddedon,
@@ -99,7 +104,9 @@ class Setting extends StatelessWidget {
                         title: TTexts.deviceModalNumber,
                         text: controller.deviceListModel.mMachineModelNumber,
                       ),
-                      SizedBox(height: 20.h,),
+                      SizedBox(
+                        height: 20.h,
+                      ),
 
                       /// Notifications Settings
                       const TextView(

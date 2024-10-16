@@ -7,11 +7,13 @@ import 'package:get/get.dart';
 import '../../../../../data/repository/device_repository.dart';
 import '../../../../navigation/view/bottom_nav_screen/model/device_list_model.dart';
 import '../model/consumption_detail_model.dart';
+import '../model/cost_estimate_detail_model.dart';
 import '../model/cost_estimate_model.dart';
 import '../model/dart_items.dart';
 import '../model/energy_consumption_model.dart';
 import '../model/history_field_modle.dart';
 import '../model/history_model.dart';
+import '../model/pf_model.dart';
 import '../model/power_factor_model.dart';
 
 class DeviceDetailController extends GetxController {
@@ -22,13 +24,15 @@ class DeviceDetailController extends GetxController {
   RxList<DeviceListModel> deviceList = <DeviceListModel>[].obs;
   RxList<DataItems> dataIts = <DataItems>[].obs;
   RxList<GraphData> graphDataList = <GraphData>[].obs;
-  Rx<EnergyConsumptionModel> energyConsumptionData =
-      EnergyConsumptionModel().obs;
+  Rx<EnergyConsumptionModel> energyConsumptionData = EnergyConsumptionModel().obs;
   Rx<ConsumptionDetail> consumptionDetails = ConsumptionDetail().obs;
   Rx<DemandModel> demandModel = DemandModel().obs;
   Rx<DemandDetailModel> demandDetailModel = DemandDetailModel().obs;
-  Rx<PowerFactorModel> powerFactorModel = PowerFactorModel().obs;
+  Rx<PfModel> powerFactorModel = PfModel().obs;
+
   Rx<CostEstimateModel> costEstimateModel = CostEstimateModel().obs;
+  Rx<CostEstimateDetailModel> costEstimateDetailsModel = CostEstimateDetailModel().obs;
+
   Rx<HistoryFieldModel> historyFieldModel = HistoryFieldModel().obs;
   Rx<HistoryModel> historyModel = HistoryModel().obs;
   Rx<HistoryModel> historyModel1 = HistoryModel().obs;
@@ -51,6 +55,8 @@ class DeviceDetailController extends GetxController {
   final isPowerFactorLoading = false.obs;
 
   final isCostEstimateLoading = false.obs;
+  final isCostEstimateDetailLoading = false.obs;
+
   final isHistoryFieldLoading = false.obs;
   final isHistoryLoading = false.obs;
 
@@ -70,7 +76,9 @@ class DeviceDetailController extends GetxController {
 
       getDemand(startDatePrep, deviceListModel.mMachineUniqueId, startDate);
 
-      getTotalPowerFactors(startDatePrep, deviceListModel.mMachineUniqueId, startDate);
+       getTotalPowerFactors(startDatePrep, deviceListModel.mMachineUniqueId, startDate);
+
+
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());
@@ -195,7 +203,7 @@ class DeviceDetailController extends GetxController {
       final Map<String, dynamic> responsee =
           await _deviceReposotory.getTotalPowerFactors(date, deviceId, endDate);
       // Assign the object to the Rx variable
-      powerFactorModel.value = PowerFactorModel.fromJson(responsee);
+      powerFactorModel.value = PfModel.fromJson(responsee);
     } catch (e) {
       print("Power_dataSetModel");
       print(e.toString());
@@ -221,6 +229,25 @@ class DeviceDetailController extends GetxController {
     }
   }
 
+
+  ///--------Cost Estimate Details
+  Future<void> getCostEstimateDetails(String date, deviceId, String endDate) async {
+    try {
+      isCostEstimateDetailLoading.value = true;
+
+      final Map<String, dynamic> responsee =
+      await _deviceReposotory.getCostEstimateDetails(date, deviceId, endDate);
+      // Assign the object to the Rx variable
+      costEstimateDetailsModel.value = CostEstimateDetailModel.fromJson(responsee);
+    } catch (e) {
+      print("cost Estimate SetModel");
+      print(e.toString());
+    } finally {
+      isCostEstimateDetailLoading.value = false;
+    }
+  }
+
+
   ///-------- History Fields
   Future<void> getHistoryFields(String startDate) async {
     try {
@@ -241,8 +268,7 @@ class DeviceDetailController extends GetxController {
     }
   }
 
-  Future<void> getHistory(String startDate, String endDate, String deviceId,
-      String fieldName, String duration, int indexPos) async {
+  Future<void> getHistory(String startDate, String endDate, String deviceId, String fieldName, String duration, int indexPos) async {
     try {
       isHistoryLoading.value = true;
 

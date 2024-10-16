@@ -1,8 +1,12 @@
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/device_card_details_app_bar.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/legend_name_card.dart';
+import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/lrgend_name_card_demand.dart';
+import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/lrgend_name_card_govt.dart';
 import 'package:auro/utils/constant/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:pie_chart/pie_chart.dart';
@@ -10,7 +14,9 @@ import 'package:pie_chart/pie_chart.dart';
 import '../../../../../common/widgets/text/text_view.dart';
 import '../../../../../utils/constant/text_strings.dart';
 import '../../../../../utils/styles/spacing_style.dart';
+import '../controller/device_detail_controller.dart';
 import '../home.dart';
+import '../widgets/device_detail_shimmer.dart';
 
 class CostEstimate extends StatefulWidget {
   const CostEstimate({super.key});
@@ -20,10 +26,47 @@ class CostEstimate extends StatefulWidget {
 }
 
 class _CostEstimateState extends State<CostEstimate> {
+
+  final DeviceDetailController controller = Get.put(DeviceDetailController());
+
   String _selectedDateRange = TTexts.chooseDateRange;
+
+
+  @override
+  void initState() {
+    super.initState();
+
+    DateTime now = DateTime.now();
+    DateTime utcNow = now.toUtc();
+
+    // Set the time to 00:00:00 (midnight) for the same date
+    DateTime utcMidnight = DateTime.utc(utcNow.year, utcNow.month, utcNow.day);
+
+    // Format the date to the desired format
+    String formattedDateMidNight = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(utcMidnight);
+
+    String formattedDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(utcNow);
+    // Call the API with the current date
+    controller.getCostEstimateDetails(formattedDateMidNight, controller.deviceListModel.mMachineUniqueId, formattedDate);
+  }
+
 
   @override
   Widget build(BuildContext context) {
+
+    Map<String, double> originalDataMap = {
+      "Demand":controller.costEstimateDetailsModel.value.totolDemandCost?.value ?? 0.0,
+      "Energy":controller.costEstimateDetailsModel.value.totalEnergyCost?.value ?? 0.0,
+      "Govt":controller.costEstimateDetailsModel.value.govCost?.value ?? 0.0,
+    };
+
+    Map<String, double> updatedDataMap2 = {};
+
+// Updating the map with formatted keys
+    originalDataMap.forEach((key, value) {
+      updatedDataMap2['$key: $value'] = value;
+    });
+
     return Scaffold(
       appBar: const DeviceCardDetailsAppBar(
         title: TTexts.costEstimate,
@@ -66,14 +109,16 @@ class _CostEstimateState extends State<CostEstimate> {
 
                   if (pickedDateRange != null) {
                     // Formatting the date to 1-08-2024 format
-                    String formattedStartDate =
-                        DateFormat('d-MM-yyyy').format(pickedDateRange.start);
-                    String formattedEndDate =
-                        DateFormat('d-MM-yyyy').format(pickedDateRange.end);
+                    String formattedStartDate = DateFormat('d-MM-yyyy').format(pickedDateRange.start);
+                    String formattedStartDate1 = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(pickedDateRange.start);
 
-                    setState(() {
-                      _selectedDateRange =
-                          "From $formattedStartDate To $formattedEndDate";
+                    String formattedEndDate = DateFormat('d-MM-yyyy').format(pickedDateRange.end);
+                    String formattedEndDate1 = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(pickedDateRange.end);
+
+                    setState(() {_selectedDateRange = "From $formattedStartDate To $formattedEndDate";
+
+                    controller.getCostEstimateDetails(formattedStartDate1, controller.deviceListModel.mMachineUniqueId, formattedEndDate1);
+
                     });
                   }
                 },
@@ -107,11 +152,29 @@ class _CostEstimateState extends State<CostEstimate> {
                   ),
                 ),
               ),
+
               // Pie chart and other widgets below
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 20.h),
-                child: InkWell(
-                  onTap: () {},
+              Obx((){
+                if (controller.isCostEstimateDetailLoading.value) {
+                  return const DeviceDetailShimmer();
+                }
+
+                double onPeak = controller.costEstimateDetailsModel.value.totolDemandCost?.value?? 0.0;
+                double offPeak = controller.costEstimateDetailsModel.value.totalEnergyCost?.value?? 0.0;
+                double normal  = controller.costEstimateDetailsModel.value.govCost?.value?? 0.0;
+                double totalCount =  onPeak + offPeak + normal;
+
+
+                /* if (controller.energyConsumptionData.value.normalUnit != null) {
+                        return const TImageLoaderWidget(
+                            text: 'Whoops! No Device available...!',
+                            animation: TImages.imgLoginBg,
+                            showAction: false);
+                      }*/
+
+                
+                return  Padding(
+                  padding: EdgeInsets.symmetric(vertical: 20.h),
                   child: Container(
                     decoration: BoxDecoration(
                       color: TColors.primaryDark1,
@@ -125,15 +188,15 @@ class _CostEstimateState extends State<CostEstimate> {
                       ),
                       child: Column(
                         children: [
-                          const TextView(text: TTexts.costEstimation),
+                         // const TextView(text: TTexts.costEstimation),
                           SizedBox(height: 20.h),
                           PieChart(
                             dataMap: updatedDataMap2,
                             animationDuration:
-                                const Duration(milliseconds: 800),
+                            const Duration(milliseconds: 800),
                             chartLegendSpacing: 32.w,
                             chartRadius:
-                                MediaQuery.of(context).size.width / 3.2,
+                            MediaQuery.of(context).size.width / 3.2,
                             colorList: colorList2,
                             initialAngleInDegree: 0,
                             chartType: ChartType.ring,
@@ -145,15 +208,15 @@ class _CostEstimateState extends State<CostEstimate> {
                                 color: TColors.primaryDark1,
                                 borderRadius: BorderRadius.circular(100.r),
                               ),
-                              child: const Center(
+                              child:  Center(
                                 child: TextView(
-                                  text: "500",
+                                  text: totalCount.toStringAsFixed(2),
                                   textColor: Colors.white,
                                 ),
                               ),
                             ),
                             legendOptions:
-                                const LegendOptions(showLegends: false),
+                            const LegendOptions(showLegends: false),
                             chartValuesOptions: const ChartValuesOptions(
                               showChartValueBackground: true,
                               showChartValues: false,
@@ -164,15 +227,18 @@ class _CostEstimateState extends State<CostEstimate> {
                             ),
                           ),
                           SizedBox(height: 20.h),
-                          const LegendNameCard(),
-                          const LegendNameCard(),
-                          const LegendNameCard(),
+                          LegendNameCard(costEstimateDetailModel: controller.costEstimateDetailsModel.value),
+                          LegendNameCardGovt(costEstimateDetailModel: controller.costEstimateDetailsModel.value),
+                          LegendNameCardDemand(costEstimateDetailModel: controller.costEstimateDetailsModel.value),
+
+                       /*    LegendNameCard(),
+                           LegendNameCard(),*/
                         ],
                       ),
                     ),
                   ),
-                ),
-              ),
+                );
+              }),
             ],
           ),
         ),
@@ -180,3 +246,10 @@ class _CostEstimateState extends State<CostEstimate> {
     );
   }
 }
+
+final colorList2 = <Color>[
+  const Color(0xff0062ff),
+  const Color(0xffffc542),
+  const Color(0xffff974a),
+  const Color(0xff3dd598),
+];

@@ -26,8 +26,9 @@ class APIKeys2{
   static const String energyConsumptionDetails = "energy-consumption-details";
   static const String demand = "demand";
   static const String demandDetail = "demand-analysis";
-  static const String powerQuality = "power-quality";
+  static const String pf = "pf";
   static const String costEstimate = "cost-estimate";
+  static const String costEstimateDetail = "cost-estimate-details";
   static const String historyFields = "history-field";
   static const String history = "history";
 }

@@ -74,6 +74,7 @@ class TColors {
   static const Color info = Color(0xFF1976D2);
   static const Color infoDark = Color(0xFF1976D2);
   static const Color infoLight = Color(0xFF1976D2);
+  static const Color blue = Color(0xFF0062FF);
 
 
   static const Color black2 = Color(0xFF1E1E1E);

@@ -6,7 +6,13 @@ class AvgDemand {
 
   AvgDemand.fromJson(Map<String, dynamic> json) {
     unit = json['unit'];
-    value = json['value'];
+
+    // Convert the value to double if it's an int
+    if (json['value'] is int) {
+      value = (json['value'] as int).toDouble();
+    } else {
+      value = json['value'];
+    }
   }
 
   Map<String, dynamic> toJson() {

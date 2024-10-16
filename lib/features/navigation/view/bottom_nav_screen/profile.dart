@@ -4,6 +4,7 @@ import 'package:auro/features/navigation/view/bottom_nav_screen/controller/profi
 import 'package:auro/features/navigation/view/bottom_nav_screen/widgets/profile_options.dart';
 import 'package:auro/features/navigation/view/bottom_nav_screen/widgets/profile_shimmer.dart';
 import 'package:auro/features/navigation/view/user_edits/view/edit_profile.dart';
+import 'package:auro/features/navigation/view/user_edits/view/subscription_page.dart';
 import 'package:auro/features/navigation/view/user_edits/view/transactions_page.dart';
 import 'package:auro/utils/constant/colors.dart';
 import 'package:auro/utils/constant/image_string.dart';
@@ -66,7 +67,6 @@ class Profile extends StatelessWidget {
                           maxRadius: 50.r,
                           foregroundImage: NetworkImage(TImages.userImagePath +
                               controller.userModelData.mCustImage),
-
                         ),
                         SizedBox(width: 10.w),
                         Column(
@@ -85,7 +85,6 @@ class Profile extends StatelessWidget {
                           ],
                         ),
                         const Spacer(),
-
                         IconButton(
                           onPressed: () => Get.to(() => EditProfile(
                                 userModel: controller.userModelData,
@@ -101,29 +100,41 @@ class Profile extends StatelessWidget {
                 ],
               ),
 
-
               Padding(
                 padding: SpacingStyle.paddingWithDefaultSpace,
                 child: Container(
                   width: double.infinity,
-                  decoration: BoxDecoration(color: TColors.primaryDark1,borderRadius: BorderRadius.circular(10.r)),
+                  decoration: BoxDecoration(
+                      color: TColors.primaryDark1,
+                      borderRadius: BorderRadius.circular(10.r)),
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 10.h),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding:  EdgeInsets.only(left: 7.w,top: 7.h),
-                          child: const TextView(text: TTexts.noActiveSubscription,bold: true,fontSize: 20,),
+                          padding: EdgeInsets.only(left: 7.w, top: 7.h),
+                          child: const TextView(
+                            text: TTexts.noActiveSubscription,
+                            bold: true,
+                            fontSize: 20,
+                          ),
                         ),
-
-                        TextButton(onPressed: (){}, child: const TextView(text: TTexts.subscribe,textColor: TColors.secondary,bold: true,))
+                        TextButton(
+                            onPressed: () {
+                              Get.to(()=> SubscriptionPage());
+                            },
+                            child: const TextView(
+                              text: TTexts.subscribe,
+                              textColor: TColors.secondary,
+                              bold: true,
+                            ))
                       ],
                     ),
                   ),
                 ),
               ),
-
 
               SizedBox(
                 height: 20.h,
@@ -134,18 +145,11 @@ class Profile extends StatelessWidget {
                 color: TColors.primaryDark1,
                 child: Column(
                   children: [
-
                     /// Transaction Option
                     ProfileOptions(
                       title: TTexts.transactions,
                       onPressed: () {
-
-
-                 Get.to(()=>const TransactionsPage());
-
-
-
-
+                        Get.to(() => const TransactionsPage());
                       },
                     ),
                     Divider(height: 1.h, color: TColors.primaryLight1),
@@ -206,7 +210,6 @@ class Profile extends StatelessWidget {
                   ],
                 ),
               ),
-
 
               /// Bottom Label
               Align(

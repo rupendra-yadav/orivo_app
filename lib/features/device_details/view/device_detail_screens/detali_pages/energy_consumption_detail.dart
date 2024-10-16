@@ -35,10 +35,18 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
 
     // Get the current date and format it
     DateTime now = DateTime.now();
-    String formattedDate = DateFormat('yyyy-MM-dd').format(now);
+    DateTime utcNow = now.toUtc();
+
+    // Set the time to 00:00:00 (midnight) for the same date
+    DateTime utcMidnight = DateTime.utc(utcNow.year, utcNow.month, utcNow.day);
+
+    // Format the date to the desired format
+    String formattedDateMidNight = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(utcMidnight);
+
+    String formattedDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(utcNow);
 
     // Call the API with the current date
-    controller.getEnergyDetailsConsumption(formattedDate, controller.deviceListModel.mMachineUniqueId, "");
+    controller.getEnergyDetailsConsumption(formattedDateMidNight, controller.deviceListModel.mMachineUniqueId, formattedDate);
   }
 
 
@@ -88,10 +96,10 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
                   if (pickedDateRange != null) {
                     // Formatting the date to 1-08-2024 format
                     String formattedStartDate = DateFormat('d-MM-yyyy').format(pickedDateRange.start);
-                    String formattedStartDateInYears = DateFormat('yyyy-MM-d').format(pickedDateRange.start);
+                    String formattedStartDateInYears = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(pickedDateRange.start);
 
                     String formattedEndDate = DateFormat('d-MM-yyyy').format(pickedDateRange.end);
-                    String formattedEndDateInYears = DateFormat('yyyy-MM-d').format(pickedDateRange.end);
+                    String formattedEndDateInYears = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(pickedDateRange.end);
 
                     setState(() {
                       _selectedDateRange =

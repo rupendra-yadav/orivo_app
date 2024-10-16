@@ -29,7 +29,7 @@ class MultipleBarGraphCard extends StatelessWidget {
           const Row(
             children: [
               TextView(text: TTexts.onPeak),
-              TextView(text: TTexts.timeRange),
+              TextView(text: "11PM to 9AM"),
             ],
           ),
            BarGraph(onPeakGraph: consumptionDetail.onPeakGraph),
@@ -39,7 +39,7 @@ class MultipleBarGraphCard extends StatelessWidget {
           const Row(
             children: [
               TextView(text: TTexts.offPeak),
-              TextView(text: TTexts.timeRange),
+              TextView(text: "9AM to 5PM"),
             ],
           ),
            BarGraph(onPeakGraph: consumptionDetail.offPeakGraph),
@@ -49,7 +49,7 @@ class MultipleBarGraphCard extends StatelessWidget {
           const Row(
             children: [
               TextView(text: TTexts.normal),
-              TextView(text: TTexts.timeRange),
+              TextView(text: "9AM to 5PM"),
             ],
           ),
            BarGraph(onPeakGraph: consumptionDetail.normalGraph),
