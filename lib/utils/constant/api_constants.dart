@@ -31,6 +31,9 @@ class APIKeys2{
   static const String costEstimateDetail = "cost-estimate-details";
   static const String historyFields = "history-field";
   static const String history = "history";
+  static const String frequencyDetails = "frequency-details";
+  static const String voltageDetails = "voltage-details";
+  static const String currentDetails = "current-details";
 }
 
 

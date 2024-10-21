@@ -431,4 +431,101 @@ class DeviceRepository extends GetxController {
     }
   }
 
+  /// Frequency Details
+  Future<Map<String, dynamic>> frequencyDetails(String date, String deviceId, String stop) async {
+    try {
+      Map<String, dynamic> request = {
+        "device_id": deviceId,
+        "start": date,
+        "stop": stop,
+      };
+
+      print("CheckRequest");
+      print(request);
+      final response = await THttpHelper2.redirectPost(APIKeys2.frequencyDetails, request,);
+
+      print(response);
+      if (kDebugMode) {
+        print('frequencyDetails Response: $response');
+      }
+
+      if (response['status'] == 'success') {
+
+        return response["data"];
+      } else {
+        print("error On status");
+        throw Exception(response['message']);
+      }
+    } catch (e) {
+      print("error Try  Catch");
+      print(e.toString());
+      throw Exception(e.toString());
+    }
+  }
+
+
+  /// Voltage Details
+  Future<Map<String, dynamic>> voltageDetails(String date, String deviceId, String stop) async {
+    try {
+      Map<String, dynamic> request = {
+        "device_id": deviceId,
+        "start": date,
+        "stop": stop,
+      };
+
+      print("CheckRequest");
+      print(request);
+      final response = await THttpHelper2.redirectPost(APIKeys2.voltageDetails, request,);
+
+      print(response);
+      if (kDebugMode) {
+        print('voltageDetails Response: $response');
+      }
+
+      if (response['status'] == 'success') {
+
+        return response["data"];
+      } else {
+        print("error On status");
+        throw Exception(response['message']);
+      }
+    } catch (e) {
+      print("error Try  Catch");
+      print(e.toString());
+      throw Exception(e.toString());
+    }
+  }
+
+  /// Current Details
+  Future<Map<String, dynamic>> currentDetails(String date, String deviceId, String stop) async {
+    try {
+      Map<String, dynamic> request = {
+        "device_id": deviceId,
+        "start": date,
+        "stop": stop,
+      };
+
+      print("CheckRequest");
+      print(request);
+      final response = await THttpHelper2.redirectPost(APIKeys2.currentDetails, request,);
+
+      print(response);
+      if (kDebugMode) {
+        print('currentDetails Response: $response');
+      }
+
+      if (response['status'] == 'success') {
+
+        return response["data"];
+      } else {
+        print("error On status");
+        throw Exception(response['message']);
+      }
+    } catch (e) {
+      print("error Try  Catch");
+      print(e.toString());
+      throw Exception(e.toString());
+    }
+  }
+
 }

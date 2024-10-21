@@ -9,12 +9,15 @@ import '../../../../navigation/view/bottom_nav_screen/model/device_list_model.da
 import '../model/consumption_detail_model.dart';
 import '../model/cost_estimate_detail_model.dart';
 import '../model/cost_estimate_model.dart';
+import '../model/curent_detail_modle.dart';
 import '../model/dart_items.dart';
 import '../model/energy_consumption_model.dart';
+import '../model/frequency_detail_model.dart';
 import '../model/history_field_modle.dart';
 import '../model/history_model.dart';
 import '../model/pf_model.dart';
 import '../model/power_factor_model.dart';
+import '../model/voltage_detail_model.dart';
 
 class DeviceDetailController extends GetxController {
   static DeviceDetailController get instance => Get.find();
@@ -32,6 +35,10 @@ class DeviceDetailController extends GetxController {
 
   Rx<CostEstimateModel> costEstimateModel = CostEstimateModel().obs;
   Rx<CostEstimateDetailModel> costEstimateDetailsModel = CostEstimateDetailModel().obs;
+
+  Rx<FrequencyDetailsModel> frequencyDetailsModel = FrequencyDetailsModel().obs;
+  Rx<VoltageDetailModel> voltageDetailsModel = VoltageDetailModel().obs;
+  Rx<CurrentDetailModel> currentDetailsModel = CurrentDetailModel().obs;
 
   Rx<HistoryFieldModel> historyFieldModel = HistoryFieldModel().obs;
   Rx<HistoryModel> historyModel = HistoryModel().obs;
@@ -57,6 +64,10 @@ class DeviceDetailController extends GetxController {
   final isCostEstimateLoading = false.obs;
   final isCostEstimateDetailLoading = false.obs;
 
+  final isFrequencyDetailLoading = false.obs;
+  final isVoltageDetailLoading = false.obs;
+  final isCurrentDetailLoading = false.obs;
+
   final isHistoryFieldLoading = false.obs;
   final isHistoryLoading = false.obs;
 
@@ -77,6 +88,12 @@ class DeviceDetailController extends GetxController {
       getDemand(startDatePrep, deviceListModel.mMachineUniqueId, startDate);
 
        getTotalPowerFactors(startDatePrep, deviceListModel.mMachineUniqueId, startDate);
+
+       getFrequencyDetails(startDatePrep, deviceListModel.mMachineUniqueId, startDate);
+
+       getVoltageDetails(startDatePrep, deviceListModel.mMachineUniqueId, startDate);
+
+       getCurrentDetails(startDatePrep, deviceListModel.mMachineUniqueId, startDate);
 
 
     } catch (e) {
@@ -246,6 +263,57 @@ class DeviceDetailController extends GetxController {
       isCostEstimateDetailLoading.value = false;
     }
   }
+
+  ///-------- frequency Details
+  Future<void> getFrequencyDetails(String date, deviceId, String endDate) async {
+    try {
+      isFrequencyDetailLoading.value = true;
+
+      final Map<String, dynamic> responsee =
+      await _deviceReposotory.frequencyDetails(date, deviceId, endDate);
+      frequencyDetailsModel.value = FrequencyDetailsModel.fromJson(responsee);
+    } catch (e) {
+      print("frequency Details catch");
+      print(e.toString());
+    } finally {
+      isFrequencyDetailLoading.value = false;
+    }
+  }
+
+
+  ///-------- Voltage Details
+  Future<void> getVoltageDetails(String date, deviceId, String endDate) async {
+    try {
+      isVoltageDetailLoading.value = true;
+
+      final Map<String, dynamic> responsee =
+      await _deviceReposotory.voltageDetails(date, deviceId, endDate);
+      voltageDetailsModel.value = VoltageDetailModel.fromJson(responsee);
+    } catch (e) {
+      print("Voltage Details catch");
+      print(e.toString());
+    } finally {
+      isVoltageDetailLoading.value = false;
+    }
+  }
+
+
+  ///-------- Current Details
+  Future<void> getCurrentDetails(String date, deviceId, String endDate) async {
+    try {
+      isCurrentDetailLoading.value = true;
+
+      final Map<String, dynamic> responsee =
+      await _deviceReposotory.currentDetails(date, deviceId, endDate);
+      currentDetailsModel.value = CurrentDetailModel.fromJson(responsee);
+    } catch (e) {
+      print("CurrentDetails catch");
+      print(e.toString());
+    } finally {
+      isCurrentDetailLoading.value = false;
+    }
+  }
+
 
 
   ///-------- History Fields
