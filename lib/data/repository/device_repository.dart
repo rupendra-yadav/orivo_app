@@ -528,4 +528,68 @@ class DeviceRepository extends GetxController {
     }
   }
 
+  /// Current Details
+  Future<Map<String, dynamic>> baseMetric(String date, String deviceId, String stop) async {
+    try {
+      Map<String, dynamic> request = {
+        "device_id": deviceId,
+        "start": date,
+        "stop": stop,
+      };
+
+      print("CheckRequest");
+      print(request);
+      final response = await THttpHelper2.redirectPost(APIKeys2.baseMetric, request,);
+
+      print(response);
+      if (kDebugMode) {
+        print('baseMetric Response: $response');
+      }
+
+      if (response['status'] == 'success') {
+
+        return response["data"];
+      } else {
+        print("error On status");
+        throw Exception(response['message']);
+      }
+    } catch (e) {
+      print("error Try  Catch");
+      print(e.toString());
+      throw Exception(e.toString());
+    }
+  }
+
+  /// power factor Detail
+  Future<Map<String, dynamic>> pfDetail(String date, String deviceId, String stop) async {
+    try {
+      Map<String, dynamic> request = {
+        "device_id": deviceId,
+        "start": date,
+        "stop": stop,
+      };
+
+      print("CheckRequest");
+      print(request);
+      final response = await THttpHelper2.redirectPost(APIKeys2.pfDetails, request,);
+
+      print(response);
+      if (kDebugMode) {
+        print('pfDetail Response: $response');
+      }
+
+      if (response['status'] == 'success') {
+
+        return response["data"];
+      } else {
+        print("error On status");
+        throw Exception(response['message']);
+      }
+    } catch (e) {
+      print("error Try  Catch");
+      print(e.toString());
+      throw Exception(e.toString());
+    }
+  }
+
 }

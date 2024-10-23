@@ -1,3 +1,4 @@
+import 'package:auro/features/device_details/view/device_detail_screens/model/base_matric_model.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/model/demand_detail_model.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/model/demand_model.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/model/graph_data_model_api.dart';
@@ -38,7 +39,9 @@ class DeviceDetailController extends GetxController {
 
   Rx<FrequencyDetailsModel> frequencyDetailsModel = FrequencyDetailsModel().obs;
   Rx<VoltageDetailModel> voltageDetailsModel = VoltageDetailModel().obs;
+
   Rx<CurrentDetailModel> currentDetailsModel = CurrentDetailModel().obs;
+  Rx<BaseMatricModel> baseMetricModel = BaseMatricModel().obs;
 
   Rx<HistoryFieldModel> historyFieldModel = HistoryFieldModel().obs;
   Rx<HistoryModel> historyModel = HistoryModel().obs;
@@ -66,7 +69,11 @@ class DeviceDetailController extends GetxController {
 
   final isFrequencyDetailLoading = false.obs;
   final isVoltageDetailLoading = false.obs;
+
   final isCurrentDetailLoading = false.obs;
+  final isBaseMetricLoading = false.obs;
+
+  final isPfDetailsLoading = false.obs;
 
   final isHistoryFieldLoading = false.obs;
   final isHistoryLoading = false.obs;
@@ -94,6 +101,8 @@ class DeviceDetailController extends GetxController {
        getVoltageDetails(startDatePrep, deviceListModel.mMachineUniqueId, startDate);
 
        getCurrentDetails(startDatePrep, deviceListModel.mMachineUniqueId, startDate);
+
+       getBaseMetric(startDatePrep, deviceListModel.mMachineUniqueId, startDate);
 
 
     } catch (e) {
@@ -314,6 +323,37 @@ class DeviceDetailController extends GetxController {
     }
   }
 
+  ///-------- Base Metric
+  Future<void> getBaseMetric(String date, deviceId, String endDate) async {
+    try {
+      isBaseMetricLoading.value = true;
+
+      final Map<String, dynamic> responsee =
+      await _deviceReposotory.baseMetric(date, deviceId, endDate);
+      baseMetricModel.value = BaseMatricModel.fromJson(responsee);
+    } catch (e) {
+      print("baseMetric catch");
+      print(e.toString());
+    } finally {
+      isBaseMetricLoading.value = false;
+    }
+  }
+
+  ///-------- pf Details
+  Future<void> getPfDetails(String date, deviceId, String endDate) async {
+    try {
+      isPfDetailsLoading.value = true;
+
+      final Map<String, dynamic> responsee =
+      await _deviceReposotory.pfDetail(date, deviceId, endDate);
+      baseMetricModel.value = BaseMatricModel.fromJson(responsee);
+    } catch (e) {
+      print("pfDetails catch");
+      print(e.toString());
+    } finally {
+      isPfDetailsLoading.value = false;
+    }
+  }
 
 
   ///-------- History Fields

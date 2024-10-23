@@ -34,6 +34,8 @@ class APIKeys2{
   static const String frequencyDetails = "frequency-details";
   static const String voltageDetails = "voltage-details";
   static const String currentDetails = "current-details";
+  static const String baseMetric = "base-metric";
+  static const String pfDetails = "pf-details";
 }
 
 

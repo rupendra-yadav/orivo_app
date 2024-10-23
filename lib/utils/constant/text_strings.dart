@@ -106,6 +106,7 @@ class TTexts {
   static const String avgValue3 = "Avg 45";
   static const String avgValue4 = "Avg 0.66";
   static const String totalPowerFactors = "Total Power Factor";
+  static const String current = "Current";
   static const String zero96 = "0.96";
   static const String bad = "Bad";
   static const String good = "Good";
@@ -195,6 +196,8 @@ class TTexts {
   static const String powerQuality = "Power Quality";
   static const String powerQuality096 = "0.96";
   static const String averagePF = "Average P.F ----------0.94";
+  static const String averageCurrent = "Average Current ----------0.94";
+  static const String averageFrequency = "Average Frequency ----------0.94";
   static const String voltage = "Voltage";
 
   ///Electricity Bill

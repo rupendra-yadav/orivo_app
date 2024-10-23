@@ -16,12 +16,12 @@ dependencies:
     sdk: flutter
   # Utility Packages
   http: ^1.1.0
-  intl: ^0.18.1
+  intl: ^0.19.0
   logger: ^2.0.1
   url_launcher: ^6.1.12
   flutter_native_splash: ^2.4.0
   smooth_page_indicator: ^1.1.0
-  connectivity_plus: ^5.0.2
+  connectivity_plus: ^1.2.4
 
   # Icons
   flutter_phosphor_icons: ^0.0.1+6
@@ -33,17 +33,17 @@ dependencies:
   get_storage: ^2.1.1
 
   # Project Specific
-  carousel_slider: ^4.2.1
+  carousel_slider: ^5.0.0
   flutter_rating_bar: ^4.0.1
   capped_progress_indicator: ^0.0.2
-  lottie: ^2.6.0
+  lottie: ^3.1.3
   cached_network_image: ^3.3.1
   shimmer: ^3.0.0
   dotted_border: ^2.1.0
-  geolocator: ^11.0.0
+  geolocator: ^13.0.1
   geocoding: ^3.0.0
   image_picker: ^1.1.2
-  image_cropper: ^5.0.1
+  image_cropper: ^8.0.2
   permission_handler: ^11.3.1
   path_provider: ^2.1.3
   pin_code_fields: ^8.0.1
@@ -56,20 +56,20 @@ dependencies:
   iconsax: ^0.0.8
   flutter_screenutil: ^5.9.3
   draggable_bottom_sheet: ^1.0.2
-  syncfusion_flutter_charts: ^25.2.7
+  syncfusion_flutter_charts: ^27.1.55
   shared_preferences: ^2.2.3
   webview_flutter: ^4.8.0
   camera: ^0.11.0+1
   path: ^1.9.0
   pie_chart: ^5.4.0
-  syncfusion_flutter_gauges: ^25.2.7
+  syncfusion_flutter_gauges: ^27.1.55
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^3.0.0
-  flutter_launcher_icons: "^0.13.1"
+  flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.14.1
   change_app_package_name: ^1.1.0
 
 flutter_native_splash:

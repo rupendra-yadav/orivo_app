@@ -217,7 +217,7 @@ class _HomeState extends State<Home> {
 
                     /// this is the device detail data
                     Obx(() {
-                      if (controller.isPowerFactorLoading.value) {
+                      if (controller.isBaseMetricLoading.value) {
                         return const DeviceDetailShimmer();
                       }
 
@@ -235,16 +235,15 @@ class _HomeState extends State<Home> {
                                   cardText: TTexts.frequency,
                                   width: TDeviceUtils.screenWidth / 2,
                                   cardValue:
-                                      "${controller.frequencyDetailsModel.value.freq?.value?.toStringAsFixed(2) ?? "0.0"}${controller.frequencyDetailsModel.value.freq?.unit?.toString() ?? "0.0"}",
-                                  cardAvg:
-                                      "Avg : ${controller.frequencyDetailsModel.value.avgFreq?.value?.toStringAsFixed(2) ?? "0.0"}${controller.frequencyDetailsModel.value.avgFreq?.unit?.toString() ?? "0.0"}")),
+                                      "${controller.baseMetricModel.value.freq?.value?.toStringAsFixed(2) ?? "0.0"}${controller.baseMetricModel.value.freq?.unit?.toString() ?? "0.0"}",
+                                  cardAvg: "Avg : ${controller.frequencyDetailsModel.value.avgFreq?.value?.toStringAsFixed(2) ?? "0.0"}${controller.frequencyDetailsModel.value.avgFreq?.unit?.toString() ?? "0.0"}")),
                           SizedBox(width: 5.w),
                           Expanded(
                             child: TextViewCard(
                               cardText: TTexts.totalVoltage,
                               width: TDeviceUtils.screenWidth / 2,
                               cardValue:
-                                  "${controller.voltageDetailsModel.value.volt?.value?.toStringAsFixed(2) ?? "0.0"}${controller.voltageDetailsModel.value.volt?.unit?.toString() ?? "0.0"}",
+                                  "${controller.baseMetricModel.value.volt?.value?.toStringAsFixed(2) ?? "0.0"}${controller.baseMetricModel.value.volt?.unit?.toString() ?? "0.0"}",
                               cardAvg:
                                   "Avg : ${controller.voltageDetailsModel.value.avgVolt?.value?.toStringAsFixed(2) ?? "0.0"}${controller.voltageDetailsModel.value.avgVolt?.unit?.toString() ?? "0.0"}",
                             ),
@@ -256,7 +255,7 @@ class _HomeState extends State<Home> {
 
                     ///Power Factors Data
                     Obx(() {
-                      if (controller.isPowerFactorLoading.value) {
+                      if (controller.isBaseMetricLoading.value) {
                         return const DeviceDetailShimmer();
                       }
 
@@ -274,7 +273,7 @@ class _HomeState extends State<Home> {
                               cardText: TTexts.totalCurrent,
                               width: TDeviceUtils.screenWidth / 2,
                               cardValue:
-                                  "${(controller.currentDetailsModel.value.current?.value ?? 0.0).toStringAsFixed(1)}${controller.currentDetailsModel.value.current?.unit?.toString() ?? "0.0"}",
+                                  "${(controller.baseMetricModel.value.current?.value ?? 0.0).toStringAsFixed(1)}${controller.baseMetricModel.value.current?.unit?.toString() ?? "0.0"}",
                               cardAvg:
                                   "${controller.powerFactorModel.value.pf?.value?.toStringAsFixed(2) ?? "0.0"}${controller.powerFactorModel.value.pf?.unit?.toString() ?? "0.0"}",
                             ),
