@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../../../../../../utils/constant/colors.dart';
-import '../../model/pf_detail_timeline_model.dart';
-import '../../model/pf_detail_value_model.dart';
+import '../../../../../utils/constant/colors.dart';
+import '../model/voltage_detail_value.dart';
 
-class MultiLineTotalPowerFactorGraph extends StatelessWidget {
-  const MultiLineTotalPowerFactorGraph({
+
+
+class MultiLineVoltageGraph extends StatelessWidget {
+  const MultiLineVoltageGraph({
     super.key,
     this.onPeakGraph,
   });
 
-
   final List<Value>? onPeakGraph;
   // final List<NormalGraph>? onPeakGraph;
-
 
   @override
   Widget build(BuildContext context) {
@@ -46,13 +45,13 @@ class MultiLineTotalPowerFactorGraph extends StatelessWidget {
           dataSource: chartData,
           xValueMapper: (ChartData data, _) => data.y,
           yValueMapper: (ChartData data, _) => data.x,
-          color: TColors.totalPowerFactorGraphLine1, // Line color for the first series
+          color: TColors.totalPowerFactorGraphLine2, // Line color for the first series
           width: 4,
           markerSettings: const MarkerSettings(
             isVisible: true,
             color: TColors.white,
             borderWidth: 2,
-            borderColor: TColors.totalPowerFactorGraphLine1,
+            borderColor: TColors.totalPowerFactorGraphLine2,
           ),
         ),
 
@@ -74,7 +73,7 @@ class MultiLineTotalPowerFactorGraph extends StatelessWidget {
 
         /// Third Line
 
-       /* SplineSeries<ChartData, String>(
+        /* SplineSeries<ChartData, String>(
           dataSource: getChartData3(),
           xValueMapper: (ChartData data, _) => data.x,
           yValueMapper: (ChartData data, _) => data.y,
@@ -90,7 +89,7 @@ class MultiLineTotalPowerFactorGraph extends StatelessWidget {
 
         /// Forth Line
 
-       /* SplineSeries<ChartData, String>(
+        /* SplineSeries<ChartData, String>(
           dataSource: getChartData4(),
           xValueMapper: (ChartData data, _) => data.x,
           yValueMapper: (ChartData data, _) => data.y,
@@ -114,6 +113,11 @@ class MultiLineTotalPowerFactorGraph extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
 
 // List<ChartData> getChartData1() {
 //   return [

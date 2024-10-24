@@ -16,6 +16,7 @@ import '../model/energy_consumption_model.dart';
 import '../model/frequency_detail_model.dart';
 import '../model/history_field_modle.dart';
 import '../model/history_model.dart';
+import '../model/pf_detail_modle.dart';
 import '../model/pf_model.dart';
 import '../model/power_factor_model.dart';
 import '../model/voltage_detail_model.dart';
@@ -27,10 +28,13 @@ class DeviceDetailController extends GetxController {
 
   RxList<DeviceListModel> deviceList = <DeviceListModel>[].obs;
   RxList<DataItems> dataIts = <DataItems>[].obs;
+
   RxList<GraphData> graphDataList = <GraphData>[].obs;
   Rx<EnergyConsumptionModel> energyConsumptionData = EnergyConsumptionModel().obs;
+
   Rx<ConsumptionDetail> consumptionDetails = ConsumptionDetail().obs;
   Rx<DemandModel> demandModel = DemandModel().obs;
+
   Rx<DemandDetailModel> demandDetailModel = DemandDetailModel().obs;
   Rx<PfModel> powerFactorModel = PfModel().obs;
 
@@ -42,6 +46,7 @@ class DeviceDetailController extends GetxController {
 
   Rx<CurrentDetailModel> currentDetailsModel = CurrentDetailModel().obs;
   Rx<BaseMatricModel> baseMetricModel = BaseMatricModel().obs;
+  Rx<PfDetailModel> pfDetailModel = PfDetailModel().obs;
 
   Rx<HistoryFieldModel> historyFieldModel = HistoryFieldModel().obs;
   Rx<HistoryModel> historyModel = HistoryModel().obs;
@@ -88,7 +93,7 @@ class DeviceDetailController extends GetxController {
       deviceList.assignAll(deviceLis);
       deviceListModel = deviceList[0];
 
-      getEnergyConsumption(startDatePrep, deviceListModel.mMachineUniqueId);
+      getEnergyConsumption(startDatePrep, deviceListModel.mMachineUniqueId,startDate);
 
       getCostEstimate(startDatePrep, deviceListModel.mMachineUniqueId, startDate);
 
@@ -132,15 +137,13 @@ class DeviceDetailController extends GetxController {
   }
 
   ///--------Device Graph Data
-  Future<void> getDeviceGraphData(
-      String fieldName, deviceId, rangeValue) async {
+  Future<void> getDeviceGraphData(String fieldName, deviceId, rangeValue) async {
     try {
       isDeviceGraphDataLoading.value = true;
 
-      final graph =
-          await _deviceReposotory.getGraphData(fieldName, deviceId, rangeValue);
+      //final graph = await _deviceReposotory.getGraphData(fieldName, deviceId, rangeValue);
 
-      graphDataList.assignAll(graph);
+      //graphDataList.assignAll(graph);
       graphDataModel = graphDataList[0];
     } catch (e) {
       if (kDebugMode) {
@@ -152,12 +155,12 @@ class DeviceDetailController extends GetxController {
   }
 
   ///--------Device Energy Consumption
-  Future<void> getEnergyConsumption(String date, deviceId) async {
+  Future<void> getEnergyConsumption(String date, deviceId,String endDate) async {
     try {
       isEnergyConsumptionLoading.value = true;
 
       final Map<String, dynamic> responsee =
-          await _deviceReposotory.getEnergyConsumption(date, deviceId);
+          await _deviceReposotory.getEnergyConsumption(date, deviceId,endDate);
       // Assign the object to the Rx variable
       energyConsumptionData.value = EnergyConsumptionModel.fromJson(responsee);
     } catch (e) {
@@ -169,8 +172,7 @@ class DeviceDetailController extends GetxController {
   }
 
   ///--------Device Energy Details Consumption
-  Future<void> getEnergyDetailsConsumption(
-      String date, deviceId, String stop) async {
+  Future<void> getEnergyDetailsConsumption(String date, deviceId, String stop) async {
     try {
       isEnergyConsumptionDetailLoading.value = true;
 
@@ -221,8 +223,7 @@ class DeviceDetailController extends GetxController {
   }
 
   ///--------Total Power Factors
-  Future<void> getTotalPowerFactors(
-      String date, deviceId, String endDate) async {
+  Future<void> getTotalPowerFactors(String date, deviceId, String endDate) async {
     try {
       isPowerFactorLoading.value = true;
 
@@ -248,13 +249,12 @@ class DeviceDetailController extends GetxController {
       // Assign the object to the Rx variable
       costEstimateModel.value = CostEstimateModel.fromJson(responsee);
     } catch (e) {
-      print("cost Estimate SetModel");
+      print("costEstimate SetModel");
       print(e.toString());
     } finally {
       isCostEstimateLoading.value = false;
     }
   }
-
 
   ///--------Cost Estimate Details
   Future<void> getCostEstimateDetails(String date, deviceId, String endDate) async {
@@ -282,13 +282,12 @@ class DeviceDetailController extends GetxController {
       await _deviceReposotory.frequencyDetails(date, deviceId, endDate);
       frequencyDetailsModel.value = FrequencyDetailsModel.fromJson(responsee);
     } catch (e) {
-      print("frequency Details catch");
+      print("frequencyDetails catch");
       print(e.toString());
     } finally {
       isFrequencyDetailLoading.value = false;
     }
   }
-
 
   ///-------- Voltage Details
   Future<void> getVoltageDetails(String date, deviceId, String endDate) async {
@@ -305,7 +304,6 @@ class DeviceDetailController extends GetxController {
       isVoltageDetailLoading.value = false;
     }
   }
-
 
   ///-------- Current Details
   Future<void> getCurrentDetails(String date, deviceId, String endDate) async {
@@ -346,7 +344,7 @@ class DeviceDetailController extends GetxController {
 
       final Map<String, dynamic> responsee =
       await _deviceReposotory.pfDetail(date, deviceId, endDate);
-      baseMetricModel.value = BaseMatricModel.fromJson(responsee);
+      pfDetailModel.value = PfDetailModel.fromJson(responsee);
     } catch (e) {
       print("pfDetails catch");
       print(e.toString());
@@ -354,7 +352,6 @@ class DeviceDetailController extends GetxController {
       isPfDetailsLoading.value = false;
     }
   }
-
 
   ///-------- History Fields
   Future<void> getHistoryFields(String startDate) async {
@@ -366,8 +363,7 @@ class DeviceDetailController extends GetxController {
       // Assign the object to the Rx variable
       historyFieldModel.value = HistoryFieldModel.fromJson(responsee);
 
-      getHistory(startDate, "", deviceListModel.mMachineUniqueId,
-          historyFieldModel.value.filters![0].id!, "-1m", 0);
+      getHistory("", "", deviceListModel.mMachineUniqueId, historyFieldModel.value.filters![0].id!, "-1h", 0);
     } catch (e) {
       print("historyFields SetModel");
       print(e.toString());
@@ -376,6 +372,7 @@ class DeviceDetailController extends GetxController {
     }
   }
 
+  ///-------- History
   Future<void> getHistory(String startDate, String endDate, String deviceId, String fieldName, String duration, int indexPos) async {
     try {
       isHistoryLoading.value = true;

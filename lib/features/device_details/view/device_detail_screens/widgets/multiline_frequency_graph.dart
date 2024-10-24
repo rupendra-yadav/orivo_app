@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../../../../../../utils/constant/colors.dart';
-import '../../model/pf_detail_timeline_model.dart';
-import '../../model/pf_detail_value_model.dart';
+import '../../../../../utils/constant/colors.dart';
+import '../model/freq_value_model.dart';
 
-class MultiLineTotalPowerFactorGraph extends StatelessWidget {
-  const MultiLineTotalPowerFactorGraph({
+class MultiLineFrequencyGraph extends StatelessWidget {
+  const MultiLineFrequencyGraph({
     super.key,
     this.onPeakGraph,
   });
-
 
   final List<Value>? onPeakGraph;
   // final List<NormalGraph>? onPeakGraph;
@@ -46,13 +44,13 @@ class MultiLineTotalPowerFactorGraph extends StatelessWidget {
           dataSource: chartData,
           xValueMapper: (ChartData data, _) => data.y,
           yValueMapper: (ChartData data, _) => data.x,
-          color: TColors.totalPowerFactorGraphLine1, // Line color for the first series
+          color: TColors.totalPowerFactorGraphLine3, // Line color for the first series
           width: 4,
           markerSettings: const MarkerSettings(
             isVisible: true,
             color: TColors.white,
             borderWidth: 2,
-            borderColor: TColors.totalPowerFactorGraphLine1,
+            borderColor: TColors.totalPowerFactorGraphLine3,
           ),
         ),
 
@@ -74,7 +72,7 @@ class MultiLineTotalPowerFactorGraph extends StatelessWidget {
 
         /// Third Line
 
-       /* SplineSeries<ChartData, String>(
+        /* SplineSeries<ChartData, String>(
           dataSource: getChartData3(),
           xValueMapper: (ChartData data, _) => data.x,
           yValueMapper: (ChartData data, _) => data.y,
@@ -90,7 +88,7 @@ class MultiLineTotalPowerFactorGraph extends StatelessWidget {
 
         /// Forth Line
 
-       /* SplineSeries<ChartData, String>(
+        /* SplineSeries<ChartData, String>(
           dataSource: getChartData4(),
           xValueMapper: (ChartData data, _) => data.x,
           yValueMapper: (ChartData data, _) => data.y,

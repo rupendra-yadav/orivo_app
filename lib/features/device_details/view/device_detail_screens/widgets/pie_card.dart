@@ -28,11 +28,11 @@ class PieCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Map<String, double> originalDataMap = {
-      "On Peak": energyConsumptionModel.onPeakUnit?.value ?? 0.0,
+      "On Peak": ((energyConsumptionModel.onPeakUnit?.value ?? 0.0) * 100).roundToDouble() / 100,
       // Handle null with ?? 0.0
-      "Off Peak": energyConsumptionModel.offPeakUnit?.value ?? 0.0,
+      "Off Peak": ((energyConsumptionModel.offPeakUnit?.value ?? 0.0) * 100).roundToDouble() / 100,
       // Same for Off Peak
-      "Normal": energyConsumptionModel.normalUnit?.value ?? 0.0,
+      "Normal":((energyConsumptionModel.normalUnit?.value ?? 0.0) * 100).roundToDouble() / 100,
       // Same for Normal
     };
 

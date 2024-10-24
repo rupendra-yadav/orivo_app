@@ -5,11 +5,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../../common/widgets/text/text_view.dart';
 import '../../../../../../utils/constant/colors.dart';
 import '../../../../../../utils/constant/text_strings.dart';
+import '../../model/curent_detail_modle.dart';
+import '../../widgets/multiline_current_graph.dart';
 import 'multi_line_total_power_factor_graph.dart';
 class CurrentCard extends StatelessWidget {
   const CurrentCard({
     super.key,
+    required this.currentDetailModel,
   });
+
+
+ final CurrentDetailModel currentDetailModel;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +36,7 @@ class CurrentCard extends StatelessWidget {
             ),
 
             TextView(
-              text: TTexts.powerQuality096,
+              text: currentDetailModel.current?.value?.toStringAsFixed(2) ?? "0.0",
               fontSize: 30,
               bold: true,
               textColor: TColors.green,
@@ -38,7 +44,7 @@ class CurrentCard extends StatelessWidget {
 
             /// Temperature Scale
 
-            TemperatureScale(),
+            TemperatureScale(totalValue: currentDetailModel.highestCurrent?.value??00,pointerValue: currentDetailModel.current?.value??00,),
 
             Row(
               children: [
@@ -49,14 +55,19 @@ class CurrentCard extends StatelessWidget {
             ),
 
             TextView(
-              text: TTexts.averageCurrent,
+              text:"Average Current ------ ${currentDetailModel.avgCurrent?.value?.toStringAsFixed(2) ?? "0.0"}",
+
               fontSize: 20,
               bold: true,
             ),
 
             ///Multile Graph
 
-            MultiLineTotalPowerFactorGraph(),
+            MultiLineCurrentGraph(
+              ia: currentDetailModel.iaTimeline?.value??[],
+              ib: currentDetailModel.ibTimeline?.value??[],
+              ic: currentDetailModel.icTimeline?.value??[]
+            ),
           ],
         ),
       ),

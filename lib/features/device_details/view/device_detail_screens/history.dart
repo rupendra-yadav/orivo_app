@@ -35,12 +35,12 @@ class _HistoryState extends State<History> {
   List<int> selectedIndices = [0]; // Track selected data items
   int selectedTimeIndex = 0; // Track selected time filter
 
-  late String fieldName = "";
-  late String duration = "-1m";
+  late String fieldName = controller.historyFieldModel.value.filters![0].id.toString();
+   String duration = "-1h";
   late String startDate = "";
   late String endDate = "";
   late String pickedDate = "";
-  late int indexPos ;
+   int indexPos = 0 ;
 
   String _selectedStartDate = TTexts.selectFromDate;
   String _selectedEndDate = TTexts.selectToDate;
@@ -53,7 +53,7 @@ class _HistoryState extends State<History> {
 
     controller.getDeviceDataItems();
 
-    controller.getDeviceGraphData("f", "3071123300001", "-0d");
+    // controller.getDeviceGraphData("f", "3071123300001", "-0d");
 
     DateTime now = DateTime.now();
     DateTime utcNow = now.toUtc();
@@ -79,8 +79,8 @@ class _HistoryState extends State<History> {
           selectedIndices.removeAt(0);
         }
         selectedIndices.add(index);
-        String fieldId = controller.historyFieldModel.value.filters![index].id!;
-        fieldName = fieldId;
+      /*  String fieldId = controller.historyFieldModel.value.filters![index].id!;
+        fieldName = fieldId;*/
       }
     });
 
@@ -93,7 +93,7 @@ class _HistoryState extends State<History> {
       if (controller.historyFieldModel.value.filters![index].name != null) {
         String fieldId = controller.historyFieldModel.value.filters![index].id!;
         fieldName = fieldId;
-        controller.getHistory(formattedDate, "", controller.deviceListModel.mMachineUniqueId, fieldId, duration,index);
+        controller.getHistory("", "", controller.deviceListModel.mMachineUniqueId, fieldId, duration,index);
       }
     }
   }
@@ -104,7 +104,7 @@ class _HistoryState extends State<History> {
       indexPos = index; // Initialize indexPos here
     });
 
-    controller.getHistory(startDate, endDate, controller.deviceListModel.mMachineUniqueId, fieldName, timeValue, indexPos);
+    controller.getHistory("", "", controller.deviceListModel.mMachineUniqueId, fieldName, timeValue, indexPos);
   }
 
 
@@ -140,44 +140,44 @@ class _HistoryState extends State<History> {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: [
-                      TextButtonWithContainer(
+                     /* TextButtonWithContainer(
                         text: TTexts.minute1,
                         isSelected: selectedTimeIndex == 0,
                         onPressed: () {
                           duration = "-1m";
                           handleTimeFilterTap(0, "-1m");
                         },
-                      ),
+                      ),*/
                       TextButtonWithContainer(
                         text: TTexts.hour1,
-                        isSelected: selectedTimeIndex == 1,
+                        isSelected: selectedTimeIndex == 0,
                         onPressed: () {
                           duration = "-1h";
-                          handleTimeFilterTap(1, "-1h");
+                          handleTimeFilterTap(0, "-1h");
                         },
                       ),
                       TextButtonWithContainer(
                         text: TTexts.day1,
-                        isSelected: selectedTimeIndex == 2,
+                        isSelected: selectedTimeIndex == 1,
                         onPressed: () {
                           duration = "-1d";
-                          handleTimeFilterTap(2, "-1d");
+                          handleTimeFilterTap(1, "-1d");
                         },
                       ),
                       TextButtonWithContainer(
                         text: TTexts.week1,
-                        isSelected: selectedTimeIndex == 3,
+                        isSelected: selectedTimeIndex == 2,
                         onPressed: () {
                           duration = "-1w";
-                          handleTimeFilterTap(3, "-1w");
+                          handleTimeFilterTap(2, "-1w");
                         },
                       ),
                       TextButtonWithContainer(
                         text: TTexts.month1,
-                        isSelected: selectedTimeIndex == 4,
+                        isSelected: selectedTimeIndex == 3,
                         onPressed: () {
                           duration = "-30d";
-                          handleTimeFilterTap(4, "-30d");
+                          handleTimeFilterTap(3, "-30d");
                         },
                       ),
                     ],
@@ -225,13 +225,7 @@ class _HistoryState extends State<History> {
                                           mainAxisSpacing: 10.w,
                                           crossAxisSpacing: 10.h,
                                           childAspectRatio: 1),
-                                  itemCount: controller.historyFieldModel.value
-                                              .filters?.length !=
-                                          null
-                                      ? (controller.historyFieldModel.value
-                                              .filters!.length -
-                                          1)
-                                      : 0,
+                                  itemCount: controller.historyFieldModel.value.filters?.length != null ? (controller.historyFieldModel.value.filters!.length - 1) : 0,
                                   itemBuilder: (_, index) {
                                     return DataItemCard(
                                       colorContainer: TColors.primaryDark2,
@@ -290,11 +284,10 @@ class _HistoryState extends State<History> {
 
                                     if (pickedDate != null) {
                                       // Formatting the selected date to the format '1-08-2024'
-                                      String formattedDate =
-                                          DateFormat('d-MM-yyyy')
-                                              .format(pickedDate);
+                                      String formattedDate = DateFormat('d-MM-yyyy').format(pickedDate);
+                                      String sttDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(pickedDate);
 
-                                      startDate = formattedDate;
+                                      startDate = sttDate;
 
                                       setState(() {
                                         _selectedStartDate = formattedDate;
@@ -378,7 +371,9 @@ class _HistoryState extends State<History> {
                                           DateFormat('d-MM-yyyy')
                                               .format(pickedDate);
 
-                                      endDate = formattedDate;
+                                      String edtDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(pickedDate);
+
+                                      endDate = edtDate;
 
                                       setState(() {
                                         _selectedEndDate = formattedDate;
@@ -425,7 +420,7 @@ class _HistoryState extends State<History> {
                                     height: 45.h,
                                     minWidth: 100.w,
                                     onPressed: () {
-                                      controller.getHistory(startDate, endDate, controller.deviceListModel.mMachineUniqueId, fieldName, duration,indexPos);
+                                      controller.getHistory(startDate, endDate, controller.deviceListModel.mMachineUniqueId, fieldName, "",indexPos);
                                     },
                                     title: TTexts.apply)
                               ],

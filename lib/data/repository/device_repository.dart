@@ -128,11 +128,12 @@ class DeviceRepository extends GetxController {
 
   ///Energy Consumption
   Future<Map<String, dynamic>> getEnergyConsumption(
-      String date, String deviceId) async {
+      String date, String deviceId,String stop) async {
     try {
       Map<String, dynamic> request = {
         "device_id": deviceId,
         "start": date,
+        "stop": stop,
       };
 
       print("CheckRequest");
@@ -384,6 +385,9 @@ class DeviceRepository extends GetxController {
       final response = await THttpHelper2.redirectPost(APIKeys2.history, request);
 
       print(response);
+      if (kDebugMode) {
+        print('history  Response: $response');
+      }
 
       if (response['status'] == 'success') {
         return response["data"];

@@ -15,12 +15,12 @@ class CostEstimateModel {
   CostEstimateModel(
       {this.demand,
         this.govCost,
-        this.normEnergy,
-        this.normEnergyRate,
-        this.offPeak,
-        this.offPeakRate,
-        this.onPeak,
-        this.onPeakRate,
+        // this.normEnergy,
+        // this.normEnergyRate,
+        // this.offPeak,
+        // this.offPeakRate,
+        // this.onPeak,
+        // this.onPeakRate,
         this.other,
         this.totalEnergyCost});
 

@@ -202,13 +202,13 @@ class _HomeState extends State<Home> {
                         return const DeviceDetailShimmer();
                       }
 
-                      /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
+                     /*  if (controller.powerFactorModel.value.pf?.value.isNullOrBlank == false) {
                         return const TImageLoaderWidget(
                             text: 'Whoops! No Device available...!',
                             animation: TImages.imgLoginBg,
                             showAction: false);
-                      }*/
-
+                      }
+*/
 
                       return TotalPowerFactorsCard(
                         powerFactorModel: controller.powerFactorModel.value,
@@ -306,9 +306,9 @@ class _HomeState extends State<Home> {
 ///Below data is for the pie charts
 
 final colorList = <Color>[
-  const Color(0xff8f8eff),
-  const Color(0xffa9a8ff),
-  const Color(0xffc5c4ff),
+  const Color(0xff8F8EFF),
+  const Color(0xffA9A8FF),
+  const Color(0xffC5C4FF),
 ];
 
 Map<String, double> originalDataMap2 = {

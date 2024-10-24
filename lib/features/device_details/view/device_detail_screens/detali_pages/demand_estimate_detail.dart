@@ -43,8 +43,6 @@ class _DemandEstimateDetailState extends State<DemandEstimateDetail> {
     controller.getDemandDetail(formattedDate, controller.deviceListModel.mMachineUniqueId, "");
   }
 
-
-
   String _selectedDateRange = TTexts.chooseDateRange;
 
   @override

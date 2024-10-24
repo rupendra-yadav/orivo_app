@@ -1,15 +1,20 @@
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/temperature_scale.dart';
+import 'package:auro/features/device_details/view/device_detail_screens/widgets/multiline_frequency_graph.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../../common/widgets/text/text_view.dart';
 import '../../../../../../utils/constant/colors.dart';
 import '../../../../../../utils/constant/text_strings.dart';
+import '../../model/frequency_detail_model.dart';
 import 'multi_line_total_power_factor_graph.dart';
 class FrequencyCard extends StatelessWidget {
   const FrequencyCard({
     super.key,
+    required this.frequencyDetailsModel,
   });
+
+  final FrequencyDetailsModel frequencyDetailsModel;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +35,7 @@ class FrequencyCard extends StatelessWidget {
             ),
 
             TextView(
-              text: TTexts.powerQuality096,
+              text: frequencyDetailsModel.freq?.value?.toStringAsFixed(2) ?? "0.0",
               fontSize: 30,
               bold: true,
               textColor: TColors.green,
@@ -38,7 +43,7 @@ class FrequencyCard extends StatelessWidget {
 
             /// Temperature Scale
 
-            TemperatureScale(),
+            TemperatureScale(totalValue: frequencyDetailsModel.highestFreq?.value??00,pointerValue: frequencyDetailsModel.freq?.value??00,),
 
             Row(
               children: [
@@ -49,14 +54,15 @@ class FrequencyCard extends StatelessWidget {
             ),
 
             TextView(
-              text: TTexts.averageFrequency,
+              text:"Average Frequency ----- ${frequencyDetailsModel.avgFreq?.value?.toStringAsFixed(2) ?? "0.0"}",
+
               fontSize: 20,
               bold: true,
             ),
 
             ///Multile Graph
 
-            MultiLineTotalPowerFactorGraph(),
+            MultiLineFrequencyGraph(onPeakGraph: frequencyDetailsModel.freqTimeline?.value??[],),
           ],
         ),
       ),

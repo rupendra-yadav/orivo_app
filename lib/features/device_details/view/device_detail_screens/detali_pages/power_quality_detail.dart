@@ -1,22 +1,22 @@
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/current_card.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/device_card_details_app_bar.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/frequency_card.dart';
-import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/multi_line_total_power_factor_graph.dart';
-import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/temperature_scale.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/totla_power_factor_card.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/voltage_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../../common/widgets/loaders/image_loader.dart';
 import '../../../../../common/widgets/text/text_view.dart';
 import '../../../../../utils/constant/colors.dart';
+import '../../../../../utils/constant/image_string.dart';
 import '../../../../../utils/constant/text_strings.dart';
 import '../../../../../utils/styles/spacing_style.dart';
 import '../controller/device_detail_controller.dart';
+import '../widgets/device_detail_shimmer.dart';
 
 class PowerQualityDetail extends StatefulWidget {
   const PowerQualityDetail({super.key});
@@ -29,7 +29,6 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
   final DeviceDetailController controller = Get.put(DeviceDetailController());
   String _selectedDateRange = TTexts.chooseDateRange;
 
-
   @override
   void initState() {
     super.initState();
@@ -41,17 +40,24 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
     DateTime utcMidnight = DateTime.utc(utcNow.year, utcNow.month, utcNow.day);
 
     // Format the date to the desired format
-    String formattedDateMidNight = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(utcMidnight);
+    String formattedDateMidNight =
+        DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(utcMidnight);
 
-    String formattedDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(utcNow);
+    String formattedDate =
+        DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(utcNow);
     // Call the API with the current date
 
-    controller.getFrequencyDetails(formattedDateMidNight, controller.deviceListModel.mMachineUniqueId, formattedDate);
+    controller.getPfDetails(formattedDateMidNight,
+        controller.deviceListModel.mMachineUniqueId, formattedDate);
 
-    controller.getVoltageDetails(formattedDateMidNight, controller.deviceListModel.mMachineUniqueId, formattedDate);
+    controller.getFrequencyDetails(formattedDateMidNight,
+        controller.deviceListModel.mMachineUniqueId, formattedDate);
 
-    controller.getCurrentDetails(formattedDateMidNight, controller.deviceListModel.mMachineUniqueId, formattedDate);
+    controller.getVoltageDetails(formattedDateMidNight,
+        controller.deviceListModel.mMachineUniqueId, formattedDate);
 
+    controller.getCurrentDetails(formattedDateMidNight,
+        controller.deviceListModel.mMachineUniqueId, formattedDate);
   }
 
   @override
@@ -98,21 +104,25 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
                   if (pickedDateRange != null) {
                     // Formatting the date to 1-08-2024 format
                     String formattedStartDate = DateFormat('d-MM-yyyy').format(pickedDateRange.start);
-                    String StartDate = DateFormat('d-MM-yyyy').format(pickedDateRange.start);
+
+                    String StartDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(pickedDateRange.start);
+
                     String formattedEndDate = DateFormat('d-MM-yyyy').format(pickedDateRange.end);
-                    String EndDate = DateFormat('d-MM-yyyy').format(pickedDateRange.end);
+
+                    String EndDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(pickedDateRange.end);
 
                     setState(() {
                       _selectedDateRange =
                           "From $formattedStartDate To $formattedEndDate";
                     });
 
+                    controller.getPfDetails(StartDate,controller.deviceListModel.mMachineUniqueId, EndDate);
+
+                    controller.getVoltageDetails(StartDate,controller.deviceListModel.mMachineUniqueId, EndDate);
+
+                    controller.getCurrentDetails(StartDate,controller.deviceListModel.mMachineUniqueId, EndDate);
 
                     controller.getFrequencyDetails(StartDate, controller.deviceListModel.mMachineUniqueId, EndDate);
-
-                    controller.getVoltageDetails(StartDate, controller.deviceListModel.mMachineUniqueId, EndDate);
-
-                    controller.getCurrentDetails(StartDate, controller.deviceListModel.mMachineUniqueId, EndDate);
 
 
                   }
@@ -151,23 +161,74 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
               SizedBox(height: 20.h),
 
               /// Total Power Factors
+              Obx(() {
+                if (controller.isVoltageDetailLoading.value) {
+                  return const DeviceDetailShimmer();
+                }
 
-              const TotalPowerFactorCard(),
+              /*   if (controller.voltageDetailsModel.value.volt?.value.isNullOrBlank == true) {
+                        return const TImageLoaderWidget(
+                            text: 'Whoops! No Device available...!',
+                            animation: TImages.imgLoginBg,
+                            showAction: false);
+                      }*/
+
+                return TotalPowerFactorCard(pfDetailModel: controller.pfDetailModel.value);
+              }),
 
               SizedBox(height: 20.h),
 
               /// Voltage
-              const VoltageCard(),
+              Obx((){
+                if (controller.isPfDetailsLoading.value) {
+                  return const DeviceDetailShimmer();
+                }
+
+                /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
+                        return const TImageLoaderWidget(
+                            text: 'Whoops! No Device available...!',
+                            animation: TImages.imgLoginBg,
+                            showAction: false);
+                      }*/
+
+                return  VoltageCard(voltageDetailModel: controller.voltageDetailsModel.value);
+              }),
+
 
               SizedBox(height: 20.h),
 
               ///Curent
-              CurrentCard(),
+              Obx((){
+                if (controller.isCurrentDetailLoading.value) {
+                  return const DeviceDetailShimmer();
+                }
+
+                /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
+                        return const TImageLoaderWidget(
+                            text: 'Whoops! No Device available...!',
+                            animation: TImages.imgLoginBg,
+                            showAction: false);
+                      }*/
+
+                return CurrentCard(currentDetailModel: controller.currentDetailsModel.value,);
+              }),
 
               SizedBox(height: 20.h),
 
               ///Frequency
-              FrequencyCard(),
+              Obx((){     if (controller.isFrequencyDetailLoading.value) {
+                return const DeviceDetailShimmer();
+              }
+
+              /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
+                        return const TImageLoaderWidget(
+                            text: 'Whoops! No Device available...!',
+                            animation: TImages.imgLoginBg,
+                            showAction: false);
+                      }*/
+
+              return FrequencyCard(frequencyDetailsModel: controller.frequencyDetailsModel.value,);
+              }),
             ],
           ),
         ),
@@ -175,7 +236,3 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
     );
   }
 }
-
-
-
-

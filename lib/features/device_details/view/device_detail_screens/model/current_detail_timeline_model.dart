@@ -1,4 +1,6 @@
-import 'freq_value_model.dart';
+
+
+import 'current_detail_value_model.dart';
 
 class IaTimeline {
   List<Value>? value;

@@ -63,7 +63,7 @@ class TotalPowerFactorsCard extends StatelessWidget {
                             // Hide the scale pointers (ticks)
                             barPointers: [
                               LinearBarPointer(
-                                value: 100,
+                                value: (powerFactorModel.pf?.value?.toDouble() ?? 0.0),
                                 // Set the value for the pointer
                                 thickness: 10,
                                 // Adjust the thickness of the bar
@@ -82,7 +82,7 @@ class TotalPowerFactorsCard extends StatelessWidget {
                             ],
                             markerPointers: [
                               LinearShapePointer(
-                                value: 70,
+                                value:(powerFactorModel.pf?.value?.toDouble() ?? 0.0),
                                 // Position of the marker
                                 shapeType: LinearShapePointerType.rectangle,
                                 // Shape of the marker

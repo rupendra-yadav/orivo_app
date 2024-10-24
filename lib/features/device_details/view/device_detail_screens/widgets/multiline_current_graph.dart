@@ -1,31 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../../../../../../utils/constant/colors.dart';
-import '../../model/pf_detail_timeline_model.dart';
-import '../../model/pf_detail_value_model.dart';
+import '../../../../../utils/constant/colors.dart';
+import '../model/current_detail_value_model.dart';
 
-class MultiLineTotalPowerFactorGraph extends StatelessWidget {
-  const MultiLineTotalPowerFactorGraph({
+class MultiLineCurrentGraph extends StatelessWidget {
+  const MultiLineCurrentGraph({
     super.key,
-    this.onPeakGraph,
+    this.ia,
+    this.ib,
+    this.ic,
+
   });
 
-
-  final List<Value>? onPeakGraph;
-  // final List<NormalGraph>? onPeakGraph;
-
+  final List<Value>? ia;
+  final List<Value>? ib;
+  final List<Value>? ic;
 
   @override
   Widget build(BuildContext context) {
 
 
     List<ChartData> chartData = <ChartData>[];
-
 // Assuming onPeakGraph is a List of data points
-    onPeakGraph?.forEach((graph) {
+    ia?.forEach((graph) {
       chartData.add(ChartData(x: graph.y ?? 0.0, y: graph.x ?? ""));
     });
+
+
+    List<ChartData> chartData1 = <ChartData>[];
+// Assuming onPeakGraph is a List of data points
+    ib?.forEach((graph) {
+      chartData1.add(ChartData(x: graph.y ?? 0.0, y: graph.x ?? ""));
+    });
+
+    List<ChartData> chartData2 = <ChartData>[];
+// Assuming onPeakGraph is a List of data points
+    ic?.forEach((graph) {
+      chartData2.add(ChartData(x: graph.y ?? 0.0, y: graph.x ?? ""));
+    });
+
     return SfCartesianChart(
       borderWidth: 0,
       plotAreaBorderWidth: 0,
@@ -58,10 +72,10 @@ class MultiLineTotalPowerFactorGraph extends StatelessWidget {
 
         /// Second Line
 
-        /*SplineSeries<ChartData, String>(
-          dataSource: getChartData2(),
-          xValueMapper: (ChartData data, _) => data.x,
-          yValueMapper: (ChartData data, _) => data.y,
+        SplineSeries<ChartData, String>(
+          dataSource: chartData1,
+          xValueMapper: (ChartData data, _) => data.y,
+          yValueMapper: (ChartData data, _) => data.x,
           color: TColors.totalPowerFactorGraphLine2, // Line color for the second series
           width: 4,
           markerSettings: const MarkerSettings(
@@ -70,14 +84,14 @@ class MultiLineTotalPowerFactorGraph extends StatelessWidget {
             borderWidth: 2,
             borderColor: TColors.totalPowerFactorGraphLine2,
           ),
-        ),*/
+        ),
 
         /// Third Line
 
-       /* SplineSeries<ChartData, String>(
-          dataSource: getChartData3(),
-          xValueMapper: (ChartData data, _) => data.x,
-          yValueMapper: (ChartData data, _) => data.y,
+         SplineSeries<ChartData, String>(
+          dataSource: chartData2,
+          xValueMapper: (ChartData data, _) => data.y,
+          yValueMapper: (ChartData data, _) => data.x,
           color: TColors.totalPowerFactorGraphLine3,// Line color for the third series
           width: 4,
           markerSettings: const MarkerSettings(
@@ -86,11 +100,11 @@ class MultiLineTotalPowerFactorGraph extends StatelessWidget {
             borderWidth: 2,
             borderColor: TColors.totalPowerFactorGraphLine3,
           ),
-        ),*/
+        ),
 
         /// Forth Line
 
-       /* SplineSeries<ChartData, String>(
+        /* SplineSeries<ChartData, String>(
           dataSource: getChartData4(),
           xValueMapper: (ChartData data, _) => data.x,
           yValueMapper: (ChartData data, _) => data.y,

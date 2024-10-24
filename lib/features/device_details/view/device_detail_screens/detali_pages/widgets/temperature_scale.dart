@@ -5,7 +5,11 @@ import 'package:syncfusion_flutter_gauges/gauges.dart';
 class TemperatureScale extends StatelessWidget {
   const TemperatureScale({
     super.key,
+    required this.totalValue,
+    required this.pointerValue,
   });
+
+  final double totalValue,pointerValue;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +22,7 @@ class TemperatureScale extends StatelessWidget {
       showTicks: false,  // Hide the scale pointers (ticks)
       barPointers: [
         LinearBarPointer(
-          value: 100, // Set the value for the pointer
+          value: totalValue, // Set the value for the pointer
           thickness: 10, // Adjust the thickness of the bar
           edgeStyle: LinearEdgeStyle.bothCurve, // Apply curved edges if needed
           shaderCallback: (bounds) {
@@ -34,7 +38,7 @@ class TemperatureScale extends StatelessWidget {
       ],
       markerPointers: [
         LinearShapePointer(
-          value: 70, // Position of the marker
+          value: pointerValue, // Position of the marker
           shapeType: LinearShapePointerType.rectangle, // Shape of the marker
           color: Colors.green[300], // Color of the marker
           elevation: 50,

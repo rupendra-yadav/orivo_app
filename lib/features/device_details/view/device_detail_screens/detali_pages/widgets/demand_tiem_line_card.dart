@@ -34,7 +34,7 @@ class DemandTimeLineCard extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-            SizedBox(height: 170.h, child: const DemandTimelineGraph()),
+            SizedBox(height: 170.h, child:  DemandTimelineGraph(timeline: demandDetailModel.demandTimeline?.value??[],)),
 
             SizedBox(
               height: 20.h,
