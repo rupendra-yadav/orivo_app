@@ -165,7 +165,6 @@ class _DemandEstimateDetailState extends State<DemandEstimateDetail> {
                 if (controller.isDemandDetailLoading.value) {
                   return const DeviceDetailShimmer();
                 }
-
                 /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
                         return const TImageLoaderWidget(
                             text: 'Whoops! No Device available...!',

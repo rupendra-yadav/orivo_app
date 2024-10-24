@@ -40,7 +40,7 @@ class Login extends StatelessWidget {
                       /// setting image for login
                       Center(
                         child: Image.asset(
-                          TImages.imgLoginBg,
+                          TImages.imgLoginBgNew,
                         ),
                       ),
                       SizedBox(
