@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 
 import '../popups/loaders.dart';
 
-
 /// Manages the network connectivity status and provides methods to check and handle connectivity changes.
 class NetworkManager extends GetxController {
   static NetworkManager get instance => Get.find();
@@ -34,12 +33,8 @@ class NetworkManager extends GetxController {
   Future<bool> isConnected() async {
     try {
       final result = await _connectivity.checkConnectivity();
-      if (result == ConnectivityResult.none) {
-        return false;
-      } else {
-        return true;
-      }
-    } on PlatformException catch (_) {
+      return result != ConnectivityResult.none;
+    } on PlatformException {
       return false;
     }
   }
@@ -47,7 +42,7 @@ class NetworkManager extends GetxController {
   /// Dispose or close the active connectivity stream.
   @override
   void onClose() {
-    super.onClose();
     _connectivitySubscription.cancel();
+    super.onClose();
   }
 }
