@@ -37,16 +37,17 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
     DateTime now = DateTime.now();
     DateTime utcNow = now.toUtc();
 
-    // Set the time to 00:00:00 (midnight) for the same date
-    DateTime utcMidnight = DateTime.utc(utcNow.year, utcNow.month, utcNow.day);
+    // Convert UTC date and time to IST
+    DateTime istNow = utcNow.add(const Duration(hours: 5, minutes: 30));
 
-    // Format the date to the desired format
-    String formattedDateMidNight = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(utcMidnight);
+    // Set the time to 00:00:00 (midnight) in IST for the same date
+    DateTime istMidnight = DateTime(istNow.year, istNow.month, istNow.day);
 
-    String formattedDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(utcNow);
-
+    // Format the date and time to the desired format
+    String formattedDateMidnight = DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
+    String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
     // Call the API with the current date
-    controller.getEnergyDetailsConsumption(formattedDateMidNight, controller.deviceListModel.mMachineUniqueId, formattedDate);
+    controller.getEnergyDetailsConsumption(formattedDateMidnight, controller.deviceListModel.mMachineUniqueId, formattedDate);
   }
 
 
@@ -96,10 +97,10 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
                   if (pickedDateRange != null) {
                     // Formatting the date to 1-08-2024 format
                     String formattedStartDate = DateFormat('d-MM-yyyy').format(pickedDateRange.start);
-                    String formattedStartDateInYears = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(pickedDateRange.start);
+                    String formattedStartDateInYears = DateFormat("yyyy-MM-dd HH:mm:ss").format(pickedDateRange.start);
 
                     String formattedEndDate = DateFormat('d-MM-yyyy').format(pickedDateRange.end);
-                    String formattedEndDateInYears = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(pickedDateRange.end);
+                    String formattedEndDateInYears = DateFormat("yyyy-MM-dd HH:mm:ss").format(pickedDateRange.end);
 
                     setState(() {
                       _selectedDateRange =

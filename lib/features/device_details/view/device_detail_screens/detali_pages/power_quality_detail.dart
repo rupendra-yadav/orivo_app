@@ -36,28 +36,23 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
     DateTime now = DateTime.now();
     DateTime utcNow = now.toUtc();
 
-    // Set the time to 00:00:00 (midnight) for the same date
-    DateTime utcMidnight = DateTime.utc(utcNow.year, utcNow.month, utcNow.day);
+    // Convert UTC date and time to IST
+    DateTime istNow = utcNow.add(const Duration(hours: 5, minutes: 30));
 
-    // Format the date to the desired format
-    String formattedDateMidNight =
-        DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(utcMidnight);
+    // Set the time to 00:00:00 (midnight) in IST for the same date
+    DateTime istMidnight = DateTime(istNow.year, istNow.month, istNow.day);
 
-    String formattedDate =
-        DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(utcNow);
-    // Call the API with the current date
+    // Format the date and time to the desired format
+    String formattedDateMidnight = DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
+    String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
 
-    controller.getPfDetails(formattedDateMidNight,
-        controller.deviceListModel.mMachineUniqueId, formattedDate);
+    controller.getPfDetails(formattedDateMidnight, controller.deviceListModel.mMachineUniqueId, formattedDate);
 
-    controller.getFrequencyDetails(formattedDateMidNight,
-        controller.deviceListModel.mMachineUniqueId, formattedDate);
+    controller.getFrequencyDetails(formattedDateMidnight, controller.deviceListModel.mMachineUniqueId, formattedDate);
 
-    controller.getVoltageDetails(formattedDateMidNight,
-        controller.deviceListModel.mMachineUniqueId, formattedDate);
+    controller.getVoltageDetails(formattedDateMidnight, controller.deviceListModel.mMachineUniqueId, formattedDate);
 
-    controller.getCurrentDetails(formattedDateMidNight,
-        controller.deviceListModel.mMachineUniqueId, formattedDate);
+    controller.getCurrentDetails(formattedDateMidnight, controller.deviceListModel.mMachineUniqueId, formattedDate);
   }
 
   @override
@@ -105,11 +100,11 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
                     // Formatting the date to 1-08-2024 format
                     String formattedStartDate = DateFormat('d-MM-yyyy').format(pickedDateRange.start);
 
-                    String StartDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(pickedDateRange.start);
+                    String StartDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(pickedDateRange.start);
 
                     String formattedEndDate = DateFormat('d-MM-yyyy').format(pickedDateRange.end);
 
-                    String EndDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(pickedDateRange.end);
+                    String EndDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(pickedDateRange.end);
 
                     setState(() {
                       _selectedDateRange =
@@ -162,7 +157,7 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
 
               /// Total Power Factors
               Obx(() {
-                if (controller.isVoltageDetailLoading.value) {
+                if (controller.isPfDetailsLoading.value) {
                   return const DeviceDetailShimmer();
                 }
 
@@ -180,7 +175,7 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
 
               /// Voltage
               Obx((){
-                if (controller.isPfDetailsLoading.value) {
+                if (controller.isVoltageDetailLoading.value) {
                   return const DeviceDetailShimmer();
                 }
 

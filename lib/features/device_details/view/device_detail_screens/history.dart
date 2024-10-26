@@ -59,7 +59,7 @@ class _HistoryState extends State<History> {
     DateTime utcNow = now.toUtc();
 
     String formattedDate =
-        DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(utcNow);
+        DateFormat("yyyy-MM-dd HH:mm:ss").format(utcNow);
 
     controller.getHistoryFields(formattedDate);
 
@@ -88,7 +88,7 @@ class _HistoryState extends State<History> {
       DateTime now = DateTime.now();
       DateTime utcNow = now.toUtc();
       String formattedDate =
-          DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(utcNow);
+          DateFormat("yyyy-MM-dd HH:mm:ss").format(utcNow);
 
       if (controller.historyFieldModel.value.filters![index].name != null) {
         String fieldId = controller.historyFieldModel.value.filters![index].id!;
@@ -285,7 +285,7 @@ class _HistoryState extends State<History> {
                                     if (pickedDate != null) {
                                       // Formatting the selected date to the format '1-08-2024'
                                       String formattedDate = DateFormat('d-MM-yyyy').format(pickedDate);
-                                      String sttDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(pickedDate);
+                                      String sttDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(pickedDate);
 
                                       startDate = sttDate;
 
@@ -371,7 +371,7 @@ class _HistoryState extends State<History> {
                                           DateFormat('d-MM-yyyy')
                                               .format(pickedDate);
 
-                                      String edtDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(pickedDate);
+                                      String edtDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(pickedDate);
 
                                       endDate = edtDate;
 

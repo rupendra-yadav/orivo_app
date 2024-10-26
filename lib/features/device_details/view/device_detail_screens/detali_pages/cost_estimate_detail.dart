@@ -39,15 +39,17 @@ class _CostEstimateState extends State<CostEstimate> {
     DateTime now = DateTime.now();
     DateTime utcNow = now.toUtc();
 
-    // Set the time to 00:00:00 (midnight) for the same date
-    DateTime utcMidnight = DateTime.utc(utcNow.year, utcNow.month, utcNow.day);
+    // Convert UTC date and time to IST
+    DateTime istNow = utcNow.add(const Duration(hours: 5, minutes: 30));
 
-    // Format the date to the desired format
-    String formattedDateMidNight = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(utcMidnight);
+    // Set the time to 00:00:00 (midnight) in IST for the same date
+    DateTime istMidnight = DateTime(istNow.year, istNow.month, istNow.day);
 
-    String formattedDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(utcNow);
+    // Format the date and time to the desired format
+    String formattedDateMidnight = DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
+    String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
     // Call the API with the current date
-    controller.getCostEstimateDetails(formattedDateMidNight, controller.deviceListModel.mMachineUniqueId, formattedDate);
+    controller.getCostEstimateDetails(formattedDateMidnight, controller.deviceListModel.mMachineUniqueId, formattedDate);
   }
 
 
@@ -110,10 +112,10 @@ class _CostEstimateState extends State<CostEstimate> {
                   if (pickedDateRange != null) {
                     // Formatting the date to 1-08-2024 format
                     String formattedStartDate = DateFormat('d-MM-yyyy').format(pickedDateRange.start);
-                    String formattedStartDate1 = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(pickedDateRange.start);
+                    String formattedStartDate1 = DateFormat("yyyy-MM-dd HH:mm:ss").format(pickedDateRange.start);
 
                     String formattedEndDate = DateFormat('d-MM-yyyy').format(pickedDateRange.end);
-                    String formattedEndDate1 = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(pickedDateRange.end);
+                    String formattedEndDate1 = DateFormat("yyyy-MM-dd HH:mm:ss").format(pickedDateRange.end);
 
                     setState(() {_selectedDateRange = "From $formattedStartDate To $formattedEndDate";
 
@@ -227,6 +229,7 @@ class _CostEstimateState extends State<CostEstimate> {
                             ),
                           ),
                           SizedBox(height: 20.h),
+
                           LegendNameCard(costEstimateDetailModel: controller.costEstimateDetailsModel.value),
                           LegendNameCardGovt(costEstimateDetailModel: controller.costEstimateDetailsModel.value),
                           LegendNameCardDemand(costEstimateDetailModel: controller.costEstimateDetailsModel.value),
@@ -248,8 +251,7 @@ class _CostEstimateState extends State<CostEstimate> {
 }
 
 final colorList2 = <Color>[
-  const Color(0xff0062ff),
-  const Color(0xffffc542),
-  const Color(0xffff974a),
   const Color(0xff3dd598),
+  const Color(0xff0062ff),
+  const Color(0xffff974a),
 ];

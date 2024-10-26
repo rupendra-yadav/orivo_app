@@ -55,23 +55,25 @@ class _HomeState extends State<Home> {
     DateTime now = DateTime.now();
     DateTime utcNow = now.toUtc();
 
-    // Set the time to 00:00:00 (midnight) for the same date
-    DateTime utcMidnight = DateTime.utc(utcNow.year, utcNow.month, utcNow.day);
+    // Convert UTC date and time to IST
+    DateTime istNow = utcNow.add(const Duration(hours: 5, minutes: 30));
 
-    // Format the date to the desired format
-    String formattedDateMidNight = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(utcMidnight);
+    // Set the time to 00:00:00 (midnight) in IST for the same date
+    DateTime istMidnight = DateTime(istNow.year, istNow.month, istNow.day);
 
-    String formattedDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(utcNow);
+    // Format the date and time to the desired format
+    String formattedDateMidnight = DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
+    String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
 
     controller.getDeviceDetail(
-        navigationController.deviceId.value, formattedDate,formattedDateMidNight);
+        navigationController.deviceId.value, formattedDate,formattedDateMidnight);
     controller.getDeviceDataItems();
 
     if (kDebugMode) {
       print(navigationController.deviceId.value);
       print("checkDateOutCome");
       print(formattedDate);
-      print(formattedDateMidNight);
+      print(formattedDateMidnight);
     }
   }
 
