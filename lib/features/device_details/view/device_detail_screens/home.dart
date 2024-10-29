@@ -1,3 +1,4 @@
+import 'package:auro/common/widgets/text/text_view.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/controller/device_detail_controller.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/energy_consumption_detail.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/widgets/cost_estimate_card.dart';
@@ -17,8 +18,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pie_chart/pie_chart.dart';
 
-import '../../../../common/widgets/loaders/image_loader.dart';
-import '../../../../utils/constant/image_string.dart';
 import '../../controller/device_detail_navigation_controller.dart';
 
 class Home extends StatefulWidget {
@@ -34,6 +33,7 @@ class _HomeState extends State<Home> {
       DeviceDetailNavigationController.instance;
 
   List<int> selectedIndices = [0];
+  String timeStamp = "";
 
   void handleCardTap(int index) {
     setState(() {
@@ -65,8 +65,10 @@ class _HomeState extends State<Home> {
     String formattedDateMidnight = DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
     String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
 
-    controller.getDeviceDetail(
-        navigationController.deviceId.value, formattedDate,formattedDateMidnight);
+    timeStamp = DateFormat("d MMMM h:mm a").format(istNow);
+
+    controller.getDeviceDetail(navigationController.deviceId.value,
+        formattedDate, formattedDateMidnight);
     controller.getDeviceDataItems();
 
     if (kDebugMode) {
@@ -76,7 +78,6 @@ class _HomeState extends State<Home> {
       print(formattedDateMidnight);
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -93,118 +94,111 @@ class _HomeState extends State<Home> {
           SingleChildScrollView(
             child: Padding(
               padding: SpacingStyle.paddingWithDefaultSpace,
-              child: Obx(() {
-                if (controller.isDeviceDetailLoading.value) {
-                  return const DeviceDetailShimmer();
-                }
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
 
-                if (controller.deviceList.isEmpty) {
-                  return const TImageLoaderWidget(
-                      text: 'Whoops! No Device available...!',
-                      animation: TImages.imgLoginBg,
-                      showAction: false);
-                }
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ///Energy Consumption
+                  Row(
+                    children: [
+                      Spacer(),
+                      TextView(text: "Updated : $timeStamp",
+                        fontSize: 11,
+                       )
+                    ],
+                  ),
 
-                    Obx(() {
-                      if (controller.isEnergyConsumptionLoading.value) {
-                        return const DeviceDetailShimmer();
-                      }
 
-                      double onPeak = controller
-                              .energyConsumptionData.value.onPeakUnit?.value ??
-                          0.0;
-                      double offPeak = controller
-                              .energyConsumptionData.value.offPeakUnit?.value ??
-                          0.0;
-                      double normal = controller
-                              .energyConsumptionData.value.normalUnit?.value ??
-                          0.0;
-                      double totalCount = onPeak + offPeak + normal;
+                  ///Energy Consumption
 
-                      /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
+                  Obx(() {
+                    if (controller.isEnergyConsumptionLoading.value) {
+                      return const DeviceDetailShimmer();
+                    }
+
+                    double onPeak = controller
+                            .energyConsumptionData.value.onPeakUnit?.value ??
+                        0.0;
+                    double offPeak = controller
+                            .energyConsumptionData.value.offPeakUnit?.value ??
+                        0.0;
+                    double normal = controller
+                            .energyConsumptionData.value.normalUnit?.value ??
+                        0.0;
+                    double totalCount = onPeak + offPeak + normal;
+
+                    /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
                         return const TImageLoaderWidget(
                             text: 'Whoops! No Device available...!',
                             animation: TImages.imgLoginBg,
                             showAction: false);
                       }*/
-                      return PieCard(
-                        energyConsumptionModel: controller.energyConsumptionData.value,
-                        totalCount: totalCount,
-                        legendPosition: LegendPosition.right,
-                        onPressed: () =>
-                            Get.to(() => const EnergyConsumptionDetail()),
-                      );
-                    }),
+                    return PieCard(
+                      energyConsumptionModel:
+                          controller.energyConsumptionData.value,
+                      totalCount: totalCount,
+                      legendPosition: LegendPosition.right,
+                      onPressed: () =>
+                          Get.to(() => const EnergyConsumptionDetail()),
+                    );
+                  }),
 
+                  ///Cost Estimate
+                  Obx(() {
+                    if (controller.isCostEstimateLoading.value) {
+                      return const DeviceDetailShimmer();
+                    }
 
-                    ///Cost Estimate
-                    Obx(() {
-                      if (controller.isCostEstimateLoading.value) {
-                        return const DeviceDetailShimmer();
-                      }
+                    double energy =
+                        controller.costEstimateModel.value.normEnergy?.value ??
+                            0.0;
+                    double govt =
+                        controller.costEstimateModel.value.govCost?.value ??
+                            0.0;
+                    double demand =
+                        controller.costEstimateModel.value.demand?.value ?? 0.0;
+                    double others =
+                        controller.costEstimateModel.value.other?.value ?? 0.0;
+                    double totalCont = energy + govt + demand + others;
 
-
-                      double energy = controller
-                          .costEstimateModel.value.normEnergy?.value ??
-                          0.0;
-                      double govt = controller
-                          .costEstimateModel.value.govCost?.value ??
-                          0.0;
-                      double demand = controller
-                          .costEstimateModel.value.demand?.value ??
-                          0.0;
-                      double others = controller
-                          .costEstimateModel.value.other?.value ??
-                          0.0;
-                      double totalCont = energy + govt + demand+ others;
-
-
-                      /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
+                    /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
                         return const TImageLoaderWidget(
                             text: 'Whoops! No Device available...!',
                             animation: TImages.imgLoginBg,
                             showAction: false);
                       }*/
-                      return CostEstimateCard(
-                              costEstimateModel: controller.costEstimateModel.value,
-                              totalCount: totalCont);
-                    }),
+                    return CostEstimateCard(
+                        costEstimateModel: controller.costEstimateModel.value,
+                        totalCount: totalCont);
+                  }),
 
-                    ///Demand
-                    Obx(() {
-                      if (controller.isDemandLoading.value) {
-                        return const DeviceDetailShimmer();
-                      }
+                  ///Demand
+                  Obx(() {
+                    if (controller.isDemandLoading.value) {
+                      return const DeviceDetailShimmer();
+                    }
 
-                      /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
+                    /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
                         return const TImageLoaderWidget(
                             text: 'Whoops! No Device available...!',
                             animation: TImages.imgLoginBg,
                             showAction: false);
                       }*/
 
-                      return
+                    return Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10.h),
+                      child: PowerDemandCard(
+                        demandModel: controller.demandModel.value,
+                      ),
+                    );
+                  }),
 
+                  ///Total Power Factors
+                  Obx(() {
+                    if (controller.isPowerFactorLoading.value) {
+                      return const DeviceDetailShimmer();
+                    }
 
-                          Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10.h),
-                        child: PowerDemandCard(
-                          demandModel: controller.demandModel.value,
-                        ),
-                      );
-                    }),
-
-                    ///Total Power Factors
-                    Obx(() {
-                      if (controller.isPowerFactorLoading.value) {
-                        return const DeviceDetailShimmer();
-                      }
-
-                     /*  if (controller.powerFactorModel.value.pf?.value.isNullOrBlank == false) {
+                    /*  if (controller.powerFactorModel.value.pf?.value.isNullOrBlank == false) {
                         return const TImageLoaderWidget(
                             text: 'Whoops! No Device available...!',
                             animation: TImages.imgLoginBg,
@@ -212,76 +206,76 @@ class _HomeState extends State<Home> {
                       }
 */
 
-                      return TotalPowerFactorsCard(
-                        powerFactorModel: controller.powerFactorModel.value,
-                      );
-                    }),
+                    return TotalPowerFactorsCard(
+                      powerFactorModel: controller.powerFactorModel.value,
+                    );
+                  }),
 
-                    /// this is the device detail data
-                    Obx(() {
-                      if (controller.isBaseMetricLoading.value) {
-                        return const DeviceDetailShimmer();
-                      }
+                  /// this is the device detail data
+                  Obx(() {
+                    if (controller.isBaseMetricLoading.value) {
+                      return const DeviceDetailShimmer();
+                    }
 
-                      /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
+                    /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
                         return const TImageLoaderWidget(
                             text: 'Whoops! No Device available...!',
                             animation: TImages.imgLoginBg,
                             showAction: false);
                       }*/
 
-                      return Row(
-                        children: [
-                          Expanded(
-                              child: TextViewCard(
-                                  cardText: TTexts.frequency,
-                                  width: TDeviceUtils.screenWidth / 2,
-                                  cardValue:
-                                      "${controller.baseMetricModel.value.freq?.value?.toStringAsFixed(2) ?? "0.0"}${controller.baseMetricModel.value.freq?.unit?.toString() ?? "0.0"}",
-                                  cardAvg: "Avg : ${controller.frequencyDetailsModel.value.avgFreq?.value?.toStringAsFixed(2) ?? "0.0"}${controller.frequencyDetailsModel.value.avgFreq?.unit?.toString() ?? "0.0"}")),
-                          SizedBox(width: 5.w),
-                          Expanded(
+                    return Row(
+                      children: [
+                        Expanded(
                             child: TextViewCard(
-                              cardText: TTexts.totalVoltage,
-                              width: TDeviceUtils.screenWidth / 2,
-                              cardValue:
-                                  "${controller.baseMetricModel.value.volt?.value?.toStringAsFixed(2) ?? "0.0"}${controller.baseMetricModel.value.volt?.unit?.toString() ?? "0.0"}",
-                              cardAvg:
-                                  "Avg : ${controller.voltageDetailsModel.value.avgVolt?.value?.toStringAsFixed(2) ?? "0.0"}${controller.voltageDetailsModel.value.avgVolt?.unit?.toString() ?? "0.0"}",
-                            ),
+                                cardText: TTexts.frequency,
+                                width: TDeviceUtils.screenWidth / 2,
+                                cardValue:
+                                    "${controller.baseMetricModel.value.freq?.value?.toStringAsFixed(2) ?? "NA"}${controller.baseMetricModel.value.freq?.unit?.toString() ?? "NA"}",
+                                cardAvg:
+                                    "Avg : ${controller.frequencyDetailsModel.value.avgFreq?.value?.toStringAsFixed(2) ?? "NA"}${controller.frequencyDetailsModel.value.avgFreq?.unit?.toString() ?? "NA"}")),
+                        SizedBox(width: 5.w),
+                        Expanded(
+                          child: TextViewCard(
+                            cardText: TTexts.totalVoltage,
+                            width: TDeviceUtils.screenWidth / 2,
+                            cardValue:
+                                "${controller.baseMetricModel.value.volt?.value?.toStringAsFixed(2) ?? "NA"}${controller.baseMetricModel.value.volt?.unit?.toString() ?? "NA"}",
+                            cardAvg:
+                                "Avg : ${controller.voltageDetailsModel.value.avgVolt?.value?.toStringAsFixed(2) ?? "NA"}${controller.voltageDetailsModel.value.avgVolt?.unit?.toString() ?? "NA"}",
                           ),
-                        ],
-                      );
-                    }),
+                        ),
+                      ],
+                    );
+                  }),
 
+                  ///Power Factors Data
+                  Obx(() {
+                    if (controller.isBaseMetricLoading.value) {
+                      return const DeviceDetailShimmer();
+                    }
 
-                    ///Power Factors Data
-                    Obx(() {
-                      if (controller.isBaseMetricLoading.value) {
-                        return const DeviceDetailShimmer();
-                      }
-
-                      /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
+                    /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
                         return const TImageLoaderWidget(
                             text: 'Whoops! No Device available...!',
                             animation: TImages.imgLoginBg,
                             showAction: false);
                       }*/
 
-                      return Row(
-                        children: [
-                          Expanded(
-                            child: TextViewCard(
-                              cardText: TTexts.totalCurrent,
-                              width: TDeviceUtils.screenWidth / 2,
-                              cardValue:
-                                  "${(controller.baseMetricModel.value.current?.value ?? 0.0).toStringAsFixed(1)}${controller.baseMetricModel.value.current?.unit?.toString() ?? "0.0"}",
-                              cardAvg:
-                                  "${controller.powerFactorModel.value.pf?.value?.toStringAsFixed(2) ?? "0.0"}${controller.powerFactorModel.value.pf?.unit?.toString() ?? "0.0"}",
-                            ),
+                    return Row(
+                      children: [
+                        Expanded(
+                          child: TextViewCard(
+                            cardText: TTexts.totalCurrent,
+                            width: TDeviceUtils.screenWidth / 2,
+                            cardValue:
+                                "${controller.baseMetricModel.value.current?.value ?.toStringAsFixed(1) ?? "NA"}${controller.baseMetricModel.value.current?.unit?.toString() ?? "NA"}",
+                            cardAvg:
+                                "${controller.powerFactorModel.value.pf?.value?.toStringAsFixed(2) ?? "NA"}${controller.powerFactorModel.value.pf?.unit?.toString() ?? "NA"}",
                           ),
-                          SizedBox(width: 5.w),
-                         /* Expanded(
+                        ),
+                        SizedBox(width: 5.w),
+                        /* Expanded(
                             child: TextViewCard(
                               cardText: TTexts.totalHD,
                               width: TDeviceUtils.screenWidth / 2,
@@ -289,12 +283,11 @@ class _HomeState extends State<Home> {
                               cardAvg:  "${(controller.powerFactorModel.value.avgPf?.value ?? 0.0).toStringAsFixed(1)}${controller.powerFactorModel.value.avgPf?.unit?.toString() ?? "0.0"}",
                             ),
                           ),*/
-                        ],
-                      );
-                    }),
-                  ],
-                );
-              }),
+                      ],
+                    );
+                  }),
+                ],
+              ),
             ),
           ),
         ],

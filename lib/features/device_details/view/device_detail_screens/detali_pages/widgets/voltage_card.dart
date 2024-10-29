@@ -38,14 +38,14 @@ class VoltageCard extends StatelessWidget {
             ),
 
             TextView(
-              text:voltageDetailModel.volt?.value?.toStringAsFixed(2) ?? "0.0",
+              text:voltageDetailModel.volt?.value?.toStringAsFixed(2) ?? "NA",
               fontSize: 30,
               bold: true,
               textColor: TColors.green,
             ),
 
             TextView(
-              text:"Average Voltage ------ ${voltageDetailModel.avgVolt?.value?.toStringAsFixed(2) ?? "0.0"}",
+              text:"Average Voltage ------ ${voltageDetailModel.avgVolt?.value?.toStringAsFixed(2) ?? "NA"}",
               fontSize: 20,
               bold: true,
             ),

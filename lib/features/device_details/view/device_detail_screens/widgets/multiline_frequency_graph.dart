@@ -36,6 +36,15 @@ class MultiLineFrequencyGraph extends StatelessWidget {
         isVisible: false, // Hide Y axis
       ),
 
+      zoomPanBehavior: ZoomPanBehavior(
+        enablePinching: true,     // Allows pinch zoom
+        enablePanning: true,      // Enables panning
+        enableDoubleTapZooming: true,
+        enableMouseWheelZooming: true,
+        enableSelectionZooming: true,
+      ),
+
+
       series: <SplineSeries<ChartData, String>>[
 
         /// First Line
@@ -105,8 +114,10 @@ class MultiLineFrequencyGraph extends StatelessWidget {
 
       tooltipBehavior: TooltipBehavior(
         enable: true,
+        activationMode: ActivationMode.singleTap, // Show tooltip on tap
+        shouldAlwaysShow: true,                   // Keeps tooltip visible after tap
         header: '',
-        format: 'point.x : point.y hrs',
+        format: 'point.y on point.x',                // Custom format to show y-value
         textStyle: const TextStyle(color: Colors.white),
       ),
     );

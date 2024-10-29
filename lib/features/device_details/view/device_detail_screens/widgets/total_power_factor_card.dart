@@ -43,7 +43,7 @@ class TotalPowerFactorsCard extends StatelessWidget {
                      Expanded(
                         flex: 1,
                         child: TextView(
-                          text: (powerFactorModel.pf?.value?.toString() ?? '0.0'),
+                          text: powerFactorModel.pf?.value?.toStringAsFixed(2) ?? 'NA',
                           fontSize: 25,
                           textColor: TColors.green,
                         )),
@@ -107,7 +107,7 @@ class TotalPowerFactorsCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                TextView(text: powerFactorModel.pf?.value?.toStringAsFixed(4) ?? '0.0'),
+                TextView(text: powerFactorModel.pf?.value?.toStringAsFixed(3) ?? 'NA'),
               ],
             ),
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../../utils/constant/colors.dart';
@@ -20,6 +21,7 @@ class DemandTimelineGraph extends StatelessWidget {
       chartData.add(ChartData(x: graph.y ?? 0.0, y: graph.x ?? ""));
     });
 
+
     return SfCartesianChart(
       backgroundColor: Colors.transparent,
       primaryXAxis: const CategoryAxis(
@@ -38,6 +40,14 @@ class DemandTimelineGraph extends StatelessWidget {
         majorTickLines: MajorTickLines(size: 0),
         minorTickLines: MinorTickLines(size: 0),
       ),
+
+      zoomPanBehavior: ZoomPanBehavior(
+        enablePinching: true,     // Allows pinch zoom
+        enablePanning: true,      // Enables panning
+        enableDoubleTapZooming: true,
+        enableMouseWheelZooming: true,
+        enableSelectionZooming: true,
+      ),
       series: <CartesianSeries>[
         LineSeries<ChartData, String>(
           dataSource: chartData,
@@ -52,6 +62,15 @@ class DemandTimelineGraph extends StatelessWidget {
       plotAreaBorderColor: Colors.transparent,
       borderColor: Colors.transparent,
       borderWidth: 0,
+
+      tooltipBehavior: TooltipBehavior(
+        enable: true,
+        activationMode: ActivationMode.singleTap, // Show tooltip on tap
+        shouldAlwaysShow: true,                   // Keeps tooltip visible after tap
+        header: '',
+        format: 'point.y on point.x',                // Custom format to show y-value
+        textStyle: const TextStyle(color: Colors.white),
+      ),
 
     );
   }

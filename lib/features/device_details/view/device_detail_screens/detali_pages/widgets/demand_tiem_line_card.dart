@@ -22,14 +22,17 @@ class DemandTimeLineCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(20.r)),
       child: Padding(
         padding:
-        EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
+        EdgeInsets.symmetric(vertical: 20.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const TextView(
-              text: TTexts.demandTimeLine,
-              bold: true,
-              fontSize: 20,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal:10.w),
+              child: const TextView(
+                text: TTexts.demandTimeLine,
+                bold: true,
+                fontSize: 20,
+              ),
             ),
             SizedBox(
               height: 10.h,
@@ -39,17 +42,26 @@ class DemandTimeLineCard extends StatelessWidget {
             SizedBox(
               height: 20.h,
             ),
-            TextView(text: "Average ${demandDetailModel.avgDemand?.unit?.toString() ?? ''} : ${demandDetailModel.avgDemand?.value?.round().toString() ?? ''} ${demandDetailModel.avgDemand?.unit?.toString() ?? ''}",fontSize: 20,),
+            Padding(
+              padding:  EdgeInsets.symmetric(horizontal: 10.w),
+              child: TextView(text: "Average ${demandDetailModel.avgDemand?.unit?.toString() ?? ''} : ${demandDetailModel.avgDemand?.value?.round().toString() ?? ''} ${demandDetailModel.avgDemand?.unit?.toString() ?? ''}",fontSize: 20,),
+            ),
 
             SizedBox(
               height: 10.h,
             ),
-            TextView(text: "Highest ${demandDetailModel.highestDemand?.unit?.toString() ?? ''} : ${demandDetailModel.highestDemand?.value?.round().toString() ?? ''} ${demandDetailModel.highestDemand?.unit?.toString() ?? ''}",fontSize: 20,),
+            Padding(
+              padding:  EdgeInsets.symmetric(horizontal: 10.w),
+              child: TextView(text: "Highest ${demandDetailModel.highestDemand?.unit?.toString() ?? ''} : ${demandDetailModel.highestDemand?.value?.round().toString() ?? ''} ${demandDetailModel.highestDemand?.unit?.toString() ?? ''}",fontSize: 20,),
+            ),
 
             SizedBox(
               height: 10.h,
             ),
-            TextView(text: "Load Factor ${demandDetailModel.loadFactor?.unit?.toString() ?? ''} : ${demandDetailModel.loadFactor?.value?.round().toString() ?? ''} ${demandDetailModel.loadFactor?.unit?.toString() ?? ''}",fontSize: 20,),
+            Padding(
+              padding:  EdgeInsets.symmetric(horizontal: 10.w),
+              child: TextView(text: "Load Factor ${demandDetailModel.loadFactor?.unit?.toString() ?? ''} : ${demandDetailModel.loadFactor?.value?.round().toString() ?? ''} ${demandDetailModel.loadFactor?.unit?.toString() ?? ''}",fontSize: 20,),
+            ),
 
           ],
         ),

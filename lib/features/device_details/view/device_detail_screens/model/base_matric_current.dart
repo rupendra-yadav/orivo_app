@@ -6,7 +6,7 @@ class Current {
 
   Current.fromJson(Map<String, dynamic> json) {
     unit = json['unit'];
-    value = json['value'];
+    value = (json['value'] is int) ? (json['value'] as int).toDouble() : json['value'];
   }
 
   Map<String, dynamic> toJson() {

@@ -29,7 +29,7 @@ class TotalPowerFactorCard extends StatelessWidget {
 
             TextView(text: TTexts.totalPowerFactors,fontSize: 20,bold: true,),
 
-            TextView(text: pfDetailModel.totalPf?.value?.toStringAsFixed(2) ?? "0.0",fontSize: 30,bold: true,textColor: TColors.green,),
+            TextView(text: pfDetailModel.totalPf?.value?.toStringAsFixed(2) ?? "NA",fontSize: 30,bold: true,textColor: TColors.green,),
 
             /// Temperature Scale
 
@@ -43,7 +43,7 @@ class TotalPowerFactorCard extends StatelessWidget {
               ],
             ),
 
-            TextView(text:"Average P.F -----------  ${pfDetailModel.avgPf?.value?.toStringAsFixed(2) ?? "0.0"}",fontSize: 20,bold: true,),
+            TextView(text:"Average P.F -----------  ${pfDetailModel.avgPf?.value?.toStringAsFixed(2) ?? "NA"}",fontSize: 20,bold: true,),
 
             ///Multile Graph
 

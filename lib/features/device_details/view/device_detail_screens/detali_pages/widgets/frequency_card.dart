@@ -35,7 +35,7 @@ class FrequencyCard extends StatelessWidget {
             ),
 
             TextView(
-              text: frequencyDetailsModel.freq?.value?.toStringAsFixed(2) ?? "0.0",
+              text: frequencyDetailsModel.freq?.value?.toStringAsFixed(2) ?? "NA",
               fontSize: 30,
               bold: true,
               textColor: TColors.green,
@@ -54,7 +54,7 @@ class FrequencyCard extends StatelessWidget {
             ),
 
             TextView(
-              text:"Average Frequency ----- ${frequencyDetailsModel.avgFreq?.value?.toStringAsFixed(2) ?? "0.0"}",
+              text:"Average Frequency ----- ${frequencyDetailsModel.avgFreq?.value?.toStringAsFixed(2) ?? "NA"}",
 
               fontSize: 20,
               bold: true,

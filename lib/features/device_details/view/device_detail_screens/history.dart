@@ -107,7 +107,6 @@ class _HistoryState extends State<History> {
     controller.getHistory("", "", controller.deviceListModel.mMachineUniqueId, fieldName, timeValue, indexPos);
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -123,12 +122,12 @@ class _HistoryState extends State<History> {
                   return const GraphShimmer();
                 }
 
-                if (controller.historyModel.value.filters?.isEmpty ?? true) {
+                /*if (controller.historyModel.value.filters?.isEmpty ?? true) {
                   return const TImageLoaderWidget(
                       text: 'Whoops! No Graph available...!',
                       animation: TImages.imgLoginBg,
                       showAction: false);
-                }
+                }*/
 
                 return const Graph();
               }),

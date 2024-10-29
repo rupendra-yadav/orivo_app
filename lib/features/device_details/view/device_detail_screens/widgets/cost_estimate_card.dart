@@ -86,6 +86,8 @@ class CostEstimateCard extends StatelessWidget {
                           text:
                           "${totalCount.toStringAsFixed(2)} Rs",
                           textColor: Colors.white,
+                          bold: true,
+                          fontSize: 11,
                         ),
                       ),
                     ),

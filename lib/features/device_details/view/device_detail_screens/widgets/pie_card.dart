@@ -69,47 +69,63 @@ class PieCard extends StatelessWidget {
 
                 ///Pie Chart
 
-                PieChart(
-                  dataMap: updatedDataMap,
-                  animationDuration: const Duration(milliseconds: 800),
-                  chartLegendSpacing: 32.w,
-                  chartRadius: MediaQuery.of(context).size.width / 3.2,
-                  colorList: colorList,
-                  initialAngleInDegree: 0,
-                  chartType: ChartType.ring,
-                  ringStrokeWidth: 32.w,
-                  centerWidget: Container(
-                    width: 87.w,
-                    height: 87.w,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(100.r)),
-                    child: Center(
-                      child: TextView(
-                        text: "${totalCount.toStringAsFixed(2)}\nTotal",
-                        textColor: Colors.black,
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 10.h),
+                  child: PieChart(
+                    dataMap: updatedDataMap,
+                    animationDuration: const Duration(milliseconds: 800),
+                    chartLegendSpacing: 32.w,
+                    chartRadius: MediaQuery.of(context).size.width / 3.2,
+                    colorList: colorList,
+                    initialAngleInDegree: 0,
+                    chartType: ChartType.ring,
+                    ringStrokeWidth: 32.w,
+                    centerWidget: Container(
+                      width: 87.w,
+                      height: 87.w,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(100.r)),
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TextView(
+                              text: "${totalCount.toStringAsFixed(2)}",
+                              textColor: Colors.black,
+                              bold: true,
+                              fontSize: 11,
+                            ),
+
+                            TextView(
+                              text: "Total",
+                              textColor: Colors.black,
+                              fontSize: 10,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
+                    legendOptions: LegendOptions(
+                      showLegendsInRow: showLegendsInRow,
+                      legendPosition: legendPosition,
+                      showLegends: true,
+                      legendShape: BoxShape.circle,
+                      legendTextStyle: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: TColors.primaryLight1),
+                    ),
+                    chartValuesOptions: const ChartValuesOptions(
+                      showChartValueBackground: true,
+                      showChartValues: false,
+                      showChartValuesInPercentage: false,
+                      showChartValuesOutside: false,
+                      chartValueBackgroundColor: TColors.primary,
+                      decimalPlaces: 1,
+                    ),
+                    // gradientList: ---To add gradient colors---
+                    // emptyColorGradient: ---Empty Color gradient---
                   ),
-                  legendOptions: LegendOptions(
-                    showLegendsInRow: showLegendsInRow,
-                    legendPosition: legendPosition,
-                    showLegends: true,
-                    legendShape: BoxShape.circle,
-                    legendTextStyle: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: TColors.primaryLight1),
-                  ),
-                  chartValuesOptions: const ChartValuesOptions(
-                    showChartValueBackground: true,
-                    showChartValues: false,
-                    showChartValuesInPercentage: false,
-                    showChartValuesOutside: false,
-                    chartValueBackgroundColor: TColors.primary,
-                    decimalPlaces: 1,
-                  ),
-                  // gradientList: ---To add gradient colors---
-                  // emptyColorGradient: ---Empty Color gradient---
                 ),
               ],
             ),

@@ -37,7 +37,7 @@ class PowerDemandCard extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               TextView(
-                text: "${demandModel.currentDemand?.value?.toString() ?? "00"} ${demandModel.currentDemand?.unit?.toString() ?? "00"}",
+                text: "${demandModel.currentDemand?.value?.toString() ?? "NA"} ${demandModel.currentDemand?.unit?.toString() ?? "NA"}",
 
                 bold: true,
                 fontSize: 35,

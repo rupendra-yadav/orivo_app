@@ -22,8 +22,6 @@ class BarGraph extends StatelessWidget {
       chartData.add(ChartSampleData(x: graph.y ?? 0.0, y: graph.x ?? ""));
     });
 
-
-
     return SizedBox(
       height: 90.h,
       child: SfCartesianChart(
@@ -40,6 +38,16 @@ class BarGraph extends StatelessWidget {
           majorTickLines: MajorTickLines(width: 0), // Hide y-axis tick lines
           labelStyle: TextStyle(color: Colors.transparent), // Hide y-axis labels
         ),
+
+        zoomPanBehavior: ZoomPanBehavior(
+          enablePinching: true,     // Allows pinch zoom
+          enablePanning: true,      // Enables panning
+          enableDoubleTapZooming: true,
+          enableMouseWheelZooming: true,
+          enableSelectionZooming: true,
+        ),
+
+
         series: <CartesianSeries>[
           ColumnSeries<ChartSampleData, String>(  // Use String for x values
             dataSource: chartData,  // Pass your chart data
@@ -49,7 +57,17 @@ class BarGraph extends StatelessWidget {
             color: TColors.barColors,
           ),
         ],
+
+        tooltipBehavior: TooltipBehavior(
+          enable: true,
+          activationMode: ActivationMode.singleTap, // Show tooltip on tap
+          shouldAlwaysShow: true,                   // Keeps tooltip visible after tap
+          header: '',
+          format: 'Value: point.y',                 // Custom format to show y-value
+          textStyle: const TextStyle(color: Colors.white),
+        ),
       ),
+
     );
   }
 }

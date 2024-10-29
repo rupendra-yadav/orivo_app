@@ -36,7 +36,7 @@ class CurrentCard extends StatelessWidget {
             ),
 
             TextView(
-              text: currentDetailModel.current?.value?.toStringAsFixed(2) ?? "0.0",
+              text: currentDetailModel.current?.value?.toStringAsFixed(2) ?? "NA",
               fontSize: 30,
               bold: true,
               textColor: TColors.green,
@@ -55,7 +55,7 @@ class CurrentCard extends StatelessWidget {
             ),
 
             TextView(
-              text:"Average Current ------ ${currentDetailModel.avgCurrent?.value?.toStringAsFixed(2) ?? "0.0"}",
+              text:"Average Current ------ ${currentDetailModel.avgCurrent?.value?.toStringAsFixed(2) ?? "NA"}",
 
               fontSize: 20,
               bold: true,

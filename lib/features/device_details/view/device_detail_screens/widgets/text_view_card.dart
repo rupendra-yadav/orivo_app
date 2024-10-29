@@ -34,7 +34,7 @@ class TextViewCard extends StatelessWidget {
               SizedBox(height: 5.h,),
               TextView(text: cardValue,fontSize: 30,bold: true,),
               SizedBox(height: 5.h,),
-              TextView(text: cardAvg),
+             // TextView(text: cardAvg),
             ],
           ),
         ),

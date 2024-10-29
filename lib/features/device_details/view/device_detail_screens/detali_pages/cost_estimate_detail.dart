@@ -212,8 +212,10 @@ class _CostEstimateState extends State<CostEstimate> {
                               ),
                               child:  Center(
                                 child: TextView(
-                                  text: totalCount.toStringAsFixed(2),
+                                  text: "${totalCount.toStringAsFixed(2)} Rs",
                                   textColor: Colors.white,
+                                    bold: true,
+                                    fontSize: 11,
                                 ),
                               ),
                             ),

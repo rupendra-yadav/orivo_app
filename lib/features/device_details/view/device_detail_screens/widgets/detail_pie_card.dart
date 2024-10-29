@@ -82,12 +82,22 @@ class DetailPieCard extends StatelessWidget {
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(100.r)),
-                    child: Center(
-                      child: TextView(
-                        text: "${totalCount.toStringAsFixed(2)}\nTotal",
-                        textColor: Colors.black,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextView(
+                          text: "${totalCount.toStringAsFixed(2)}",
+                          textColor: Colors.black,
+                          bold: true,
+                          fontSize: 11,
+                        ),
 
-                      ),
+                        TextView(
+                          text: "Total",
+                          textColor: Colors.black,
+                          fontSize: 10,
+                        ),
+                      ],
                     ),
                   ),
                   legendOptions: LegendOptions(
