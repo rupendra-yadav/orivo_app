@@ -218,5 +218,12 @@ class TTexts {
   static const String disc4 = "Analysis and Machine Learning";
   static const String subscribeButton = "Subscribe";
   static const String gold = "Gold";
+  static const String silver = "Silver";
+  static const String yearl = "Yearly, Rs 20,000";
+  static const String halfYearly = "half Yearly, Rs 15,000";
+  static const String quaterly = "Quarterly, Rs 9,000";
+  static const String only17 = "Only Rs 1,700/month";
+  static const String only25 = "Only Rs 2,500/month";
+  static const String only3 = "Only Rs 3,000/month";
 
 }

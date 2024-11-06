@@ -99,16 +99,9 @@ class DeviceDetailController extends GetxController {
 
       getDemand(startDatePrep, deviceListModel.mMachineUniqueId, startDate);
 
-       getTotalPowerFactors(startDatePrep, deviceListModel.mMachineUniqueId, startDate);
+      getTotalPowerFactors(startDatePrep, deviceListModel.mMachineUniqueId, startDate);
 
-       getFrequencyDetails(startDatePrep, deviceListModel.mMachineUniqueId, startDate);
-
-       getVoltageDetails(startDatePrep, deviceListModel.mMachineUniqueId, startDate);
-
-       getCurrentDetails(startDatePrep, deviceListModel.mMachineUniqueId, startDate);
-
-       getBaseMetric(startDatePrep, deviceListModel.mMachineUniqueId, startDate);
-
+      getBaseMetric(startDatePrep, deviceListModel.mMachineUniqueId, startDate);
 
     } catch (e) {
       if (kDebugMode) {

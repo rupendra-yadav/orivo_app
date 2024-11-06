@@ -64,7 +64,7 @@ class DeviceCard extends StatelessWidget {
                         ),
 
                         /// model code
-                        Row(
+                        /*Row(
                           children: [
                             const Text(
                               "MID : ",
@@ -75,13 +75,13 @@ class DeviceCard extends StatelessWidget {
                               style: const TextStyle(color: TColors.warningDark1),
                             ),
                           ],
-                        ),
+                        ),*/
                         const SizedBox(height: 10),
 
                         ///status
                         Row(
                           children: [
-                            Container(
+                            /*Container(
                               decoration: BoxDecoration(
                                   color: deviceListModel.mMachineStatus=="1"?statusColor:TColors.error,
                                   borderRadius: BorderRadius.circular(20)),
@@ -94,9 +94,9 @@ class DeviceCard extends StatelessWidget {
                                       color: TColors.white, fontSize: 12),
                                 ),
                               ),
-                            ),
+                            ),*/
                             const SizedBox(width: 10),
-                            Container(
+                            /*Container(
                               decoration: BoxDecoration(
                                   color: TColors.ochre,
                                   borderRadius: BorderRadius.circular(20)),
@@ -109,7 +109,7 @@ class DeviceCard extends StatelessWidget {
                                       color: TColors.white, fontSize: 12),
                                 ),
                               ),
-                            )
+                            )*/
                           ],
                         )
                       ],
