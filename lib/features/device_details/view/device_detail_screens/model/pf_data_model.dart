@@ -6,7 +6,7 @@ class Pf {
 
   Pf.fromJson(Map<String, dynamic> json) {
     unit = json['unit'];
-    value = json['value'];
+    value = (json['value'] is double) ? json['value'].toInt() : json['value'];
   }
 
   Map<String, dynamic> toJson() {

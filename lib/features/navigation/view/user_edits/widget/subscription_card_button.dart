@@ -5,15 +5,15 @@ import '../../../../../common/widgets/text/text_view.dart';
 import '../../../../../utils/constant/colors.dart';
 
 class SubscriptionCardButton extends StatelessWidget {
-  final bool isSelected;
-  final VoidCallback onTap;
-
   const SubscriptionCardButton({
     super.key,
     required this.isSelected,
     required this.onTap,
+    required this.title,
   });
-
+  final bool isSelected;
+  final VoidCallback onTap;
+  final String title;
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -31,7 +31,7 @@ class SubscriptionCardButton extends StatelessWidget {
           ),
           child: Center(
             child: TextView(
-              text: "Gold",
+              text: title,
               textColor: isSelected ? TColors.secondary : TColors.white, // Change text color when selected
               fontSize: 30,
             ),

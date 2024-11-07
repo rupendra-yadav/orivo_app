@@ -106,7 +106,7 @@ class Login extends StatelessWidget {
                       ),
 
                       /// Register here
-                       Center(
+                       /*Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -125,7 +125,7 @@ class Login extends StatelessWidget {
                             ),
                           ],
                         ),
-                      ),
+                      ),*/
                     ],
                   ),
                 ],

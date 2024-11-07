@@ -17,7 +17,6 @@ class TotalPowerFactorsCard extends StatelessWidget {
 
   final PfModel powerFactorModel;
 
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -54,7 +53,7 @@ class TotalPowerFactorsCard extends StatelessWidget {
                         children: [
                           SfLinearGauge(
                             minimum: 0,
-                            maximum: 100,
+                            maximum: 1,
                             animateRange: true,
                             animateAxis: true,
                             showLabels: false,
@@ -63,7 +62,7 @@ class TotalPowerFactorsCard extends StatelessWidget {
                             // Hide the scale pointers (ticks)
                             barPointers: [
                               LinearBarPointer(
-                                value: (powerFactorModel.pf?.value?.toDouble() ?? 0.0),
+                                value: 1,
                                 // Set the value for the pointer
                                 thickness: 10,
                                 // Adjust the thickness of the bar
@@ -107,7 +106,7 @@ class TotalPowerFactorsCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                TextView(text: powerFactorModel.pf?.value?.toStringAsFixed(3) ?? 'NA'),
+                TextView(text: powerFactorModel.pf?.value?.toStringAsFixed(2) ?? 'NA'),
               ],
             ),
           ),

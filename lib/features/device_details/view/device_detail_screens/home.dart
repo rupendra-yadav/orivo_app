@@ -229,7 +229,7 @@ class _HomeState extends State<Home> {
                             cardText: TTexts.frequency,
                             width: TDeviceUtils.screenWidth / 2,
                             cardValue:
-                                "${controller.baseMetricModel.value.freq?.value?.toStringAsFixed(2) ?? "NA"}${controller.baseMetricModel.value.freq?.unit?.toString() ?? "NA"}",
+                                "${controller.baseMetricModel.value.freq?.value?.toStringAsFixed(2) ?? "NA"} ${controller.baseMetricModel.value.freq?.unit?.toString() ?? "NA"}",
                             cardAvg:
                                 "Avg : ${controller.frequencyDetailsModel.value.avgFreq?.value?.toStringAsFixed(2) ?? "NA"}${controller.frequencyDetailsModel.value.avgFreq?.unit?.toString() ?? "NA"}")),
                     SizedBox(width: 5.w),
@@ -238,7 +238,7 @@ class _HomeState extends State<Home> {
                         cardText: TTexts.totalVoltage,
                         width: TDeviceUtils.screenWidth / 2,
                         cardValue:
-                            "${controller.baseMetricModel.value.volt?.value?.toStringAsFixed(2) ?? "NA"}${controller.baseMetricModel.value.volt?.unit?.toString() ?? "NA"}",
+                            "${controller.baseMetricModel.value.volt?.value?.toStringAsFixed(2) ?? "NA"} ${controller.baseMetricModel.value.volt?.unit?.toString() ?? "NA"}",
                         cardAvg:
                             "Avg : ${controller.voltageDetailsModel.value.avgVolt?.value?.toStringAsFixed(2) ?? "NA"}${controller.voltageDetailsModel.value.avgVolt?.unit?.toString() ?? "NA"}",
                       ),
@@ -267,7 +267,7 @@ class _HomeState extends State<Home> {
                         cardText: TTexts.totalCurrent,
                         width: TDeviceUtils.screenWidth / 2,
                         cardValue:
-                            "${controller.baseMetricModel.value.current?.value ?.toStringAsFixed(1) ?? "NA"}${controller.baseMetricModel.value.current?.unit?.toString() ?? "NA"}",
+                            "${controller.baseMetricModel.value.current?.value ?.toStringAsFixed(1) ?? "NA"} ${controller.baseMetricModel.value.current?.unit?.toString() ?? "NA"}",
                         cardAvg:
                             "${controller.powerFactorModel.value.pf?.value?.toStringAsFixed(2) ?? "NA"}${controller.powerFactorModel.value.pf?.unit?.toString() ?? "NA"}",
                       ),

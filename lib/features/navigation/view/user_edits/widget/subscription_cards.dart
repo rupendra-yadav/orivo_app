@@ -6,14 +6,18 @@ import '../../../../../common/widgets/text/text_view.dart';
 import '../../../../../utils/constant/colors.dart';
 
 class SubscriptionOptionCard extends StatelessWidget {
-  final bool isSelected;  // To determine if the card is selected
-  final VoidCallback onTap; // Callback for when the card is tapped
-
   const SubscriptionOptionCard({
     super.key,
     required this.isSelected, // Make isSelected a required parameter
-    required this.onTap,      // Make onTap a required parameter
+    required this.onTap,
+    required this.title,
+    required this.subTitle, // Make onTap a required parameter
   });
+  final bool isSelected;
+  final VoidCallback onTap;
+  final String title,subTitle;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -38,12 +42,12 @@ class SubscriptionOptionCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextView(
-                    text: "Yearly, Rs 20,000",
+                    text: title,
                     textColor: isSelected ? TColors.secondary : TColors.white, // Change text color based on selection
                     fontSize: 20,
                   ),
                   TextView(
-                    text: "Only Rs 1,700/ month",
+                    text: subTitle,
                     textColor: isSelected ? TColors.secondary : TColors.white, // Change text color based on selection
                     fontSize: 15,
                   ),

@@ -74,12 +74,12 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                 children: [
                   SubscriptionCardButton(
                     isSelected: selectedButtonIndex == 0,
-                    onTap: () => onSelectButton(0),
+                    onTap: () => onSelectButton(0), title: TTexts.gold,
                   ),
                   SizedBox(width: 10.w),
                   SubscriptionCardButton(
                     isSelected: selectedButtonIndex == 1,
-                    onTap: () => onSelectButton(1),
+                    onTap: () => onSelectButton(1), title: TTexts.silver,
                   ),
                 ],
               ),
@@ -90,24 +90,24 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                 children: [
                   SubscriptionOptionCard(
                     isSelected: selectedOptionIndex == 0,
-                    onTap: () => onSelectOption(0),
+                    onTap: () => onSelectOption(0), title: TTexts.yearl, subTitle: TTexts.only17,
                   ),
                   SizedBox(height: 10.h),
                   SubscriptionOptionCard(
                     isSelected: selectedOptionIndex == 1,
-                    onTap: () => onSelectOption(1),
+                    onTap: () => onSelectOption(1), title: TTexts.halfYearly, subTitle: TTexts.only25,
                   ),
                   SizedBox(height: 10.h),
                   SubscriptionOptionCard(
                     isSelected: selectedOptionIndex == 2,
-                    onTap: () => onSelectOption(2),
+                    onTap: () => onSelectOption(2), title: TTexts.quaterly, subTitle: TTexts.only3,
                   ),
                   SizedBox(height: 10.h),
                 ],
               ),
 
               SizedBox(height: 20.h,),
-              Button(height: 40.h, minWidth: double.infinity, onPressed: (){}, title: TTexts.subscribeButton)
+              //Button(height: 40.h, minWidth: double.infinity, onPressed: (){}, title: TTexts.subscribeButton)
 
             ],
           ),
