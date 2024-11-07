@@ -87,29 +87,35 @@ class _LegendNameCardDemandState extends State<LegendNameCardDemand> {
                   ),
                   Row(
                     children: [
-                      TextView(
-                        text: (widget.costEstimateDetailModel.demand
-                            ?.value ??
-                            0.0)
-                            .toStringAsFixed(2),
-                        // Referencing widget.onPeakValue
-                        textColor: TColors.graphLine,
+                      Expanded(
+                        child: TextView(
+                          text: (widget.costEstimateDetailModel.demand
+                              ?.value ??
+                              0.0)
+                              .toStringAsFixed(2),
+                          // Referencing widget.onPeakValue
+                          textColor: TColors.graphLine,
+                        ),
                       ),
-                      Spacer(),
-                      TextView(text: "x", fontSize: 15),
-                      Spacer(),
-                      TextView(
-                        text: (widget.costEstimateDetailModel.demandRate
-                            ?.value ??
-                            0.0)
-                            .toStringAsFixed(2),
-                        // Referencing widget.onPeakRate
-                        textColor: TColors.graphLine,
+                     
+                      Expanded(child: TextView(text: "x", fontSize: 15)),
+                     
+                      Expanded(
+                        child: TextView(
+                          text: (widget.costEstimateDetailModel.demandRate
+                              ?.value ??
+                              0.0)
+                              .toStringAsFixed(2),
+                          // Referencing widget.onPeakRate
+                          textColor: TColors.graphLine,
+                        ),
                       ),
-                      Spacer(),
-                      TextView(
-                          text: ((widget.costEstimateDetailModel.demand?.value ?? 0.0) * (widget.costEstimateDetailModel.demandRate?.value ?? 0.0)).toStringAsFixed(2),
-                          textColor: TColors.graphLine),
+                      
+                      Expanded(
+                        child: TextView(
+                            text: ((widget.costEstimateDetailModel.demand?.value ?? 0.0) * (widget.costEstimateDetailModel.demandRate?.value ?? 0.0)).toStringAsFixed(2),
+                            textColor: TColors.graphLine),
+                      ),
                     ],
                   ),
 

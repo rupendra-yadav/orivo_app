@@ -119,7 +119,6 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
 
                     controller.getFrequencyDetails(StartDate, controller.deviceListModel.mMachineUniqueId, EndDate);
 
-
                   }
                 },
                 child: Center(

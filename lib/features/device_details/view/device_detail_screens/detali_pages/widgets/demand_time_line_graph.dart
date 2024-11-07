@@ -30,8 +30,8 @@ class DemandTimelineGraph extends StatelessWidget {
         //interval: 5,  // Adjust this based on how many labels you want visible
         //labelRotation: 45, // Rotate the labels to avoid overlapping
         edgeLabelPlacement: EdgeLabelPlacement.shift, // Handle labels at the edge
-        autoScrollingMode: AutoScrollingMode.end,  // Enable auto-scrolling if you have lots of data
-        autoScrollingDelta: 10,
+        autoScrollingMode: AutoScrollingMode.start,  // Enable auto-scrolling if you have lots of data
+
       ),
       primaryYAxis: const NumericAxis(
         labelStyle: TextStyle(color: Colors.white),
@@ -41,21 +41,19 @@ class DemandTimelineGraph extends StatelessWidget {
         minorTickLines: MinorTickLines(size: 0),
       ),
 
-      zoomPanBehavior: ZoomPanBehavior(
+      /*zoomPanBehavior: ZoomPanBehavior(
         enablePinching: true,     // Allows pinch zoom
         enablePanning: true,      // Enables panning
         enableDoubleTapZooming: true,
         enableMouseWheelZooming: true,
         enableSelectionZooming: true,
-      ),
+      ),*/
       series: <CartesianSeries>[
         LineSeries<ChartData, String>(
           dataSource: chartData,
           xValueMapper: (ChartData data, _) => data.y,
           yValueMapper: (ChartData data, _) => data.x,
           color: TColors.demandGraphLine,
-
-          // Solid color for the line
           width: 3,
         ),
       ],
@@ -75,21 +73,6 @@ class DemandTimelineGraph extends StatelessWidget {
     );
   }
 
-/*
-  List<ChartData> getChartData() {
-    return [
-      ChartData('Jan', 18),
-      ChartData('Feb', 25),
-      ChartData('Mar', 22),
-      ChartData('Apr', 30),
-      ChartData('May', 28),
-      ChartData('Jun', 35),
-      ChartData('Jul', 25),
-      ChartData('Aug', 30),
-    ];
-  }
-}
-*/
 }
 class ChartData {
   final double x; // The numeric value (y-axis)

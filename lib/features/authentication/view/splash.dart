@@ -18,7 +18,7 @@ class Splash extends StatelessWidget {
       body: Image(
         height: TDeviceUtils.screenHeight,
         width: TDeviceUtils.screenWidth,
-        image: const AssetImage(TImages.imgSplash),
+        image: const AssetImage(TImages.imgSplashNew),
         fit: BoxFit.cover,
       ),
     );

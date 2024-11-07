@@ -15,7 +15,7 @@ class TemperatureScale extends StatelessWidget {
   Widget build(BuildContext context) {
     return SfLinearGauge(
       minimum: 0,
-      maximum: 100,
+      maximum: totalValue,
       animateRange: true,
       animateAxis: true,
       showLabels: false, // Hide the scale values (labels)

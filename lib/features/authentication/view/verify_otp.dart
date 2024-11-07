@@ -66,7 +66,7 @@ class VerifyOtp extends StatelessWidget {
                       /// setting image for OTP
                       Center(
                         child: Image.asset(
-                          TImages.imgLoginBg,
+                          TImages.imgLoginBgNew1,height: 230.h,width: 230.w,
                         ),
                       ),
                       SizedBox(

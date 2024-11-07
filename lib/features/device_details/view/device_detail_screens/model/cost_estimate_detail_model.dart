@@ -77,8 +77,8 @@ class CostEstimateDetailModel {
     totalEnergyCost = json['total_energy_cost'] != null
         ? new Demand.fromJson(json['total_energy_cost'])
         : null;
-    totolDemandCost = json['totol_demand_cost'] != null
-        ? new Demand.fromJson(json['totol_demand_cost'])
+    totolDemandCost = json['total_demand_cost'] != null
+        ? new Demand.fromJson(json['total_demand_cost'])
         : null;
   }
 
@@ -135,7 +135,7 @@ class CostEstimateDetailModel {
       data['total_energy_cost'] = this.totalEnergyCost!.toJson();
     }
     if (this.totolDemandCost != null) {
-      data['totol_demand_cost'] = this.totolDemandCost!.toJson();
+      data['total_demand_cost'] = this.totolDemandCost!.toJson();
     }
     return data;
   }

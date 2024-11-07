@@ -40,7 +40,7 @@ class Login extends StatelessWidget {
                       /// setting image for login
                       Center(
                         child: Image.asset(
-                          TImages.imgLoginBgNew,
+                          TImages.imgLoginBgNew1,height: 230.h,width: 230.w,
                         ),
                       ),
                       SizedBox(
@@ -75,6 +75,10 @@ class Login extends StatelessWidget {
                         preFixIcon: const Icon(Iconsax.lock),
                         keyboardType: TextInputType.text,
                       ),
+
+                      //PasswordInputField(),
+
+
                       SizedBox(
                         height: 5.h,
                       ),

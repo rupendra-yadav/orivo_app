@@ -24,7 +24,7 @@ class DeviceList extends StatelessWidget {
       if (controller.deviceList.isEmpty) {
         return const TImageLoaderWidget(
             text: 'Whoops! No Device available...!',
-            animation: TImages.imgLoginBg,
+            animation: TImages.imgLoginBgNew1,
             showAction: false);
       }
 

@@ -40,13 +40,13 @@ class BarGraph extends StatelessWidget {
         ),
 
         zoomPanBehavior: ZoomPanBehavior(
-          enablePinching: true,     // Allows pinch zoom
+          //enablePinching: true,     // Allows pinch zoom
           enablePanning: true,      // Enables panning
-          enableDoubleTapZooming: true,
-          enableMouseWheelZooming: true,
-          enableSelectionZooming: true,
+          zoomMode: ZoomMode.x,
+          //enableDoubleTapZooming: true,
+          //enableMouseWheelZooming: true,
+          //enableSelectionZooming: true,
         ),
-
 
         series: <CartesianSeries>[
           ColumnSeries<ChartSampleData, String>(  // Use String for x values

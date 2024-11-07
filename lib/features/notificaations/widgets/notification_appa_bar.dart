@@ -1,27 +1,24 @@
-import 'package:auro/features/notificaations/view/alerts.dart';
-import 'package:auro/features/notificaations/view/notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../../../utils/constant/colors.dart';
-import '../../../../utils/constant/sizes.dart';
+import '../../../utils/constant/colors.dart';
+import '../../../utils/constant/sizes.dart';
 
-class DeviceDetailsAppBar extends StatelessWidget
+class NotificationAppBar extends StatelessWidget
     implements PreferredSizeWidget {
-  const DeviceDetailsAppBar({
+  const NotificationAppBar({
     super.key,
-    required this.title,
-     this.colorAppBar = TColors.primary,
-     this.colorTitleContainer = TColors.primary,
-     this.colorText = TColors.white,
-     this.colorNotification = TColors.white,
-     this.colorBackArrow = TColors.secondary,
-     this.sizeTitleSpacing = 0,
-     this.sizeBackArrow = 30,
-     this.sizeTitle = 22,
-     this.sizeNotificationIcon =25,
+    this.title = "Notifications",
+    this.colorAppBar = TColors.primary,
+    this.colorTitleContainer = TColors.primary,
+    this.colorText = TColors.white,
+    this.colorNotification = TColors.white,
+    this.colorBackArrow = TColors.secondary,
+    this.sizeTitleSpacing = 0,
+    this.sizeBackArrow = 30,
+    this.sizeTitle = 22,
+    this.sizeNotificationIcon =25,
   });
 
   final String title;
@@ -63,11 +60,11 @@ class DeviceDetailsAppBar extends StatelessWidget
                 style:  TextStyle(color: colorText, fontSize: sizeTitle),
               ),
             ),
-            Row(
+           /* Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 IconButton(
-                  onPressed: () => Get.to(() => const Alerts()),
+                  onPressed: () => Get.to(() => const Notifications()),
                   icon: Icon(
                     Iconsax.notification,
                     color: colorNotification,
@@ -75,7 +72,7 @@ class DeviceDetailsAppBar extends StatelessWidget
                   ),
                 ),
               ],
-            )
+            )*/
           ],
         ),
       ),

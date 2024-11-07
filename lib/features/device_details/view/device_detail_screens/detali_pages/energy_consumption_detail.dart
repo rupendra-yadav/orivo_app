@@ -19,8 +19,7 @@ class EnergyConsumptionDetail extends StatefulWidget {
   const EnergyConsumptionDetail({super.key});
 
   @override
-  State<EnergyConsumptionDetail> createState() =>
-      _EnergyConsumptionDetailState();
+  State<EnergyConsumptionDetail> createState() => _EnergyConsumptionDetailState();
 }
 
 class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {

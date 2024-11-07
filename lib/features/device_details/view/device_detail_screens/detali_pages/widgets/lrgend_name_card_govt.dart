@@ -87,29 +87,32 @@ class _LegendNameCardGovtState extends State<LegendNameCardGovt> {
                   ),
                   Row(
                     children: [
-                      TextView(
-                        text: (widget.costEstimateDetailModel.normalFpps
-                            ?.value ??
-                            0.0)
-                            .toStringAsFixed(2),
-                        // Referencing widget.onPeakValue
-                        textColor: TColors.blue,
+                      Expanded(
+                        child: TextView(
+                          text: (widget.costEstimateDetailModel.normalFpps
+                              ?.value ??
+                              0.0)
+                              .toStringAsFixed(2),
+                          // Referencing widget.onPeakValue
+                          textColor: TColors.blue,
+                        ),
                       ),
-                      Spacer(),
-                      TextView(text: "x", fontSize: 15),
-                      Spacer(),
-                      TextView(
-                        text: (widget.costEstimateDetailModel.fppsRate
-                            ?.value ??
-                            0.0)
-                            .toStringAsFixed(2),
-                        // Referencing widget.onPeakRate
-                        textColor: TColors.blue,
+                      Expanded(child: TextView(text: "x", fontSize: 15)),
+                      Expanded(
+                        child: TextView(
+                          text: (widget.costEstimateDetailModel.fppsRate
+                              ?.value ??
+                              0.0)
+                              .toStringAsFixed(2),
+                          // Referencing widget.onPeakRate
+                          textColor: TColors.blue,
+                        ),
                       ),
-                      Spacer(),
-                      TextView(
-                          text: ((widget.costEstimateDetailModel.normalFpps?.value ?? 0.0) * (widget.costEstimateDetailModel.fppsRate?.value ?? 0.0)).toStringAsFixed(2),
-                          textColor: TColors.blue),
+                      Expanded(
+                        child: TextView(
+                            text: ((widget.costEstimateDetailModel.normalFpps?.value ?? 0.0) * (widget.costEstimateDetailModel.fppsRate?.value ?? 0.0)).toStringAsFixed(2),
+                            textColor: TColors.blue),
+                      ),
                     ],
                   ),
 
@@ -126,25 +129,31 @@ class _LegendNameCardGovtState extends State<LegendNameCardGovt> {
                   ),
                   Row(
                     children: [
-                      TextView(
-                        text: (widget.costEstimateDetailModel.cess
-                            ?.value ??
-                            0.0)
-                            .toStringAsFixed(2),
-                        // Referencing widget.offPeakValue
-                        textColor: TColors.blue,
+                      Expanded(
+                        child: TextView(
+                          text: (widget.costEstimateDetailModel.cess
+                              ?.value ??
+                              0.0)
+                              .toStringAsFixed(2),
+                          // Referencing widget.offPeakValue
+                          textColor: TColors.blue,
+                        ),
                       ),
-                      Spacer(),
-                      TextView(text: "x", fontSize: 15),
-                      Spacer(),
-                      TextView(
-                        text: (widget.costEstimateDetailModel.cessRate?.value ?? 0.0).toStringAsFixed(2),
-                        // Referencing widget.offPeakRate
-                        textColor: TColors.blue,
+                      
+                      Expanded(child: TextView(text: "x", fontSize: 15)),
+                      
+                      Expanded(
+                        child: TextView(
+                          text: (widget.costEstimateDetailModel.cessRate?.value ?? 0.0).toStringAsFixed(2),
+                          // Referencing widget.offPeakRate
+                          textColor: TColors.blue,
+                        ),
                       ),
-                      Spacer(),
-                      TextView(
-                          text: ((widget.costEstimateDetailModel.cess?.value ?? 0.0) * (widget.costEstimateDetailModel.cessRate?.value ?? 0.0)).toStringAsFixed(2), textColor: TColors.blue),
+                     
+                      Expanded(
+                        child: TextView(
+                            text: ((widget.costEstimateDetailModel.cess?.value ?? 0.0) * (widget.costEstimateDetailModel.cessRate?.value ?? 0.0)).toStringAsFixed(2), textColor: TColors.blue),
+                      ),
                     ],
                   ),
 

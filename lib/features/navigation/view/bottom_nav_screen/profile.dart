@@ -39,7 +39,7 @@ class Profile extends StatelessWidget {
           if (controller.userModel.isEmpty) {
             return const TImageLoaderWidget(
                 text: 'Whoops! Profile Data Unavailable...!',
-                animation: TImages.imgLoginBg,
+                animation: TImages.imgLoginBgNew1,
                 showAction: false);
           }
 
@@ -146,13 +146,14 @@ class Profile extends StatelessWidget {
                 child: Column(
                   children: [
                     /// Transaction Option
-                    ProfileOptions(
+                   /* ProfileOptions(
                       title: TTexts.transactions,
                       onPressed: () {
                         Get.to(() => const TransactionsPage());
                       },
-                    ),
-                    Divider(height: 1.h, color: TColors.primaryLight1),
+                    ),*/
+
+                   // Divider(height: 1.h, color: TColors.primaryLight1),
 
                     /// Help & Support
                     ProfileOptions(

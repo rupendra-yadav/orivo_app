@@ -39,7 +39,7 @@ class NavigationScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(left: 8.0.w),
                 child: Image(
-                  image: const AssetImage(TImages.imgAppBarLogoNew),
+                  image: const AssetImage(TImages.imgAppBarLogoNew1),
                   height: 150.h,
                   width: 80.w,
                 ),

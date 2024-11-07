@@ -37,7 +37,7 @@ class DemandTimeLineCard extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-            SizedBox(height: 170.h, child:  DemandTimelineGraph(timeline: demandDetailModel.demandTimeline?.value??[],)),
+            SizedBox(height: 200.h, child:  DemandTimelineGraph(timeline: demandDetailModel.demandTimeline?.value??[],)),
 
             SizedBox(
               height: 20.h,
@@ -60,7 +60,7 @@ class DemandTimeLineCard extends StatelessWidget {
             ),
             Padding(
               padding:  EdgeInsets.symmetric(horizontal: 10.w),
-              child: TextView(text: "Load Factor ${demandDetailModel.loadFactor?.unit?.toString() ?? ''} : ${demandDetailModel.loadFactor?.value?.round().toString() ?? ''} ${demandDetailModel.loadFactor?.unit?.toString() ?? ''}",fontSize: 20,),
+              child: TextView(text: "Load Factor : ${demandDetailModel.loadFactor?.value?.round().toString() ?? ''} ${demandDetailModel.loadFactor?.unit?.toString() ?? ''}",fontSize: 20,),
             ),
 
           ],

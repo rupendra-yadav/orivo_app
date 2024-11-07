@@ -53,7 +53,7 @@ class TotalPowerFactorsCard extends StatelessWidget {
                         children: [
                           SfLinearGauge(
                             minimum: 0,
-                            maximum: 1,
+                            maximum: (powerFactorModel.pf?.value?.toDouble() ?? 0.0),
                             animateRange: true,
                             animateAxis: true,
                             showLabels: false,
@@ -62,7 +62,7 @@ class TotalPowerFactorsCard extends StatelessWidget {
                             // Hide the scale pointers (ticks)
                             barPointers: [
                               LinearBarPointer(
-                                value: 1,
+                                value: (powerFactorModel.pf?.value?.toDouble() ?? 0.0),
                                 // Set the value for the pointer
                                 thickness: 10,
                                 // Adjust the thickness of the bar
@@ -79,9 +79,11 @@ class TotalPowerFactorsCard extends StatelessWidget {
                                 },
                               ),
                             ],
+
+                            /// this is the marker or the Pointer
                             markerPointers: [
                               LinearShapePointer(
-                                value:(powerFactorModel.pf?.value?.toDouble() ?? 0.0),
+                                value:(powerFactorModel.highestPf?.value?.toDouble() ?? 0.0),
                                 // Position of the marker
                                 shapeType: LinearShapePointerType.rectangle,
                                 // Shape of the marker

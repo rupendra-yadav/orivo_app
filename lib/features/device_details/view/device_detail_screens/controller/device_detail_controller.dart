@@ -169,8 +169,7 @@ class DeviceDetailController extends GetxController {
     try {
       isEnergyConsumptionDetailLoading.value = true;
 
-      final Map<String, dynamic> responsee = await _deviceReposotory
-          .getEnergyDetailConsumption(date, deviceId, stop);
+      final Map<String, dynamic> responsee = await _deviceReposotory.getEnergyDetailConsumption(date, deviceId, stop);
       // Assign the object to the Rx variable
       consumptionDetails.value = ConsumptionDetail.fromJson(responsee);
     } catch (e) {

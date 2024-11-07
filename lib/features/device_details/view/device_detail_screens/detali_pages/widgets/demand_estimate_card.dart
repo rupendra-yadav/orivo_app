@@ -18,6 +18,26 @@ class DemandEstimateCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+  /*  int vall = demandDetailModel.currentDemand?.value?.toInt()??00;
+
+    int total = demandDetailModel.highestDemand?.value?.toInt() ?? 0;
+
+    int reVal= ((vall / total ) * 100).toInt() ;
+
+    int value = ((reVal /  100 )* 33).toInt();*/
+
+    int vall = demandDetailModel.currentDemand?.value?.toInt() ?? 0;
+    int total = demandDetailModel.highestDemand?.value?.toInt() ?? 1; // Set to 1 to avoid division by zero
+
+    int reVal = (total != 0) ? ((vall / total) * 100).toInt() : 0;
+    int value = ((reVal / 100) * 33).toInt();
+
+
+    print("checkDemandValue");
+    print(reVal);
+    print(value);
+
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -47,8 +67,8 @@ class DemandEstimateCard extends StatelessWidget {
               child: Row(
                 children: [
                   CustomBar(
-                    max: demandDetailModel.highestDemand?.value?.toInt() ?? 0,
-                    value: demandDetailModel.currentDemand?.value?.toInt() ?? 0,
+                    max: 33,
+                    value: value,
                   ),
                   // Add more widgets here as needed
                 ],

@@ -16,6 +16,13 @@ class PowerDemandCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    int vall = demandModel.avgDemand?.value?.toInt() ?? 0;
+    int total = demandModel.currentDemand?.value?.toInt() ?? 1; // Set to 1 to avoid division by zero
+
+    int reVal = (total != 0) ? ((vall / total) * 100).toInt() : 0;
+    int value = ((reVal / 100) * 33).toInt();
+
     return InkWell(
       onTap: () => (Get.to(() => const DemandEstimateDetail())),
       child: Container(
@@ -50,8 +57,8 @@ class PowerDemandCard extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10.w),
                       child: CustomBar(
-                        max: demandModel.avgDemand?.value?.toInt() ?? 0,
-                        value: demandModel.currentDemand?.value?.toInt() ?? 0,
+                        max: 33,
+                        value: value,
                       ),
                     ),
                     // Other widgets can be added here

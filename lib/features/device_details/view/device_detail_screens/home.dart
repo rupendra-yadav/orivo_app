@@ -32,52 +32,43 @@ class _HomeState extends State<Home> {
   final DeviceDetailNavigationController navigationController =
       DeviceDetailNavigationController.instance;
 
-  List<int> selectedIndices = [0];
   String timeStamp = "";
-
-  void handleCardTap(int index) {
-    setState(() {
-      if (selectedIndices.contains(index)) {
-        selectedIndices.remove(index);
-      } else {
-        if (selectedIndices.length >= 4) {
-          selectedIndices.removeAt(0);
-        }
-        selectedIndices.add(index);
-      }
-    });
-  }
 
   @override
   void initState() {
     super.initState();
 
-    DateTime now = DateTime.now();
+   /* DateTime now = DateTime.now();
     DateTime utcNow = now.toUtc();
-
-    // Convert UTC date and time to IST
     DateTime istNow = utcNow.add(const Duration(hours: 5, minutes: 30));
-
-    // Set the time to 00:00:00 (midnight) in IST for the same date
     DateTime istMidnight = DateTime(istNow.year, istNow.month, istNow.day);
-
-    // Format the date and time to the desired format
     String formattedDateMidnight = DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
     String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
-
     timeStamp = DateFormat("d MMMM h:mm a").format(istNow);
+    controller.getDeviceDetail(navigationController.deviceId.value, formattedDate, formattedDateMidnight);
+    controller.getDeviceDataItems();*/
 
-    controller.getDeviceDetail(navigationController.deviceId.value,
-        formattedDate, formattedDateMidnight);
-    controller.getDeviceDataItems();
+    _refreshData();
 
-    if (kDebugMode) {
-      print(navigationController.deviceId.value);
-      print("checkDateOutCome");
-      print(formattedDate);
-      print(formattedDateMidnight);
-    }
   }
+
+  // Refresh method
+  Future<void> _refreshData() async {
+    DateTime now = DateTime.now();
+    DateTime utcNow = now.toUtc();
+    DateTime istNow = utcNow.add(const Duration(hours: 5, minutes: 30));
+    DateTime istMidnight = DateTime(istNow.year, istNow.month, istNow.day);
+    String formattedDateMidnight = DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
+    String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
+    setState(() {
+      timeStamp = DateFormat("d MMMM h:mm a").format(istNow);
+    });
+    await controller.getDeviceDetail(navigationController.deviceId.value, formattedDate, formattedDateMidnight);
+    await controller.getDeviceDataItems();
+
+
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -89,202 +80,205 @@ class _HomeState extends State<Home> {
         updatedDataMap2.values.reduce((a, b) => a + b); // Calculate total count
     return Scaffold(
       backgroundColor: TColors.primary,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: SpacingStyle.paddingWithDefaultSpace,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+      body: RefreshIndicator(
+        onRefresh:_refreshData,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: SpacingStyle.paddingWithDefaultSpace,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
 
-              Row(
-                children: [
-                  Spacer(),
-                  TextView(text: "Updated : $timeStamp",
-                    fontSize: 11,
-                   )
-                ],
-              ),
+                Row(
+                  children: [
+                    Spacer(),
+                    TextView(text: "Updated : $timeStamp",
+                      fontSize: 11,
+                     )
+                  ],
+                ),
 
 
-              ///Energy Consumption
+                ///Energy Consumption
 
-              Obx(() {
-                if (controller.isEnergyConsumptionLoading.value) {
-                  return const DeviceDetailShimmer();
-                }
-
-                double onPeak = controller
-                        .energyConsumptionData.value.onPeakUnit?.value ??
-                    0.0;
-                double offPeak = controller
-                        .energyConsumptionData.value.offPeakUnit?.value ??
-                    0.0;
-                double normal = controller
-                        .energyConsumptionData.value.normalUnit?.value ??
-                    0.0;
-                double totalCount = onPeak + offPeak + normal;
-
-                /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
-                    return const TImageLoaderWidget(
-                        text: 'Whoops! No Device available...!',
-                        animation: TImages.imgLoginBg,
-                        showAction: false);
-                  }*/
-                return PieCard(
-                  energyConsumptionModel:
-                      controller.energyConsumptionData.value,
-                  totalCount: totalCount,
-                  legendPosition: LegendPosition.right,
-                  onPressed: () =>
-                      Get.to(() => const EnergyConsumptionDetail()),
-                );
-              }),
-
-              ///Cost Estimate
-              Obx(() {
-                if (controller.isCostEstimateLoading.value) {
-                  return const DeviceDetailShimmer();
-                }
-
-                double energy =
-                    controller.costEstimateModel.value.normEnergy?.value ??
-                        0.0;
-                double govt =
-                    controller.costEstimateModel.value.govCost?.value ??
-                        0.0;
-                double demand =
-                    controller.costEstimateModel.value.demand?.value ?? 0.0;
-                double others =
-                    controller.costEstimateModel.value.other?.value ?? 0.0;
-                double totalCont = energy + govt + demand + others;
-
-                /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
-                    return const TImageLoaderWidget(
-                        text: 'Whoops! No Device available...!',
-                        animation: TImages.imgLoginBg,
-                        showAction: false);
-                  }*/
-                return CostEstimateCard(
-                    costEstimateModel: controller.costEstimateModel.value,
-                    totalCount: totalCont);
-              }),
-
-              ///Demand
-              Obx(() {
-                if (controller.isDemandLoading.value) {
-                  return const DeviceDetailShimmer();
-                }
-
-                /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
-                    return const TImageLoaderWidget(
-                        text: 'Whoops! No Device available...!',
-                        animation: TImages.imgLoginBg,
-                        showAction: false);
-                  }*/
-
-                return Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10.h),
-                  child: PowerDemandCard(
-                    demandModel: controller.demandModel.value,
-                  ),
-                );
-              }),
-
-              ///Total Power Factors
-              Obx(() {
-                if (controller.isPowerFactorLoading.value) {
-                  return const DeviceDetailShimmer();
-                }
-
-                /*  if (controller.powerFactorModel.value.pf?.value.isNullOrBlank == false) {
-                    return const TImageLoaderWidget(
-                        text: 'Whoops! No Device available...!',
-                        animation: TImages.imgLoginBg,
-                        showAction: false);
+                Obx(() {
+                  if (controller.isEnergyConsumptionLoading.value) {
+                    return const DeviceDetailShimmer();
                   }
-      */
 
-                return TotalPowerFactorsCard(
-                  powerFactorModel: controller.powerFactorModel.value,
-                );
-              }),
+                  double onPeak = controller
+                          .energyConsumptionData.value.onPeakUnit?.value ??
+                      0.0;
+                  double offPeak = controller
+                          .energyConsumptionData.value.offPeakUnit?.value ??
+                      0.0;
+                  double normal = controller
+                          .energyConsumptionData.value.normalUnit?.value ??
+                      0.0;
+                  double totalCount = onPeak + offPeak + normal;
 
-              /// this is the device detail data
-              Obx(() {
-                if (controller.isBaseMetricLoading.value) {
-                  return const DeviceDetailShimmer();
-                }
+                  /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
+                      return const TImageLoaderWidget(
+                          text: 'Whoops! No Device available...!',
+                          animation: TImages.imgLoginBg,
+                          showAction: false);
+                    }*/
+                  return PieCard(
+                    energyConsumptionModel:
+                        controller.energyConsumptionData.value,
+                    totalCount: totalCount,
+                    legendPosition: LegendPosition.right,
+                    onPressed: () =>
+                        Get.to(() => const EnergyConsumptionDetail()),
+                  );
+                }),
 
-                /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
-                    return const TImageLoaderWidget(
-                        text: 'Whoops! No Device available...!',
-                        animation: TImages.imgLoginBg,
-                        showAction: false);
-                  }*/
+                ///Cost Estimate
+                Obx(() {
+                  if (controller.isCostEstimateLoading.value) {
+                    return const DeviceDetailShimmer();
+                  }
 
-                return Row(
-                  children: [
-                    Expanded(
-                        child: TextViewCard(
-                            cardText: TTexts.frequency,
-                            width: TDeviceUtils.screenWidth / 2,
-                            cardValue:
-                                "${controller.baseMetricModel.value.freq?.value?.toStringAsFixed(2) ?? "NA"} ${controller.baseMetricModel.value.freq?.unit?.toString() ?? "NA"}",
-                            cardAvg:
-                                "Avg : ${controller.frequencyDetailsModel.value.avgFreq?.value?.toStringAsFixed(2) ?? "NA"}${controller.frequencyDetailsModel.value.avgFreq?.unit?.toString() ?? "NA"}")),
-                    SizedBox(width: 5.w),
-                    Expanded(
-                      child: TextViewCard(
-                        cardText: TTexts.totalVoltage,
-                        width: TDeviceUtils.screenWidth / 2,
-                        cardValue:
-                            "${controller.baseMetricModel.value.volt?.value?.toStringAsFixed(2) ?? "NA"} ${controller.baseMetricModel.value.volt?.unit?.toString() ?? "NA"}",
-                        cardAvg:
-                            "Avg : ${controller.voltageDetailsModel.value.avgVolt?.value?.toStringAsFixed(2) ?? "NA"}${controller.voltageDetailsModel.value.avgVolt?.unit?.toString() ?? "NA"}",
-                      ),
+                  double energy =
+                      controller.costEstimateModel.value.normEnergy?.value ??
+                          0.0;
+                  double govt =
+                      controller.costEstimateModel.value.govCost?.value ??
+                          0.0;
+                  double demand =
+                      controller.costEstimateModel.value.demand?.value ?? 0.0;
+                  double others =
+                      controller.costEstimateModel.value.other?.value ?? 0.0;
+                  double totalCont = energy + govt + demand + others;
+
+                  /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
+                      return const TImageLoaderWidget(
+                          text: 'Whoops! No Device available...!',
+                          animation: TImages.imgLoginBg,
+                          showAction: false);
+                    }*/
+                  return CostEstimateCard(
+                      costEstimateModel: controller.costEstimateModel.value,
+                      totalCount: totalCont);
+                }),
+
+                ///Demand
+                Obx(() {
+                  if (controller.isDemandLoading.value) {
+                    return const DeviceDetailShimmer();
+                  }
+
+                  /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
+                      return const TImageLoaderWidget(
+                          text: 'Whoops! No Device available...!',
+                          animation: TImages.imgLoginBg,
+                          showAction: false);
+                    }*/
+
+                  return Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10.h),
+                    child: PowerDemandCard(
+                      demandModel: controller.demandModel.value,
                     ),
-                  ],
-                );
-              }),
+                  );
+                }),
 
-              ///Power Factors Data
-              Obx(() {
-                if (controller.isBaseMetricLoading.value) {
-                  return const DeviceDetailShimmer();
-                }
+                ///Total Power Factors
+                Obx(() {
+                  if (controller.isPowerFactorLoading.value) {
+                    return const DeviceDetailShimmer();
+                  }
 
-                /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
-                    return const TImageLoaderWidget(
-                        text: 'Whoops! No Device available...!',
-                        animation: TImages.imgLoginBg,
-                        showAction: false);
-                  }*/
+                  /*  if (controller.powerFactorModel.value.pf?.value.isNullOrBlank == false) {
+                      return const TImageLoaderWidget(
+                          text: 'Whoops! No Device available...!',
+                          animation: TImages.imgLoginBg,
+                          showAction: false);
+                    }
+        */
 
-                return Row(
-                  children: [
-                    Expanded(
-                      child: TextViewCard(
-                        cardText: TTexts.totalCurrent,
-                        width: TDeviceUtils.screenWidth / 2,
-                        cardValue:
-                            "${controller.baseMetricModel.value.current?.value ?.toStringAsFixed(1) ?? "NA"} ${controller.baseMetricModel.value.current?.unit?.toString() ?? "NA"}",
-                        cardAvg:
-                            "${controller.powerFactorModel.value.pf?.value?.toStringAsFixed(2) ?? "NA"}${controller.powerFactorModel.value.pf?.unit?.toString() ?? "NA"}",
-                      ),
-                    ),
-                    SizedBox(width: 5.w),
-                    /* Expanded(
+                  return TotalPowerFactorsCard(
+                    powerFactorModel: controller.powerFactorModel.value,
+                  );
+                }),
+
+                /// this is the device detail data
+                Obx(() {
+                  if (controller.isBaseMetricLoading.value) {
+                    return const DeviceDetailShimmer();
+                  }
+
+                  /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
+                      return const TImageLoaderWidget(
+                          text: 'Whoops! No Device available...!',
+                          animation: TImages.imgLoginBg,
+                          showAction: false);
+                    }*/
+
+                  return Row(
+                    children: [
+                      Expanded(
+                          child: TextViewCard(
+                              cardText: TTexts.frequency,
+                              width: TDeviceUtils.screenWidth / 2,
+                              cardValue:
+                                  "${controller.baseMetricModel.value.freq?.value?.toStringAsFixed(2) ?? "NA"} ${controller.baseMetricModel.value.freq?.unit?.toString() ?? "NA"}",
+                              cardAvg:
+                                  "Avg : ${controller.frequencyDetailsModel.value.avgFreq?.value?.toStringAsFixed(2) ?? "NA"}${controller.frequencyDetailsModel.value.avgFreq?.unit?.toString() ?? "NA"}")),
+                      SizedBox(width: 5.w),
+                      Expanded(
                         child: TextViewCard(
-                          cardText: TTexts.totalHD,
+                          cardText: TTexts.totalVoltage,
                           width: TDeviceUtils.screenWidth / 2,
-                          cardValue:  "${(controller.powerFactorModel.value.totalPf?.value ?? 0.0).toStringAsFixed(1)}${controller.powerFactorModel.value.totalPf?.unit?.toString() ?? "0.0"}",
-                          cardAvg:  "${(controller.powerFactorModel.value.avgPf?.value ?? 0.0).toStringAsFixed(1)}${controller.powerFactorModel.value.avgPf?.unit?.toString() ?? "0.0"}",
+                          cardValue:
+                              "${controller.baseMetricModel.value.volt?.value?.toStringAsFixed(2) ?? "NA"} ${controller.baseMetricModel.value.volt?.unit?.toString() ?? "NA"}",
+                          cardAvg:
+                              "Avg : ${controller.voltageDetailsModel.value.avgVolt?.value?.toStringAsFixed(2) ?? "NA"}${controller.voltageDetailsModel.value.avgVolt?.unit?.toString() ?? "NA"}",
                         ),
-                      ),*/
-                  ],
-                );
-              }),
-            ],
+                      ),
+                    ],
+                  );
+                }),
+
+                ///Power Factors Data
+                Obx(() {
+                  if (controller.isBaseMetricLoading.value) {
+                    return const DeviceDetailShimmer();
+                  }
+
+                  /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
+                      return const TImageLoaderWidget(
+                          text: 'Whoops! No Device available...!',
+                          animation: TImages.imgLoginBg,
+                          showAction: false);
+                    }*/
+
+                  return Row(
+                    children: [
+                      Expanded(
+                        child: TextViewCard(
+                          cardText: TTexts.totalCurrent,
+                          width: TDeviceUtils.screenWidth / 2,
+                          cardValue:
+                              "${controller.baseMetricModel.value.current?.value ?.toStringAsFixed(1) ?? "NA"} ${controller.baseMetricModel.value.current?.unit?.toString() ?? "NA"}",
+                          cardAvg:
+                              "${controller.powerFactorModel.value.pf?.value?.toStringAsFixed(2) ?? "NA"}${controller.powerFactorModel.value.pf?.unit?.toString() ?? "NA"}",
+                        ),
+                      ),
+                      SizedBox(width: 5.w),
+                      /* Expanded(
+                          child: TextViewCard(
+                            cardText: TTexts.totalHD,
+                            width: TDeviceUtils.screenWidth / 2,
+                            cardValue:  "${(controller.powerFactorModel.value.totalPf?.value ?? 0.0).toStringAsFixed(1)}${controller.powerFactorModel.value.totalPf?.unit?.toString() ?? "0.0"}",
+                            cardAvg:  "${(controller.powerFactorModel.value.avgPf?.value ?? 0.0).toStringAsFixed(1)}${controller.powerFactorModel.value.avgPf?.unit?.toString() ?? "0.0"}",
+                          ),
+                        ),*/
+                    ],
+                  );
+                }),
+              ],
+            ),
           ),
         ),
       ),

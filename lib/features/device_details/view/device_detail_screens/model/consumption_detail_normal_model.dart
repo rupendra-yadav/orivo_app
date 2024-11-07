@@ -6,7 +6,7 @@ class NormalUnit {
 
   NormalUnit.fromJson(Map<String, dynamic> json) {
     unit = json['unit'];
-    value = json['value'];
+    value = (json['value'] as num?)?.toDouble();
   }
 
   Map<String, dynamic> toJson() {
