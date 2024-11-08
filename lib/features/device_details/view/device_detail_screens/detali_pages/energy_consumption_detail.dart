@@ -26,6 +26,7 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
   final DeviceDetailController controller = Get.put(DeviceDetailController());
   
   String _selectedDateRange = TTexts.chooseDateRange;
+  String formattedEndDateInYears = "";
 
 
   @override
@@ -99,7 +100,18 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
                     String formattedStartDateInYears = DateFormat("yyyy-MM-dd HH:mm:ss").format(pickedDateRange.start);
 
                     String formattedEndDate = DateFormat('d-MM-yyyy').format(pickedDateRange.end);
-                    String formattedEndDateInYears = DateFormat("yyyy-MM-dd HH:mm:ss").format(pickedDateRange.end);
+                     formattedEndDateInYears = DateFormat("yyyy-MM-dd HH:mm:ss").format(pickedDateRange.end);
+
+
+                    if (formattedStartDate == formattedEndDate) {
+                      DateTime pickedDateRange = DateTime.parse(formattedEndDateInYears);
+                      DateTime updatedDateTime = pickedDateRange.copyWith(hour: 23, minute: 59, second: 59);
+                      formattedEndDateInYears = DateFormat('yyyy-MM-dd HH:mm:ss').format(updatedDateTime);
+
+                      print("Start and End dates are the same.");
+                    } else {
+                      print("Start and End dates are different.");
+                    }
 
                     setState(() {
                       _selectedDateRange =

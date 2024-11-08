@@ -117,6 +117,17 @@ class _CostEstimateState extends State<CostEstimate> {
                     String formattedEndDate = DateFormat('d-MM-yyyy').format(pickedDateRange.end);
                     String formattedEndDate1 = DateFormat("yyyy-MM-dd HH:mm:ss").format(pickedDateRange.end);
 
+                    if (formattedStartDate == formattedEndDate) {
+                      DateTime pickedDateRange = DateTime.parse(formattedEndDate1);
+                      DateTime updatedDateTime = pickedDateRange.copyWith(hour: 23, minute: 59, second: 59);
+                      formattedEndDate1 = DateFormat('yyyy-MM-dd HH:mm:ss').format(updatedDateTime);
+
+                      print("Start and End dates are the same.");
+                    } else {
+                      print("Start and End dates are different.");
+                    }
+
+
                     setState(() {_selectedDateRange = "From $formattedStartDate To $formattedEndDate";
 
                     controller.getCostEstimateDetails(formattedStartDate1, controller.deviceListModel.mMachineUniqueId, formattedEndDate1);

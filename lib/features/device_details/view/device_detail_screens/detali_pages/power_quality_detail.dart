@@ -29,6 +29,7 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
   final DeviceDetailController controller = Get.put(DeviceDetailController());
   String _selectedDateRange = TTexts.chooseDateRange;
    int sameDate = 0;
+  String EndDate ="";
 
   @override
   void initState() {
@@ -105,7 +106,7 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
 
                     String formattedEndDate = DateFormat('d-MM-yyyy').format(pickedDateRange.end);
 
-                    String EndDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(pickedDateRange.end);
+                     EndDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(pickedDateRange.end);
 
                     setState(() {
                       _selectedDateRange =
@@ -114,6 +115,14 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
 
                     if (formattedStartDate == formattedEndDate) {
                       sameDate = 1;
+
+                      DateTime pickedDateRange = DateTime.parse(EndDate); // Original date and time
+
+                      DateTime updatedDateTime = pickedDateRange.copyWith(hour: 23, minute: 59, second: 59);
+                      EndDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(updatedDateTime);
+                      print("EndDateCHECK");
+                      print(EndDate);
+
                       print("Start and End dates are the same.");
                     } else {
                       sameDate = 0;
