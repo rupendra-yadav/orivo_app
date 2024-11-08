@@ -28,6 +28,7 @@ class PowerQualityDetail extends StatefulWidget {
 class _PowerQualityDetailState extends State<PowerQualityDetail> {
   final DeviceDetailController controller = Get.put(DeviceDetailController());
   String _selectedDateRange = TTexts.chooseDateRange;
+   int sameDate = 0;
 
   @override
   void initState() {
@@ -111,6 +112,15 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
                           "From $formattedStartDate To $formattedEndDate";
                     });
 
+                    if (formattedStartDate == formattedEndDate) {
+                      sameDate = 1;
+                      print("Start and End dates are the same.");
+                    } else {
+                      sameDate = 0;
+                      print("Start and End dates are different.");
+                    }
+
+
                     controller.getPfDetails(StartDate,controller.deviceListModel.mMachineUniqueId, EndDate);
 
                     controller.getVoltageDetails(StartDate,controller.deviceListModel.mMachineUniqueId, EndDate);
@@ -159,15 +169,7 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
                 if (controller.isPfDetailsLoading.value) {
                   return const DeviceDetailShimmer();
                 }
-
-              /*   if (controller.voltageDetailsModel.value.volt?.value.isNullOrBlank == true) {
-                        return const TImageLoaderWidget(
-                            text: 'Whoops! No Device available...!',
-                            animation: TImages.imgLoginBg,
-                            showAction: false);
-                      }*/
-
-                return TotalPowerFactorCard(pfDetailModel: controller.pfDetailModel.value);
+                return TotalPowerFactorCard(pfDetailModel: controller.pfDetailModel.value,dateType: sameDate,);
               }),
 
               SizedBox(height: 20.h),
@@ -177,15 +179,7 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
                 if (controller.isVoltageDetailLoading.value) {
                   return const DeviceDetailShimmer();
                 }
-
-                /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
-                        return const TImageLoaderWidget(
-                            text: 'Whoops! No Device available...!',
-                            animation: TImages.imgLoginBg,
-                            showAction: false);
-                      }*/
-
-                return  VoltageCard(voltageDetailModel: controller.voltageDetailsModel.value);
+                return  VoltageCard(voltageDetailModel: controller.voltageDetailsModel.value,dateType: sameDate,);
               }),
 
 
@@ -196,15 +190,7 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
                 if (controller.isCurrentDetailLoading.value) {
                   return const DeviceDetailShimmer();
                 }
-
-                /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
-                        return const TImageLoaderWidget(
-                            text: 'Whoops! No Device available...!',
-                            animation: TImages.imgLoginBg,
-                            showAction: false);
-                      }*/
-
-                return CurrentCard(currentDetailModel: controller.currentDetailsModel.value,);
+                return CurrentCard(currentDetailModel: controller.currentDetailsModel.value,dateType: sameDate,);
               }),
 
               SizedBox(height: 20.h),
@@ -213,15 +199,7 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
               Obx((){     if (controller.isFrequencyDetailLoading.value) {
                 return const DeviceDetailShimmer();
               }
-
-              /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
-                        return const TImageLoaderWidget(
-                            text: 'Whoops! No Device available...!',
-                            animation: TImages.imgLoginBg,
-                            showAction: false);
-                      }*/
-
-              return FrequencyCard(frequencyDetailsModel: controller.frequencyDetailsModel.value,);
+              return FrequencyCard(frequencyDetailsModel: controller.frequencyDetailsModel.value,dateType: sameDate,);
               }),
             ],
           ),

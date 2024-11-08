@@ -11,10 +11,13 @@ import 'multi_line_total_power_factor_graph.dart';
 
 class TotalPowerFactorCard extends StatelessWidget {
   const TotalPowerFactorCard({
-    super.key, required this.pfDetailModel,
+    super.key,
+    required this.pfDetailModel,
+    required this.dateType,
   });
 
   final PfDetailModel pfDetailModel;
+  final int dateType ;
 
 
   @override
@@ -47,7 +50,7 @@ class TotalPowerFactorCard extends StatelessWidget {
 
             ///Multile Graph
 
-            MultiLineTotalPowerFactorGraph(onPeakGraph:pfDetailModel.pfTimeline?.value??[]),
+            MultiLineTotalPowerFactorGraph(onPeakGraph:pfDetailModel.pfTimeline?.value??[],dateType: dateType,),
           ],
         ),
       ),

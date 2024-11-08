@@ -6,9 +6,7 @@ import '../../../../../../utils/constant/colors.dart';
 import '../../model/demand_value_modle.dart';
 
 class DemandTimelineGraph extends StatelessWidget {
-  const DemandTimelineGraph({super.key,
-    this.timeline});
-
+  const DemandTimelineGraph({super.key, this.timeline});
 
   final List<Value>? timeline;
 
@@ -16,40 +14,37 @@ class DemandTimelineGraph extends StatelessWidget {
   Widget build(BuildContext context) {
     List<ChartData> chartData = <ChartData>[];
 
-// Assuming onPeakGraph is a List of data points
     timeline?.forEach((graph) {
-      chartData.add(ChartData(x: graph.y ?? 0.0, y: graph.x ?? ""));
+      chartData.add(ChartData(
+        x: graph.y ?? 0.0,
+        y: DateTime.parse(graph.x ?? ""),
+      ));
     });
-
 
     return SfCartesianChart(
       backgroundColor: Colors.transparent,
-      primaryXAxis: const CategoryAxis(
-        labelStyle: TextStyle(color: Colors.white),
-        majorGridLines: MajorGridLines(width: 0),
-        //interval: 5,  // Adjust this based on how many labels you want visible
-        //labelRotation: 45, // Rotate the labels to avoid overlapping
-        edgeLabelPlacement: EdgeLabelPlacement.shift, // Handle labels at the edge
-        autoScrollingMode: AutoScrollingMode.start,  // Enable auto-scrolling if you have lots of data
-
+      primaryXAxis: DateTimeAxis(
+        interval: 1,
+        dateFormat: DateFormat('dd/MM'),
+        labelStyle: const TextStyle(color: Colors.white),
+        majorGridLines: const MajorGridLines(width: 0),
+        axisLine: const AxisLine(width: 0),
+        autoScrollingDelta: 5,
+        autoScrollingMode: AutoScrollingMode.start,
       ),
       primaryYAxis: const NumericAxis(
         labelStyle: TextStyle(color: Colors.white),
-
         axisLine: AxisLine(width: 0),
         majorTickLines: MajorTickLines(size: 0),
         minorTickLines: MinorTickLines(size: 0),
       ),
 
-      /*zoomPanBehavior: ZoomPanBehavior(
-        enablePinching: true,     // Allows pinch zoom
-        enablePanning: true,      // Enables panning
-        enableDoubleTapZooming: true,
-        enableMouseWheelZooming: true,
-        enableSelectionZooming: true,
-      ),*/
+      zoomPanBehavior: ZoomPanBehavior(
+        enablePanning: true,
+        zoomMode: ZoomMode.x,
+      ),
       series: <CartesianSeries>[
-        LineSeries<ChartData, String>(
+        LineSeries<ChartData, DateTime>(
           dataSource: chartData,
           xValueMapper: (ChartData data, _) => data.y,
           yValueMapper: (ChartData data, _) => data.x,
@@ -60,23 +55,24 @@ class DemandTimelineGraph extends StatelessWidget {
       plotAreaBorderColor: Colors.transparent,
       borderColor: Colors.transparent,
       borderWidth: 0,
-
       tooltipBehavior: TooltipBehavior(
         enable: true,
-        activationMode: ActivationMode.singleTap, // Show tooltip on tap
-        shouldAlwaysShow: true,                   // Keeps tooltip visible after tap
+        activationMode: ActivationMode.singleTap,
+        // Show tooltip on tap
+        shouldAlwaysShow: true,
+        // Keeps tooltip visible after tap
         header: '',
-        format: 'point.y on point.x',                // Custom format to show y-value
+        format: 'point.y on point.x',
+        // Custom format to show y-value
         textStyle: const TextStyle(color: Colors.white),
       ),
-
     );
   }
-
 }
+
 class ChartData {
   final double x; // The numeric value (y-axis)
-  final String y; // The date (x-axis)
+  final DateTime y; // The date (x-axis)
 
   ChartData({required this.x, required this.y});
 }

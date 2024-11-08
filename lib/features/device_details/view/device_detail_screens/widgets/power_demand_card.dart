@@ -26,6 +26,7 @@ class PowerDemandCard extends StatelessWidget {
     return InkWell(
       onTap: () => (Get.to(() => const DemandEstimateDetail())),
       child: Container(
+        height: 200.h,
         width: double.infinity,
         padding: EdgeInsets.symmetric(vertical: 10.h),
         decoration: BoxDecoration(
@@ -33,7 +34,7 @@ class PowerDemandCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(10.r),
         ),
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
+          padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 5.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

@@ -146,14 +146,6 @@ class _DemandEstimateDetailState extends State<DemandEstimateDetail> {
                 if (controller.isDemandDetailLoading.value) {
                   return const DeviceDetailShimmer();
                 }
-
-                /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
-                        return const TImageLoaderWidget(
-                            text: 'Whoops! No Device available...!',
-                            animation: TImages.imgLoginBg,
-                            showAction: false);
-                      }*/
-
                 return DemandEstimateCard(demandDetailModel: controller.demandDetailModel.value,);
               }),
 
@@ -167,13 +159,6 @@ class _DemandEstimateDetailState extends State<DemandEstimateDetail> {
                 if (controller.isDemandDetailLoading.value) {
                   return const DeviceDetailShimmer();
                 }
-                /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
-                        return const TImageLoaderWidget(
-                            text: 'Whoops! No Device available...!',
-                            animation: TImages.imgLoginBg,
-                            showAction: false);
-                      }*/
-
                 return DemandTimeLineCard(demandDetailModel: controller.demandDetailModel.value,);
               })
             ],

@@ -52,6 +52,7 @@ class PieCard extends StatelessWidget {
       child: InkWell(
         onTap: onPressed,
         child: Container(
+          height: 240.h,
           decoration: BoxDecoration(
             color: TColors.primaryDark1,
             borderRadius: BorderRadius.circular(10.r),

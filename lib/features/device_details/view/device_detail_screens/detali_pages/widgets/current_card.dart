@@ -11,11 +11,12 @@ import 'multi_line_total_power_factor_graph.dart';
 class CurrentCard extends StatelessWidget {
   const CurrentCard({
     super.key,
-    required this.currentDetailModel,
+    required this.currentDetailModel, required this.dateType,
   });
 
 
  final CurrentDetailModel currentDetailModel;
+  final int dateType ;
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +67,8 @@ class CurrentCard extends StatelessWidget {
             MultiLineCurrentGraph(
               ia: currentDetailModel.iaTimeline?.value??[],
               ib: currentDetailModel.ibTimeline?.value??[],
-              ic: currentDetailModel.icTimeline?.value??[]
+              ic: currentDetailModel.icTimeline?.value??[],
+              dateType: dateType,
             ),
           ],
         ),

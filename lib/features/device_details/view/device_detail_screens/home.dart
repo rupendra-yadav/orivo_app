@@ -76,8 +76,6 @@ class _HomeState extends State<Home> {
       updatedDataMap2['$key: $value'] = value;
     });
 
-    double totalCount2 =
-        updatedDataMap2.values.reduce((a, b) => a + b); // Calculate total count
     return Scaffold(
       backgroundColor: TColors.primary,
       body: RefreshIndicator(
@@ -117,12 +115,7 @@ class _HomeState extends State<Home> {
                       0.0;
                   double totalCount = onPeak + offPeak + normal;
 
-                  /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
-                      return const TImageLoaderWidget(
-                          text: 'Whoops! No Device available...!',
-                          animation: TImages.imgLoginBg,
-                          showAction: false);
-                    }*/
+
                   return PieCard(
                     energyConsumptionModel:
                         controller.energyConsumptionData.value,
@@ -151,12 +144,7 @@ class _HomeState extends State<Home> {
                       controller.costEstimateModel.value.other?.value ?? 0.0;
                   double totalCont = energy + govt + demand + others;
 
-                  /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
-                      return const TImageLoaderWidget(
-                          text: 'Whoops! No Device available...!',
-                          animation: TImages.imgLoginBg,
-                          showAction: false);
-                    }*/
+
                   return CostEstimateCard(
                       costEstimateModel: controller.costEstimateModel.value,
                       totalCount: totalCont);
@@ -168,12 +156,6 @@ class _HomeState extends State<Home> {
                     return const DeviceDetailShimmer();
                   }
 
-                  /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
-                      return const TImageLoaderWidget(
-                          text: 'Whoops! No Device available...!',
-                          animation: TImages.imgLoginBg,
-                          showAction: false);
-                    }*/
 
                   return Padding(
                     padding: EdgeInsets.symmetric(vertical: 10.h),
@@ -189,14 +171,6 @@ class _HomeState extends State<Home> {
                     return const DeviceDetailShimmer();
                   }
 
-                  /*  if (controller.powerFactorModel.value.pf?.value.isNullOrBlank == false) {
-                      return const TImageLoaderWidget(
-                          text: 'Whoops! No Device available...!',
-                          animation: TImages.imgLoginBg,
-                          showAction: false);
-                    }
-        */
-
                   return TotalPowerFactorsCard(
                     powerFactorModel: controller.powerFactorModel.value,
                   );
@@ -208,12 +182,6 @@ class _HomeState extends State<Home> {
                     return const DeviceDetailShimmer();
                   }
 
-                  /* if (controller.energyConsumptionData.value.normalUnit.isNull) {
-                      return const TImageLoaderWidget(
-                          text: 'Whoops! No Device available...!',
-                          animation: TImages.imgLoginBg,
-                          showAction: false);
-                    }*/
 
                   return Row(
                     children: [

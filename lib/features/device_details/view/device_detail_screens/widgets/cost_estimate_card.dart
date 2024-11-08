@@ -44,6 +44,7 @@ class CostEstimateCard extends StatelessWidget {
       child: InkWell(
         onTap: () => Get.to(() => const CostEstimate()),
         child: Container(
+            height: 320.h,
             decoration: BoxDecoration(
               color: TColors.primaryDark1,
               borderRadius: BorderRadius.circular(10.r),

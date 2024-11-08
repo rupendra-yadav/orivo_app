@@ -8,66 +8,68 @@ import '../../../../../common/widgets/text/text_view.dart';
 import '../../../../../utils/constant/colors.dart';
 import '../../../../../utils/constant/text_strings.dart';
 import '../model/pf_model.dart';
-import '../model/power_factor_model.dart';
 
 class TotalPowerFactorsCard extends StatelessWidget {
   const TotalPowerFactorsCard({
-    super.key, required this.powerFactorModel,
+    super.key,
+    required this.powerFactorModel,
   });
 
   final PfModel powerFactorModel;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 10.h),
-      child: InkWell(
-        onTap: () => (Get.to(() => const PowerQualityDetail())),
-        child: Container(
-          decoration: BoxDecoration(
-            color: TColors.primaryDark1,
-            borderRadius: BorderRadius.circular(10.r),
-          ),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const TextView(
-                  text: TTexts.totalPowerFactors,
-                  bold: true,
-                ),
-                Row(
-                  children: [
-                     Expanded(
-                        flex: 1,
-                        child: TextView(
-                          text: powerFactorModel.pf?.value?.toStringAsFixed(2) ?? 'NA',
-                          fontSize: 25,
-                          textColor: TColors.green,
-                        )),
-                    // SizedBox(width: 20.w,),
-                    Expanded(
-                      flex: 2,
-                      child: Column(
-                        children: [
-                          SfLinearGauge(
+    return
+      Container(
+        width: MediaQuery.of(context).size.width,
+        margin: EdgeInsets.symmetric(vertical: 10.h),
+        padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
+        height: 110.h,
+        decoration: BoxDecoration(
+          color: TColors.primaryDark1,
+          borderRadius: BorderRadius.circular(10.r),
+        ),
+        child: GestureDetector(
+          onTap: () => Get.to(() => const PowerQualityDetail()),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const TextView(
+                text: TTexts.totalPowerFactors,
+                bold: true,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: TextView(
+                      text: powerFactorModel.highestPf?.value?.toStringAsFixed(2) ?? 'NA',
+                      fontSize: 25,
+                      textColor: TColors.green,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: 200,  // Explicit fixed width
+                          height: 30,  // Explicit fixed height
+                          child: SfLinearGauge(
                             minimum: 0,
-                            maximum: (powerFactorModel.pf?.value?.toDouble() ?? 0.0),
+                            maximum: 1.0,  // Set fixed range for gauge
+                            interval: 0.2,
                             animateRange: true,
                             animateAxis: true,
                             showLabels: false,
-                            // Hide the scale values (labels)
                             showTicks: false,
-                            // Hide the scale pointers (ticks)
                             barPointers: [
                               LinearBarPointer(
-                                value: (powerFactorModel.pf?.value?.toDouble() ?? 0.0),
-                                // Set the value for the pointer
-                                thickness: 10,
-                                // Adjust the thickness of the bar
+                                value: (powerFactorModel.pf?.value?.toDouble() ?? 0.0).isFinite
+                                    ? powerFactorModel.pf?.value?.toDouble() ?? 0.0
+                                    : 0.0,
+                                thickness: 5,
                                 edgeStyle: LinearEdgeStyle.bothCurve,
-                                // Apply curved edges if needed
                                 shaderCallback: (bounds) {
                                   return const LinearGradient(
                                     colors: [
@@ -79,41 +81,150 @@ class TotalPowerFactorsCard extends StatelessWidget {
                                 },
                               ),
                             ],
-
-                            /// this is the marker or the Pointer
                             markerPointers: [
                               LinearShapePointer(
-                                value:(powerFactorModel.highestPf?.value?.toDouble() ?? 0.0),
-                                // Position of the marker
+                                value: (powerFactorModel.highestPf?.value?.toDouble() ?? 0.0).isFinite
+                                    ? powerFactorModel.highestPf?.value?.toDouble() ?? 0.0
+                                    : 0.0,
                                 shapeType: LinearShapePointerType.rectangle,
-                                // Shape of the marker
                                 color: Colors.green[300],
-                                // Color of the marker
                                 elevation: 50,
-                                width: 2.w,
-                                height: 20.h, // Adds shadow to the marker
-                                // Size of the marker
+                                width: 4,  // Fixed width for pointer
+                                height: 20, // Fixed height for pointer
                               ),
                             ],
                           ),
-                          const Row(
-                            children: [
-                              TextView(text: TTexts.bad),
-                              Spacer(),
-                              TextView(text: TTexts.good),
-                            ],
-                          ),
-                        ],
-                      ),
+                        ),
+                        const Row(
+                          children: [
+                            TextView(text: TTexts.bad),
+                            Spacer(),
+                            TextView(text: TTexts.good),
+                          ],
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                TextView(text: powerFactorModel.pf?.value?.toStringAsFixed(2) ?? 'NA'),
-              ],
-            ),
+                  ),
+                ],
+              ),
+              TextView(
+                text: powerFactorModel.pf?.value?.toStringAsFixed(2) ?? 'NA',
+              ),
+            ],
           ),
         ),
+      );
+
+
+
+
+    /* Container(
+      width: MediaQuery.of(context).size.width,
+      margin: EdgeInsets.symmetric(vertical: 10.h),
+      padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
+      height: 110.h,
+      decoration: BoxDecoration(
+        color: TColors.primaryDark1,
+        borderRadius: BorderRadius.circular(10.r),
       ),
-    );
+      child: GestureDetector(
+        onTap: () => Get.to(() => const PowerQualityDetail()),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const TextView(
+              text: TTexts.totalPowerFactors,
+              bold: true,
+            ),
+            Row(
+              children: [
+                Flexible(
+                  flex: 1,
+                  child: TextView(
+                    text:
+                        powerFactorModel.pf?.value?.toStringAsFixed(2) ?? 'NA',
+                    fontSize: 25,
+                    textColor: TColors.green,
+                  ),
+                ),
+                Flexible(
+                  flex: 2,
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        width: 200.w,
+                        height: 30.h, // Adjust as needed
+                        child: SfLinearGauge(
+                          minimum: 0,
+                          maximum: (powerFactorModel.pf?.value?.toDouble() ??
+                                      0.0)
+                                  .isFinite
+                              ? powerFactorModel.pf?.value?.toDouble() ?? 0.0
+                              : 1.0,
+                          interval: 0.2,
+                          animateRange: true,
+                          animateAxis: true,
+                          showLabels: false,
+                          showTicks: false,
+                          barPointers: [
+                            LinearBarPointer(
+
+                              value: (powerFactorModel.pf?.value?.toDouble() ??
+                                          0.0)
+                                      .isFinite
+                                  ? powerFactorModel.pf?.value?.toDouble() ??
+                                      0.0
+                                  : 0.0,
+                              thickness: 5,
+                              edgeStyle: LinearEdgeStyle.bothCurve,
+                              shaderCallback: (bounds) {
+                                return const LinearGradient(
+                                  colors: [
+                                    Colors.red,
+                                    Colors.yellow,
+                                    Colors.green,
+                                  ],
+                                ).createShader(bounds);
+                              },
+                            ),
+                          ],
+                          markerPointers: [
+                            LinearShapePointer(
+                              value: (powerFactorModel.highestPf?.value
+                                              ?.toDouble() ??
+                                          0.0)
+                                      .isFinite
+                                  ? powerFactorModel.highestPf?.value
+                                          ?.toDouble() ??
+                                      0.0
+                                  : 0.0,
+                              shapeType: LinearShapePointerType.rectangle,
+                              color: Colors.green[300],
+                              elevation: 50,
+                              width: 2.w,
+                              // Adjusted width
+                              height: 20.h, // Adjusted height
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Row(
+                        children: [
+                          TextView(text: TTexts.bad),
+                          Spacer(),
+                          TextView(text: TTexts.good),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            TextView(
+                text: powerFactorModel.pf?.value?.toStringAsFixed(2) ?? 'NA'),
+          ],
+        ),
+      ),
+    );*/
   }
 }

@@ -13,11 +13,12 @@ import 'multi_line_total_power_factor_graph.dart';
 class VoltageCard extends StatelessWidget {
   const VoltageCard({
     super.key,
-    required this.voltageDetailModel,
+    required this.voltageDetailModel, required this.dateType,
 
   });
 
   final VoltageDetailModel voltageDetailModel;
+  final int dateType ;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +52,7 @@ class VoltageCard extends StatelessWidget {
             ),
 
             ///Multile Graph
-        MultiLineVoltageGraph(onPeakGraph: voltageDetailModel.voltageTimeline?.value ?? []),
+        MultiLineVoltageGraph(onPeakGraph: voltageDetailModel.voltageTimeline?.value ?? [],dateType: dateType,),
 
         ],
         ),

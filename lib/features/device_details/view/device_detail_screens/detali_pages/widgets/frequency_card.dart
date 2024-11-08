@@ -11,10 +11,11 @@ import 'multi_line_total_power_factor_graph.dart';
 class FrequencyCard extends StatelessWidget {
   const FrequencyCard({
     super.key,
-    required this.frequencyDetailsModel,
+    required this.frequencyDetailsModel, required this.dateType,
   });
 
   final FrequencyDetailsModel frequencyDetailsModel;
+  final int dateType ;
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +63,7 @@ class FrequencyCard extends StatelessWidget {
 
             ///Multile Graph
 
-            MultiLineFrequencyGraph(onPeakGraph: frequencyDetailsModel.freqTimeline?.value??[],),
+            MultiLineFrequencyGraph(onPeakGraph: frequencyDetailsModel.freqTimeline?.value??[],dateType: dateType,),
           ],
         ),
       ),
