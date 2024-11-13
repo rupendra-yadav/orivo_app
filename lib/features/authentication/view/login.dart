@@ -5,10 +5,12 @@ import 'package:auro/utils/constant/image_string.dart';
 import 'package:auro/utils/constant/text_strings.dart';
 import 'package:auro/utils/device/device_utility.dart';
 import 'package:auro/utils/validate/validate.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../common/widgets/buttons/button.dart';
 import '../../../common/widgets/inputFields/input_text.dart';
@@ -21,6 +23,8 @@ class Login extends StatelessWidget {
   Widget build(BuildContext context) {
     final loginController = Get.put(LoginController());
     // loginController.screenRedirect();
+
+
 
     return Scaffold(
       backgroundColor: TColors.primary,
@@ -37,10 +41,11 @@ class Login extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+
                       /// setting image for login
                       Center(
                         child: Image.asset(
-                          TImages.imgLoginBgNew1,height: 230.h,width: 230.w,
+                          TImages.imgLoginBgNew1, height: 230.h, width: 230.w,
                         ),
                       ),
                       SizedBox(
@@ -61,11 +66,13 @@ class Login extends StatelessWidget {
                       /// Email Input
                       PrefixInputText(
                         controller: loginController.phoneNumber,
-                        validator:(value) => Validate.validatePhoneNumber(value),
+                        validator: (value) =>
+                            Validate.validatePhoneNumber(value),
                         hint: TTexts.etHintLoginEmail,
                         preFixIcon: const Icon(Iconsax.attach_circle),
                         keyboardType: TextInputType.text,
                       ),
+
                       ///password input
                       PrefixInputText(
                         controller: loginController.password,
@@ -85,7 +92,7 @@ class Login extends StatelessWidget {
 
                       /// Sign in With OTP
                       InkWell(
-                        onTap: ()=>Get.to(()=>SendOtp(resetPass: 0,)),
+                        onTap: () => Get.to(() => SendOtp(resetPass: 0,)),
                         child: const Text(TTexts.signInWithOTP,
                             style: TextStyle(
                                 fontSize: 16, color: TColors.secondary)),
@@ -95,6 +102,7 @@ class Login extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+
                       ///Login button
                       Center(
                         child: Button(
@@ -102,7 +110,7 @@ class Login extends StatelessWidget {
                             minWidth: 185.w,
                             title: TTexts.logMeIn,
                             onPressed: () {
-                              loginController.userLogin();
+                               loginController.userLogin();
                             }),
                       ),
                       SizedBox(
@@ -110,7 +118,7 @@ class Login extends StatelessWidget {
                       ),
 
                       /// Register here
-                       /*Center(
+                      /*Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

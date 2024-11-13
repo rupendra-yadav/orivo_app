@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class Myapp extends StatelessWidget {
   const Myapp({super.key});
@@ -22,6 +23,7 @@ class Myapp extends StatelessWidget {
         darkTheme: TAppTheme.darkTheme,
         debugShowCheckedModeBanner: true,
         home: const Splash(),
+        navigatorKey: navigatorKey,
       ),
     );
   }
