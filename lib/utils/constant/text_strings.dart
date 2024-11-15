@@ -14,8 +14,10 @@ class TTexts {
       "Please enter your credentials to get you going";
   static const String signInWithOTP = "Sign in with OTP";
   static const String doYouHaveAccount = "Didn’t have an account ";
+  static const String rememberThePassword = "Didn’t Remember The Password ? ";
   static const String alreadyHasAcccount = "Already has an account ";
   static const String registerHere = "Register here";
+  static const String resetHere = "Reset here";
   static const String loginHere = "Login here";
   static const String logMeIn = "Log Me In";
   static const String continu = "Continue";

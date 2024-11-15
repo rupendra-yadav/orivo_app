@@ -56,18 +56,6 @@ class _CostEstimateState extends State<CostEstimate> {
   @override
   Widget build(BuildContext context) {
 
-    Map<String, double> originalDataMap = {
-      "Demand":controller.costEstimateDetailsModel.value.totolDemandCost?.value ?? 0.0,
-      "Energy":controller.costEstimateDetailsModel.value.totalEnergyCost?.value ?? 0.0,
-      "Govt":controller.costEstimateDetailsModel.value.govCost?.value ?? 0.0,
-    };
-
-    Map<String, double> updatedDataMap2 = {};
-
-// Updating the map with formatted keys
-    originalDataMap.forEach((key, value) {
-      updatedDataMap2['$key: $value'] = value;
-    });
 
     return Scaffold(
       appBar: const DeviceCardDetailsAppBar(
@@ -171,6 +159,21 @@ class _CostEstimateState extends State<CostEstimate> {
                 if (controller.isCostEstimateDetailLoading.value) {
                   return const DeviceDetailShimmer();
                 }
+
+
+                Map<String, double> originalDataMap = {
+                  "Demand":controller.costEstimateDetailsModel.value.totolDemandCost?.value ?? 0.0,
+                  "Energy":controller.costEstimateDetailsModel.value.totalEnergyCost?.value ?? 0.0,
+                  "Govt":controller.costEstimateDetailsModel.value.govCost?.value ?? 0.0,
+                };
+
+                Map<String, double> updatedDataMap2 = {};
+
+                originalDataMap.forEach((key, value) {
+                  updatedDataMap2['$key: $value'] = value;
+                });
+
+
 
                 double onPeak = controller.costEstimateDetailsModel.value.totolDemandCost?.value?? 0.0;
                 double offPeak = controller.costEstimateDetailsModel.value.totalEnergyCost?.value?? 0.0;

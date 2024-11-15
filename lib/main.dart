@@ -8,17 +8,20 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 import 'data/repository/authentication_repository.dart';
+import 'data/repository/profile_repository.dart';
 import 'features/firebase/firebase_api.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
+
+  await SharedPrefs.init();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await FirebaseApi().initNotifications();
-
-  await Firebase.initializeApp();
 
   AwesomeNotifications().initialize(
     null,
@@ -27,15 +30,24 @@ Future<void> main() async {
           channelKey: "basic_chanel",
           channelName: "Basic Notifications",
           channelDescription: "Notification Chanel For Basic Tests",
-          importance: NotificationImportance.High)
+          importance: NotificationImportance.Max,
+          playSound: true,
+          enableVibration: true,
+          defaultColor: Color(0xFF9D50DD),
+          ledColor: Color(0xFF9D50DD)),
     ],
     debug: true,
   );
 
+  Get.put(ProfileRepository());
+
   await GetStorage.init();
+
   Get.put(AuthenticationRepository());
+
   Get.put(NetworkManager());
-  await SharedPrefs.init();
+
+
 
   runApp(const Myapp());
 }

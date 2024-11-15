@@ -25,7 +25,7 @@ class CostEstimateCard extends StatelessWidget {
   Widget build(BuildContext context) {
 
     Map<String, double> originalDataMap = {
-      "Energy": costEstimateModel.normEnergy?.value ?? 0.0,
+      "Energy": costEstimateModel.totalEnergyCost?.value ?? 0.0,
       "Govt": costEstimateModel.govCost?.value ?? 0.0,
       "Demand": costEstimateModel.demand?.value ?? 0.0,
       "Other": costEstimateModel.other?.value ?? 0.0,
@@ -70,7 +70,7 @@ class CostEstimateCard extends StatelessWidget {
                     chartLegendSpacing: 32.w,
                     chartRadius:
                     MediaQuery.of(context).size.width / 3.2,
-                    colorList: colorList2,
+                    colorList: colorList,
                     initialAngleInDegree: 0,
                     chartType: ChartType.ring,
 
@@ -121,3 +121,9 @@ class CostEstimateCard extends StatelessWidget {
     );
   }
 }
+final colorList = <Color>[
+  const Color(0xff3dd598),
+  const Color(0xff0062ff),
+  const Color(0xffff974a),
+  const Color(0xffffc542),
+];

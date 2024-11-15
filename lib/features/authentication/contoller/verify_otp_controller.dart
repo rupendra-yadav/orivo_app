@@ -1,3 +1,4 @@
+import 'package:auro/features/authentication/view/login.dart';
 import 'package:auro/features/navigation/view/navigation_screen.dart';
 import 'package:auro/features/navigation/view/user_edits/view/reset_password.dart';
 import 'package:flutter/cupertino.dart';
@@ -64,10 +65,13 @@ class VerifyOtpController extends GetxController {
         TLoaders.successSnackBar(
             title: 'Success', message: response['message']);
         if (resetPassword == 1) {
-          Get.offAll(() => const ResetPassword());
+          Get.offAll(() =>  ResetPassword(flow: resetPassword,));
+        } else if(resetPassword == 2){
+          Get.offAll(() =>  ResetPassword(flow: resetPassword,));
         } else {
           Get.offAll(() => const NavigationScreen());
         }
+
       } else {
         TLoaders.errorSnackBar(title: 'Error', message: response['message']);
         if (kDebugMode) {

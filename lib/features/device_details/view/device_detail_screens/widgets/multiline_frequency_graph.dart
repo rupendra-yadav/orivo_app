@@ -52,7 +52,7 @@ class MultiLineFrequencyGraph extends StatelessWidget {
           color: TColors.totalPowerFactorGraphLine1,
           width: 4,
           markerSettings: const MarkerSettings(
-            isVisible: true,
+            isVisible: false,
             color: TColors.white,
             borderWidth: 2,
             borderColor: TColors.totalPowerFactorGraphLine1,

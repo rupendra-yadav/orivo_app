@@ -1,4 +1,5 @@
 import 'package:auro/data/repository/profile_repository.dart';
+import 'package:auro/features/authentication/view/login.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,7 +25,7 @@ class ResetPasswordController extends GetxController {
   final TLocalStorage _localStorage = TLocalStorage();
   static const String _userDataKey = 'user_data';
 
-  Future<void> resetPassword() async {
+  Future<void> resetPassword(int state) async {
     TFullScreenLoader.openLoadingDialog('Resettling Password...');
 
     //check internet Connection
@@ -51,7 +52,13 @@ class ResetPasswordController extends GetxController {
         if (response['success'] == true) {
           TLoaders.successSnackBar(
               title: 'Success', message: response['message']);
-          Get.offAll(() => const NavigationScreen());
+
+          if(state == 2){
+            Get.offAll(() => const Login());
+          }else{
+            Get.offAll(() => const NavigationScreen());
+          }
+
         } else {
           TLoaders.errorSnackBar(title: 'Error', message: response['message']);
           if (kDebugMode) {

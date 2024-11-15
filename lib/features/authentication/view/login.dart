@@ -4,8 +4,10 @@ import 'package:auro/utils/constant/colors.dart';
 import 'package:auro/utils/constant/image_string.dart';
 import 'package:auro/utils/constant/text_strings.dart';
 import 'package:auro/utils/device/device_utility.dart';
+import 'package:auro/utils/preferences/cache_manager.dart';
 import 'package:auro/utils/validate/validate.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -24,7 +26,18 @@ class Login extends StatelessWidget {
     final loginController = Get.put(LoginController());
     // loginController.screenRedirect();
 
+  if(SharedPrefs.getBool("firstLaunch") == true){
 
+  }else{
+    AwesomeNotifications().createNotification(
+        content: NotificationContent(
+            id: 10,
+            channelKey: "basic_chanel",
+            title: "Change Password..!",
+            body: "For your account’s safety, we require you to update your password before logging in.\nClick on the Reset here link on the login page."
+
+        ));
+  }
 
     return Scaffold(
       backgroundColor: TColors.primary,
@@ -110,7 +123,7 @@ class Login extends StatelessWidget {
                             minWidth: 185.w,
                             title: TTexts.logMeIn,
                             onPressed: () {
-                               loginController.userLogin();
+                              loginController.userLogin();
                             }),
                       ),
                       SizedBox(
@@ -118,26 +131,27 @@ class Login extends StatelessWidget {
                       ),
 
                       /// Register here
-                      /*Center(
+                      Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Text(
-                              TTexts.doYouHaveAccount,
+                              TTexts.rememberThePassword,
                               style:
                                   TextStyle(color: TColors.white, fontSize: 16),
                             ),
                             InkWell(
-                              onTap: () => Get.to(() => Register()),
+                              //onTap: () => Get.to(() => Register()),
+                              onTap: () => Get.to(() => SendOtp(resetPass: 2)),
                               child: const Text(
-                                TTexts.registerHere,
+                                TTexts.resetHere,
                                 style: TextStyle(
                                     color: TColors.secondary, fontSize: 16),
                               ),
                             ),
                           ],
                         ),
-                      ),*/
+                      ),
                     ],
                   ),
                 ],

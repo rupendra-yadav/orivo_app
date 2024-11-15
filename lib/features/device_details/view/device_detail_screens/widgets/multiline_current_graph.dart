@@ -77,7 +77,7 @@ class MultiLineCurrentGraph extends StatelessWidget {
           color: TColors.totalPowerFactorGraphLine2,
           width: 4,
           markerSettings: const MarkerSettings(
-            isVisible: true,
+            isVisible: false,
             color: TColors.white,
             borderWidth: 2,
             borderColor: TColors.totalPowerFactorGraphLine2,
@@ -91,7 +91,7 @@ class MultiLineCurrentGraph extends StatelessWidget {
           color: TColors.totalPowerFactorGraphLine4,
           width: 4,
           markerSettings: const MarkerSettings(
-            isVisible: true,
+            isVisible: false,
             color: TColors.white,
             borderWidth: 2,
             borderColor: TColors.totalPowerFactorGraphLine4,
@@ -105,7 +105,7 @@ class MultiLineCurrentGraph extends StatelessWidget {
           color: TColors.totalPowerFactorGraphLine3,
           width: 4,
           markerSettings: const MarkerSettings(
-            isVisible: true,
+            isVisible: false,
             color: TColors.white,
             borderWidth: 2,
             borderColor: TColors.totalPowerFactorGraphLine3,

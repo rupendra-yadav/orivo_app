@@ -50,7 +50,7 @@ class TotalPowerFactorCard extends StatelessWidget {
 
             ///Multile Graph
 
-            MultiLineTotalPowerFactorGraph(onPeakGraph:pfDetailModel.pfTimeline?.value??[],dateType: dateType,),
+            MultiLineTotalPowerFactorGraph(dateType: dateType,),
           ],
         ),
       ),

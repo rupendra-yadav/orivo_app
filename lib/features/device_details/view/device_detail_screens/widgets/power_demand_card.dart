@@ -23,7 +23,7 @@ class PowerDemandCard extends StatelessWidget {
     int reVal = (total != 0) ? ((vall / total) * 100).toInt() : 0;
     int value = ((reVal / 100) * 33).toInt();
 
-    return InkWell(
+    return GestureDetector(
       onTap: () => (Get.to(() => const DemandEstimateDetail())),
       child: Container(
         height: 200.h,

@@ -21,6 +21,7 @@ class Device extends StatelessWidget {
 
     // Set the login preference
     SharedPrefs.setBool("isLoggedIn", true);
+    SharedPrefs.setBool("firstLaunch", true);
 
     return Scaffold(
       backgroundColor: TColors.primary,

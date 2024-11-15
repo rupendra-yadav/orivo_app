@@ -16,7 +16,10 @@ import '../../../../../utils/constant/text_strings.dart';
 import '../../../../../utils/validate/validate.dart';
 
 class ResetPassword extends StatelessWidget {
-  const ResetPassword({super.key});
+  const ResetPassword({super.key,
+    required this.flow});
+
+  final int flow;
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +89,7 @@ class ResetPassword extends StatelessWidget {
                           child: Button(
                               height: 57.h,
                               minWidth: 180.w,
-                              onPressed: () => resetPasswordController.resetPassword(),
+                              onPressed: () => resetPasswordController.resetPassword(flow),
                               title: TTexts.updatePassword))
                     ],
                   )

@@ -37,17 +37,6 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-
-   /* DateTime now = DateTime.now();
-    DateTime utcNow = now.toUtc();
-    DateTime istNow = utcNow.add(const Duration(hours: 5, minutes: 30));
-    DateTime istMidnight = DateTime(istNow.year, istNow.month, istNow.day);
-    String formattedDateMidnight = DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
-    String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
-    timeStamp = DateFormat("d MMMM h:mm a").format(istNow);
-    controller.getDeviceDetail(navigationController.deviceId.value, formattedDate, formattedDateMidnight);
-    controller.getDeviceDataItems();*/
-
     _refreshData();
 
   }
@@ -133,7 +122,7 @@ class _HomeState extends State<Home> {
                   }
 
                   double energy =
-                      controller.costEstimateModel.value.normEnergy?.value ??
+                      controller.costEstimateModel.value.totalEnergyCost?.value ??
                           0.0;
                   double govt =
                       controller.costEstimateModel.value.govCost?.value ??
