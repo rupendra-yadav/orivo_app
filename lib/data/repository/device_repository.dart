@@ -232,8 +232,7 @@ class DeviceRepository extends GetxController {
 
 
   /// Demand Details
-  Future<Map<String, dynamic>> getDemandDetails(
-      String date, String deviceId, String stop) async {
+  Future<Map<String, dynamic>> getDemandDetails(String date, String deviceId, String stop) async {
     try {
       Map<String, dynamic> request = {
         "device_id": deviceId,
@@ -595,5 +594,68 @@ class DeviceRepository extends GetxController {
       throw Exception(e.toString());
     }
   }
+
+  /// Update Device Name
+  Future<Map<String, dynamic>> updateDeviceName(String deviceId, String name) async {
+    try {
+      Map<String, dynamic> request = {
+        "machine_id": deviceId,
+        "machine_name": name,
+      };
+
+      print("CheckRequest");
+      print(request);
+      final response = await THttpHelper.post(APIKeys.updateMachineName, request,);
+
+      print(response);
+      if (kDebugMode) {
+        print('updateDeviceName  Response: $response');
+      }
+
+      if (response['status'] == 'success') {
+
+        return response["data"];
+      } else {
+        print("error On status");
+        throw Exception(response['message']);
+      }
+    } catch (e) {
+      print("error Try  Catch");
+      print(e.toString());
+      throw Exception(e.toString());
+    }
+  }
+
+  /// Update FCM
+  Future<Map<String, dynamic>> updateFCM(String deviceId, String fcmToken) async {
+    try {
+      Map<String, dynamic> request = {
+        "user_id": deviceId,
+        "user_fcm": fcmToken,
+      };
+
+      print("CheckRequest");
+      print(request);
+      final response = await THttpHelper.post(APIKeys.updateFcm, request,);
+
+      print(response);
+      if (kDebugMode) {
+        print('updateDeviceName  Response: $response');
+      }
+
+      if (response['response'] == 'success') {
+
+        return response["data"];
+      } else {
+        print("error On status");
+        throw Exception(response['message']);
+      }
+    } catch (e) {
+      print("error Try  Catch");
+      print(e.toString());
+      throw Exception(e.toString());
+    }
+  }
+
 
 }

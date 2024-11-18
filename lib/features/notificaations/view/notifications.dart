@@ -1,8 +1,15 @@
+import 'package:auro/features/notificaations/Controller/notificatyion_controller.dart';
 import 'package:auro/features/notificaations/widgets/notification_appa_bar.dart';
 import 'package:auro/utils/constant/colors.dart';
 import 'package:auro/utils/styles/spacing_style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
+import '../../../common/widgets/loaders/image_loader.dart';
+import '../../../utils/constant/image_string.dart';
+import '../../navigation/view/bottom_nav_screen/widgets/device_list_shimmer.dart';
 import '../widgets/notification_card.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -13,8 +20,8 @@ class Notifications extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    //final message = ModalRoute.of(context)!.settings.arguments as RemoteMessage;
-    //TLoaders.successSnackBar(title: message.notification!.title.toString(), message: message.notification!.body.toString());
+    final NotificationController controller = Get.put(NotificationController());
+    controller.getNotificationList();
 
     return Scaffold(
       backgroundColor: TColors.primary,
@@ -25,12 +32,30 @@ class Notifications extends StatelessWidget {
           child: Column(
             children: [
               /// Notification Card
-              NotificationCard(),
-              NotificationCard(),
-              NotificationCard(),
-              NotificationCard(),
-              NotificationCard(),
-              NotificationCard(),
+              Obx((){
+
+                if (controller.isNotificationLoading.value) return const DeviceListShimmer();
+
+                if (controller.notificationList.isEmpty) {
+                  return const TImageLoaderWidget(
+                      text: 'Whoops! No Device available...!',
+                      animation: TImages.imgLoginBgNew1,
+                      showAction: false);
+                }
+
+                return  SizedBox(
+                  height: 800.h,
+                  child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    itemCount: controller.notificationList.length,
+                    itemBuilder: (context,index){
+                      return NotificationCard(deviceListModel: controller.notificationList[index],
+                      );
+                    }),
+                );
+              })
+
+              ,
             ],
           ),
         ),

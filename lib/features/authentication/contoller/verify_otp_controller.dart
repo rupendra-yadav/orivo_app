@@ -10,6 +10,7 @@ import '../../../utils/helpers/network_manager.dart';
 import '../../../utils/local_storage/storage_utility.dart';
 import '../../../utils/popups/full_screen_loader.dart';
 import '../../../utils/popups/loaders.dart';
+import '../../../utils/preferences/cache_manager.dart';
 import '../model/user_detail.dart';
 
 class VerifyOtpController extends GetxController {
@@ -43,21 +44,20 @@ class VerifyOtpController extends GetxController {
         TFullScreenLoader.stopLoading();
         return;
       }
-      Map<String, dynamic> userDataMap =
-          _localStorage.readData(_userDataKey) ?? {};
+      Map<String, dynamic> userDataMap = _localStorage.readData(_userDataKey) ?? {};
       UserDetail user = UserDetail.fromJson(userDataMap);
       try {
         if (kDebugMode) {
           print(user.mCustName);
         }
-        id = user.mCustId;
+        id = user.mCustMobile;
       } catch (e) {
         if (kDebugMode) {
           print(e.toString());
         }
       }
 
-      final response = await _repository.verifyOtp(id, otp.text.trim());
+      final response = await _repository.verifyOtp( SharedPrefs.getString("mobileNumber"), otp.text.trim());
 
       TFullScreenLoader.stopLoading();
 

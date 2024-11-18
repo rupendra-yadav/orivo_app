@@ -22,6 +22,12 @@ class DemandTimelineGraph extends StatelessWidget {
     });
 
     return SfCartesianChart(
+      trackballBehavior: TrackballBehavior(
+          enable: true,
+          tooltipAlignment: ChartAlignment.center,
+          activationMode: ActivationMode.singleTap,
+          tooltipDisplayMode: TrackballDisplayMode.groupAllPoints
+      ),
       backgroundColor: Colors.transparent,
       primaryXAxis: DateTimeAxis(
         interval: 1,
@@ -29,8 +35,8 @@ class DemandTimelineGraph extends StatelessWidget {
         labelStyle: const TextStyle(color: Colors.white),
         majorGridLines: const MajorGridLines(width: 0),
         axisLine: const AxisLine(width: 0),
-        autoScrollingDelta: 5,
-        autoScrollingMode: AutoScrollingMode.start,
+       /* autoScrollingDelta: 5,
+        autoScrollingMode: AutoScrollingMode.start,*/
       ),
       primaryYAxis: const NumericAxis(
         labelStyle: TextStyle(color: Colors.white),
@@ -39,10 +45,10 @@ class DemandTimelineGraph extends StatelessWidget {
         minorTickLines: MinorTickLines(size: 0),
       ),
 
-      zoomPanBehavior: ZoomPanBehavior(
+    /*  zoomPanBehavior: ZoomPanBehavior(
         enablePanning: true,
         zoomMode: ZoomMode.x,
-      ),
+      ),*/
       series: <CartesianSeries>[
         LineSeries<ChartData, DateTime>(
           dataSource: chartData,

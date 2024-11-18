@@ -18,6 +18,7 @@ class Device extends StatelessWidget {
 
     // Fetch the device list when the widget is built
     controller.getDeviceList();
+    controller.updateFcm();
 
     // Set the login preference
     SharedPrefs.setBool("isLoggedIn", true);

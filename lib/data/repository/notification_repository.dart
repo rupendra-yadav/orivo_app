@@ -1,0 +1,42 @@
+import 'package:auro/features/notificaations/Model/notification_model.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+
+import '../../utils/constant/api_constants.dart';
+import '../http/http_client.dart';
+
+class NotificationRepository extends GetxController {
+  static NotificationRepository get instance => Get.find();
+
+  ///Notification List
+  Future<List<NotificationModel>> getNotificationList(String userId) async {
+    try {
+      Map<String, dynamic> request = {"user_id": userId};
+
+      Map<String, dynamic> response =
+      await THttpHelper.post(APIKeys.notifications, request);
+
+      if (kDebugMode) {
+        print('machine  Response: $response');
+      }
+
+      if (response['response'] == 'success') {
+        List<dynamic> deviceListData = response['data'];
+
+        List<NotificationModel> deviceList = deviceListData
+            .map((data) => NotificationModel.fromJson(data))
+            .toList();
+
+        return deviceList;
+      } else {
+        throw Exception(response['message']);
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+}

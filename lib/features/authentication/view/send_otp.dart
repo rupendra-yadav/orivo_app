@@ -1,5 +1,6 @@
 import 'package:auro/features/authentication/contoller/send_otp_controller.dart';
 import 'package:auro/features/authentication/view/login.dart';
+import 'package:auro/utils/preferences/cache_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -88,6 +89,7 @@ class SendOtp extends StatelessWidget {
                             minWidth: 185.w,
                             title: TTexts.sendOtp,
                             onPressed: () {
+
                               sendOtpController.sendOtp(resetPass);
                             }),
                       ),
@@ -97,7 +99,7 @@ class SendOtp extends StatelessWidget {
                       ),
 
                       /// Register here
-                      const Center(
+                      /*const Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -113,7 +115,7 @@ class SendOtp extends StatelessWidget {
                             ),
                           ],
                         ),
-                      ),
+                      ),*/
                     ],
                   ),
                 ],

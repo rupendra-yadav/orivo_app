@@ -7,6 +7,7 @@ import '../../../data/repository/authentication_repository.dart';
 import '../../../utils/helpers/network_manager.dart';
 import '../../../utils/popups/full_screen_loader.dart';
 import '../../../utils/popups/loaders.dart';
+import '../../../utils/preferences/cache_manager.dart';
 
 class SendOtpController extends GetxController {
   static SendOtpController get instance => Get.find();
@@ -36,7 +37,7 @@ class SendOtpController extends GetxController {
       }
 
       final response = await _repository.sendOtp(mobileNumber.text.trim());
-
+      SharedPrefs.setString("mobileNumber", mobileNumber.text.trim());
       TFullScreenLoader.stopLoading();
 
       if (response['success'] == true) {

@@ -10,6 +10,7 @@ import 'package:auro/features/device_details/view/device_detail_screens/widgets/
 import 'package:auro/utils/constant/colors.dart';
 import 'package:auro/utils/constant/text_strings.dart';
 import 'package:auro/utils/device/device_utility.dart';
+import 'package:auro/utils/helpers/date_helper.dart';
 import 'package:auro/utils/styles/spacing_style.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,6 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     _refreshData();
-
   }
 
   // Refresh method
@@ -47,17 +47,16 @@ class _HomeState extends State<Home> {
     DateTime utcNow = now.toUtc();
     DateTime istNow = utcNow.add(const Duration(hours: 5, minutes: 30));
     DateTime istMidnight = DateTime(istNow.year, istNow.month, istNow.day);
-    String formattedDateMidnight = DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
+    String formattedDateMidnight =
+        DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
     String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
     setState(() {
       timeStamp = DateFormat("d MMMM h:mm a").format(istNow);
     });
-    await controller.getDeviceDetail(navigationController.deviceId.value, formattedDate, formattedDateMidnight);
+    await controller.getDeviceDetail(navigationController.deviceId.value,
+        formattedDate, formattedDateMidnight);
     await controller.getDeviceDataItems();
-
-
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +67,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: TColors.primary,
       body: RefreshIndicator(
-        onRefresh:_refreshData,
+        onRefresh: _refreshData,
         child: SingleChildScrollView(
           child: Padding(
             padding: SpacingStyle.paddingWithDefaultSpace,
@@ -76,15 +75,19 @@ class _HomeState extends State<Home> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
 
-                Row(
-                  children: [
-                    Spacer(),
-                    TextView(text: "Updated : $timeStamp",
-                      fontSize: 11,
-                     )
-                  ],
-                ),
+                /// updated at date time
+                Obx(() {
+                  return Row(
+                    children: [
+                      Spacer(),
+                      TextView(
+                        text: "Updated : " + DateHelper().formatDateTime(controller.energyConsumptionData.value.latestDataTs?.value ?? "2024-11-16 00:30:00"),
 
+                        fontSize: 11,
+                      )
+                    ],
+                  );
+                }),
 
                 ///Energy Consumption
 
@@ -92,7 +95,6 @@ class _HomeState extends State<Home> {
                   if (controller.isEnergyConsumptionLoading.value) {
                     return const DeviceDetailShimmer();
                   }
-
                   double onPeak = controller
                           .energyConsumptionData.value.onPeakUnit?.value ??
                       0.0;
@@ -103,7 +105,6 @@ class _HomeState extends State<Home> {
                           .energyConsumptionData.value.normalUnit?.value ??
                       0.0;
                   double totalCount = onPeak + offPeak + normal;
-
 
                   return PieCard(
                     energyConsumptionModel:
@@ -121,18 +122,16 @@ class _HomeState extends State<Home> {
                     return const DeviceDetailShimmer();
                   }
 
-                  double energy =
-                      controller.costEstimateModel.value.totalEnergyCost?.value ??
-                          0.0;
+                  double energy = controller
+                          .costEstimateModel.value.totalEnergyCost?.value ??
+                      0.0;
                   double govt =
-                      controller.costEstimateModel.value.govCost?.value ??
-                          0.0;
+                      controller.costEstimateModel.value.govCost?.value ?? 0.0;
                   double demand =
                       controller.costEstimateModel.value.demand?.value ?? 0.0;
                   double others =
                       controller.costEstimateModel.value.other?.value ?? 0.0;
                   double totalCont = energy + govt + demand + others;
-
 
                   return CostEstimateCard(
                       costEstimateModel: controller.costEstimateModel.value,
@@ -144,7 +143,6 @@ class _HomeState extends State<Home> {
                   if (controller.isDemandLoading.value) {
                     return const DeviceDetailShimmer();
                   }
-
 
                   return Padding(
                     padding: EdgeInsets.symmetric(vertical: 10.h),
@@ -170,7 +168,6 @@ class _HomeState extends State<Home> {
                   if (controller.isBaseMetricLoading.value) {
                     return const DeviceDetailShimmer();
                   }
-
 
                   return Row(
                     children: [
@@ -217,7 +214,7 @@ class _HomeState extends State<Home> {
                           cardText: TTexts.totalCurrent,
                           width: TDeviceUtils.screenWidth / 2,
                           cardValue:
-                              "${controller.baseMetricModel.value.current?.value ?.toStringAsFixed(1) ?? "NA"} ${controller.baseMetricModel.value.current?.unit?.toString() ?? "NA"}",
+                              "${controller.baseMetricModel.value.current?.value?.toStringAsFixed(1) ?? "NA"} ${controller.baseMetricModel.value.current?.unit?.toString() ?? "NA"}",
                           cardAvg:
                               "${controller.powerFactorModel.value.pf?.value?.toStringAsFixed(2) ?? "NA"}${controller.powerFactorModel.value.pf?.unit?.toString() ?? "NA"}",
                         ),

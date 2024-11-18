@@ -57,7 +57,7 @@ class TotalPowerFactorsCard extends StatelessWidget {
                           height: 30,  // Explicit fixed height
                           child: SfLinearGauge(
                             minimum: 0,
-                            maximum: 1.0,  // Set fixed range for gauge
+                            maximum: 1,  // Set fixed range for gauge
                             interval: 0.2,
                             animateRange: true,
                             animateAxis: true,
@@ -65,9 +65,7 @@ class TotalPowerFactorsCard extends StatelessWidget {
                             showTicks: false,
                             barPointers: [
                               LinearBarPointer(
-                                value: (powerFactorModel.pf?.value?.toDouble() ?? 0.0).isFinite
-                                    ? powerFactorModel.pf?.value?.toDouble() ?? 0.0
-                                    : 0.0,
+                                value:1,
                                 thickness: 5,
                                 edgeStyle: LinearEdgeStyle.bothCurve,
                                 shaderCallback: (bounds) {

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../../../../../common/widgets/text/text_view.dart';
 import '../../../../../../utils/constant/colors.dart';
+import '../../controller/device_detail_controller.dart';
 import '../../model/cost_estimate_detail_model.dart';
+import '../../widgets/demand_distribution_card.dart';
 
 class LegendNameCardDemand extends StatefulWidget {
   const LegendNameCardDemand({
@@ -19,6 +23,7 @@ class LegendNameCardDemand extends StatefulWidget {
 }
 
 class _LegendNameCardDemandState extends State<LegendNameCardDemand> {
+
   bool _isDetailVisible = false;
 
   @override
@@ -44,10 +49,10 @@ class _LegendNameCardDemandState extends State<LegendNameCardDemand> {
                 SizedBox(width: 5.w),
                 const TextView(text: "Demand : ", fontSize: 20),
                 TextView(
-                  text: (widget.costEstimateDetailModel.totolDemandCost
-                      ?.value ??
-                      0.0)
-                      .toStringAsFixed(2),
+                  text:
+                      (widget.costEstimateDetailModel.totolDemandCost?.value ??
+                              0.0)
+                          .toStringAsFixed(2),
                   // Referencing widget.titleValue
                   fontSize: 20,
                   textColor: TColors.graphLine,
@@ -89,36 +94,35 @@ class _LegendNameCardDemandState extends State<LegendNameCardDemand> {
                     children: [
                       Expanded(
                         child: TextView(
-                          text: (widget.costEstimateDetailModel.demand
-                              ?.value ??
-                              0.0)
+                          text: (widget.costEstimateDetailModel.demand?.value ??
+                                  0.0)
                               .toStringAsFixed(2),
                           // Referencing widget.onPeakValue
                           textColor: TColors.graphLine,
                         ),
                       ),
-                     
                       Expanded(child: TextView(text: "x", fontSize: 15)),
-                     
                       Expanded(
                         child: TextView(
                           text: (widget.costEstimateDetailModel.demandRate
-                              ?.value ??
-                              0.0)
+                                      ?.value ??
+                                  0.0)
                               .toStringAsFixed(2),
                           // Referencing widget.onPeakRate
                           textColor: TColors.graphLine,
                         ),
                       ),
-                      
                       Expanded(
                         child: TextView(
-                            text: ((widget.costEstimateDetailModel.demand?.value ?? 0.0) * (widget.costEstimateDetailModel.demandRate?.value ?? 0.0)).toStringAsFixed(2),
+                            text: ((widget.costEstimateDetailModel.demand?.value ?? 0.0) *
+                                    (widget.costEstimateDetailModel.demandRate
+                                            ?.value ??
+                                        0.0))
+                                .toStringAsFixed(2),
                             textColor: TColors.graphLine),
                       ),
                     ],
                   ),
-
 
                   /// Grand Total
                   SizedBox(
@@ -133,13 +137,43 @@ class _LegendNameCardDemandState extends State<LegendNameCardDemand> {
                       ),
                       Spacer(),
                       TextView(
-                        text:((widget.costEstimateDetailModel.demand?.value ?? 0.0) * (widget.costEstimateDetailModel.demandRate?.value ?? 0.0)).toStringAsFixed(2),
+                        text: ((widget.costEstimateDetailModel.demand?.value ??
+                                    0.0) *
+                                (widget.costEstimateDetailModel.demandRate
+                                        ?.value ??
+                                    0.0))
+                            .toStringAsFixed(2),
                         fontSize: 20,
                         bold: true,
                         textColor: TColors.graphLine,
                       ),
                     ],
-                  )
+                  ),
+                  SizedBox(
+                    height: 15.h,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(child: TextView(text: "Cost")),
+                      Expanded(child: TextView(text: "Demand")),
+                      Expanded(child: TextView(text: "Rate")),
+
+                    ],
+                  ),
+
+                  SizedBox(
+                    height: 200.h,
+                    child: ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        itemCount: widget.costEstimateDetailModel.demandDistribution?.length ?? 0,
+                        itemBuilder: (context,index){
+                          return DemandDistributionCard(
+                            demandDistribution: widget.costEstimateDetailModel.demandDistribution![index],
+                          );
+                        }),
+                  ),
+
+
                 ],
               ),
             ),

@@ -1,6 +1,8 @@
 import 'cost_estimate_demand_demand.dart';
+import 'cost_estimate_details_demand_distribution_model.dart';
 
 class CostEstimateDetailModel {
+  List<DemandDistribution>? demandDistribution;
   Demand? cess;
   Demand? cessRate;
   Demand? demand;
@@ -21,6 +23,7 @@ class CostEstimateDetailModel {
 
   CostEstimateDetailModel(
       {this.cess,
+        this.demandDistribution,
         this.cessRate,
         this.demand,
         this.demandRate,
@@ -39,6 +42,14 @@ class CostEstimateDetailModel {
         this.totolDemandCost});
 
   CostEstimateDetailModel.fromJson(Map<String, dynamic> json) {
+
+    if (json['demand_distribution'] != null) {
+      demandDistribution = <DemandDistribution>[];
+      json['demand_distribution'].forEach((v) {
+        demandDistribution!.add(new DemandDistribution.fromJson(v));
+      });
+    }
+
     cess = json['cess'] != null ? new Demand.fromJson(json['cess']) : null;
     cessRate =
     json['cess_rate'] != null ? new Demand.fromJson(json['cess_rate']) : null;
@@ -86,6 +97,12 @@ class CostEstimateDetailModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+
+    if (this.demandDistribution != null) {
+      data['demand_distribution'] =
+          this.demandDistribution!.map((v) => v.toJson()).toList();
+    }
+
     if (this.cess != null) {
       data['cess'] = this.cess!.toJson();
     }

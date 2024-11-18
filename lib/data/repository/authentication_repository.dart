@@ -121,7 +121,7 @@ class AuthenticationRepository extends GetxController {
       userId,otp) async {
     try {
       Map<String, dynamic> data = {
-        'user_id': userId,
+        'user_mobile': userId,
         'otp': otp,
 
       };

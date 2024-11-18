@@ -1,18 +1,25 @@
+import 'data_update_time.dart';
 import 'normal_model.dart';
 
 class EnergyConsumptionModel {
+  LatestDataTs? latestDataTs;
   NormalUnit? normalUnit;
   NormalUnit? offPeakUnit;
   NormalUnit? onPeakUnit;
   NormalUnit? totalUnit;
 
   EnergyConsumptionModel(
-      {this.normalUnit,
+      {
+        this.latestDataTs,
+        this.normalUnit,
         this.offPeakUnit,
         this.onPeakUnit,
         this.totalUnit});
 
   EnergyConsumptionModel.fromJson(Map<String, dynamic> json) {
+    latestDataTs = json['latest_data_ts'] != null
+        ? new LatestDataTs.fromJson(json['latest_data_ts'])
+        : null;
     normalUnit = json['normal_unit'] != null
         ? NormalUnit.fromJson(json['normal_unit'])
         : null;
@@ -29,6 +36,9 @@ class EnergyConsumptionModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    if (this.latestDataTs != null) {
+      data['latest_data_ts'] = this.latestDataTs!.toJson();
+    }
     if (normalUnit != null) {
       data['normal_unit'] = normalUnit!.toJson();
     }

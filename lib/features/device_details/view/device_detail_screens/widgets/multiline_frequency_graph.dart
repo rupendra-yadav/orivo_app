@@ -26,6 +26,12 @@ class MultiLineFrequencyGraph extends StatelessWidget {
       ));
     });
     return SfCartesianChart(
+      trackballBehavior: TrackballBehavior(
+          enable: true,
+          tooltipAlignment: ChartAlignment.center,
+          activationMode: ActivationMode.singleTap,
+          tooltipDisplayMode: TrackballDisplayMode.groupAllPoints
+      ),
       borderWidth: 0,
       plotAreaBorderWidth: 0,
       primaryXAxis: DateTimeAxis(
@@ -37,25 +43,25 @@ class MultiLineFrequencyGraph extends StatelessWidget {
       primaryYAxis: const NumericAxis(
         isVisible: false, // Hide Y axis
       ),
-      zoomPanBehavior: ZoomPanBehavior(
+     /* zoomPanBehavior: ZoomPanBehavior(
         enablePinching: true,
         enablePanning: true,
         enableDoubleTapZooming: true,
         enableMouseWheelZooming: false,
         enableSelectionZooming: true,
-      ),
+      ),*/
       series: <SplineSeries<ChartData, DateTime>>[
         SplineSeries<ChartData, DateTime>(
           dataSource: chartData,
           xValueMapper: (ChartData data, _) => data.y,
           yValueMapper: (ChartData data, _) => data.x,
-          color: TColors.totalPowerFactorGraphLine1,
+          color: TColors.totalPowerFactorGraphLine2,
           width: 4,
           markerSettings: const MarkerSettings(
             isVisible: false,
             color: TColors.white,
             borderWidth: 2,
-            borderColor: TColors.totalPowerFactorGraphLine1,
+            borderColor: TColors.totalPowerFactorGraphLine2,
           ),
         ),
       ],

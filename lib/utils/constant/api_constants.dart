@@ -16,6 +16,11 @@ class APIKeys{
 
   static const String machineEND = "Api/machine";
   static const String machineDetailsEND = "Api/machine_details";
+  static const String notifications = "Api/notification";
+  static const String updateMachineName = "Api/update_machine_name";
+  static const String updateFcm = "Api/update_fcm";
+
+
   static const String machineDetailsDataItemsEND = "readflux.php";
   static const String machineDetailsGraphDataEND = "readfieldwisedata.php";
 }
@@ -36,6 +41,7 @@ class APIKeys2{
   static const String currentDetails = "current-details";
   static const String baseMetric = "base-metric";
   static const String pfDetails = "pf-details";
+
 }
 
 

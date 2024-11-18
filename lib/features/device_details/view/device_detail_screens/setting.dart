@@ -4,14 +4,19 @@ import 'package:auro/features/device_details/view/device_detail_screens/widgets/
 import 'package:auro/features/device_details/view/device_detail_screens/widgets/setting_notification_detjails_card.dart';
 import 'package:auro/utils/constant/colors.dart';
 import 'package:auro/utils/constant/text_strings.dart';
+import 'package:auro/utils/helpers/date_helper.dart';
 import 'package:auro/utils/styles/spacing_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 
+import '../../../../common/widgets/inputFields/input_text.dart';
 import '../../../../utils/constant/image_string.dart';
 import '../../../../utils/device/device_utility.dart';
+import '../../../../utils/validate/validate.dart';
 import '../../controller/device_detail_navigation_controller.dart';
+import '../widgets/update_device_name_dialog.dart';
 import 'controller/device_detail_controller.dart';
 
 class Setting extends StatelessWidget {
@@ -20,8 +25,7 @@ class Setting extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final DeviceDetailController controller = Get.put(DeviceDetailController());
-    final DeviceDetailNavigationController navigationController =
-        DeviceDetailNavigationController.instance;
+    final DeviceDetailNavigationController navigationController = DeviceDetailNavigationController.instance;
 
     controller.getDeviceDetail(navigationController.deviceId.value, "", "");
 
@@ -69,13 +73,18 @@ class Setting extends StatelessWidget {
                         text: TTexts.deviceAInfo,
                         fontSize: 20,
                       ),
-                      SettingDeviceDetailCard(
-                        title: TTexts.deviceAName,
-                        text: controller.deviceListModel.mMachineTitle,
+                      GestureDetector(
+                        onTap: (){
+                          dialogUpdateDeviceName(context,controller,navigationController.deviceId.value);
+                        },
+                        child: SettingDeviceDetailCard(
+                          title: TTexts.deviceAName,
+                          text: controller.deviceListModel.mMachineTitle,
+                        ),
                       ),
                       SettingDeviceDetailCard(
                         title: TTexts.installationDate,
-                        text: controller.deviceListModel.mMachineAddedon,
+                        text: DateHelper().formatDateTime(controller.deviceListModel.mMachineAddedon),
                       ),
                       SettingDeviceDetailCard(
                         title: TTexts.deviceModalNumber,
@@ -91,17 +100,17 @@ class Setting extends StatelessWidget {
                         fontSize: 20,
                       ),
                       const SettingDeviceDetailCard(
-                          title: TTexts.deviceAName, text: TTexts.totalLoad),
+                          title: TTexts.totalLoad, text: TTexts.totalLoad),
                       SettingDeviceDetailCard(
-                        title: TTexts.installationDate,
+                        title: TTexts.tariffPlan,
                         text: controller.deviceListModel.mMachineAddedon,
                       ),
                       SettingDeviceDetailCard(
-                        title: TTexts.deviceModalNumber,
+                        title: TTexts.bPNumber,
                         text: controller.deviceListModel.mMachineModelNumber,
                       ),
                       SettingDeviceDetailCard(
-                        title: TTexts.deviceModalNumber,
+                        title: TTexts.cSPDCLpassword,
                         text: controller.deviceListModel.mMachineModelNumber,
                       ),
                       SizedBox(
@@ -136,3 +145,6 @@ class Setting extends StatelessWidget {
     );
   }
 }
+
+
+

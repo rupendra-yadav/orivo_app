@@ -29,6 +29,12 @@ class MultiLineVoltageGraph extends StatelessWidget {
 
 
     return SfCartesianChart(
+      trackballBehavior: TrackballBehavior(
+          enable: true,
+          tooltipAlignment: ChartAlignment.center,
+          activationMode: ActivationMode.singleTap,
+          tooltipDisplayMode: TrackballDisplayMode.groupAllPoints
+      ),
       borderWidth: 0,
       plotAreaBorderWidth: 0,
       primaryXAxis: DateTimeAxis(

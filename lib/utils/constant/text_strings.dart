@@ -65,6 +65,7 @@ class TTexts {
   static const String deviceDetails = "Device Details";
   static const String deviceAInfo = "Device Info";
   static const String deviceAName = "Device Name";
+  static const String totalLoad = "Total Load";
   static const String a_ = ":";
   static const String installationDate = "Installation Date";
   static const String deviceModalNumber = "Device Modal Number";
@@ -74,7 +75,6 @@ class TTexts {
   static const String dumNumber = "9784561322";
   static const String clickToAddNumber = "Click To Add Number";
   static const String userDetails = "User Details";
-  static const String totalLoad = "Total Load";
   static const String tariffPlan = "Tariff Plan";
   static const String bPNumber = "B.P Number";
   static const String cSPDCLpassword = "CSPDCL password";
@@ -82,6 +82,9 @@ class TTexts {
   static const String hV4 = "HV4";
   static const String num10023457 = "10023457";
   static const String stars = "********";
+  static const String changeDeviceName = "Change Device Name";
+  static const String deviceName = "Device Name";
+  static const String save = "Save";
 
   ///Home
   static const String machineName = "Machine Name";

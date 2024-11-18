@@ -1,5 +1,6 @@
 import 'package:auro/data/repository/device_repository.dart';
 import 'package:auro/features/navigation/view/bottom_nav_screen/model/device_list_model.dart';
+import 'package:auro/utils/preferences/cache_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
@@ -18,13 +19,13 @@ class DeviceListController extends GetxController {
   RxList<DeviceListModel> deviceList = <DeviceListModel>[].obs;
 
   final isDeviceLoading = false.obs;
+  final isFCMLoading = false.obs;
 
   ///--------Device List
   Future<void> getDeviceList() async {
 
     /// this is to Access data
-    Map<String, dynamic> userDataMap =
-        _localStorage.readData(_userDataKey) ?? {};
+    Map<String, dynamic> userDataMap = _localStorage.readData(_userDataKey) ?? {};
     UserDetail user = UserDetail.fromJson(userDataMap);
     try {
 
@@ -43,10 +44,6 @@ class DeviceListController extends GetxController {
 
       TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     }
-
-
-
-
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());
@@ -58,4 +55,35 @@ class DeviceListController extends GetxController {
   }
 
 
+
+  ///--------Update FCM
+
+  Future<void> updateFcm() async {
+    /// this is to Access data
+    Map<String, dynamic> userDataMap = _localStorage.readData(_userDataKey) ?? {};
+    UserDetail user = UserDetail.fromJson(userDataMap);
+
+      try {
+        isDeviceLoading.value = true;
+
+        try {
+          isFCMLoading.value = true;
+
+          final Map<String, dynamic> responsee = await _deviceReposotory.updateFCM(user.mCustId, SharedPrefs.getString("FCM_TOKEN").toString());
+
+        } catch (e) {
+          print(e.toString());
+        }
+
+        if (kDebugMode) {
+          print(user.mCustName);
+        }
+      } catch (e) {
+        TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+      }
+
+  finally {
+      isFCMLoading.value = false;
+    }
+  }
 }

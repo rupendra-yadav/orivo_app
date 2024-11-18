@@ -31,7 +31,6 @@ class _CostEstimateState extends State<CostEstimate> {
 
   String _selectedDateRange = TTexts.chooseDateRange;
 
-
   @override
   void initState() {
     super.initState();

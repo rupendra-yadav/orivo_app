@@ -2,6 +2,8 @@ import 'package:auro/features/device_details/view/device_detail_screens/model/ba
 import 'package:auro/features/device_details/view/device_detail_screens/model/demand_detail_model.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/model/demand_model.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/model/graph_data_model_api.dart';
+import 'package:auro/utils/popups/loaders.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
@@ -25,6 +27,8 @@ class DeviceDetailController extends GetxController {
   static DeviceDetailController get instance => Get.find();
 
   final _deviceReposotory = Get.put(DeviceRepository());
+
+  final deviceName = TextEditingController();
 
   RxList<DeviceListModel> deviceList = <DeviceListModel>[].obs;
   RxList<DataItems> dataIts = <DataItems>[].obs;
@@ -82,6 +86,8 @@ class DeviceDetailController extends GetxController {
 
   final isHistoryFieldLoading = false.obs;
   final isHistoryLoading = false.obs;
+
+  final isUpdateDeviceNameLoading = false.obs;
 
   ///Device Detail Data
   Future<void> getDeviceDetail(String deviceId, String startDate,String startDatePrep) async {
@@ -373,25 +379,21 @@ class DeviceDetailController extends GetxController {
           startDate, deviceId, endDate, fieldName, duration);
 
       // Assign the object to the Rx variable
-      historyModel.value = HistoryModel.fromJson(responsee);
+      //historyModel.value = HistoryModel.fromJson(responsee);
 
-
-      // Use modulo to reset indexPos for values greater than 3
-      int normalizedIndex = indexPos % 4;
-
-      // TLoaders.customToast(message: normalizedIndex.toString());
-
-      switch (normalizedIndex) {
-        case 0:
+      print("indexPosTest");
+      print(indexPos);
+      switch (indexPos) {
+        case 1:
           historyModel.value = HistoryModel.fromJson(responsee);
           break;
-        case 1:
+        case 2:
           historyModel1.value = HistoryModel.fromJson(responsee);
           break;
-        case 2:
+        case 3:
           historyModel2.value = HistoryModel.fromJson(responsee);
           break;
-        case 3:
+        case 4:
           historyModel3.value = HistoryModel.fromJson(responsee);
           break;
         default:
@@ -404,4 +406,23 @@ class DeviceDetailController extends GetxController {
       isHistoryLoading.value = false;
     }
   }
+
+  ///--------Update Device Name
+  Future<void> updateDeviceName(String deviceId) async {
+    try {
+      isUpdateDeviceNameLoading.value = true;
+
+      final Map<String, dynamic> responsee = await _deviceReposotory.updateDeviceName(deviceId, deviceName.text.toString().trim());
+      // Assign the object to the Rx variable
+     // demandDetailModel.value = DemandDetailModel.fromJson(responsee);
+
+      TLoaders.successSnackBar(title: "Device Name Changed",message: "Device Name Changed Successfully...!");
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      isUpdateDeviceNameLoading.value = false;
+    }
+  }
+
 }
+

@@ -28,7 +28,7 @@ class PfDetailModel {
         ? new PfTimeline.fromJson(json['pf_timeline'])
         : null;
     totalPf =
-    json['total_pf'] != null ? new AvgPf.fromJson(json['total_pf']) : null;
+    json['current_pf'] != null ? new AvgPf.fromJson(json['current_pf']) : null;
   }
 
   Map<String, dynamic> toJson() {

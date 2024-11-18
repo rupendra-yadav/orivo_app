@@ -21,14 +21,20 @@ class Graph extends StatelessWidget {
     return Padding(
       padding: SpacingStyle.paddingWithDefaultSpace,
       child: SfCartesianChart(
+        trackballBehavior: TrackballBehavior(
+            enable: true,
+            tooltipAlignment: ChartAlignment.center,
+            activationMode: ActivationMode.singleTap,
+            tooltipDisplayMode: TrackballDisplayMode.groupAllPoints
+        ),
         tooltipBehavior: TooltipBehavior(enable: true),
         plotAreaBorderColor: TColors.primaryLight2,
-        zoomPanBehavior: ZoomPanBehavior(
+       /* zoomPanBehavior: ZoomPanBehavior(
           enablePinching: true, // Enables pinch zooming
           enablePanning: true, // Enables panning
           enableDoubleTapZooming: true, // Enables double-tap zooming
           enableMouseWheelZooming: true, // Enables mouse wheel zooming (for web)
-        ),
+        ),*/
         primaryXAxis: const CategoryAxis(
           axisLine: AxisLine(color: TColors.primaryLight2),
           labelStyle: TextStyle(color: TColors.primaryLight2, fontSize: 6),
@@ -51,7 +57,7 @@ class Graph extends StatelessWidget {
 
             /// marker Setting to get dots in the graph
             markerSettings: MarkerSettings(
-              isVisible: true,
+              isVisible: false,
               shape: DataMarkerType.circle,
               color: TColors.error,
               height: 6.h,
@@ -70,13 +76,13 @@ class Graph extends StatelessWidget {
 
             /// marker Setting to get dots in the graph
             markerSettings: MarkerSettings(
-              isVisible: true,
+              isVisible: false,
               shape: DataMarkerType.circle,
-              color: TColors.error,
+              color: TColors.primaryLight2,
               height: 6.h,
               width: 6.w,
               borderWidth: 0,
-              borderColor: TColors.error,
+              borderColor: TColors.primaryLight2,
             ),
           ),
 
@@ -89,13 +95,13 @@ class Graph extends StatelessWidget {
 
             /// marker Setting to get dots in the graph
             markerSettings: MarkerSettings(
-              isVisible: true,
+              isVisible: false,
               shape: DataMarkerType.circle,
-              color: TColors.error,
+              color: TColors.accent,
               height: 6.h,
               width: 6.w,
               borderWidth: 0,
-              borderColor: TColors.error,
+              borderColor: TColors.accent,
             ),
           ),
 
@@ -108,7 +114,7 @@ class Graph extends StatelessWidget {
 
             /// marker Setting to get dots in the graph
             markerSettings: MarkerSettings(
-              isVisible: true,
+              isVisible: false,
               shape: DataMarkerType.circle,
               color: TColors.error,
               height: 6.h,
