@@ -9,10 +9,10 @@ class PfModel {
   PfModel({this.highestPf, this.pf});
 
   PfModel.fromJson(Map<String, dynamic> json) {
-    highestPf = json['highest_pf'] != null
-        ? new HighestPf.fromJson(json['highest_pf'])
+    highestPf = json['curr_pf'] != null
+        ? new HighestPf.fromJson(json['curr_pf'])
         : null;
-    pf = json['pf'] != null ? new Pf.fromJson(json['pf']) : null;
+    pf = json['avg_pf'] != null ? new Pf.fromJson(json['avg_pf']) : null;
   }
 
   Map<String, dynamic> toJson() {
