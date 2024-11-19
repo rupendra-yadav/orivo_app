@@ -1,3 +1,4 @@
+import 'package:auro/utils/helpers/date_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
@@ -48,12 +49,12 @@ class DemandDistributionCard extends StatelessWidget {
                         child: ListBody(
                           children: <Widget>[
                             TextView(
-                              text: "Start :${demandDistribution.start.toString()}",
+                              text: "Start :${DateHelper().formatDateTime(demandDistribution.start.toString())}",
                               textColor: TColors.primary,
                             ),
 
                             TextView(
-                              text: "End :${demandDistribution.end.toString()}",
+                              text: "End :${DateHelper().formatDateTime(demandDistribution.end.toString())}",
                               textColor: TColors.primary,
                             ),
                           ],
@@ -63,7 +64,7 @@ class DemandDistributionCard extends StatelessWidget {
                         TextButton(
                           child: const TextView(
                             text: TTexts.dialogOk,
-                            textColor: TColors.accentDark1,
+                            textColor: TColors.primary,
                           ),
                           onPressed: () {
                             Navigator.of(context).pop();

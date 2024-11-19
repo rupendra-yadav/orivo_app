@@ -161,19 +161,20 @@ class _LegendNameCardDemandState extends State<LegendNameCardDemand> {
                     ],
                   ),
 
-                  SizedBox(
-                    height: 200.h,
+                  ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxHeight: 300.0, // Set a maximum height for the ListView
+                    ),
                     child: ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        itemCount: widget.costEstimateDetailModel.demandDistribution?.length ?? 0,
-                        itemBuilder: (context,index){
-                          return DemandDistributionCard(
-                            demandDistribution: widget.costEstimateDetailModel.demandDistribution![index],
-                          );
-                        }),
+                      shrinkWrap: true,
+                      itemCount: widget.costEstimateDetailModel.demandDistribution?.length ?? 0,
+                      itemBuilder: (context, index) {
+                        return DemandDistributionCard(
+                          demandDistribution: widget.costEstimateDetailModel.demandDistribution![index],
+                        );
+                      },
+                    ),
                   ),
-
-
                 ],
               ),
             ),

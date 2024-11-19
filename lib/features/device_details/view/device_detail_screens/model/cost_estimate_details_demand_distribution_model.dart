@@ -1,4 +1,3 @@
-
 class DemandDistribution {
   int? cost;
   int? demand;
@@ -9,15 +8,15 @@ class DemandDistribution {
   DemandDistribution({this.cost, this.demand, this.end, this.rate, this.start});
 
   DemandDistribution.fromJson(Map<String, dynamic> json) {
-    cost = json['cost'];
-    demand = json['demand'];
+    cost = (json['cost'] is double) ? (json['cost'] as double).toInt() : json['cost'] as int?;
+    demand = (json['demand'] is double) ? (json['demand'] as double).toInt() : json['demand'] as int?;
+    rate = (json['rate'] is double) ? (json['rate'] as double).toInt() : json['rate'] as int?;
     end = json['end'];
-    rate = json['rate'];
     start = json['start'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['cost'] = this.cost;
     data['demand'] = this.demand;
     data['end'] = this.end;
