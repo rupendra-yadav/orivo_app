@@ -34,7 +34,7 @@ class TotalPowerFactorsCard extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           margin: EdgeInsets.symmetric(vertical: 10.h),
           padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
-          height: 110.h,
+
           decoration: BoxDecoration(
             color: TColors.primaryDark1,
             borderRadius: BorderRadius.circular(10.r),

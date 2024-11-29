@@ -132,7 +132,7 @@ class Login extends StatelessWidget {
 
                       /// Register here
                       Center(
-                        child: Row(
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Text(
