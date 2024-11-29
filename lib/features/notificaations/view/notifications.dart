@@ -44,7 +44,7 @@ class Notifications extends StatelessWidget {
                 }
 
                 return  SizedBox(
-                  height: 800.h,
+                  height:  MediaQuery.of(Get.context!).size.height,
                   child: ListView.builder(
                     scrollDirection: Axis.vertical,
                     itemCount: controller.notificationList.length,

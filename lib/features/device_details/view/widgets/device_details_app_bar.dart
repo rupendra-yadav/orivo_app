@@ -13,6 +13,7 @@ class DeviceDetailsAppBar extends StatelessWidget
   const DeviceDetailsAppBar({
     super.key,
     required this.title,
+    required this.deviceId,
      this.colorAppBar = TColors.primary,
      this.colorTitleContainer = TColors.primary,
      this.colorText = TColors.white,
@@ -24,7 +25,7 @@ class DeviceDetailsAppBar extends StatelessWidget
      this.sizeNotificationIcon =25,
   });
 
-  final String title;
+  final String title,deviceId;
   final Color colorAppBar,
       colorTitleContainer,
       colorText,
@@ -67,7 +68,7 @@ class DeviceDetailsAppBar extends StatelessWidget
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 IconButton(
-                  onPressed: () => Get.to(() => const Alerts()),
+                  onPressed: () => Get.to(() =>  Alerts( id: deviceId,)),
                   icon: Icon(
                     Iconsax.notification,
                     color: colorNotification,

@@ -25,7 +25,7 @@ class DeviceDetailsNavigationScreen extends StatelessWidget {
 
       /// App Bar
       appBar: DeviceDetailsAppBar(
-        title: deviceListModel.mMachineTitle,
+        title: deviceListModel.mMachineTitle, deviceId: deviceListModel.mMachineId,
       ),
 
       /// Bottom Navigation

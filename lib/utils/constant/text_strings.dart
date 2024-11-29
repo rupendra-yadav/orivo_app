@@ -85,6 +85,9 @@ class TTexts {
   static const String changeDeviceName = "Change Device Name";
   static const String deviceName = "Device Name";
   static const String save = "Save";
+  static const String editNumber = "Edit Number";
+  static const String phoneNumber = "Phone Number";
+  static const String update = "Update";
 
   ///Home
   static const String machineName = "Machine Name";
@@ -183,7 +186,9 @@ class TTexts {
   static const String onPeak = "On Peak : ";
   static const String offPeak = "Off Peak : ";
   static const String normal = "Normal : ";
-  static const String timeRange = "6 AM to 12 PM";
+  static const String normalTimeRange = "11 PM(Prev day) - 9 AM (Today)";
+  static const String onTimeRange = "5 PM - 11 PM";
+  static const String offTimeRange = "9 AM - 5 PM";
   static const String breakDownCardTitle = "Light off/Breakdown/Down Time";
 
   /// Cost Estimate Details

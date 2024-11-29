@@ -1,4 +1,5 @@
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/power_quality_detail.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -19,18 +20,25 @@ class TotalPowerFactorsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    if (kDebugMode) {
+      print("TestFactors");
+      print( powerFactorModel.pf?.value?.toStringAsFixed(2) ?? 'NA');
+    }
+
     return
-      Container(
-        width: MediaQuery.of(context).size.width,
-        margin: EdgeInsets.symmetric(vertical: 10.h),
-        padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
-        height: 110.h,
-        decoration: BoxDecoration(
-          color: TColors.primaryDark1,
-          borderRadius: BorderRadius.circular(10.r),
-        ),
-        child: GestureDetector(
-          onTap: () => Get.to(() => const PowerQualityDetail()),
+      InkWell(
+        onTap: () => Get.to(() => const PowerQualityDetail()),
+        borderRadius: BorderRadius.circular(10.r),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.symmetric(vertical: 10.h),
+          padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
+          height: 110.h,
+          decoration: BoxDecoration(
+            color: TColors.primaryDark1,
+            borderRadius: BorderRadius.circular(10.r),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -105,9 +113,9 @@ class TotalPowerFactorsCard extends StatelessWidget {
                   ),
                 ],
               ),
+              //print(powerFactorModel.pf?.value?.toStringAsFixed(2) ?? 'NA'),
               TextView(
-                text: powerFactorModel.pf?.value?.toStringAsFixed(2) ?? 'NA',
-              ),
+                 text: powerFactorModel.pf?.value?.toStringAsFixed(2) ?? 'NA'),
             ],
           ),
         ),

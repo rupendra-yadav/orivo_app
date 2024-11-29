@@ -1,3 +1,4 @@
+import 'package:auro/utils/constant/text_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -31,10 +32,11 @@ class DemandTimelineGraph extends StatelessWidget {
       backgroundColor: Colors.transparent,
       primaryXAxis: DateTimeAxis(
         interval: 1,
-        dateFormat: DateFormat('dd/MM'),
+        dateFormat: DateFormat('dd-MM-yyyy h:mm a'),
         labelStyle: const TextStyle(color: Colors.white),
         majorGridLines: const MajorGridLines(width: 0),
         axisLine: const AxisLine(width: 0),
+       isVisible: false,
        /* autoScrollingDelta: 5,
         autoScrollingMode: AutoScrollingMode.start,*/
       ),
@@ -50,7 +52,9 @@ class DemandTimelineGraph extends StatelessWidget {
         zoomMode: ZoomMode.x,
       ),*/
       series: <CartesianSeries>[
+
         LineSeries<ChartData, DateTime>(
+          name: TTexts.demandTimeLine,
           dataSource: chartData,
           xValueMapper: (ChartData data, _) => data.y,
           yValueMapper: (ChartData data, _) => data.x,

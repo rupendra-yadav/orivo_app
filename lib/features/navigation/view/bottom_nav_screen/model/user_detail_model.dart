@@ -23,6 +23,18 @@ class UserModel {
   String mCustAddedon;
   String mCustUpdatedon;
 
+  String? custTotalload;
+  String? custTarrifplan;
+  String? custBpno;
+  String? custCspcdlpass;
+
+  String? mCustMobileActive;
+  String? mCustWhatsappActive;
+  String? mCustAltWhatsappActive;
+
+  String? mCustWhatsapp;
+  String? mCustAltWhatsapp;
+
   UserModel(
       {required this.mCustId,
         required this.mCustName,
@@ -45,7 +57,21 @@ class UserModel {
         required this.mCustFcmtoken,
         required this.mCustStatus,
         required this.mCustAddedon,
-        required this.mCustUpdatedon});
+        required this.mCustUpdatedon,
+
+        required this.custTotalload,
+        required this.custTarrifplan,
+        required this.custBpno,
+        required this.custCspcdlpass,
+
+        required this.mCustMobileActive,
+        required this.mCustWhatsappActive,
+        required this.mCustAltWhatsappActive,
+
+        required this.mCustWhatsapp,
+        required this.mCustAltWhatsapp,
+
+      });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
@@ -71,6 +97,20 @@ class UserModel {
     mCustStatus : json['m_cust_status']?? '',
     mCustAddedon : json['m_cust_addedon']?? '',
     mCustUpdatedon : json['m_cust_updatedon']?? '',
+
+      custTotalload: json['cust_totalload'] ?? '',
+      custTarrifplan: json['cust_tarrifplan'] ?? '',
+      custBpno: json['cust_bpno'] ?? '',
+      custCspcdlpass: json['cust_cspcdlpass'] ?? '',
+
+      mCustMobileActive: json['m_cust_mobile_active'] ?? '',
+      mCustWhatsappActive: json['m_cust_whatsapp_active'] ?? '',
+      mCustAltWhatsappActive: json['m_cust_alt_whatsapp_active'] ?? '',
+
+      mCustWhatsapp: json['m_cust_whatsapp'] ?? '',
+      mCustAltWhatsapp: json['m_cust_alt_whatsapp'] ?? '',
+
+
     );
   }
 
@@ -98,6 +138,18 @@ class UserModel {
     data['m_cust_status'] = mCustStatus;
     data['m_cust_addedon'] = mCustAddedon;
     data['m_cust_updatedon'] = mCustUpdatedon;
+
+    data['m_cust_updatedon'] = custTotalload;
+    data['m_cust_updatedon'] = custTarrifplan;
+    data['m_cust_updatedon'] = custBpno;
+    data['m_cust_updatedon'] = custCspcdlpass;
+
+    data['m_cust_mobile_active'] = mCustMobileActive;
+    data['m_cust_whatsapp_active'] = mCustWhatsappActive;
+    data['m_cust_alt_whatsapp_active'] = mCustAltWhatsappActive;
+
+    data['m_cust_whatsapp'] = mCustWhatsapp;
+    data['m_cust_alt_whatsapp'] = mCustAltWhatsapp;
     return data;
   }
 }

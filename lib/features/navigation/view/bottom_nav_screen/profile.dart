@@ -11,6 +11,7 @@ import 'package:auro/utils/constant/image_string.dart';
 import 'package:auro/utils/constant/text_strings.dart';
 import 'package:auro/utils/device/device_utility.dart';
 import 'package:auro/utils/styles/spacing_style.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -52,22 +53,44 @@ class Profile extends StatelessWidget {
                   Image(
                     image: const AssetImage(TImages.imgProfileBg),
                     width: MediaQuery.of(context).size.width,
-                    height: 140.h,
+                    height: 90.h,
                     fit: BoxFit.cover,
                   ),
                   Positioned(
-                    bottom: 10.h,
+                    top: 10.h,
                     left: 20.w,
                     right: 20.w,
                     child: Row(
                       children: [
-                        CircleAvatar(
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(50.r),
+                          child: CachedNetworkImage(
+                            imageUrl: TImages.userImagePath +
+                                controller.userModelData.mCustImage,
+                            // Provide a fallback empty string if null or empty
+                            width: 80.w,
+                            height: 80.h,
+                            fit: BoxFit.fill,
+                            placeholder: (context, url) => const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                            errorWidget: (context, url, error) {
+                              // Check gender and provide appropriate default image
+                              return Image.asset(
+                                TImages.imgUser,
+                                width: 100.w,
+                                height: 100.h,
+                                fit: BoxFit.fill,
+                              );
+                            },
+                          ),
+                        ),
+                        /*   CircleAvatar(
                           backgroundColor: TColors.primaryLight1,
                           minRadius: 50.r,
                           maxRadius: 50.r,
-                          foregroundImage: NetworkImage(TImages.userImagePath +
-                              controller.userModelData.mCustImage),
-                        ),
+                          foregroundImage: NetworkImage(TImages.userImagePath + controller.userModelData.mCustImage),
+                        ),*/
                         SizedBox(width: 10.w),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,7 +146,7 @@ class Profile extends StatelessWidget {
                         ),
                         TextButton(
                             onPressed: () {
-                              Get.to(()=> SubscriptionPage());
+                              Get.to(() => SubscriptionPage());
                             },
                             child: const TextView(
                               text: TTexts.subscribe,
@@ -146,14 +169,14 @@ class Profile extends StatelessWidget {
                 child: Column(
                   children: [
                     /// Transaction Option
-                   /* ProfileOptions(
+                    /* ProfileOptions(
                       title: TTexts.transactions,
                       onPressed: () {
                         Get.to(() => const TransactionsPage());
                       },
                     ),*/
 
-                   // Divider(height: 1.h, color: TColors.primaryLight1),
+                    // Divider(height: 1.h, color: TColors.primaryLight1),
 
                     /// Help & Support
                     ProfileOptions(

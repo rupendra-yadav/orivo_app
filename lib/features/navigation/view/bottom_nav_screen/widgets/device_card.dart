@@ -1,6 +1,7 @@
 import 'package:auro/features/navigation/view/bottom_nav_screen/model/device_list_model.dart';
 import 'package:auro/utils/constant/image_string.dart';
 import 'package:auro/utils/constant/text_strings.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -41,10 +42,23 @@ class DeviceCard extends StatelessWidget {
               children: [
                 Expanded(
                   flex:1,
-                  child: Image(
-                    image: isNetworkImage?NetworkImage(TImages.deviceImagePath+deviceListModel.mMachineImage): const AssetImage(TImages.imgDevice ) as ImageProvider,
+                  child:  CachedNetworkImage(
+                    imageUrl: TImages.deviceImagePath+deviceListModel.mMachineImage, // Provide a fallback empty string if null or empty
                     width: 100.w,
                     height: 100.h,
+                    fit: BoxFit.fill,
+                    placeholder: (context, url) => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                    errorWidget: (context, url, error) {
+                      // Check gender and provide appropriate default image
+                      return Image.asset(
+                        TImages.imgDevice,
+                        width: 100.w,
+                        height: 100.h,
+                        fit: BoxFit.fill,
+                      );
+                    },
                   ),
                 ),
                 Expanded(

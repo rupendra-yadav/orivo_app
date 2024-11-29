@@ -1,4 +1,5 @@
 import 'package:auro/data/repository/notification_repository.dart';
+import 'package:auro/utils/preferences/cache_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -7,6 +8,7 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import '../../../utils/local_storage/storage_utility.dart';
 import '../../../utils/popups/loaders.dart';
 import '../../authentication/model/user_detail.dart';
+import '../Model/device_alert_notification_model.dart';
 import '../Model/notification_model.dart';
 
 class NotificationController extends GetxController {
@@ -18,8 +20,10 @@ class NotificationController extends GetxController {
   static const String _userDataKey = 'user_data';
 
   RxList<NotificationModel> notificationList = <NotificationModel>[].obs;
+  RxList<DeviceAlertNotificationModel> deviceAlertNotificationList = <DeviceAlertNotificationModel>[].obs;
 
   final isNotificationLoading = false.obs;
+  final isDeviceAlertNotificationLoading = false.obs;
 
   ///--------Notification List
   Future<void> getNotificationList() async {
@@ -35,9 +39,6 @@ class NotificationController extends GetxController {
 
         notificationList.assignAll(deviceLis);
 
-        if (kDebugMode) {
-          print(user.mCustName);
-        }
       } catch (e) {
 
         TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
@@ -52,5 +53,36 @@ class NotificationController extends GetxController {
       isNotificationLoading.value = false;
     }
   }
+
+
+  ///--------Device AlertNotification List
+  Future<void> getDeviceAlertNotificationList(String mid) async {
+
+    /// this is to Access data
+    Map<String, dynamic> userDataMap = _localStorage.readData(_userDataKey) ?? {};
+    UserDetail user = UserDetail.fromJson(userDataMap);
+    try {
+      try {
+        isDeviceAlertNotificationLoading.value = true;
+
+        final deviceLis = await _deviceReposotory.getDeviceAlertNotificationList(mid);
+
+        deviceAlertNotificationList.assignAll(deviceLis);
+
+      } catch (e) {
+
+        TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+      }
+
+    } catch (e) {
+      if (kDebugMode) {
+        print(e.toString());
+      }
+    }
+    finally{
+      isDeviceAlertNotificationLoading.value = false;
+    }
+  }
+
 
 }

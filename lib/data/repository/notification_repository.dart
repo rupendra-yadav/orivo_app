@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
+import '../../features/notificaations/Model/device_alert_notification_model.dart';
 import '../../utils/constant/api_constants.dart';
 import '../http/http_client.dart';
 
@@ -28,6 +29,35 @@ class NotificationRepository extends GetxController {
 
         List<NotificationModel> deviceList = deviceListData
             .map((data) => NotificationModel.fromJson(data))
+            .toList();
+
+        return deviceList;
+      } else {
+        throw Exception(response['message']);
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+
+  ///Device Alert Notification List
+  Future<List<DeviceAlertNotificationModel>> getDeviceAlertNotificationList(String machineId) async {
+    try {
+      Map<String, dynamic> request = {"machine_id": machineId};
+
+      Map<String, dynamic> response =
+      await THttpHelper.post(APIKeys.deviceNotification, request);
+
+      if (kDebugMode) {
+        print('machine  Response: $response');
+      }
+
+      if (response['response'] == 'success') {
+        List<dynamic> deviceListData = response['data'];
+
+        List<DeviceAlertNotificationModel> deviceList = deviceListData
+            .map((data) => DeviceAlertNotificationModel.fromJson(data))
             .toList();
 
         return deviceList;

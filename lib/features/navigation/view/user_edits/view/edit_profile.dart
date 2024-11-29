@@ -47,23 +47,27 @@ class EditProfile extends StatelessWidget {
                       Row(
                         children: [
                           ///Profile Image
-                           CircleAvatar(
-                            backgroundColor: TColors.primaryLight1,
-                            minRadius: 50,
-                            // Adjusted the radius to fit the image better
-                            maxRadius: 50,
 
-                            foregroundImage: NetworkImage(TImages.userImagePath + userModel.mCustImage),
-
-                            // Adjusted the radius to fit the image better
-                            /*child: Image(
-                              image: AssetImage(TImages.imgUser),
-                              height: 180, // Adjusted to fit the CircleAvatar
-                              width: 180, // Adjusted to fit the CircleAvatar
-                              fit: BoxFit.cover,
-                            ),*/
-                          ),
-
+                          Obx(() {
+                            final controller = EditProfileController.instance;
+                            return controller.imageData.value != null
+                                ? ClipOval(
+                              child: Image.file(
+                                controller.imageData.value!,
+                                height: 80.h,
+                                width: 80.w, // Ensure width and height are equal for a circle
+                                fit: BoxFit.cover,
+                              ),
+                            )
+                                : ClipOval(
+                              child: Image(
+                                height: 80.h,
+                                width: 80.w, // Ensure width and height are equal for a circle
+                                fit: BoxFit.cover,
+                                image:NetworkImage(TImages.userImagePath + userModel.mCustImage),
+                              ),
+                            );
+                          }),
                           ///TextButton
                           TextButton(
                               onPressed: () {

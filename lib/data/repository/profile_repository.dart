@@ -125,4 +125,72 @@ class ProfileRepository extends GetxController {
       throw Exception(e.toString());
     }
   }
+
+  ///update Phone Number
+  Future<List<UserModel>> updatePhoneNumber(String userId,String whatsApp, String altWhatsApp) async {
+    try {
+      Map<String, dynamic> request = {
+        'user_id': userId,
+        'user_whatsapp': whatsApp,
+        'user_alt_whatsapp': altWhatsApp,
+      };
+
+      Map<String, dynamic> response =
+      await THttpHelper.post(APIKeys.updateContacts, request);
+
+      if (kDebugMode) {
+        print('user_details  Response: $response');
+      }
+
+      if (response['response'] == 'success') {
+        List<dynamic> useData = response['data'];
+
+        List<UserModel> userDetails =
+        useData.map((data) => UserModel.fromJson(data)).toList();
+
+        return userDetails;
+      } else {
+        throw Exception(response['message']);
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+
+
+  ///update Phone Number status
+  Future<List<UserModel>> updatePhoneNumberStatus(String userId,String status1, String status2,String status3) async {
+    try {
+      Map<String, dynamic> request = {
+        'user_id': userId,
+        'whatsapp_status_1': status1,
+        'whatsapp_status_2': status2,
+        'whatsapp_status_3': status3,
+      };
+
+      Map<String, dynamic> response =
+      await THttpHelper.post(APIKeys.updateNotificationContact, request);
+
+      if (kDebugMode) {
+        print('user_details  Response: $response');
+      }
+
+      if (response['response'] == 'success') {
+        List<dynamic> useData = response['data'];
+
+        List<UserModel> userDetails =
+        useData.map((data) => UserModel.fromJson(data)).toList();
+
+        return userDetails;
+      } else {
+        throw Exception(response['message']);
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+
+
 }

@@ -79,6 +79,7 @@ class TColors {
   static const Color alertRed = Color(0xFFFC5252);
   static const Color alertBlue = Color(0xFF0062FF);
   static const Color alertYellow = Color(0xFFFFC542);
+  static const Color dialColor = Color(0xFF39056C);
 
 
   static const Color black2 = Color(0xFF1E1E1E);

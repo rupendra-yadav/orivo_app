@@ -17,8 +17,12 @@ class APIKeys{
   static const String machineEND = "Api/machine";
   static const String machineDetailsEND = "Api/machine_details";
   static const String notifications = "Api/notification";
+  static const String deviceNotification = "Api/device_notification";
   static const String updateMachineName = "Api/update_machine_name";
   static const String updateFcm = "Api/update_fcm";
+
+  static const String updateContacts = "Api/update_contact";
+  static const String updateNotificationContact = "Api/update_notification_contact";
 
 
   static const String machineDetailsDataItemsEND = "readflux.php";

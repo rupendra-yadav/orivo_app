@@ -37,7 +37,8 @@ class EditProfileController extends GetxController {
 
   RxList<UserModel> userModel = <UserModel>[].obs;
 
-  File? imageData;
+  // File? imageData;
+  Rx<File?> imageData = Rx<File?>(null);
 
   Future<void> updateProfile() async {
     //check internet Connection
@@ -66,7 +67,7 @@ class EditProfileController extends GetxController {
           companyType.text.trim().isEmpty?user.mCustCompanyType:companyType.text.trim(),
           ownersName.text.trim().isEmpty?user.mCustOwnerName:ownersName.text.trim(),
           gstNumber.text.trim().isEmpty?user.mCustGstno:gstNumber.text.trim(),
-          imageData!);
+          imageData.value!);
 
       TFullScreenLoader.stopLoading();
 
@@ -165,7 +166,7 @@ class EditProfileController extends GetxController {
       if (kDebugMode) {
         print("Image selected: ${image.path}");
       }
-      imageData = File(image.path);
+      imageData.value = File(image.path);
       TLoaders.successSnackBar(title: "Image Selected..!", message: "Image Selected Successfully..!");
       // Correctly cast to File
     } else {

@@ -4,6 +4,7 @@ import 'package:auro/features/device_details/view/device_detail_screens/widgets/
 import 'package:auro/features/device_details/view/device_detail_screens/widgets/device_details_itme.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/widgets/graph.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/widgets/graph_shimmer.dart';
+import 'package:auro/utils/preferences/cache_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -51,6 +52,8 @@ class _HistoryState extends State<History> {
     super.initState();
 
     controller.getDeviceDetail(navigationController.deviceId.value, "","");
+
+    SharedPrefs.setString("MACH_ID", navigationController.deviceId.value);
 
     controller.getDeviceDataItems();
 
