@@ -22,17 +22,17 @@ class UserDetail {
   String mCustAddedon;
   String mCustUpdatedon;
 
-  String? custTotalload;
-  String? custTarrifplan;
-  String? custBpno;
-  String? custCspcdlpass;
+  String custTotalload;
+  String custTarrifplan;
+  String custBpno;
+  String custCspcdlpass;
 
-  String? mCustMobileActive;
-  String? mCustWhatsappActive;
-  String? mCustAltWhatsappActive;
+  String mCustMobileActive;
+  String mCustWhatsappActive;
+  String mCustAltWhatsappActive;
 
-  String? mCustWhatsapp;
-  String? mCustAltWhatsapp;
+  String mCustWhatsapp;
+  String mCustAltWhatsapp;
 
   UserDetail(
       {required this.mCustId,
