@@ -49,5 +49,21 @@
     <false/>
     <key>NSAllowsArbitraryLoads</key>
     <true/>
+
+     <key>NSCameraUsageDescription</key>
+     <string>This app requires access to the camera to take photos and videos.</string>
+
+      <key>NSPhotoLibraryUsageDescription</key>
+      <string>This app needs access to your photo library to select or save media.</string>
+
+      <key>NSPhotoLibraryAddUsageDescription</key>
+      <string>This app needs access to your photo library to save media files.</string>
+
+      <key>NSPhotoLibraryUsageDescription</key>
+      <string>This app needs access to your photos and videos for better functionality.</string>
+
+    <key>NSUserNotificationUsageDescription</key>
+    <string>This app needs permission to send notifications to keep you informed.</string>
+
   </dict>
 </plist>
