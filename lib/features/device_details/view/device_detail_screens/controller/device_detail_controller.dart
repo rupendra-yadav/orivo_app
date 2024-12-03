@@ -381,8 +381,11 @@ class DeviceDetailController extends GetxController {
       // Assign the object to the Rx variable
       //historyModel.value = HistoryModel.fromJson(responsee);
 
-      print("indexPosTest");
-      print(indexPos);
+      if (kDebugMode) {
+        print("indexPosTest");
+        print(indexPos);
+      }
+
       switch (indexPos) {
         case 1:
           historyModel.value = HistoryModel.fromJson(responsee);
@@ -400,8 +403,11 @@ class DeviceDetailController extends GetxController {
         // Handle any other cases if needed
       }
     } catch (e) {
-      print("historyGraph SetModel");
-      print(e.toString());
+      if (kDebugMode) {
+        print("historyGraph SetModel");
+        print(e.toString());
+      }
+
     } finally {
       isHistoryLoading.value = false;
     }

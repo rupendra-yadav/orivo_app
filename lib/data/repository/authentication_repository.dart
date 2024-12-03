@@ -133,6 +133,20 @@ class AuthenticationRepository extends GetxController {
       }
 
       if (response['response'] == 'success') {
+        List<dynamic> userDataList = response['user'];
+
+        /// SetData in Model...
+        if (userDataList.isNotEmpty) {
+          Map<String, dynamic> userData = userDataList.first;
+          UserDetail user = UserDetail.fromJson(userData);
+          _localStorage.saveData(_userDataKey, user.toJson());
+
+          return {'success': true, 'message': 'Logged in successfully'};
+        } else {
+          return {'success': false, 'message': 'User data is empty'};
+        }
+
+
 
         return {'success': true, 'message': 'OTP Send Successfully'};
       } else {

@@ -14,7 +14,7 @@ class THttpHelper2 {
         Map<String, dynamic>? queryParams,
         dynamic data,
       }) async {
-    final uri = Uri.parse('$_baseUrl/$endpoint').replace(
+    final uri = Uri.parse('$_baseUrl$endpoint').replace(
       queryParameters: queryParams,
     );
 

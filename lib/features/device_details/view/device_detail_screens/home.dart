@@ -19,6 +19,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pie_chart/pie_chart.dart';
 
+import '../../../navigation/view/bottom_nav_screen/controller/profile_detail_cotroller.dart';
 import '../../controller/device_detail_navigation_controller.dart';
 
 class Home extends StatefulWidget {
@@ -30,8 +31,10 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final DeviceDetailController controller = Get.put(DeviceDetailController());
-  final DeviceDetailNavigationController navigationController =
-      DeviceDetailNavigationController.instance;
+  final DeviceDetailNavigationController navigationController = DeviceDetailNavigationController.instance;
+
+  final userController = Get.put(ProfileDetailController());
+
 
   String timeStamp = "";
 
@@ -43,6 +46,8 @@ class _HomeState extends State<Home> {
 
   // Refresh method
   Future<void> _refreshData() async {
+    userController.getUserData();
+
     DateTime now = DateTime.now();
     DateTime utcNow = now.toUtc();
     DateTime istNow = utcNow.add(const Duration(hours: 5, minutes: 30));
@@ -56,6 +61,9 @@ class _HomeState extends State<Home> {
     await controller.getDeviceDetail(navigationController.deviceId.value,
         formattedDate, formattedDateMidnight);
     await controller.getDeviceDataItems();
+
+
+
   }
 
   @override
@@ -143,11 +151,14 @@ class _HomeState extends State<Home> {
                   if (controller.isDemandLoading.value) {
                     return const DeviceDetailShimmer();
                   }
+                  if (userController.isUserDataLoading.value) {
+                    return const DeviceDetailShimmer();
+                  }
 
                   return Padding(
                     padding: EdgeInsets.symmetric(vertical: 10.h),
                     child: PowerDemandCard(
-                      demandModel: controller.demandModel.value,
+                      demandModel: controller.demandModel.value, totalLoad: userController.userModel[0].custTotalload?.toString() ?? "1.0",
                     ),
                   );
                 }),

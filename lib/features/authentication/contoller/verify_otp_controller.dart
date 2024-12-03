@@ -61,7 +61,14 @@ class VerifyOtpController extends GetxController {
 
       TFullScreenLoader.stopLoading();
 
+      SharedPrefs.setString("mobileNumber", "");
+
+
+
+
       if (response['success'] == true) {
+
+
         TLoaders.successSnackBar(
             title: 'Success', message: response['message']);
         if (resetPassword == 1) {

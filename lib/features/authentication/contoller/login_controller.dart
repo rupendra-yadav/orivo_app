@@ -44,8 +44,7 @@ class LoginController extends GetxController {
       }
 
       // Login user using number and password
-      final response = await _repository.userLogin(
-          phoneNumber.text.trim(), password.text.trim());
+      final response = await _repository.userLogin(phoneNumber.text.trim(), password.text.trim());
 
       TFullScreenLoader.stopLoading();
 

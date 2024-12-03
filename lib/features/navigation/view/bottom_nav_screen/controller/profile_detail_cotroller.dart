@@ -31,13 +31,11 @@ class ProfileDetailController extends GetxController {
   Future<void> getUserData() async {
     try {
       /// this is to Access data
-      Map<String, dynamic> userDataMap =
-          _localStorage.readData(_userDataKey) ?? {};
+      Map<String, dynamic> userDataMap = _localStorage.readData(_userDataKey) ?? {};
       UserDetail user = UserDetail.fromJson(userDataMap);
       try {
         isUserDataLoading.value = true;
-        final userModelResponse =
-            await _profileRepository.getUserData(user.mCustId);
+        final userModelResponse = await _profileRepository.getUserData(user.mCustId);
         userModel.assignAll(userModelResponse);
         userModelData = userModel[0];
       } catch (e) {

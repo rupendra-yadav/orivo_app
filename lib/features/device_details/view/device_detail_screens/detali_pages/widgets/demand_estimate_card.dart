@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
@@ -27,9 +28,12 @@ class DemandEstimateCard extends StatelessWidget {
     int value = ((reVal / 100) * 33).toInt();
 
 
-    print("checkDemandValue");
-    print(reVal);
-    print(value);
+    if (kDebugMode) {
+      print("checkDemandValue");
+      print(reVal);
+      print(value);
+    }
+
 
     return Container(
       width: double.infinity,

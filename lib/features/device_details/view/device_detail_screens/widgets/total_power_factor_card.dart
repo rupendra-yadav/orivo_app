@@ -23,7 +23,7 @@ class TotalPowerFactorsCard extends StatelessWidget {
 
     if (kDebugMode) {
       print("TestFactors");
-      print( powerFactorModel.pf?.value?.toStringAsFixed(2) ?? 'NA');
+      print( powerFactorModel.pf?.value?.toStringAsFixed(3) ?? 'NA');
     }
 
     return
@@ -51,7 +51,7 @@ class TotalPowerFactorsCard extends StatelessWidget {
                   Expanded(
                     flex: 1,
                     child: TextView(
-                      text: powerFactorModel.highestPf?.value?.toStringAsFixed(2) ?? 'NA',
+                      text: powerFactorModel.highestPf?.value?.toStringAsFixed(3) ?? 'NA',
                       fontSize: 25,
                       textColor: TColors.green,
                     ),
@@ -115,7 +115,7 @@ class TotalPowerFactorsCard extends StatelessWidget {
               ),
               //print(powerFactorModel.pf?.value?.toStringAsFixed(2) ?? 'NA'),
               TextView(
-                 text: powerFactorModel.pf?.value?.toStringAsFixed(2) ?? 'NA'),
+                 text: powerFactorModel.pf?.value?.toStringAsFixed(3) ?? 'NA'),
             ],
           ),
         ),

@@ -25,10 +25,10 @@ class DeviceListController extends GetxController {
   Future<void> getDeviceList() async {
 
     /// this is to Access data
-    Map<String, dynamic> userDataMap = _localStorage.readData(_userDataKey) ?? {};
+    Map<String, dynamic> userDataMap = _localStorage.readData(_userDataKey) ??
+        {};
     UserDetail user = UserDetail.fromJson(userDataMap);
     try {
-
       try {
         isDeviceLoading.value = true;
 
@@ -37,23 +37,21 @@ class DeviceListController extends GetxController {
         deviceList.assignAll(deviceLis);
 
 
-      if (kDebugMode) {
-        print(user.mCustName);
+        if (kDebugMode) {
+          print(user.mCustName);
+        }
+      } catch (e) {
+        TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
       }
-    } catch (e) {
-
-      TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
-    }
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());
       }
     }
-    finally{
+    finally {
       isDeviceLoading.value = false;
     }
   }
-
 
 
   ///--------Update FCM
@@ -63,26 +61,27 @@ class DeviceListController extends GetxController {
     Map<String, dynamic> userDataMap = _localStorage.readData(_userDataKey) ?? {};
     UserDetail user = UserDetail.fromJson(userDataMap);
 
+    try {
+      isDeviceLoading.value = true;
+
       try {
-        isDeviceLoading.value = true;
+        isFCMLoading.value = true;
 
-        try {
-          isFCMLoading.value = true;
-
-          final Map<String, dynamic> responsee = await _deviceReposotory.updateFCM(user.mCustId, SharedPrefs.getString("FCM_TOKEN").toString());
-
-        } catch (e) {
-          print(e.toString());
-        }
-
-        if (kDebugMode) {
-          print(user.mCustName);
-        }
+        final Map<String, dynamic> responsee = await _deviceReposotory
+            .updateFCM(
+            user.mCustId, SharedPrefs.getString("FCM_TOKEN").toString());
       } catch (e) {
-        TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+        print(e.toString());
       }
 
-  finally {
+      if (kDebugMode) {
+        print(user.mCustName);
+      }
+    } catch (e) {
+      TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+    }
+
+    finally {
       isFCMLoading.value = false;
     }
   }

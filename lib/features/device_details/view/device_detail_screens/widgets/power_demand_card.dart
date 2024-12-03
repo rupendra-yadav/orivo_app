@@ -11,18 +11,24 @@ import '../model/demand_model.dart';
 import 'custom_bars.dart';
 
 class PowerDemandCard extends StatelessWidget {
-  const PowerDemandCard({super.key, required this.demandModel});
+  const PowerDemandCard({super.key,
+    required this.demandModel,
+    required this.totalLoad});
 
   final DemandModel demandModel;
+  final String totalLoad;
 
   @override
   Widget build(BuildContext context) {
 
-    int vall = demandModel.avgDemand?.value?.toInt() ?? 0;
-    int total = demandModel.currentDemand?.value?.toInt() ?? 1; // Set to 1 to avoid division by zero
+    double vall = demandModel.currentDemand?.value?.toDouble() ?? 0;
+    double total = totalLoad != null ? double.parse(totalLoad) : 0;
 
-    int reVal = (total != 0) ? ((vall / total) * 100).toInt() : 0;
-    int value = ((reVal / 100) * 33).toInt();
+    // double total = demandModel.currentDemand?.value?.toInt() ?? 1;
+
+
+    double reVal =  ((vall / total) * 100).toDouble();
+    double value = ((reVal / 100) * 33).toDouble();
 
     return GestureDetector(
       onTap: () => (Get.to(() => const DemandEstimateDetail())),
@@ -55,7 +61,7 @@ class PowerDemandCard extends StatelessWidget {
                   radiusFactor:0.65.r,
                   axisLineStyle: const AxisLineStyle(thickness: 20,cornerStyle: CornerStyle.bothCurve),
                   minimum: 0,
-                  maximum: demandModel.currentDemand?.value?.toDouble() ?? 1,
+                  maximum: /*demandModel.currentDemand?.value?.toDouble() ?? 1*/total,
                   axisLabelStyle: const GaugeTextStyle(
                     color: Colors.white, // Set text color to white
                     fontSize: 12, // Optional: Set font size
@@ -79,7 +85,7 @@ class PowerDemandCard extends StatelessWidget {
                       animationType: AnimationType.easeOutBack,
                       width: 20,
                       color: Color(0xFF00A8B5),
-                      value: demandModel.avgDemand?.value?.toDouble() ?? 0,
+                      value: /*demandModel.avgDemand?.value?.toDouble() ?? 0*/vall,
                       cornerStyle: CornerStyle.bothCurve, // Add rounded corners
                       gradient: SweepGradient(
                           colors: <Color>[Color(0xFFC4306E), Color(0xFFE5961E)],
@@ -96,7 +102,7 @@ class PowerDemandCard extends StatelessWidget {
                         needleColor:
                         TColors.dialColor,
                         needleLength: 0.78,
-                        value: demandModel.avgDemand?.value?.toDouble() ?? 0,
+                        value:/* demandModel.avgDemand?.value?.toDouble() ?? 0*/vall,
                         enableAnimation: true,
                         animationType: AnimationType.easeOutBack),],
                 )

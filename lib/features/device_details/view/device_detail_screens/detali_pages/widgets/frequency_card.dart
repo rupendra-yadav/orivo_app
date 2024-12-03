@@ -44,7 +44,7 @@ class FrequencyCard extends StatelessWidget {
 
             /// Temperature Scale
 
-            TemperatureScale(totalValue: frequencyDetailsModel.highestFreq?.value??00,pointerValue: frequencyDetailsModel.freq?.value??00,),
+            /*TemperatureScale(totalValue: frequencyDetailsModel.highestFreq?.value??00,pointerValue: frequencyDetailsModel.freq?.value??00,),
 
             Row(
               children: [
@@ -52,7 +52,7 @@ class FrequencyCard extends StatelessWidget {
                 Spacer(),
                 TextView(text: TTexts.good),
               ],
-            ),
+            ),*/
 
             TextView(
               text:"Average Frequency ----- ${frequencyDetailsModel.avgFreq?.value?.toStringAsFixed(2) ?? "NA"}",

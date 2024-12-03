@@ -4,6 +4,7 @@ import 'package:auro/utils/constant/colors.dart';
 import 'package:auro/utils/constant/text_strings.dart';
 import 'package:auro/utils/device/device_utility.dart';
 import 'package:auro/utils/styles/spacing_style.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -60,6 +61,40 @@ class EditProfile extends StatelessWidget {
                               ),
                             )
                                 : ClipOval(
+                              child: CachedNetworkImage(
+                                imageUrl: TImages.userImagePath + userModel.mCustImage,
+                                height: 80.h,
+                                width: 80.w, // Ensure width and height are equal for a circle
+                                fit: BoxFit.cover,
+                                placeholder: (context, url) => const Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                                errorWidget: (context, url, error) {
+                                  return Image.asset(
+                                    TImages.imgUser,
+                                    height: 80.h,
+                                    width: 80.w,
+                                    fit: BoxFit.cover,
+                                  );
+                                },
+                              )
+
+                            );
+                          }),
+
+
+                         /* Obx(() {
+                            final controller = EditProfileController.instance;
+                            return controller.imageData.value != null
+                                ? ClipOval(
+                              child: Image.file(
+                                controller.imageData.value!,
+                                height: 80.h,
+                                width: 80.w, // Ensure width and height are equal for a circle
+                                fit: BoxFit.cover,
+                              ),
+                            )
+                                : ClipOval(
                               child: Image(
                                 height: 80.h,
                                 width: 80.w, // Ensure width and height are equal for a circle
@@ -67,7 +102,7 @@ class EditProfile extends StatelessWidget {
                                 image:NetworkImage(TImages.userImagePath + userModel.mCustImage),
                               ),
                             );
-                          }),
+                          }),*/
                           ///TextButton
                           TextButton(
                               onPressed: () {

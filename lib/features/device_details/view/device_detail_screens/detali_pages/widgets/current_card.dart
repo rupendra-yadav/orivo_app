@@ -45,7 +45,7 @@ class CurrentCard extends StatelessWidget {
 
             /// Temperature Scale
 
-            TemperatureScale(totalValue: currentDetailModel.highestCurrent?.value??00,pointerValue: currentDetailModel.current?.value??00,),
+           /* TemperatureScale(totalValue: currentDetailModel.highestCurrent?.value??00,pointerValue: currentDetailModel.current?.value??00,),
 
             Row(
               children: [
@@ -53,7 +53,7 @@ class CurrentCard extends StatelessWidget {
                 Spacer(),
                 TextView(text: TTexts.good),
               ],
-            ),
+            ),*/
 
             TextView(
               text:"Average Current ------ ${currentDetailModel.avgCurrent?.value?.toStringAsFixed(2) ?? "NA"}",

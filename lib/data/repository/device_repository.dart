@@ -299,8 +299,7 @@ class DeviceRepository extends GetxController {
 
 
   /// Cost Estimate
-  Future<Map<String, dynamic>> getCostEstimate(
-      String date, String deviceId, String stop) async {
+  Future<Map<String, dynamic>> getCostEstimate(String date, String deviceId, String stop) async {
     try {
       Map<String, dynamic> request = {
         "device_id": deviceId,
@@ -308,11 +307,16 @@ class DeviceRepository extends GetxController {
         "stop": stop,
       };
 
-      print("CheckRequest");
-      print(request);
+      if (kDebugMode) {
+        print("CheckRequest");
+        print(request);
+      }
+
       final response = await THttpHelper2.redirectPost(APIKeys2.costEstimate, request,);
 
-      print(response);
+      if (kDebugMode) {
+        print(response);
+      }
       if (kDebugMode) {
         print('coat Estimate  Response: $response');
       }
@@ -321,12 +325,17 @@ class DeviceRepository extends GetxController {
 
         return response["data"];
       } else {
-        print("error On status");
+        if (kDebugMode) {
+          print("error On status");
+        }
         throw Exception(response['message']);
       }
     } catch (e) {
-      print("error Try  Catch");
-      print(e.toString());
+      if (kDebugMode) {
+        print("error Try  Catch");
+        print(e.toString());
+      }
+
       throw Exception(e.toString());
     }
   }
@@ -378,25 +387,34 @@ class DeviceRepository extends GetxController {
         "duration": duration,
       };
 
-      print("CheckRequest");
-      print(request);
+      if (kDebugMode) {
+        print("CheckRequest");
+        print(request);
+      }
+
 
       final response = await THttpHelper2.redirectPost(APIKeys2.history, request);
 
-      print(response);
+
       if (kDebugMode) {
+        print(response);
         print('history  Response: $response');
       }
 
       if (response['status'] == 'success') {
         return response["data"];
       } else {
-        print("Error on status");
+        if (kDebugMode) {
+          print("Error on status");
+        }
         throw Exception(response['message']);
       }
     } catch (e) {
-      print("Error in Try-Catch");
-      print(e.toString());
+      if (kDebugMode) {
+        print("Error in Try-Catch");
+        print(e.toString());
+      }
+
       throw Exception(e.toString());
     }
   }
@@ -531,7 +549,7 @@ class DeviceRepository extends GetxController {
     }
   }
 
-  /// Current Details
+  /// Base Metric
   Future<Map<String, dynamic>> baseMetric(String date, String deviceId, String stop) async {
     try {
       Map<String, dynamic> request = {
