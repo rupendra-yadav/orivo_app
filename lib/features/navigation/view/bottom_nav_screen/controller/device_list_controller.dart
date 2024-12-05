@@ -41,7 +41,8 @@ class DeviceListController extends GetxController {
           print(user.mCustName);
         }
       } catch (e) {
-        TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+        // TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+        TLoaders.errorSnackBar(title: 'Oh Snap!', message: "No Device Available...!");
       }
     } catch (e) {
       if (kDebugMode) {

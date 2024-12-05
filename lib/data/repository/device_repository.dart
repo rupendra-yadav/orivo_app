@@ -68,7 +68,7 @@ class DeviceRepository extends GetxController {
     }
   }
 
-  ///Device List
+  /*///Device List
   Future<List<DataItems>> getDataItems() async {
     try {
       Map<String, dynamic> request = {};
@@ -93,7 +93,7 @@ class DeviceRepository extends GetxController {
     } catch (e) {
       throw Exception(e.toString());
     }
-  }
+  }*/
 
   ///Device Graph data
   Future<List<GraphData>> getGraphData(String field, deviceId, range) async {
@@ -136,11 +136,16 @@ class DeviceRepository extends GetxController {
         "stop": stop,
       };
 
-      print("CheckRequest");
-      print(request);
+      if (kDebugMode) {
+        print("CheckRequest");
+        print(request);
+      }
+
       final response = await THttpHelper2.redirectPost(APIKeys2.energyConsumption, request,);
 
-      print(response);
+      if (kDebugMode) {
+        print(response);
+      }
       if (kDebugMode) {
         print('energy-consumption  Response: $response');
       }

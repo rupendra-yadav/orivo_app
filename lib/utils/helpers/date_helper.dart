@@ -21,6 +21,13 @@ class DateHelper{
   }
 
 
+  String getMonth(String dateTime) {
+    DateTime parsedDate = DateTime.parse(dateTime);
+    String formattedDate = DateFormat("MMMM").format(parsedDate);
+    return formattedDate;
+  }
+
+
   String getTime(String dateTime) {
     DateTime parsedDate = DateTime.parse(dateTime);
     String formattedDate = DateFormat("h:mm a").format(parsedDate);

@@ -13,10 +13,11 @@ import '../../widgets/demand_distribution_card.dart';
 class LegendNameCardDemand extends StatefulWidget {
   const LegendNameCardDemand({
     super.key,
-    required this.costEstimateDetailModel,
+    required this.costEstimateDetailModel,  required this.color,
   });
 
   final CostEstimateDetailModel costEstimateDetailModel;
+  final Color color;
 
   @override
   _LegendNameCardDemandState createState() => _LegendNameCardDemandState();
@@ -28,12 +29,18 @@ class _LegendNameCardDemandState extends State<LegendNameCardDemand> {
 
   @override
   Widget build(BuildContext context) {
+    double gTotal= 0;
+    for(int i = 0; i< widget.costEstimateDetailModel.demandDistribution!.length;i++){
+      gTotal = gTotal + ((widget.costEstimateDetailModel.demandDistribution![i].rate?.toDouble() ?? 0.0) * (widget.costEstimateDetailModel.demandDistribution![i].demand?.toDouble() ?? 0.0));
+    }
+
+
     return Column(
       children: [
         /// Name
         Card(
           elevation: 10.h,
-          color: TColors.primaryDark2,
+          color: TColors.primaryDark4,
           child: Padding(
             padding: EdgeInsets.only(left: 10.w),
             child: Row(
@@ -42,7 +49,7 @@ class _LegendNameCardDemandState extends State<LegendNameCardDemand> {
                   width: 20.w,
                   height: 20.h,
                   decoration: BoxDecoration(
-                    color: TColors.graphLine,
+                    color: widget.color,
                     borderRadius: BorderRadius.circular(50.r),
                   ),
                 ),
@@ -55,7 +62,7 @@ class _LegendNameCardDemandState extends State<LegendNameCardDemand> {
                           .toStringAsFixed(2),
                   // Referencing widget.titleValue
                   fontSize: 20,
-                  textColor: TColors.graphLine,
+                  textColor: widget.color,
                 ),
                 const TextView(text: " Rs", fontSize: 20),
                 const Spacer(),
@@ -76,14 +83,14 @@ class _LegendNameCardDemandState extends State<LegendNameCardDemand> {
         /// Details - Only visible if _isDetailVisible is true
         if (_isDetailVisible)
           Card(
-            color: TColors.primaryDark2,
-            elevation: 5.h,
+            color: Colors.transparent,
+            elevation: 0.h,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+              padding: EdgeInsets.symmetric( vertical: 5.h),
               child: Column(
                 children: [
                   /// Demand Charge
-                  Row(
+                /*  Row(
                     children: [
                       const TextView(text: "Demand Charge"),
                       SizedBox(width: 10.w),
@@ -122,58 +129,56 @@ class _LegendNameCardDemandState extends State<LegendNameCardDemand> {
                             textColor: TColors.graphLine),
                       ),
                     ],
-                  ),
+                  ),*/
 
                   /// Grand Total
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  Row(
-                    children: [
-                      const TextView(
-                        text: "Total :",
-                        fontSize: 20,
-                        bold: true,
-                      ),
-                      Spacer(),
-                      TextView(
-                        text: ((widget.costEstimateDetailModel.demand?.value ??
-                                    0.0) *
-                                (widget.costEstimateDetailModel.demandRate
-                                        ?.value ??
-                                    0.0))
-                            .toStringAsFixed(2),
-                        fontSize: 20,
-                        bold: true,
-                        textColor: TColors.graphLine,
-                      ),
-                    ],
-                  ),
-                  SizedBox(
+
+                 /* SizedBox(
                     height: 15.h,
-                  ),
-                  Row(
+                  ),*/
+                 /* Row(
                     children: [
                       Expanded(child: TextView(text: "Cost")),
                       Expanded(child: TextView(text: "Demand")),
                       Expanded(child: TextView(text: "Rate")),
 
                     ],
-                  ),
+                  ),*/
 
                   ConstrainedBox(
                     constraints: BoxConstraints(
-                      maxHeight: 300.0, // Set a maximum height for the ListView
+                      maxHeight: 400.h, // Set a maximum height for the ListView
                     ),
                     child: ListView.builder(
                       shrinkWrap: true,
                       itemCount: widget.costEstimateDetailModel.demandDistribution?.length ?? 0,
                       itemBuilder: (context, index) {
-                        return DemandDistributionCard(
-                          demandDistribution: widget.costEstimateDetailModel.demandDistribution![index],
+                        return DemandDistributionCard(demandDistribution: widget.costEstimateDetailModel.demandDistribution![index], color: widget.color,
                         );
                       },
                     ),
+                  ),
+
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                       TextView(
+                        text: "Total :",
+                        fontSize: 20,
+                        bold: false,
+                        textColor: widget.color,
+                      ),
+                      SizedBox(width: 50.w,),
+                      TextView(
+                        text: (gTotal).toStringAsFixed(2),
+                        fontSize: 20,
+                        bold: true,
+                        textColor: widget.color,
+                      ),
+                    ],
                   ),
                 ],
               ),

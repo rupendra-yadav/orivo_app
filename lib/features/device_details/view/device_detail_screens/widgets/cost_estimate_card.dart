@@ -28,7 +28,7 @@ class CostEstimateCard extends StatelessWidget {
       "Energy": costEstimateModel.totalEnergyCost?.value ?? 0.0,
       "Govt": costEstimateModel.govCost?.value ?? 0.0,
       "Demand": costEstimateModel.demand?.value ?? 0.0,
-      "Other": costEstimateModel.other?.value ?? 0.0,
+     /* "Other": costEstimateModel.other?.value ?? 0.0,*/
     };
 
     Map<String, double> updatedDataMap = {};
@@ -76,8 +76,8 @@ class CostEstimateCard extends StatelessWidget {
 
                     ringStrokeWidth: 10.w,
                     centerWidget: Container(
-                      width: 87.w,
-                      height: 87.w,
+                      width: 90.w,
+                      height: 90.h,
                       decoration: BoxDecoration(
                           color: TColors.primaryDark1,
                           borderRadius:

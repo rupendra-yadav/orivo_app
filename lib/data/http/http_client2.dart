@@ -106,8 +106,7 @@ class THttpHelper2 {
 
 
   /// Helper method to make a POST request
-  static Future<Map<String, dynamic>> post(String endpoint, dynamic data,
-      {String accessToken = ""}) async {
+  static Future<Map<String, dynamic>> post(String endpoint, dynamic data, {String accessToken = ""}) async {
     if (kDebugMode) {
       print('POST Request: $_baseUrl/$endpoint');
       print('POST Data: $data');
@@ -139,6 +138,9 @@ class THttpHelper2 {
 
     return _handleResponse(response);
   }
+
+
+
 
   /// Helper method to make a PATCH request with form data
   static Future<Map<String, dynamic>> patchFormData(

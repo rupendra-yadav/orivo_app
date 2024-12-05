@@ -3,6 +3,7 @@ import 'package:auro/features/device_details/view/device_detail_screens/model/de
 import 'package:auro/features/device_details/view/device_detail_screens/model/demand_model.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/model/graph_data_model_api.dart';
 import 'package:auro/utils/popups/loaders.dart';
+import 'package:auro/utils/preferences/cache_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -53,10 +54,15 @@ class DeviceDetailController extends GetxController {
   Rx<PfDetailModel> pfDetailModel = PfDetailModel().obs;
 
   Rx<HistoryFieldModel> historyFieldModel = HistoryFieldModel().obs;
+
   Rx<HistoryModel> historyModel = HistoryModel().obs;
   Rx<HistoryModel> historyModel1 = HistoryModel().obs;
   Rx<HistoryModel> historyModel2 = HistoryModel().obs;
   Rx<HistoryModel> historyModel3 = HistoryModel().obs;
+
+  String name1="";
+  String name2="";
+  String name3="";
 
   late DeviceListModel deviceListModel;
   late GraphData graphDataModel;
@@ -97,6 +103,9 @@ class DeviceDetailController extends GetxController {
       final deviceLis = await _deviceReposotory.getDeviceDetail(deviceId);
 
       deviceList.assignAll(deviceLis);
+
+      SharedPrefs.setString("deviceId",deviceList[0].mMachineUniqueId);
+
       deviceListModel = deviceList[0];
 
       getEnergyConsumption(startDatePrep, deviceListModel.mMachineUniqueId,startDate);
@@ -119,7 +128,7 @@ class DeviceDetailController extends GetxController {
   }
 
   ///--------Device Data Items
-  Future<void> getDeviceDataItems() async {
+ /* Future<void> getDeviceDataItems() async {
     try {
       isDeviceDataItemsLoading.value = true;
 
@@ -133,7 +142,7 @@ class DeviceDetailController extends GetxController {
     } finally {
       isDeviceDataItemsLoading.value = false;
     }
-  }
+  }*/
 
   ///--------Device Graph Data
   Future<void> getDeviceGraphData(String fieldName, deviceId, rangeValue) async {
@@ -361,17 +370,20 @@ class DeviceDetailController extends GetxController {
       // Assign the object to the Rx variable
       historyFieldModel.value = HistoryFieldModel.fromJson(responsee);
 
-      getHistory("", "", deviceListModel.mMachineUniqueId, historyFieldModel.value.filters![0].id!, "-1h", 0);
+      getHistory(historyFieldModel.value.filters![0].name!,"", "", deviceListModel.mMachineUniqueId, historyFieldModel.value.filters![0].id!, "-1h", 1);
     } catch (e) {
-      print("historyFields SetModel");
-      print(e.toString());
+      if (kDebugMode) {
+        print("historyFields SetModel");
+        print(e.toString());
+      }
+
     } finally {
       isHistoryFieldLoading.value = false;
     }
   }
 
   ///-------- History
-  Future<void> getHistory(String startDate, String endDate, String deviceId, String fieldName, String duration, int indexPos) async {
+  Future<void> getHistory(String name,String startDate, String endDate, String deviceId, String fieldName, String duration, int indexPos) async {
     try {
       isHistoryLoading.value = true;
 
@@ -389,12 +401,15 @@ class DeviceDetailController extends GetxController {
       switch (indexPos) {
         case 1:
           historyModel.value = HistoryModel.fromJson(responsee);
+          name1 = name;
           break;
         case 2:
           historyModel1.value = HistoryModel.fromJson(responsee);
+          name2 = name;
           break;
         case 3:
           historyModel2.value = HistoryModel.fromJson(responsee);
+          name3 = name;
           break;
         case 4:
           historyModel3.value = HistoryModel.fromJson(responsee);

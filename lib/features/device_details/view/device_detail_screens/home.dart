@@ -60,9 +60,7 @@ class _HomeState extends State<Home> {
     });
     await controller.getDeviceDetail(navigationController.deviceId.value,
         formattedDate, formattedDateMidnight);
-    await controller.getDeviceDataItems();
-
-
+    //await controller.getDeviceDataItems();
 
   }
 
@@ -85,11 +83,23 @@ class _HomeState extends State<Home> {
 
                 /// updated at date time
                 Obx(() {
+
+                  if (kDebugMode) {
+                    print("date format Exceptions");
+                    print(controller.energyConsumptionData.value.latestDataTs?.value.toString());
+                  }
+
                   return Row(
                     children: [
                       Spacer(),
                       TextView(
-                        text: "Updated : " + DateHelper().formatDateTime(controller.energyConsumptionData.value.latestDataTs?.value ?? "2024-11-16 00:30:00"),
+                        text: "Updated : " +
+                            (controller.energyConsumptionData.value.latestDataTs?.value != null &&
+                                controller.energyConsumptionData.value.latestDataTs!.value!.isNotEmpty &&
+                                controller.energyConsumptionData.value.latestDataTs!.value != "N/A"
+                                ? DateHelper().formatDateTime(
+                                controller.energyConsumptionData.value.latestDataTs!.value!)
+                                : controller.energyConsumptionData.value.latestDataTs?.value ?? ""),
 
                         fontSize: 11,
                       )

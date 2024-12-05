@@ -37,12 +37,14 @@ class _HistoryState extends State<History> {
   int selectedTimeIndex = 0; // Track selected time filter
 
   late String fieldName = controller.historyFieldModel.value.filters![0].id.toString();
+  late String fieldParameter = controller.historyFieldModel.value.filters![0].id.toString();
    String duration = "-1h";
   late String startDate = "";
   late String endDate = "";
   late String pickedDate = "";
    int indexPos = 0 ;
-   int slot = 1 ;
+   int slot = 2 ;
+  String fieldId =  "";
 
   String _selectedStartDate = TTexts.selectFromDate;
   String _selectedEndDate = TTexts.selectToDate;
@@ -51,13 +53,11 @@ class _HistoryState extends State<History> {
   void initState() {
     super.initState();
 
-    controller.getDeviceDetail(navigationController.deviceId.value, "","");
+    //controller.getDeviceDetail(navigationController.deviceId.value, "","");
 
     SharedPrefs.setString("MACH_ID", navigationController.deviceId.value);
 
-    controller.getDeviceDataItems();
-
-    // controller.getDeviceGraphData("f", "3071123300001", "-0d");
+   // controller.getDeviceDataItems();
 
     DateTime now = DateTime.now();
     DateTime utcNow = now.toUtc();
@@ -83,8 +83,6 @@ class _HistoryState extends State<History> {
           selectedIndices.removeAt(0);
         }
         selectedIndices.add(index);
-      /*  String fieldId = controller.historyFieldModel.value.filters![index].id!;
-        fieldName = fieldId;*/
       }
     });
 
@@ -95,13 +93,14 @@ class _HistoryState extends State<History> {
           DateFormat("yyyy-MM-dd HH:mm:ss").format(utcNow);
 
       if (controller.historyFieldModel.value.filters![index].name != null) {
-        String fieldId = controller.historyFieldModel.value.filters![index].id!;
+         fieldId = controller.historyFieldModel.value.filters![index].id!;
+         fieldParameter = controller.historyFieldModel.value.filters![index].name!;
         fieldName = fieldId;
 
         if (slot == 4){
           slot = 1;
         }
-        controller.getHistory("", "", controller.deviceListModel.mMachineUniqueId, fieldId, duration,slot);
+        controller.getHistory(fieldParameter,"", "", controller.deviceListModel.mMachineUniqueId, fieldId, duration,slot);
         slot++;
       }
     }
@@ -112,8 +111,11 @@ class _HistoryState extends State<History> {
       selectedTimeIndex = index;
       indexPos = index; // Initialize indexPos here
     });
-
-    controller.getHistory("", "", controller.deviceListModel.mMachineUniqueId, fieldName, timeValue, indexPos);
+    if (slot == 4){
+      slot = 1;
+    }
+    controller.getHistory(fieldParameter,"", "", controller.deviceListModel.mMachineUniqueId, fieldName, timeValue, slot);
+    slot++;
   }
 
   @override
@@ -138,7 +140,7 @@ class _HistoryState extends State<History> {
                       showAction: false);
                 }*/
 
-                return const Graph();
+                return  Graph(name: fieldId, nameType: slot,);
               }),
 
               /// Graph Filter
@@ -428,7 +430,7 @@ class _HistoryState extends State<History> {
                                     height: 45.h,
                                     minWidth: 100.w,
                                     onPressed: () {
-                                      controller.getHistory(startDate, endDate, controller.deviceListModel.mMachineUniqueId, fieldName, "",indexPos);
+                                      controller.getHistory(fieldParameter,startDate, endDate, controller.deviceListModel.mMachineUniqueId, fieldName, "",indexPos);
                                     },
                                     title: TTexts.apply)
                               ],

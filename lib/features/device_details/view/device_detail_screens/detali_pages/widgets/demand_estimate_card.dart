@@ -63,7 +63,9 @@ class DemandEstimateCard extends StatelessWidget {
                 radiusFactor:0.8.r,
                 axisLineStyle: const AxisLineStyle(thickness: 20,cornerStyle: CornerStyle.bothCurve),
                 minimum: 0,
-                maximum: demandDetailModel.highestDemand?.value?.toDouble() ?? 1,
+                maximum: ((demandDetailModel.highestDemand?.value?.toDouble() ?? 1) != 0)
+                    ? (demandDetailModel.highestDemand?.value?.toDouble() ?? 1)
+                    : 1,
                 axisLabelStyle: const GaugeTextStyle(
                   color: Colors.white, // Set text color to white
                   fontSize: 12, // Optional: Set font size

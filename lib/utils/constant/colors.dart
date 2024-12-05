@@ -7,6 +7,7 @@ class TColors {
   static const Color primaryDark1 = Color(0xFF272D3F);
   static const Color primaryDark2 = Color(0xFF3F424D);
   static const Color primaryDark3 = Color(0xFF212636);
+  static const Color primaryDark4 = Color(0xFF212531);
   static const Color primaryLight1 = Color(0xFF8891B0);
   static const Color primaryLight2 = Color(0xFFADC5EB);
 

@@ -9,10 +9,11 @@ import '../../model/cost_estimate_detail_model.dart';
 class LegendNameCard extends StatefulWidget {
   const LegendNameCard({
     super.key,
-    required this.costEstimateDetailModel,
+    required this.costEstimateDetailModel, required this.colo ,
   });
 
   final CostEstimateDetailModel costEstimateDetailModel;
+  final Color colo;
 
   @override
   _LegendNameCardState createState() => _LegendNameCardState();
@@ -28,7 +29,7 @@ class _LegendNameCardState extends State<LegendNameCard> {
         /// Name
         Card(
           elevation: 10.h,
-          color: TColors.primaryDark2,
+          color: TColors.primaryDark4,
           child: Padding(
             padding: EdgeInsets.only(left: 10.w),
             child: Row(
@@ -37,7 +38,7 @@ class _LegendNameCardState extends State<LegendNameCard> {
                   width: 20.w,
                   height: 20.h,
                   decoration: BoxDecoration(
-                    color: TColors.green,
+                      color: widget.colo,
                     borderRadius: BorderRadius.circular(50.r),
                   ),
                 ),
@@ -50,7 +51,7 @@ class _LegendNameCardState extends State<LegendNameCard> {
                       .toStringAsFixed(2),
                   // Referencing widget.titleValue
                   fontSize: 20,
-                  textColor: TColors.green,
+                  textColor: widget.colo,
                 ),
                 const TextView(text: " Rs", fontSize: 20),
                 const Spacer(),
@@ -71,7 +72,7 @@ class _LegendNameCardState extends State<LegendNameCard> {
         /// Details - Only visible if _isDetailVisible is true
         if (_isDetailVisible)
           Card(
-            color: TColors.primaryDark2,
+            color: TColors.primaryDark4,
             elevation: 5.h,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
@@ -94,7 +95,7 @@ class _LegendNameCardState extends State<LegendNameCard> {
                                   0.0)
                               .toStringAsFixed(2),
                           // Referencing widget.onPeakValue
-                          textColor: TColors.green,
+                          textColor: widget.colo,
                         ),
                       ),
                      
@@ -107,14 +108,14 @@ class _LegendNameCardState extends State<LegendNameCard> {
                                   0.0)
                               .toStringAsFixed(2),
                           // Referencing widget.onPeakRate
-                          textColor: TColors.green,
+                          textColor: widget.colo,
                         ),
                       ),
                       
                       Expanded(
                         child: TextView(
                             text: ((widget.costEstimateDetailModel.onPeak?.value ?? 0.0) * (widget.costEstimateDetailModel.onPeakRate?.value ?? 0.0)).toStringAsFixed(2),
-                            textColor: TColors.green),
+                            textColor: widget.colo,),
                       ),
                     ],
                   ),
@@ -139,7 +140,7 @@ class _LegendNameCardState extends State<LegendNameCard> {
                                   0.0)
                               .toStringAsFixed(2),
                           // Referencing widget.offPeakValue
-                          textColor: TColors.green,
+                          textColor: widget.colo,
                         ),
                       ),
                     
@@ -149,13 +150,13 @@ class _LegendNameCardState extends State<LegendNameCard> {
                         child: TextView(
                           text: (widget.costEstimateDetailModel.offPeakRate?.value ?? 0.0).toStringAsFixed(2),
                           // Referencing widget.offPeakRate
-                          textColor: TColors.green,
+                          textColor: widget.colo,
                         ),
                       ),
                      
                       Expanded(
                         child: TextView(
-                            text: ((widget.costEstimateDetailModel.offPeak?.value ?? 0.0) * (widget.costEstimateDetailModel.offPeakRate?.value ?? 0.0)).toStringAsFixed(2), textColor: TColors.green),
+                            text: ((widget.costEstimateDetailModel.offPeak?.value ?? 0.0) * (widget.costEstimateDetailModel.offPeakRate?.value ?? 0.0)).toStringAsFixed(2), textColor: widget.colo,),
                       ),
                     ],
                   ),
@@ -177,7 +178,7 @@ class _LegendNameCardState extends State<LegendNameCard> {
                         child: TextView(
                           text: (widget.costEstimateDetailModel.normEnergy?.value ?? 0.0).toStringAsFixed(2),
                           // Referencing widget.offPeakValue
-                          textColor: TColors.green,
+                          textColor: widget.colo,
                         ),
                       ),
                       Expanded(child: TextView(text: "x", fontSize: 15)),
@@ -185,12 +186,12 @@ class _LegendNameCardState extends State<LegendNameCard> {
                         child: TextView(
                           text: (widget.costEstimateDetailModel.normEnergyRate?.value ?? 0.0).toStringAsFixed(2),
                           // Referencing widget.offPeakRate
-                          textColor: TColors.green,
+                          textColor: widget.colo,
                         ),
                       ),
                       Expanded(
                         child: TextView(
-                            text: ((widget.costEstimateDetailModel.normEnergy?.value ?? 0.0)*(widget.costEstimateDetailModel.normEnergyRate?.value ?? 0.0)).toStringAsFixed(2), textColor: TColors.green),
+                            text: ((widget.costEstimateDetailModel.normEnergy?.value ?? 0.0)*(widget.costEstimateDetailModel.normEnergyRate?.value ?? 0.0)).toStringAsFixed(2), textColor: widget.colo,),
                       ),
                     ],
                   ),
@@ -200,20 +201,21 @@ class _LegendNameCardState extends State<LegendNameCard> {
                     height: 10.h,
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       const TextView(
                         text: "Total :",
                         fontSize: 20,
                         bold: true,
                       ),
-                      Spacer(),
+                      SizedBox(width: 50.w,),
                       TextView(
                         text:(((widget.costEstimateDetailModel.onPeak?.value ?? 0.0) * (widget.costEstimateDetailModel.onPeakRate?.value ?? 0.0))+
                             ((widget.costEstimateDetailModel.offPeak?.value ?? 0.0) * (widget.costEstimateDetailModel.offPeakRate?.value ?? 0.0))+
                             ((widget.costEstimateDetailModel.normEnergy?.value ?? 0.0)*(widget.costEstimateDetailModel.normEnergyRate?.value ?? 0.0))).toStringAsFixed(2),
                         fontSize: 20,
                         bold: true,
-                        textColor: TColors.green,
+                        textColor: widget.colo,
                       ),
                     ],
                   )

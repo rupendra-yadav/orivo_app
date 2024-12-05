@@ -66,7 +66,7 @@ class Setting extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ///Electric Bill Button
-                      GestureDetector(
+                     /* GestureDetector(
                           onTap: () => Get.to(() => const ElectricBill()),
                           child: const TextView(
                             text: "Eletricity Bill",
@@ -74,9 +74,9 @@ class Setting extends StatelessWidget {
                             textColor: TColors.secondary,
                           )),
 
-                      const SizedBox(
+                    const SizedBox(
                         height: 20,
-                      ),
+                      ),*/
 
                       /// DeviceInfo
                       const TextView(

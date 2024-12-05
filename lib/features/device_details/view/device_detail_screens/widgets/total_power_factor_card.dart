@@ -115,7 +115,7 @@ class TotalPowerFactorsCard extends StatelessWidget {
               ),
               //print(powerFactorModel.pf?.value?.toStringAsFixed(2) ?? 'NA'),
               TextView(
-                 text: powerFactorModel.pf?.value?.toStringAsFixed(3) ?? 'NA'),
+                 text:"Avg : ${powerFactorModel.pf?.value?.toStringAsFixed(3) ?? 'NA'}"),
             ],
           ),
         ),

@@ -1,3 +1,4 @@
+import 'package:auro/common/widgets/shimmer/shimmer.dart';
 import 'package:auro/common/widgets/text/text_view.dart';
 import 'package:auro/features/authentication/view/login.dart';
 import 'package:auro/features/navigation/view/bottom_nav_screen/controller/profile_detail_cotroller.dart';
@@ -55,9 +56,12 @@ class Profile extends StatelessWidget {
                 child: Row(
                   children: [
                     Obx(() {
-                     /* if (controller.isUserDataLoading.value) {
-                        return const ProfileShimmer();
-                      }*/
+                       if (controller.isUserDataLoading.value) {
+                        return ClipRRect(
+                          borderRadius: BorderRadius.circular(50.r),
+                          child: TShimmerEffect(width: 80.w, height: 80.h),
+                        );
+                      }
 
                       return ClipRRect(
                         borderRadius: BorderRadius.circular(50.r),
@@ -75,8 +79,8 @@ class Profile extends StatelessWidget {
                             // Check gender and provide appropriate default image
                             return Image.asset(
                               TImages.imgUser,
-                              width: 100.w,
-                              height: 100.h,
+                              width: 80.w,
+                              height: 80.h,
                               fit: BoxFit.fill,
                             );
                           },
@@ -85,16 +89,16 @@ class Profile extends StatelessWidget {
                     }),
                     SizedBox(width: 10.w),
                     Obx(() {
-                    /*  if (controller.isUserDataLoading.value) {
-                        return const ProfileShimmer();
-                      }*/
-/*
-                      if (controller.userModel.isEmpty) {
-                        return const TImageLoaderWidget(
-                            text: 'Whoops! Profile Data Unavailable...!',
-                            animation: TImages.imgLoginBgNew1,
-                            showAction: false);
-                      }*/
+                        if (controller.isUserDataLoading.value) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TShimmerEffect(width: 66.w, height: 15.h),
+                            SizedBox(height: 10.h,),
+                            TShimmerEffect(width: 33.w, height: 10.h),
+                          ],
+                        );
+                      }
 
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -128,7 +132,7 @@ class Profile extends StatelessWidget {
             ],
           ),
 
-          Padding(
+          /*Padding(
             padding: SpacingStyle.paddingWithDefaultSpace,
             child: Container(
               width: double.infinity,
@@ -161,7 +165,7 @@ class Profile extends StatelessWidget {
                 ),
               ),
             ),
-          ),
+          ),*/
 
           SizedBox(
             height: 20.h,

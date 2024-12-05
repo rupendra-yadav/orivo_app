@@ -10,9 +10,11 @@ class LegendNameCardGovt extends StatefulWidget {
   const LegendNameCardGovt({
     super.key,
     required this.costEstimateDetailModel,
+    required this.color,
   });
 
   final CostEstimateDetailModel costEstimateDetailModel;
+  final Color color;
 
   @override
   _LegendNameCardGovtState createState() => _LegendNameCardGovtState();
@@ -28,7 +30,7 @@ class _LegendNameCardGovtState extends State<LegendNameCardGovt> {
         /// Name
         Card(
           elevation: 10.h,
-          color: TColors.primaryDark2,
+          color: TColors.primaryDark4,
           child: Padding(
             padding: EdgeInsets.only(left: 10.w),
             child: Row(
@@ -37,7 +39,7 @@ class _LegendNameCardGovtState extends State<LegendNameCardGovt> {
                   width: 20.w,
                   height: 20.h,
                   decoration: BoxDecoration(
-                    color: TColors.blue,
+                    color: widget.color,
                     borderRadius: BorderRadius.circular(50.r),
                   ),
                 ),
@@ -50,7 +52,7 @@ class _LegendNameCardGovtState extends State<LegendNameCardGovt> {
                       .toStringAsFixed(2),
                   // Referencing widget.titleValue
                   fontSize: 20,
-                  textColor: TColors.blue,
+                  textColor: widget.color,
                 ),
                 const TextView(text: " Rs", fontSize: 20),
                 const Spacer(),
@@ -71,7 +73,7 @@ class _LegendNameCardGovtState extends State<LegendNameCardGovt> {
         /// Details - Only visible if _isDetailVisible is true
         if (_isDetailVisible)
           Card(
-            color: TColors.primaryDark2,
+            color: TColors.primaryDark4,
             elevation: 5.h,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
@@ -94,7 +96,7 @@ class _LegendNameCardGovtState extends State<LegendNameCardGovt> {
                               0.0)
                               .toStringAsFixed(2),
                           // Referencing widget.onPeakValue
-                          textColor: TColors.blue,
+                          textColor: widget.color,
                         ),
                       ),
                       Expanded(child: TextView(text: "x", fontSize: 15)),
@@ -105,7 +107,7 @@ class _LegendNameCardGovtState extends State<LegendNameCardGovt> {
                               0.0)
                               .toStringAsFixed(2),
                           // Referencing widget.onPeakRate
-                          textColor: TColors.blue,
+                          textColor: widget.color,
                         ),
                       ),
                       Expanded(
@@ -136,7 +138,7 @@ class _LegendNameCardGovtState extends State<LegendNameCardGovt> {
                               0.0)
                               .toStringAsFixed(2),
                           // Referencing widget.offPeakValue
-                          textColor: TColors.blue,
+                          textColor: widget.color,
                         ),
                       ),
                       
@@ -146,7 +148,7 @@ class _LegendNameCardGovtState extends State<LegendNameCardGovt> {
                         child: TextView(
                           text: (widget.costEstimateDetailModel.cessRate?.value ?? 0.0).toStringAsFixed(2),
                           // Referencing widget.offPeakRate
-                          textColor: TColors.blue,
+                          textColor: widget.color,
                         ),
                       ),
                      
@@ -162,19 +164,20 @@ class _LegendNameCardGovtState extends State<LegendNameCardGovt> {
                     height: 10.h,
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       const TextView(
                         text: "Total :",
                         fontSize: 20,
                         bold: true,
                       ),
-                      Spacer(),
+                      SizedBox(width: 50.w,),
                       TextView(
                         text:(((widget.costEstimateDetailModel.normalFpps?.value ?? 0.0) * (widget.costEstimateDetailModel.fppsRate?.value ?? 0.0))+
                             ((widget.costEstimateDetailModel.cess?.value ?? 0.0)*(widget.costEstimateDetailModel.cessRate?.value ?? 0.0))).toStringAsFixed(2),
                         fontSize: 20,
                         bold: true,
-                        textColor: TColors.blue,
+                        textColor: widget.color,
                       ),
                     ],
                   )
