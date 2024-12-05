@@ -6,6 +6,7 @@ import 'package:iconsax/iconsax.dart';
 
 import '../../../../../../common/widgets/text/text_view.dart';
 import '../../../../../../utils/constant/colors.dart';
+import '../../../../../../utils/helpers/number_formaters.dart';
 import '../../controller/device_detail_controller.dart';
 import '../../model/cost_estimate_detail_model.dart';
 import '../../widgets/demand_distribution_card.dart';
@@ -31,7 +32,7 @@ class _LegendNameCardDemandState extends State<LegendNameCardDemand> {
   Widget build(BuildContext context) {
     double gTotal= 0;
     for(int i = 0; i< widget.costEstimateDetailModel.demandDistribution!.length;i++){
-      gTotal = gTotal + ((widget.costEstimateDetailModel.demandDistribution![i].rate?.toDouble() ?? 0.0) * (widget.costEstimateDetailModel.demandDistribution![i].demand?.toDouble() ?? 0.0));
+      gTotal = gTotal + ((widget.costEstimateDetailModel.demandDistribution![i].cost?.toDouble() ?? 0.0) /** (widget.costEstimateDetailModel.demandDistribution![i].demand?.toDouble() ?? 0.0)*/);
     }
 
 
@@ -56,10 +57,7 @@ class _LegendNameCardDemandState extends State<LegendNameCardDemand> {
                 SizedBox(width: 5.w),
                 const TextView(text: "Demand : ", fontSize: 20),
                 TextView(
-                  text:
-                      (widget.costEstimateDetailModel.totolDemandCost?.value ??
-                              0.0)
-                          .toStringAsFixed(2),
+                  text: NumberFormater().numberComma(number:(widget.costEstimateDetailModel.totolDemandCost?.value ?? 0.0)),
                   // Referencing widget.titleValue
                   fontSize: 20,
                   textColor: widget.color,
@@ -173,7 +171,7 @@ class _LegendNameCardDemandState extends State<LegendNameCardDemand> {
                       ),
                       SizedBox(width: 50.w,),
                       TextView(
-                        text: (gTotal).toStringAsFixed(2),
+                        text: NumberFormater().numberComma(number:gTotal),
                         fontSize: 20,
                         bold: true,
                         textColor: widget.color,

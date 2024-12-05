@@ -1,5 +1,6 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import '../../utils/preferences/cache_manager.dart';
 import '../notificaations/view/notifications.dart';
 
@@ -41,16 +42,31 @@ class FirebaseApi {
 
     /// this is to get the message when the App is Opened
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print(
-          'Message received in the foreground: ${message.notification?.title}');
-      // Handle the message, like showing an in-app alert
-      AwesomeNotifications().createNotification(
-        content: NotificationContent(
-            id: 10,
-            channelKey: "basic_chanel",
-            title: "${message.notification?.title}",
-            body: "${message.notification?.body}"),
-      );
+      if (kDebugMode) {
+        print(
+          'Message received in the foreground: ${message.notification?.body}');
+        /// this is to get the chanel key for validation.
+        print('Message received in the foregroundd: ${message.data}');
+
+      }
+
+     createNotification(channelKey: "basic_chanel", title: "${message.notification?.title}", body: "${message.notification?.body}");
+
+     //createNotification(channelKey: "device_chanel", title: "${message.notification?.title}", body: "Device Alert : ${message.notification?.body}");
+
     });
   }
+
+
+  void createNotification({required String? channelKey,required String? title, required String? body}) {
+    AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: 10,
+        channelKey: channelKey.toString(),
+        title: title,
+        body: body,
+      ),
+    );
+  }
+
 }

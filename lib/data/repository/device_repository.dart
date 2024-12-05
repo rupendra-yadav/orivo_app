@@ -304,12 +304,13 @@ class DeviceRepository extends GetxController {
 
 
   /// Cost Estimate
-  Future<Map<String, dynamic>> getCostEstimate(String date, String deviceId, String stop) async {
+  Future<Map<String, dynamic>> getCostEstimate(String date, String deviceId, String stop,String totalLoad) async {
     try {
       Map<String, dynamic> request = {
         "device_id": deviceId,
         "start": date,
         "stop": stop,
+        "contact_demand": totalLoad,
       };
 
       if (kDebugMode) {
@@ -426,12 +427,13 @@ class DeviceRepository extends GetxController {
 
   /// Cost Estimate Details
   Future<Map<String, dynamic>> getCostEstimateDetails(
-      String date, String deviceId, String stop) async {
+      String date, String deviceId, String stop,String totalLoad) async {
     try {
       Map<String, dynamic> request = {
         "device_id": deviceId,
         "start": date,
         "stop": stop,
+        "contact_demand": totalLoad,
       };
 
       print("CheckRequest");

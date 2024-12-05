@@ -14,6 +14,8 @@ import 'package:pie_chart/pie_chart.dart';
 
 import '../../../../../common/widgets/text/text_view.dart';
 import '../../../../../utils/constant/text_strings.dart';
+import '../../../../../utils/helpers/number_formaters.dart';
+import '../../../../../utils/preferences/cache_manager.dart';
 import '../../../../../utils/styles/spacing_style.dart';
 import '../controller/device_detail_controller.dart';
 import '../home.dart';
@@ -46,8 +48,7 @@ class _CostEstimateState extends State<CostEstimate> {
         DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
     String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
 
-    controller.getCostEstimateDetails(formattedDateMidnight,
-        controller.deviceListModel.mMachineUniqueId, formattedDate);
+    controller.getCostEstimateDetails(formattedDateMidnight, controller.deviceListModel.mMachineUniqueId, formattedDate,SharedPrefs.getString("userLoad").toString());
   }
 
   @override
@@ -128,7 +129,8 @@ class _CostEstimateState extends State<CostEstimate> {
                       controller.getCostEstimateDetails(
                           formattedStartDate1,
                           controller.deviceListModel.mMachineUniqueId,
-                          formattedEndDate1);
+                          formattedEndDate1,
+                          SharedPrefs.getString("userLoad").toString());
                     });
                   }
                 },
@@ -255,7 +257,7 @@ class _CostEstimateState extends State<CostEstimate> {
                                 ),
                                 child: Center(
                                   child: TextView(
-                                    text: "${totalCount.toStringAsFixed(2)} Rs",
+                                    text: "${NumberFormater().numberComma( number: totalCount)} Rs",
                                     textColor: Colors.white,
                                     bold: true,
                                     fontSize: 11,

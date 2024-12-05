@@ -1,4 +1,5 @@
 import 'package:auro/myapp.dart';
+import 'package:auro/utils/constant/colors.dart';
 import 'package:auro/utils/helpers/network_manager.dart';
 import 'package:auro/utils/preferences/cache_manager.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
@@ -13,7 +14,6 @@ import 'features/firebase/firebase_api.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
 
   await SharedPrefs.init();
@@ -28,13 +28,23 @@ Future<void> main() async {
     [
       NotificationChannel(
           channelKey: "basic_chanel",
-          channelName: "Basic Notifications",
-          channelDescription: "Notification Chanel For Basic Tests",
+          channelName: "App Notifications",
+          channelDescription: "Receive Updates and Alerts from our app.",
           importance: NotificationImportance.Max,
           playSound: true,
           enableVibration: true,
-          defaultColor: Color(0xFF9D50DD),
-          ledColor: Color(0xFF9D50DD)),
+          defaultColor: TColors.primary,
+          ledColor: TColors.primary),
+
+      NotificationChannel(
+          channelKey: "device_chanel",
+          channelName: "Device Alert Notifications",
+          channelDescription: "Receive Updates and Alerts for Devices.",
+          importance: NotificationImportance.Max,
+          playSound: true,
+          enableVibration: true,
+          defaultColor: TColors.secondary,
+          ledColor: TColors.secondary),
     ],
     debug: true,
   );
@@ -46,8 +56,6 @@ Future<void> main() async {
   Get.put(AuthenticationRepository());
 
   Get.put(NetworkManager());
-
-
 
   runApp(const Myapp());
 }

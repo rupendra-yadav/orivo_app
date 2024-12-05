@@ -4,6 +4,7 @@ import 'package:iconsax/iconsax.dart';
 
 import '../../../../../../common/widgets/text/text_view.dart';
 import '../../../../../../utils/constant/colors.dart';
+import '../../../../../../utils/helpers/number_formaters.dart';
 import '../../model/cost_estimate_detail_model.dart';
 
 class LegendNameCardGovt extends StatefulWidget {
@@ -46,10 +47,10 @@ class _LegendNameCardGovtState extends State<LegendNameCardGovt> {
                 SizedBox(width: 5.w),
                 const TextView(text: "Govt : ", fontSize: 20),
                 TextView(
-                  text: (widget.costEstimateDetailModel.govCost
+                  text: NumberFormater().numberComma(number:(widget.costEstimateDetailModel.govCost
                       ?.value ??
-                      0.0)
-                      .toStringAsFixed(2),
+                      0.0))
+                      ,
                   // Referencing widget.titleValue
                   fontSize: 20,
                   textColor: widget.color,
@@ -90,30 +91,33 @@ class _LegendNameCardGovtState extends State<LegendNameCardGovt> {
                   Row(
                     children: [
                       Expanded(
-                        child: TextView(
-                          text: (widget.costEstimateDetailModel.normalFpps
-                              ?.value ??
-                              0.0)
-                              .toStringAsFixed(2),
-                          // Referencing widget.onPeakValue
-                          textColor: widget.color,
+                        child: Center(
+                          child: TextView(
+                            text: NumberFormater().numberComma(number:(widget.costEstimateDetailModel.normalFpps
+                                ?.value ??
+                                0.0))
+                                ,
+                            // Referencing widget.onPeakValue
+                            textColor: widget.color,
+                          ),
                         ),
                       ),
-                      Expanded(child: TextView(text: "x", fontSize: 15)),
+                      //Expanded(child: TextView(text: "x", fontSize: 15)),
                       Expanded(
-                        child: TextView(
-                          text: (widget.costEstimateDetailModel.fppsRate
-                              ?.value ??
-                              0.0)
-                              .toStringAsFixed(2),
-                          // Referencing widget.onPeakRate
-                          textColor: widget.color,
+                        child: Center(
+                          child: TextView(
+                            text: NumberFormater().numberComma(number:widget.costEstimateDetailModel.fppsRate?.value ?? 0.0),
+                            // Referencing widget.onPeakRate
+                            textColor: widget.color,
+                          ),
                         ),
                       ),
                       Expanded(
-                        child: TextView(
-                            text: ((widget.costEstimateDetailModel.normalFpps?.value ?? 0.0) * (widget.costEstimateDetailModel.fppsRate?.value ?? 0.0)).toStringAsFixed(2),
-                            textColor: TColors.blue),
+                        child: Center(
+                          child: TextView(
+                              text: NumberFormater().numberComma(number:((widget.costEstimateDetailModel.normalFpps?.value ?? 0.0) * (widget.costEstimateDetailModel.fppsRate?.value ?? 0.0))),
+                              textColor: TColors.blue),
+                        ),
                       ),
                     ],
                   ),
@@ -132,29 +136,80 @@ class _LegendNameCardGovtState extends State<LegendNameCardGovt> {
                   Row(
                     children: [
                       Expanded(
-                        child: TextView(
-                          text: (widget.costEstimateDetailModel.cess
-                              ?.value ??
-                              0.0)
-                              .toStringAsFixed(2),
-                          // Referencing widget.offPeakValue
-                          textColor: widget.color,
+                        child: Center(
+                          child: TextView(
+                            text: NumberFormater().numberComma(number:(widget.costEstimateDetailModel.cess
+                                ?.value ??
+                                0.0))
+                                ,
+                            // Referencing widget.offPeakValue
+                            textColor: widget.color,
+                          ),
                         ),
                       ),
                       
-                      Expanded(child: TextView(text: "x", fontSize: 15)),
+                      //Expanded(child: TextView(text: "x", fontSize: 15)),
                       
                       Expanded(
-                        child: TextView(
-                          text: (widget.costEstimateDetailModel.cessRate?.value ?? 0.0).toStringAsFixed(2),
-                          // Referencing widget.offPeakRate
-                          textColor: widget.color,
+                        child: Center(
+                          child: TextView(
+                            text: NumberFormater().numberComma(number:(widget.costEstimateDetailModel.cessRate?.value ?? 0.0)),
+                            // Referencing widget.offPeakRate
+                            textColor: widget.color,
+                          ),
                         ),
                       ),
                      
                       Expanded(
-                        child: TextView(
-                            text: ((widget.costEstimateDetailModel.cess?.value ?? 0.0) * (widget.costEstimateDetailModel.cessRate?.value ?? 0.0)).toStringAsFixed(2), textColor: TColors.blue),
+                        child: Center(
+                          child: TextView(
+                              text: NumberFormater().numberComma(number:((widget.costEstimateDetailModel.cess?.value ?? 0.0) * (widget.costEstimateDetailModel.cessRate?.value ?? 0.0))), textColor: TColors.blue),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  /// Duty Rate
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Row(
+                    children: [
+                      const TextView(text: "Duty"),
+                      SizedBox(width: 10.w),
+                      const TextView(text: ""),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Center(
+                          child: TextView(
+                            text: NumberFormater().numberComma(number:widget.costEstimateDetailModel.electricityDuty?.value ?? 0.0)
+                                ,
+                            // Referencing widget.offPeakValue
+                            textColor: widget.color,
+                          ),
+                        ),
+                      ),
+
+                      //Expanded(child: TextView(text: "x", fontSize: 15)),
+
+                      Expanded(
+                        child: Center(
+                          child: TextView(
+                            text: NumberFormater().numberComma(number:(widget.costEstimateDetailModel.dutyRate?.value ?? 0.0)),
+                            // Referencing widget.offPeakRate
+                            textColor: widget.color,
+                          ),
+                        ),
+                      ),
+
+                      Expanded(
+                        child: Center(
+                          child: TextView(
+                              text: NumberFormater().numberComma(number:((widget.costEstimateDetailModel.electricityDuty?.value ?? 0.0) * (widget.costEstimateDetailModel.dutyRate?.value ?? 0.0))), textColor: TColors.blue),
+                        ),
                       ),
                     ],
                   ),
@@ -173,8 +228,8 @@ class _LegendNameCardGovtState extends State<LegendNameCardGovt> {
                       ),
                       SizedBox(width: 50.w,),
                       TextView(
-                        text:(((widget.costEstimateDetailModel.normalFpps?.value ?? 0.0) * (widget.costEstimateDetailModel.fppsRate?.value ?? 0.0))+
-                            ((widget.costEstimateDetailModel.cess?.value ?? 0.0)*(widget.costEstimateDetailModel.cessRate?.value ?? 0.0))).toStringAsFixed(2),
+                        text:NumberFormater().numberComma(number:(((widget.costEstimateDetailModel.normalFpps?.value ?? 0.0) * (widget.costEstimateDetailModel.fppsRate?.value ?? 0.0))+
+                            ((widget.costEstimateDetailModel.cess?.value ?? 0.0)*(widget.costEstimateDetailModel.cessRate?.value ?? 0.0)))),
                         fontSize: 20,
                         bold: true,
                         textColor: widget.color,

@@ -20,6 +20,7 @@ class CostEstimateDetailModel {
   Demand? others;
   Demand? totalEnergyCost;
   Demand? totolDemandCost;
+  Demand? dutyRate;
 
   CostEstimateDetailModel(
       {this.cess,
@@ -39,7 +40,8 @@ class CostEstimateDetailModel {
         this.onPeakRate,
         this.others,
         this.totalEnergyCost,
-        this.totolDemandCost});
+        this.totolDemandCost,
+        this.dutyRate,});
 
   CostEstimateDetailModel.fromJson(Map<String, dynamic> json) {
 
@@ -49,6 +51,10 @@ class CostEstimateDetailModel {
         demandDistribution!.add(new DemandDistribution.fromJson(v));
       });
     }
+
+
+    dutyRate = json['duty_rate'] != null ? new Demand.fromJson(json['duty_rate']) : null;
+
 
     cess = json['cess'] != null ? new Demand.fromJson(json['cess']) : null;
     cessRate =
@@ -101,6 +107,10 @@ class CostEstimateDetailModel {
     if (this.demandDistribution != null) {
       data['demand_distribution'] =
           this.demandDistribution!.map((v) => v.toJson()).toList();
+    }
+
+    if (this.dutyRate != null) {
+      data['duty_rate'] = this.dutyRate!.toJson();
     }
 
     if (this.cess != null) {

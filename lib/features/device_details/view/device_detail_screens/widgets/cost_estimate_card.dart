@@ -6,6 +6,7 @@ import 'package:pie_chart/pie_chart.dart';
 import '../../../../../common/widgets/text/text_view.dart';
 import '../../../../../utils/constant/colors.dart';
 import '../../../../../utils/constant/text_strings.dart';
+import '../../../../../utils/helpers/number_formaters.dart';
 import '../detali_pages/cost_estimate_detail.dart';
 import '../home.dart';
 import '../model/cost_estimate_model.dart';
@@ -85,7 +86,7 @@ class CostEstimateCard extends StatelessWidget {
                       child: Center(
                         child: TextView(
                           text:
-                          "${totalCount.toStringAsFixed(2)} Rs",
+                          "${NumberFormater().numberComma( number: totalCount)} Rs",
                           textColor: Colors.white,
                           bold: true,
                           fontSize: 11,

@@ -11,12 +11,14 @@ import 'package:auro/utils/constant/colors.dart';
 import 'package:auro/utils/constant/image_string.dart';
 import 'package:auro/utils/constant/text_strings.dart';
 import 'package:auro/utils/device/device_utility.dart';
+import 'package:auro/utils/helpers/get_version.dart';
 import 'package:auro/utils/styles/spacing_style.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../../../common/widgets/loaders/image_loader.dart';
 import '../../../../utils/local_storage/storage_utility.dart';
@@ -24,8 +26,37 @@ import '../../../../utils/preferences/cache_manager.dart';
 import '../../../authentication/view/send_otp.dart';
 import '../../../web_view/webview.dart';
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
   const Profile({super.key});
+
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  String version = "Loading...";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    fetchVersion();
+    super.initState();
+  }
+
+  Future<void> fetchVersion() async {
+    String appVersion = await getAppInfo(); // Call your function
+    setState(() {
+      version = appVersion; // Update the state with the fetched version
+    });
+  }
+
+  Future<String> getAppInfo() async {
+    // Retrieve package information
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+    // Extract the version
+    return packageInfo.version;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +65,8 @@ class Profile extends StatelessWidget {
     final TLocalStorage _localStorage = TLocalStorage();
 
     controller.getUserData();
+
+
     return Scaffold(
       backgroundColor: TColors.primary,
       body: SingleChildScrollView(
@@ -250,8 +283,9 @@ class Profile extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.only(
                   top: TDeviceUtils.getBottomNavigationBarHeight()),
-              child: const Text(
-                TTexts.versionAndDevelopedBy,
+              child:  Text(
+                'Version ${version} \n${TTexts.versionAndDevelopedBy}',
+                //TTexts.versionAndDevelopedBy,
                 textAlign: TextAlign.center,
                 style: TextStyle(color: TColors.primaryLight1, fontSize: 10),
               ),

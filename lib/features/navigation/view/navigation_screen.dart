@@ -96,7 +96,7 @@ class NavigationScreen extends StatelessWidget {
 
 
                   BottomNavigationBarItem(
-                      icon: Icon(Iconsax.profile_add),
+                      icon: Icon(Iconsax.profile_circle5),
                       label: TTexts.profile,
                       tooltip: TTexts.profile),
                 ],

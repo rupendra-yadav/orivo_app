@@ -3,6 +3,7 @@ import 'package:auro/features/navigation/view/bottom_nav_screen/widgets/device_l
 import 'package:auro/utils/constant/colors.dart';
 import 'package:auro/utils/constant/image_string.dart';
 import 'package:auro/utils/styles/spacing_style.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -19,6 +20,16 @@ class Device extends StatelessWidget {
     // Fetch the device list when the widget is built
     controller.getDeviceList();
     controller.updateFcm();
+
+    if (SharedPrefs.getBool("firstLaunch") == true) {
+    } else {
+      AwesomeNotifications().createNotification(
+          content: NotificationContent(
+              id: 10,
+              channelKey: "basic_chanel",
+              title: "Change Password..!",
+              body: "For your account’s safety,Update your password.\nClick on the Change Password in Profile."));
+    }
 
     // Set the login preference
     SharedPrefs.setBool("isLoggedIn", true);
@@ -42,8 +53,8 @@ class Device extends StatelessWidget {
               await controller.getDeviceList();
             },
             child: SingleChildScrollView(
-              physics:
-              const AlwaysScrollableScrollPhysics(), // Ensures that the scroll view can always be scrolled to trigger the refresh
+              physics: const AlwaysScrollableScrollPhysics(),
+              // Ensures that the scroll view can always be scrolled to trigger the refresh
               child: Padding(
                 padding: SpacingStyle.paddingWithDefaultSpace,
                 child: const DeviceList(),

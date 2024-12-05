@@ -26,19 +26,6 @@ class Login extends StatelessWidget {
     final loginController = Get.put(LoginController());
     // loginController.screenRedirect();
 
-  if(SharedPrefs.getBool("firstLaunch") == true){
-
-  }else{
-    AwesomeNotifications().createNotification(
-        content: NotificationContent(
-            id: 10,
-            channelKey: "basic_chanel",
-            title: "Change Password..!",
-            body: "For your account’s safety, we require you to update your password before logging in.\nClick on the Reset here link on the login page."
-
-        ));
-  }
-
     return Scaffold(
       backgroundColor: TColors.primary,
       body: SingleChildScrollView(

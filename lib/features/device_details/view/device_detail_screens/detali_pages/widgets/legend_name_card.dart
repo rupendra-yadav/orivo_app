@@ -4,6 +4,7 @@ import 'package:iconsax/iconsax.dart';
 
 import '../../../../../../common/widgets/text/text_view.dart';
 import '../../../../../../utils/constant/colors.dart';
+import '../../../../../../utils/helpers/number_formaters.dart';
 import '../../model/cost_estimate_detail_model.dart';
 
 class LegendNameCard extends StatefulWidget {
@@ -45,10 +46,10 @@ class _LegendNameCardState extends State<LegendNameCard> {
                 SizedBox(width: 5.w),
                 const TextView(text: "Energy : ", fontSize: 20),
                 TextView(
-                  text: (widget.costEstimateDetailModel.totalEnergyCost
+                  text: NumberFormater().numberComma(number:(  widget.costEstimateDetailModel.totalEnergyCost
                               ?.value ??
-                          0.0)
-                      .toStringAsFixed(2),
+                          0.0),)
+                      ,
                   // Referencing widget.titleValue
                   fontSize: 20,
                   textColor: widget.colo,
@@ -81,41 +82,47 @@ class _LegendNameCardState extends State<LegendNameCard> {
                   /// On Peak
                   Row(
                     children: [
-                      const TextView(text: "On Peak Unit"),
+                      Center(child: const TextView(text: "On Peak Unit")),
                       SizedBox(width: 10.w),
-                      const TextView(text: "Per Unit Cost"),
+                      Center(child: const TextView(text: "Per Unit Cost")),
                     ],
                   ),
                   Row(
                     children: [
                       Expanded(
-                        child: TextView(
-                          text: (widget.costEstimateDetailModel.onPeak
-                                      ?.value ??
-                                  0.0)
-                              .toStringAsFixed(2),
-                          // Referencing widget.onPeakValue
-                          textColor: widget.colo,
+                        child: Center(
+                          child: TextView(
+                            text: NumberFormater().numberComma(number:(widget.costEstimateDetailModel.onPeak
+                                        ?.value ??
+                                    0.0))
+                                ,
+                            // Referencing widget.onPeakValue
+                            textColor: widget.colo,
+                          ),
                         ),
                       ),
                      
-                      Expanded(child: TextView(text: "x", fontSize: 15)),
+                      Expanded(child: Center(child: TextView(text: "x", fontSize: 15))),
                    
                       Expanded(
-                        child: TextView(
-                          text: (widget.costEstimateDetailModel.onPeakRate
-                                      ?.value ??
-                                  0.0)
-                              .toStringAsFixed(2),
-                          // Referencing widget.onPeakRate
-                          textColor: widget.colo,
+                        child: Center(
+                          child: TextView(
+                            text: NumberFormater().numberComma(number:(widget.costEstimateDetailModel.onPeakRate
+                                        ?.value ??
+                                    0.0))
+                                ,
+                            // Referencing widget.onPeakRate
+                            textColor: widget.colo,
+                          ),
                         ),
                       ),
                       
                       Expanded(
-                        child: TextView(
-                            text: ((widget.costEstimateDetailModel.onPeak?.value ?? 0.0) * (widget.costEstimateDetailModel.onPeakRate?.value ?? 0.0)).toStringAsFixed(2),
-                            textColor: widget.colo,),
+                        child: Center(
+                          child: TextView(
+                              text: NumberFormater().numberComma(number:((widget.costEstimateDetailModel.onPeak?.value ?? 0.0) * (widget.costEstimateDetailModel.onPeakRate?.value ?? 0.0))),
+                              textColor: widget.colo,),
+                        ),
                       ),
                     ],
                   ),
@@ -134,29 +141,35 @@ class _LegendNameCardState extends State<LegendNameCard> {
                   Row(
                     children: [
                       Expanded(
-                        child: TextView(
-                          text: (widget.costEstimateDetailModel.offPeak
-                                      ?.value ??
-                                  0.0)
-                              .toStringAsFixed(2),
-                          // Referencing widget.offPeakValue
-                          textColor: widget.colo,
+                        child: Center(
+                          child: TextView(
+                            text: NumberFormater().numberComma(number:(widget.costEstimateDetailModel.offPeak
+                                        ?.value ??
+                                    0.0))
+                               ,
+                            // Referencing widget.offPeakValue
+                            textColor: widget.colo,
+                          ),
                         ),
                       ),
                     
-                      Expanded(child: TextView(text: "x", fontSize: 15)),
+                      Expanded(child: Center(child: TextView(text: "x", fontSize: 15))),
                      
                       Expanded(
-                        child: TextView(
-                          text: (widget.costEstimateDetailModel.offPeakRate?.value ?? 0.0).toStringAsFixed(2),
-                          // Referencing widget.offPeakRate
-                          textColor: widget.colo,
+                        child: Center(
+                          child: TextView(
+                            text: NumberFormater().numberComma(number:(widget.costEstimateDetailModel.offPeakRate?.value ?? 0.0)),
+                            // Referencing widget.offPeakRate
+                            textColor: widget.colo,
+                          ),
                         ),
                       ),
                      
                       Expanded(
-                        child: TextView(
-                            text: ((widget.costEstimateDetailModel.offPeak?.value ?? 0.0) * (widget.costEstimateDetailModel.offPeakRate?.value ?? 0.0)).toStringAsFixed(2), textColor: widget.colo,),
+                        child: Center(
+                          child: TextView(
+                              text: NumberFormater().numberComma(number:((widget.costEstimateDetailModel.offPeak?.value ?? 0.0) * (widget.costEstimateDetailModel.offPeakRate?.value ?? 0.0))), textColor: widget.colo,),
+                        ),
                       ),
                     ],
                   ),
@@ -175,23 +188,29 @@ class _LegendNameCardState extends State<LegendNameCard> {
                   Row(
                     children: [
                       Expanded(
-                        child: TextView(
-                          text: (widget.costEstimateDetailModel.normEnergy?.value ?? 0.0).toStringAsFixed(2),
-                          // Referencing widget.offPeakValue
-                          textColor: widget.colo,
+                        child: Center(
+                          child: TextView(
+                            text: NumberFormater().numberComma(number:(widget.costEstimateDetailModel.normEnergy?.value ?? 0.0)),
+                            // Referencing widget.offPeakValue
+                            textColor: widget.colo,
+                          ),
                         ),
                       ),
-                      Expanded(child: TextView(text: "x", fontSize: 15)),
+                      Expanded(child: Center(child: TextView(text: "x", fontSize: 15))),
                       Expanded(
-                        child: TextView(
-                          text: (widget.costEstimateDetailModel.normEnergyRate?.value ?? 0.0).toStringAsFixed(2),
-                          // Referencing widget.offPeakRate
-                          textColor: widget.colo,
+                        child: Center(
+                          child: TextView(
+                            text: NumberFormater().numberComma(number:(widget.costEstimateDetailModel.normEnergyRate?.value ?? 0.0)),
+                            // Referencing widget.offPeakRate
+                            textColor: widget.colo,
+                          ),
                         ),
                       ),
                       Expanded(
-                        child: TextView(
-                            text: ((widget.costEstimateDetailModel.normEnergy?.value ?? 0.0)*(widget.costEstimateDetailModel.normEnergyRate?.value ?? 0.0)).toStringAsFixed(2), textColor: widget.colo,),
+                        child: Center(
+                          child: TextView(
+                              text: NumberFormater().numberComma(number:((widget.costEstimateDetailModel.normEnergy?.value ?? 0.0)*(widget.costEstimateDetailModel.normEnergyRate?.value ?? 0.0))), textColor: widget.colo,),
+                        ),
                       ),
                     ],
                   ),
@@ -210,9 +229,9 @@ class _LegendNameCardState extends State<LegendNameCard> {
                       ),
                       SizedBox(width: 50.w,),
                       TextView(
-                        text:(((widget.costEstimateDetailModel.onPeak?.value ?? 0.0) * (widget.costEstimateDetailModel.onPeakRate?.value ?? 0.0))+
+                        text:NumberFormater().numberComma(number:(((widget.costEstimateDetailModel.onPeak?.value ?? 0.0) * (widget.costEstimateDetailModel.onPeakRate?.value ?? 0.0))+
                             ((widget.costEstimateDetailModel.offPeak?.value ?? 0.0) * (widget.costEstimateDetailModel.offPeakRate?.value ?? 0.0))+
-                            ((widget.costEstimateDetailModel.normEnergy?.value ?? 0.0)*(widget.costEstimateDetailModel.normEnergyRate?.value ?? 0.0))).toStringAsFixed(2),
+                            ((widget.costEstimateDetailModel.normEnergy?.value ?? 0.0)*(widget.costEstimateDetailModel.normEnergyRate?.value ?? 0.0)))),
                         fontSize: 20,
                         bold: true,
                         textColor: widget.colo,

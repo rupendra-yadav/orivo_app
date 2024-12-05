@@ -38,6 +38,8 @@ class ProfileDetailController extends GetxController {
         final userModelResponse = await _profileRepository.getUserData(user.mCustId);
         userModel.assignAll(userModelResponse);
         userModelData = userModel[0];
+
+        SharedPrefs.setString("userLoad", userModel[0].custTotalload.toString());
       } catch (e) {
         TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
       }

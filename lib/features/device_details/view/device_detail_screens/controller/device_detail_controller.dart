@@ -96,7 +96,7 @@ class DeviceDetailController extends GetxController {
   final isUpdateDeviceNameLoading = false.obs;
 
   ///Device Detail Data
-  Future<void> getDeviceDetail(String deviceId, String startDate,String startDatePrep) async {
+  Future<void> getDeviceDetail(String deviceId, String startDate,String startDatePrep,String totalLoad) async {
     try {
       isDeviceDetailLoading.value = true;
 
@@ -110,7 +110,7 @@ class DeviceDetailController extends GetxController {
 
       getEnergyConsumption(startDatePrep, deviceListModel.mMachineUniqueId,startDate);
 
-      getCostEstimate(startDatePrep, deviceListModel.mMachineUniqueId, startDate);
+      getCostEstimate(startDatePrep, deviceListModel.mMachineUniqueId, startDate,totalLoad);
 
       getDemand(startDatePrep, deviceListModel.mMachineUniqueId, startDate);
 
@@ -247,12 +247,12 @@ class DeviceDetailController extends GetxController {
   }
 
   ///--------Cost Estimate
-  Future<void> getCostEstimate(String date, deviceId, String endDate) async {
+  Future<void> getCostEstimate(String date, deviceId, String endDate,String totalLoad) async {
     try {
       isCostEstimateLoading.value = true;
 
       final Map<String, dynamic> responsee =
-          await _deviceReposotory.getCostEstimate(date, deviceId, endDate);
+          await _deviceReposotory.getCostEstimate(date, deviceId, endDate,totalLoad);
       // Assign the object to the Rx variable
       costEstimateModel.value = CostEstimateModel.fromJson(responsee);
     } catch (e) {
@@ -264,12 +264,12 @@ class DeviceDetailController extends GetxController {
   }
 
   ///--------Cost Estimate Details
-  Future<void> getCostEstimateDetails(String date, deviceId, String endDate) async {
+  Future<void> getCostEstimateDetails(String date, deviceId, String endDate,String totalLoad) async {
     try {
       isCostEstimateDetailLoading.value = true;
 
       final Map<String, dynamic> responsee =
-      await _deviceReposotory.getCostEstimateDetails(date, deviceId, endDate);
+      await _deviceReposotory.getCostEstimateDetails(date, deviceId, endDate,totalLoad);
       // Assign the object to the Rx variable
       costEstimateDetailsModel.value = CostEstimateDetailModel.fromJson(responsee);
     } catch (e) {

@@ -58,8 +58,7 @@ class _HomeState extends State<Home> {
     setState(() {
       timeStamp = DateFormat("d MMMM h:mm a").format(istNow);
     });
-    await controller.getDeviceDetail(navigationController.deviceId.value,
-        formattedDate, formattedDateMidnight);
+    await controller.getDeviceDetail(navigationController.deviceId.value, formattedDate, formattedDateMidnight,userController.userModel[0].custTotalload?.toString() ?? "0");
     //await controller.getDeviceDataItems();
 
   }
@@ -155,6 +154,8 @@ class _HomeState extends State<Home> {
                       costEstimateModel: controller.costEstimateModel.value,
                       totalCount: totalCont);
                 }),
+
+
 
                 ///Demand
                 Obx(() {

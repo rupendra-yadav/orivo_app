@@ -50,7 +50,7 @@ class TTexts {
   static const String termsOfUse = "Terms of use";
   static const String changePassword = "Change Password";
   static const String logout = "Logout";
-  static const String versionAndDevelopedBy = "Version 1.01\nDesigned & Developed By Logixhunt";
+  static const String versionAndDevelopedBy = "Designed & Developed By Logixhunt";
   static const String dialogLogout = "Logout...!";
   static const String dialogMessage = "Are You Sure You Want To Logout...?";
   static const String dialogOk = "Ok";

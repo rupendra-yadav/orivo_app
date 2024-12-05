@@ -34,7 +34,7 @@ class Setting extends StatelessWidget {
     final DeviceDetailController controller = Get.put(DeviceDetailController());
     final DeviceDetailNavigationController navigationController =
         DeviceDetailNavigationController.instance;
-    controller.getDeviceDetail(navigationController.deviceId.value, "", "");
+    controller.getDeviceDetail(navigationController.deviceId.value, "", "",SharedPrefs.getString("userLoad").toString());
 
     final userController = Get.put(ProfileDetailController());
     userController.getUserData();

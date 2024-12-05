@@ -6,6 +6,7 @@ import 'package:iconsax/iconsax.dart';
 import '../../../../../common/widgets/text/text_view.dart';
 import '../../../../../utils/constant/colors.dart';
 import '../../../../../utils/constant/text_strings.dart';
+import '../../../../../utils/helpers/number_formaters.dart';
 import '../model/cost_estimate_details_demand_distribution_model.dart';
 
 class DemandDistributionCard extends StatelessWidget {
@@ -41,7 +42,7 @@ class DemandDistributionCard extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(child: Center(child: TextView(text: "Demand",bold: true,))),
-                  Expanded(child: Center(child: TextView(text:""))),
+                  // Expanded(child: Center(child: TextView(text:""))),
                   Expanded(child: Center(child: TextView(text: "Rate",bold: true,))),
                   Expanded(child: Center(child: TextView(text: ""))),
                 ],
@@ -55,9 +56,9 @@ class DemandDistributionCard extends StatelessWidget {
                 children: [
 
                   Expanded(child: Center(child: TextView(text: demandDistribution.demand.toString(),textColor: color,))),
-                  Expanded(child: Center(child: TextView(text:"x"))),
+                  // Expanded(child: Center(child: TextView(text:""))),
                   Expanded(child: Center(child: TextView(text: demandDistribution.rate.toString(),textColor: color,))),
-                  Expanded(child: Center(child: TextView(text: ((demandDistribution.rate?.toDouble() ?? 0.0) * (demandDistribution.demand?.toDouble() ?? 0.0)).toStringAsFixed(2),textColor: color,))),
+                  Expanded(child: Center(child: TextView(text: NumberFormater().numberComma(number:demandDistribution.cost!.toDouble(),  ),textColor: color,))),
 
                  /* GestureDetector(onTap:(){
 

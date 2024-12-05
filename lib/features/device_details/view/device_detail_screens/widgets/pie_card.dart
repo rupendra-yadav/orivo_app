@@ -5,6 +5,7 @@ import 'package:pie_chart/pie_chart.dart';
 import '../../../../../common/widgets/text/text_view.dart';
 import '../../../../../utils/constant/colors.dart';
 import '../../../../../utils/constant/text_strings.dart';
+import '../../../../../utils/helpers/number_formaters.dart';
 import '../home.dart';
 import '../model/energy_consumption_model.dart';
 
@@ -92,7 +93,7 @@ class PieCard extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             TextView(
-                              text: "${totalCount.toStringAsFixed(2)}",
+                              text: NumberFormater().numberComma( number: totalCount),
                               textColor: Colors.black,
                               bold: true,
                               fontSize: 11,

@@ -24,7 +24,6 @@ class APIKeys{
   static const String updateContacts = "Api/update_contact";
   static const String updateNotificationContact = "Api/update_notification_contact";
 
-
   static const String machineDetailsDataItemsEND = "readflux.php";
   static const String machineDetailsGraphDataEND = "readfieldwisedata.php";
 }
