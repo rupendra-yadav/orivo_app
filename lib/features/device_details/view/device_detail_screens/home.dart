@@ -19,6 +19,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pie_chart/pie_chart.dart';
 
+import '../../../../utils/preferences/cache_manager.dart';
 import '../../../navigation/view/bottom_nav_screen/controller/profile_detail_cotroller.dart';
 import '../../controller/device_detail_navigation_controller.dart';
 
@@ -35,18 +36,35 @@ class _HomeState extends State<Home> {
 
   final userController = Get.put(ProfileDetailController());
 
-
   String timeStamp = "";
 
   @override
   void initState() {
+
+    //_refreshData();
+    firstCall();
     super.initState();
-    _refreshData();
   }
 
+  void firstCall(){
+    userController.getUserData();
+
+    DateTime now = DateTime.now();
+    DateTime utcNow = now.toUtc();
+    DateTime istNow = utcNow.add(const Duration(hours: 5, minutes: 30));
+    DateTime istMidnight = DateTime(istNow.year, istNow.month, istNow.day);
+    String formattedDateMidnight =
+    DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
+    String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
+
+    setState(() {
+      timeStamp = DateFormat("d MMMM h:mm a").format(istNow);
+    });
+    controller.getDeviceDetail(navigationController.deviceId.value, formattedDate, formattedDateMidnight,SharedPrefs.getString("userLoad") ?? "0");
+  }
   // Refresh method
   Future<void> _refreshData() async {
-    userController.getUserData();
+   // userController.getUserData();
 
     DateTime now = DateTime.now();
     DateTime utcNow = now.toUtc();
@@ -55,16 +73,17 @@ class _HomeState extends State<Home> {
     String formattedDateMidnight =
         DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
     String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
+
     setState(() {
       timeStamp = DateFormat("d MMMM h:mm a").format(istNow);
     });
-    await controller.getDeviceDetail(navigationController.deviceId.value, formattedDate, formattedDateMidnight,userController.userModel[0].custTotalload?.toString() ?? "0");
+  controller.getDeviceDetail(navigationController.deviceId.value, formattedDate, formattedDateMidnight,userController.userModel[0].custTotalload?.toString() ?? "0");
     //await controller.getDeviceDataItems();
-
   }
 
   @override
   Widget build(BuildContext context) {
+
     originalDataMap2.forEach((key, value) {
       updatedDataMap2['$key: $value'] = value;
     });

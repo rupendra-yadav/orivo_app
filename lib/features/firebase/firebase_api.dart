@@ -1,6 +1,8 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:path/path.dart';
 import '../../utils/preferences/cache_manager.dart';
 import '../notificaations/view/notifications.dart';
 
@@ -49,6 +51,20 @@ class FirebaseApi {
         print('Message received in the foregroundd: ${message.data}');
 
       }
+
+    /*  if(message.data == "/costEstimateDetail"){
+        Navigator.pushNamed(context as BuildContext, '/costEstimateDetail');
+      }
+      if(message.data == "/demandDetail"){
+        Navigator.pushNamed(context as BuildContext, '/demandDetail');
+      }
+      if(message.data == "/consumptionDetail"){
+        Navigator.pushNamed(context as BuildContext, '/consumptionDetail');
+      }
+      if(message.data == "/powerDetail"){
+        Navigator.pushNamed(context as BuildContext, '/powerDetail');
+      }*/
+
 
      createNotification(channelKey: "basic_chanel", title: "${message.notification?.title}", body: "${message.notification?.body}");
 

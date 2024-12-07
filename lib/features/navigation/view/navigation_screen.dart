@@ -48,7 +48,10 @@ class NavigationScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   IconButton(
-                    onPressed: () => Get.to(() => const Notifications()),
+                    onPressed: (){
+
+                     Get.to(() => const Notifications());
+                    } ,
                     icon: const Icon(
                       Iconsax.notification,
                       color: TColors.white,
@@ -93,7 +96,6 @@ class NavigationScreen extends StatelessWidget {
                       icon: Icon(Iconsax.cloud_lightning),
                       label: TTexts.device,
                       tooltip: TTexts.device),
-
 
                   BottomNavigationBarItem(
                       icon: Icon(Iconsax.profile_circle5),

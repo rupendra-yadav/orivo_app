@@ -48,13 +48,13 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
     String formattedDateMidnight = DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
     String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
 
-    controller.getPfDetails(formattedDateMidnight, controller.deviceListModel.mMachineUniqueId, formattedDate);
+    controller.getPfDetails(formattedDateMidnight, controller.deviceList[0].mMachineUniqueId, formattedDate);
 
-    controller.getFrequencyDetails(formattedDateMidnight, controller.deviceListModel.mMachineUniqueId, formattedDate);
+    controller.getFrequencyDetails(formattedDateMidnight, controller.deviceList[0].mMachineUniqueId, formattedDate);
 
-    controller.getVoltageDetails(formattedDateMidnight, controller.deviceListModel.mMachineUniqueId, formattedDate);
+    controller.getVoltageDetails(formattedDateMidnight, controller.deviceList[0].mMachineUniqueId, formattedDate);
 
-    controller.getCurrentDetails(formattedDateMidnight, controller.deviceListModel.mMachineUniqueId, formattedDate);
+    controller.getCurrentDetails(formattedDateMidnight, controller.deviceList[0].mMachineUniqueId, formattedDate);
   }
 
   @override
@@ -130,13 +130,13 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
                     }
 
 
-                    controller.getPfDetails(StartDate,controller.deviceListModel.mMachineUniqueId, EndDate);
+                    controller.getPfDetails(StartDate,controller.deviceList[0].mMachineUniqueId, EndDate);
 
-                    controller.getVoltageDetails(StartDate,controller.deviceListModel.mMachineUniqueId, EndDate);
+                    controller.getVoltageDetails(StartDate,controller.deviceList[0].mMachineUniqueId, EndDate);
 
-                    controller.getCurrentDetails(StartDate,controller.deviceListModel.mMachineUniqueId, EndDate);
+                    controller.getCurrentDetails(StartDate,controller.deviceList[0].mMachineUniqueId, EndDate);
 
-                    controller.getFrequencyDetails(StartDate, controller.deviceListModel.mMachineUniqueId, EndDate);
+                    controller.getFrequencyDetails(StartDate, controller.deviceList[0].mMachineUniqueId, EndDate);
 
                   }
                 },

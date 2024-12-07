@@ -48,7 +48,7 @@ class _CostEstimateState extends State<CostEstimate> {
         DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
     String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
 
-    controller.getCostEstimateDetails(formattedDateMidnight, controller.deviceListModel.mMachineUniqueId, formattedDate,SharedPrefs.getString("userLoad").toString());
+    controller.getCostEstimateDetails(formattedDateMidnight, controller.deviceList[0].mMachineUniqueId, formattedDate,SharedPrefs.getString("userLoad").toString());
   }
 
   @override
@@ -128,7 +128,7 @@ class _CostEstimateState extends State<CostEstimate> {
 
                       controller.getCostEstimateDetails(
                           formattedStartDate1,
-                          controller.deviceListModel.mMachineUniqueId,
+                          controller.deviceList[0].mMachineUniqueId,
                           formattedEndDate1,
                           SharedPrefs.getString("userLoad").toString());
                     });

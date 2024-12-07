@@ -42,7 +42,7 @@ class _DemandEstimateDetailState extends State<DemandEstimateDetail> {
     String formattedDateMidnight = DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
     String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
     // Call the API with the current date
-    controller.getDemandDetail(formattedDateMidnight, controller.deviceListModel.mMachineUniqueId, formattedDate);
+    controller.getDemandDetail(formattedDateMidnight, controller.deviceList[0].mMachineUniqueId, formattedDate);
   }
 
   String _selectedDateRange = TTexts.chooseDateRange;
@@ -111,7 +111,7 @@ class _DemandEstimateDetailState extends State<DemandEstimateDetail> {
                       _selectedDateRange =
                       "From $formattedStartDate To $formattedEndDate";
 
-                      controller.getDemandDetail(formattedStartDateInYears, controller.deviceListModel.mMachineUniqueId, formattedEndDateInYears);
+                      controller.getDemandDetail(formattedStartDateInYears, controller.deviceList[0].mMachineUniqueId, formattedEndDateInYears);
 
                     });
                   }

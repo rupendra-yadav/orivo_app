@@ -5,6 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import 'features/device_details/view/device_detail_screens/detali_pages/cost_estimate_detail.dart';
+import 'features/device_details/view/device_detail_screens/detali_pages/demand_estimate_detail.dart';
+import 'features/device_details/view/device_detail_screens/detali_pages/energy_consumption_detail.dart';
+import 'features/device_details/view/device_detail_screens/detali_pages/power_quality_detail.dart';
+
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class Myapp extends StatelessWidget {
@@ -17,6 +22,21 @@ class Myapp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       child: GetMaterialApp(
+
+
+        routes: {
+
+          '/costEstimateDetail': (context) => CostEstimate(),
+
+          '/demandDetail': (context) => DemandEstimateDetail(),
+
+          '/consumptionDetail': (context) => EnergyConsumptionDetail(),
+
+          '/powerDetail': (context) => PowerQualityDetail(),
+
+        },
+
+
         title: TTexts.appName,
         themeMode: ThemeMode.light,
         theme: TAppTheme.lightTheme,

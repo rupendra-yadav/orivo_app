@@ -32,22 +32,14 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
   @override
   void initState() {
     super.initState();
-
-    // Get the current date and format it
     DateTime now = DateTime.now();
     DateTime utcNow = now.toUtc();
-
-    // Convert UTC date and time to IST
     DateTime istNow = utcNow.add(const Duration(hours: 5, minutes: 30));
-
-    // Set the time to 00:00:00 (midnight) in IST for the same date
     DateTime istMidnight = DateTime(istNow.year, istNow.month, istNow.day);
-
-    // Format the date and time to the desired format
     String formattedDateMidnight = DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
     String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
-    // Call the API with the current date
-    controller.getEnergyDetailsConsumption(formattedDateMidnight, controller.deviceListModel.mMachineUniqueId, formattedDate);
+
+    controller.getEnergyDetailsConsumption(formattedDateMidnight, controller.deviceList[0].mMachineUniqueId, formattedDate);
   }
 
 
@@ -117,7 +109,7 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
                       _selectedDateRange =
                           "From $formattedStartDate To $formattedEndDate";
 
-                      controller.getEnergyDetailsConsumption(formattedStartDateInYears, controller.deviceListModel.mMachineUniqueId, formattedEndDateInYears);
+                      controller.getEnergyDetailsConsumption(formattedStartDateInYears, controller.deviceList[0].mMachineUniqueId, formattedEndDateInYears);
                     });
                   }
                 },

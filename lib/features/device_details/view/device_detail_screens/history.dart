@@ -100,7 +100,7 @@ class _HistoryState extends State<History> {
         if (slot == 4){
           slot = 1;
         }
-        controller.getHistory(fieldParameter,"", "", controller.deviceListModel.mMachineUniqueId, fieldId, duration,slot);
+        controller.getHistory(fieldParameter,"", "", controller.deviceList[0].mMachineUniqueId, fieldId, duration,slot);
         slot++;
       }
     }
@@ -114,7 +114,7 @@ class _HistoryState extends State<History> {
     if (slot == 4){
       slot = 1;
     }
-    controller.getHistory(fieldParameter,"", "", controller.deviceListModel.mMachineUniqueId, fieldName, timeValue, slot);
+    controller.getHistory(fieldParameter,"", "", controller.deviceList[0].mMachineUniqueId, fieldName, timeValue, slot);
     slot++;
   }
 
@@ -430,7 +430,7 @@ class _HistoryState extends State<History> {
                                     height: 45.h,
                                     minWidth: 100.w,
                                     onPressed: () {
-                                      controller.getHistory(fieldParameter,startDate, endDate, controller.deviceListModel.mMachineUniqueId, fieldName, "",indexPos);
+                                      controller.getHistory(fieldParameter,startDate, endDate, controller.deviceList[0].mMachineUniqueId, fieldName, "",indexPos);
                                     },
                                     title: TTexts.apply)
                               ],
