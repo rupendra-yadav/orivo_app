@@ -52,6 +52,8 @@ class FirebaseApi {
 
       }
 
+
+      /// this is to navigate to a particular page on click of the Notification
     /*  if(message.data == "/costEstimateDetail"){
         Navigator.pushNamed(context as BuildContext, '/costEstimateDetail');
       }
