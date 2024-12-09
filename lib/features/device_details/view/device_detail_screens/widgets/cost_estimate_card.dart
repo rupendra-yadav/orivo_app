@@ -43,7 +43,7 @@ class CostEstimateCard extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10.h),
       child: InkWell(
-        onTap: () => Get.to(() => const CostEstimate()),
+        onTap: () => Get.to(() => const CostEstimate(isNotify: false,)),
         child: Container(
             height: 320.h,
             decoration: BoxDecoration(

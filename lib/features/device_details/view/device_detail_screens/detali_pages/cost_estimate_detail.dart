@@ -22,18 +22,84 @@ import '../home.dart';
 import '../widgets/device_detail_shimmer.dart';
 
 class CostEstimate extends StatefulWidget {
-  const CostEstimate({super.key});
+  const CostEstimate({super.key, required this.isNotify});
+
+  final bool isNotify;
 
   @override
   _CostEstimateState createState() => _CostEstimateState();
 }
 
 class _CostEstimateState extends State<CostEstimate> {
+  // late String deviceId;
+  late Map<String, String> args;
+
+  late String deviceId;
+
+  late String deviceName;
+
+  late String startDate;
+
+  late String endDate;
+
   final DeviceDetailController controller = Get.put(DeviceDetailController());
 
   String _selectedDateRange = TTexts.chooseDateRange;
 
+
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Extract arguments safely
+
+    if (widget.isNotify == true) {
+      args = ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+
+      // Initialize values safely
+      deviceId = args['deviceId'] ?? controller.deviceList[0].mMachineUniqueId;
+      deviceName = args['deviceName'] ?? TTexts.costEstimate;
+
+      DateTime now =
+          DateTime.now().toUtc().add(const Duration(hours: 5, minutes: 30));
+      DateTime midnight = DateTime(now.year, now.month, now.day);
+
+      startDate = args['startDate'] ??
+          DateFormat("yyyy-MM-dd HH:mm:ss").format(midnight);
+      endDate =
+          args['endDate'] ?? DateFormat("yyyy-MM-dd HH:mm:ss").format(now);
+
+      // Fetch data
+      controller.getCostEstimateDetails(
+        startDate,
+        deviceId,
+        endDate,
+        SharedPrefs.getString("userLoad").toString(),
+      );
+    }else{
+      deviceId = controller.deviceList[0].mMachineUniqueId;
+      deviceName =  TTexts.costEstimate;
+
+      DateTime now =
+      DateTime.now().toUtc().add(const Duration(hours: 5, minutes: 30));
+      DateTime midnight = DateTime(now.year, now.month, now.day);
+
+      startDate =
+          DateFormat("yyyy-MM-dd HH:mm:ss").format(midnight);
+      endDate =
+           DateFormat("yyyy-MM-dd HH:mm:ss").format(now);
+
+      // Fetch data
+      controller.getCostEstimateDetails(
+        startDate,
+        deviceId,
+        endDate,
+        SharedPrefs.getString("userLoad").toString(),
+      );
+    }
+  }
+
+
+/*  @override
   void initState() {
     super.initState();
 
@@ -48,14 +114,39 @@ class _CostEstimateState extends State<CostEstimate> {
         DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
     String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
 
-    controller.getCostEstimateDetails(formattedDateMidnight, controller.deviceList[0].mMachineUniqueId, formattedDate,SharedPrefs.getString("userLoad").toString());
-  }
+  if (deviceId != null && deviceId!.isNotEmpty) {
+      deviceId = deviceId!;
+    } else {
+      deviceId = controller.deviceList[0].mMachineUniqueId;
+    }
+
+    if (deviceName != null && deviceName!.isNotEmpty) {
+      deviceName = deviceName!;
+    } else {
+      deviceName = TTexts.costEstimate;
+    }
+
+    if (startDate != null && startDate!.isNotEmpty) {
+      startDate = startDate!;
+    } else {
+      startDate = formattedDateMidnight;
+    }
+
+    if (endDate != null && endDate!.isNotEmpty) {
+      endDate = endDate!;
+    } else {
+      endDate = formattedDate;
+    }
+
+    controller.getCostEstimateDetails(startDate, deviceId, endDate,
+        SharedPrefs.getString("userLoad").toString());
+  }*/
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const DeviceCardDetailsAppBar(
-        title: TTexts.costEstimate,
+      appBar: DeviceCardDetailsAppBar(
+        title: deviceName,
       ),
       backgroundColor: TColors.primary,
       body: Padding(
@@ -128,7 +219,7 @@ class _CostEstimateState extends State<CostEstimate> {
 
                       controller.getCostEstimateDetails(
                           formattedStartDate1,
-                          controller.deviceList[0].mMachineUniqueId,
+                          deviceId,
                           formattedEndDate1,
                           SharedPrefs.getString("userLoad").toString());
                     });
@@ -200,13 +291,13 @@ class _CostEstimateState extends State<CostEstimate> {
                         0.0;
                 double totalCount = onPeak + offPeak + normal;
 
-
-
-                List<MapEntry<String, Color>> getSortedColors(Map<String, double> dataMap, List<Color> colorList) {
+                List<MapEntry<String, Color>> getSortedColors(
+                    Map<String, double> dataMap, List<Color> colorList) {
                   if (dataMap.isEmpty || colorList.isEmpty) return [];
 
                   // Combine dataMap keys and values with colors
-                  List<MapEntry<String, double>> dataEntries = dataMap.entries.toList();
+                  List<MapEntry<String, double>> dataEntries =
+                      dataMap.entries.toList();
 
                   // Sort data entries by value in descending order
                   dataEntries.sort((a, b) => b.value.compareTo(a.value));
@@ -214,107 +305,118 @@ class _CostEstimateState extends State<CostEstimate> {
                   // Map the sorted data entries to colors
                   return List<MapEntry<String, Color>>.generate(
                     dataEntries.length,
-                        (index) => MapEntry(dataEntries[index].key, colorList[index]),
+                    (index) =>
+                        MapEntry(dataEntries[index].key, colorList[index]),
                   );
                 }
 
-
-
-                return
-
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20.h),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: TColors.primaryDark1,
-                        borderRadius: BorderRadius.circular(10.r),
+                return Padding(
+                  padding: EdgeInsets.symmetric(vertical: 20.h),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: TColors.primaryDark1,
+                      borderRadius: BorderRadius.circular(10.r),
+                    ),
+                    width: double.infinity,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: 20.h,
+                        horizontal: 10.w,
                       ),
-                      width: double.infinity,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 20.h,
-                          horizontal: 10.w,
-                        ),
-                        child: Column(
-                          children: [
-                            // Pie Chart
-                            SizedBox(height: 20.h),
-                            PieChart(
-                              dataMap: updatedDataMap2,
-                              animationDuration: const Duration(milliseconds: 800),
-                              chartLegendSpacing: 32.w,
-                              chartRadius: MediaQuery.of(context).size.width / 3.2,
-                              colorList: colorList2,
-                              initialAngleInDegree: 0,
-                              chartType: ChartType.ring,
-                              ringStrokeWidth: 10.w,
-                              centerWidget: Container(
-                                width: 87.w,
-                                height: 87.w,
-                                decoration: BoxDecoration(
-                                  color: TColors.primaryDark1,
-                                  borderRadius: BorderRadius.circular(100.r),
+                      child: Column(
+                        children: [
+                          // Pie Chart
+                          SizedBox(height: 20.h),
+                          PieChart(
+                            dataMap: updatedDataMap2,
+                            animationDuration:
+                                const Duration(milliseconds: 800),
+                            chartLegendSpacing: 32.w,
+                            chartRadius:
+                                MediaQuery.of(context).size.width / 3.2,
+                            colorList: colorList2,
+                            initialAngleInDegree: 0,
+                            chartType: ChartType.ring,
+                            ringStrokeWidth: 10.w,
+                            centerWidget: Container(
+                              width: 87.w,
+                              height: 87.w,
+                              decoration: BoxDecoration(
+                                color: TColors.primaryDark1,
+                                borderRadius: BorderRadius.circular(100.r),
+                              ),
+                              child: Center(
+                                child: TextView(
+                                  text:
+                                      "${NumberFormater().numberComma(number: totalCount)} Rs",
+                                  textColor: Colors.white,
+                                  bold: true,
+                                  fontSize: 11,
                                 ),
-                                child: Center(
-                                  child: TextView(
-                                    text: "${NumberFormater().numberComma( number: totalCount)} Rs",
-                                    textColor: Colors.white,
-                                    bold: true,
-                                    fontSize: 11,
+                              ),
+                            ),
+                            legendOptions: const LegendOptions(
+                              showLegends: false,
+                            ),
+                            chartValuesOptions: const ChartValuesOptions(
+                              showChartValueBackground: true,
+                              showChartValues: false,
+                              showChartValuesInPercentage: false,
+                              showChartValuesOutside: false,
+                              chartValueBackgroundColor: TColors.primary,
+                              decimalPlaces: 1,
+                            ),
+                          ),
+                          SizedBox(height: 20.h),
+
+                          // Assign colors based on sorted data
+                          Builder(
+                            builder: (context) {
+                              final sortedColors =
+                                  getSortedColors(updatedDataMap2, colorList2);
+
+                              return Column(
+                                children: [
+                                  // Majority
+                                  LegendNameCard(
+                                    costEstimateDetailModel: controller
+                                        .costEstimateDetailsModel.value,
+                                    colo: sortedColors.isNotEmpty
+                                        ? sortedColors[0].value
+                                        : Colors.transparent,
                                   ),
-                                ),
-                              ),
-                              legendOptions: const LegendOptions(
-                                showLegends: false,
-                              ),
-                              chartValuesOptions: const ChartValuesOptions(
-                                showChartValueBackground: true,
-                                showChartValues: false,
-                                showChartValuesInPercentage: false,
-                                showChartValuesOutside: false,
-                                chartValueBackgroundColor: TColors.primary,
-                                decimalPlaces: 1,
-                              ),
-                            ),
-                            SizedBox(height: 20.h),
 
-                            // Assign colors based on sorted data
-                            Builder(
-                              builder: (context) {
-                                final sortedColors = getSortedColors(updatedDataMap2, colorList2);
-
-                                return Column(
-                                  children: [
-                                    // Majority
-                                    LegendNameCard(
-                                      costEstimateDetailModel: controller.costEstimateDetailsModel.value,
-                                      colo: sortedColors.isNotEmpty ? sortedColors[0].value : Colors.transparent,
-                                    ),
-
-                                    SizedBox(height: 15.h,),
-                                    // Secondary
-                                    LegendNameCardGovt(
-                                      costEstimateDetailModel: controller.costEstimateDetailsModel.value,
-                                      color: sortedColors.length > 1 ? sortedColors[1].value : Colors.transparent,
-                                    ),
-                                    SizedBox(height: 15.h,),
-                                    // Least
-                                    LegendNameCardDemand(
-                                      costEstimateDetailModel: controller.costEstimateDetailsModel.value,
-                                      color: sortedColors.length > 2 ? sortedColors[2].value : Colors.transparent,
-                                    ),
-                                  ],
-                                );
-                              },
-                            ),
-                          ],
-                        ),
+                                  SizedBox(
+                                    height: 15.h,
+                                  ),
+                                  // Secondary
+                                  LegendNameCardGovt(
+                                    costEstimateDetailModel: controller
+                                        .costEstimateDetailsModel.value,
+                                    color: sortedColors.length > 1
+                                        ? sortedColors[1].value
+                                        : Colors.transparent,
+                                  ),
+                                  SizedBox(
+                                    height: 15.h,
+                                  ),
+                                  // Least
+                                  LegendNameCardDemand(
+                                    costEstimateDetailModel: controller
+                                        .costEstimateDetailsModel.value,
+                                    color: sortedColors.length > 2
+                                        ? sortedColors[2].value
+                                        : Colors.transparent,
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ],
                       ),
                     ),
-                  );
-
-
-
+                  ),
+                );
 
                 /*Padding(
                   padding: EdgeInsets.symmetric(vertical: 20.h),
@@ -393,7 +495,8 @@ class _CostEstimateState extends State<CostEstimate> {
                       ),
                     ),
                   ),
-                )*/;
+                )*/
+                ;
               }),
             ],
           ),

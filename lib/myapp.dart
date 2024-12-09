@@ -17,26 +17,19 @@ class Myapp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
     return ScreenUtilInit(
       designSize: const Size(360, 800),
       minTextAdapt: true,
       splitScreenMode: true,
       child: GetMaterialApp(
-
-
         routes: {
-
-          '/costEstimateDetail': (context) => CostEstimate(),
-
+          '/costEstimateDetail': (context) => CostEstimate(isNotify: true,),
           '/demandDetail': (context) => DemandEstimateDetail(),
-
           '/consumptionDetail': (context) => EnergyConsumptionDetail(),
-
           '/powerDetail': (context) => PowerQualityDetail(),
-
         },
-
-
         title: TTexts.appName,
         themeMode: ThemeMode.light,
         theme: TAppTheme.lightTheme,

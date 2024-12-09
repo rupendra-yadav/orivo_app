@@ -12,7 +12,6 @@ import '../../../utils/constant/image_string.dart';
 import '../../navigation/view/bottom_nav_screen/widgets/device_list_shimmer.dart';
 import '../widgets/notification_card.dart';
 
-final navigatorKey = GlobalKey<NavigatorState>();
 
 class Notifications extends StatelessWidget {
   const Notifications({super.key});
