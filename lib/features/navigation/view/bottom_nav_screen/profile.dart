@@ -285,7 +285,6 @@ class _ProfileState extends State<Profile> {
                   top: TDeviceUtils.getBottomNavigationBarHeight()),
               child:  Text(
                 'Version ${version} \n${TTexts.versionAndDevelopedBy}',
-                //TTexts.versionAndDevelopedBy,
                 textAlign: TextAlign.center,
                 style: TextStyle(color: TColors.primaryLight1, fontSize: 10),
               ),
