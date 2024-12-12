@@ -19,19 +19,106 @@ import '../controller/device_detail_controller.dart';
 import '../widgets/device_detail_shimmer.dart';
 
 class PowerQualityDetail extends StatefulWidget {
-  const PowerQualityDetail({super.key});
+  const PowerQualityDetail({super.key, required this.isNotify});
+
+  final bool isNotify;
 
   @override
   State<PowerQualityDetail> createState() => _PowerQualityDetailState();
 }
 
 class _PowerQualityDetailState extends State<PowerQualityDetail> {
+
+  late Map<String, String> args;
+
+  late String deviceId;
+
+  late String deviceName;
+
+  late String startDate;
+
+  late String endDate;
+
   final DeviceDetailController controller = Get.put(DeviceDetailController());
   String _selectedDateRange = TTexts.chooseDateRange;
    int sameDate = 0;
   String EndDate ="";
 
+
   @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+
+    if (widget.isNotify == true) {
+      args = ModalRoute
+          .of(context)!
+          .settings
+          .arguments as Map<String, String>;
+
+
+      deviceId = args['deviceId'] ?? controller.deviceList[0].mMachineUniqueId;
+
+
+      DateTime now = DateTime.now();
+      DateTime utcNow = now.toUtc();
+
+      // Convert UTC date and time to IST
+      DateTime istNow = utcNow.add(const Duration(hours: 5, minutes: 30));
+
+      // Set the time to 00:00:00 (midnight) in IST for the same date
+      DateTime istMidnight = DateTime(istNow.year, istNow.month, istNow.day);
+
+      // Format the date and time to the desired format
+
+      startDate = args['startDate'] ?? DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
+      endDate = args['endDate'] ?? DateFormat("yyyy-MM-dd HH:mm:ss").format(now);
+
+
+      controller.getPfDetails(startDate, deviceId, endDate);
+
+      controller.getFrequencyDetails(startDate, deviceId, endDate);
+
+      controller.getVoltageDetails(startDate, deviceId, endDate);
+
+      controller.getCurrentDetails(startDate, deviceId, endDate);
+
+
+
+    }else{
+
+
+
+      DateTime now = DateTime.now();
+    DateTime utcNow = now.toUtc();
+
+    // Convert UTC date and time to IST
+    DateTime istNow = utcNow.add(const Duration(hours: 5, minutes: 30));
+
+    // Set the time to 00:00:00 (midnight) in IST for the same date
+    DateTime istMidnight = DateTime(istNow.year, istNow.month, istNow.day);
+
+    // Format the date and time to the desired format
+    String formattedDateMidnight = DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
+    String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
+
+    deviceId =   controller.deviceList[0].mMachineUniqueId;
+      startDate = startDate;
+      endDate = endDate;
+
+
+    controller.getPfDetails(startDate, deviceId, endDate);
+
+    controller.getFrequencyDetails(startDate, deviceId, endDate);
+
+    controller.getVoltageDetails(startDate, deviceId, endDate);
+
+    controller.getCurrentDetails(startDate, deviceId, endDate);
+    }
+
+  }
+
+ /* @override
   void initState() {
     super.initState();
 
@@ -55,7 +142,7 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
     controller.getVoltageDetails(formattedDateMidnight, controller.deviceList[0].mMachineUniqueId, formattedDate);
 
     controller.getCurrentDetails(formattedDateMidnight, controller.deviceList[0].mMachineUniqueId, formattedDate);
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -130,13 +217,13 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
                     }
 
 
-                    controller.getPfDetails(StartDate,controller.deviceList[0].mMachineUniqueId, EndDate);
+                    controller.getPfDetails(StartDate,deviceId, EndDate);
 
-                    controller.getVoltageDetails(StartDate,controller.deviceList[0].mMachineUniqueId, EndDate);
+                    controller.getVoltageDetails(StartDate,deviceId, EndDate);
 
-                    controller.getCurrentDetails(StartDate,controller.deviceList[0].mMachineUniqueId, EndDate);
+                    controller.getCurrentDetails(StartDate,deviceId, EndDate);
 
-                    controller.getFrequencyDetails(StartDate, controller.deviceList[0].mMachineUniqueId, EndDate);
+                    controller.getFrequencyDetails(StartDate, deviceId, EndDate);
 
                   }
                 },

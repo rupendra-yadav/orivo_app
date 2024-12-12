@@ -25,10 +25,11 @@ class Myapp extends StatelessWidget {
       splitScreenMode: true,
       child: GetMaterialApp(
         routes: {
+
           '/costEstimateDetail': (context) => CostEstimate(isNotify: true,),
-          '/demandDetail': (context) => DemandEstimateDetail(),
-          '/consumptionDetail': (context) => EnergyConsumptionDetail(),
-          '/powerDetail': (context) => PowerQualityDetail(),
+          '/demandDetail': (context) => DemandEstimateDetail(isNotify: true,),
+          '/consumptionDetail': (context) => EnergyConsumptionDetail(isNotify: true,),
+          '/powerDetail': (context) => PowerQualityDetail(isNotify: true,),
         },
         title: TTexts.appName,
         themeMode: ThemeMode.light,

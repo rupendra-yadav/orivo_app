@@ -28,7 +28,7 @@ class TotalPowerFactorsCard extends StatelessWidget {
 
     return
       InkWell(
-        onTap: () => Get.to(() => const PowerQualityDetail()),
+        onTap: () => Get.to(() => const PowerQualityDetail(isNotify: false,)),
         borderRadius: BorderRadius.circular(10.r),
         child: Container(
           width: MediaQuery.of(context).size.width,

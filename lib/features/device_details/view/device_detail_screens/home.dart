@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:auro/common/widgets/text/text_view.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/controller/device_detail_controller.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/energy_consumption_detail.dart';
@@ -40,7 +42,6 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-
     //_refreshData();
     firstCall();
     super.initState();
@@ -80,6 +81,9 @@ class _HomeState extends State<Home> {
   controller.getDeviceDetail(navigationController.deviceId.value, formattedDate, formattedDateMidnight,userController.userModel[0].custTotalload?.toString() ?? "0");
     //await controller.getDeviceDataItems();
   }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +152,7 @@ class _HomeState extends State<Home> {
                     totalCount: totalCount,
                     legendPosition: LegendPosition.right,
                     onPressed: () =>
-                        Get.to(() => const EnergyConsumptionDetail()),
+                        Get.to(() => const EnergyConsumptionDetail(isNotify: false,)),
                   );
                 }),
 

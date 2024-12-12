@@ -15,17 +15,77 @@ import '../controller/device_detail_controller.dart';
 import '../widgets/device_detail_shimmer.dart';
 
 class DemandEstimateDetail extends StatefulWidget {
-  const DemandEstimateDetail({super.key});
+  const DemandEstimateDetail({super.key, required this.isNotify});
+
+  final bool isNotify;
 
   @override
   State<DemandEstimateDetail> createState() => _DemandEstimateDetailState();
 }
 
 class _DemandEstimateDetailState extends State<DemandEstimateDetail> {
+
+  late Map<String, String> args;
+
+  late String deviceId;
+
+  late String deviceName;
+
+  late String startDate;
+
+  late String endDate;
+
+
+
+
   final DeviceDetailController controller = Get.put(DeviceDetailController());
 
 
   @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+
+    if (widget.isNotify == true) {
+
+      args = ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+
+      // Initialize values safely
+      deviceId = args['deviceId'] ?? controller.deviceList[0].mMachineUniqueId;
+
+      DateTime now =
+      DateTime.now().toUtc().add(const Duration(hours: 5, minutes: 30));
+      DateTime midnight = DateTime(now.year, now.month, now.day);
+
+      startDate = args['startDate'] ?? DateFormat("yyyy-MM-dd HH:mm:ss").format(midnight);
+      endDate = args['endDate'] ?? DateFormat("yyyy-MM-dd HH:mm:ss").format(now);
+
+      controller.getDemandDetail(startDate, deviceId, endDate);
+
+
+    }else {
+      DateTime now = DateTime.now();
+      DateTime utcNow = now.toUtc();
+
+      // Convert UTC date and time to IST
+      DateTime istNow = utcNow.add(const Duration(hours: 5, minutes: 30));
+
+      // Set the time to 00:00:00 (midnight) in IST for the same date
+      DateTime istMidnight = DateTime(istNow.year, istNow.month, istNow.day);
+
+      // Format the date and time to the desired format
+      String formattedDateMidnight = DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
+      startDate = formattedDateMidnight;
+      String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
+      endDate = formattedDate;
+
+      deviceId = controller.deviceList[0].mMachineUniqueId;
+      // Call the API with the current date
+      controller.getDemandDetail(startDate, deviceId, endDate);
+    }
+  }
+
+/*  @override
   void initState() {
     super.initState();
 
@@ -43,7 +103,7 @@ class _DemandEstimateDetailState extends State<DemandEstimateDetail> {
     String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
     // Call the API with the current date
     controller.getDemandDetail(formattedDateMidnight, controller.deviceList[0].mMachineUniqueId, formattedDate);
-  }
+  }*/
 
   String _selectedDateRange = TTexts.chooseDateRange;
 
@@ -108,10 +168,12 @@ class _DemandEstimateDetailState extends State<DemandEstimateDetail> {
                     }
 
                     setState(() {
-                      _selectedDateRange =
-                      "From $formattedStartDate To $formattedEndDate";
+                      _selectedDateRange = "From $formattedStartDate To $formattedEndDate";
 
-                      controller.getDemandDetail(formattedStartDateInYears, controller.deviceList[0].mMachineUniqueId, formattedEndDateInYears);
+                      endDate = formattedEndDateInYears;
+                      startDate = formattedStartDateInYears;
+
+                      controller.getDemandDetail(startDate, deviceId, endDate);
 
                     });
                   }

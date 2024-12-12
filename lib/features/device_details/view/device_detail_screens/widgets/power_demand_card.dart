@@ -31,7 +31,7 @@ class PowerDemandCard extends StatelessWidget {
     double value = ((reVal / 100) * 33).toDouble();
 
     return GestureDetector(
-      onTap: () => (Get.to(() => const DemandEstimateDetail())),
+      onTap: () => (Get.to(() => const DemandEstimateDetail(isNotify: false,))),
       child: Container(
 
         width: double.infinity,

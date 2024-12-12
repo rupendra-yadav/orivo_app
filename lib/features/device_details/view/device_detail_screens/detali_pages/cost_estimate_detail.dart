@@ -57,16 +57,12 @@ class _CostEstimateState extends State<CostEstimate> {
 
       // Initialize values safely
       deviceId = args['deviceId'] ?? controller.deviceList[0].mMachineUniqueId;
-      deviceName = args['deviceName'] ?? TTexts.costEstimate;
-
-      DateTime now =
-          DateTime.now().toUtc().add(const Duration(hours: 5, minutes: 30));
+      deviceName =  TTexts.costEstimate;
+      DateTime now = DateTime.now().toUtc().add(const Duration(hours: 5, minutes: 30));
       DateTime midnight = DateTime(now.year, now.month, now.day);
 
-      startDate = args['startDate'] ??
-          DateFormat("yyyy-MM-dd HH:mm:ss").format(midnight);
-      endDate =
-          args['endDate'] ?? DateFormat("yyyy-MM-dd HH:mm:ss").format(now);
+      startDate = args['startDate'] ?? DateFormat("yyyy-MM-dd HH:mm:ss").format(midnight);
+      endDate = args['endDate'] ?? DateFormat("yyyy-MM-dd HH:mm:ss").format(now);
 
       // Fetch data
       controller.getCostEstimateDetails(

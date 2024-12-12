@@ -16,32 +16,78 @@ import '../widgets/detail_pie_card.dart';
 import '../widgets/device_detail_shimmer.dart';
 
 class EnergyConsumptionDetail extends StatefulWidget {
-  const EnergyConsumptionDetail({super.key});
+  const EnergyConsumptionDetail({super.key, required this.isNotify});
+
+  final bool isNotify;
 
   @override
-  State<EnergyConsumptionDetail> createState() => _EnergyConsumptionDetailState();
+  State<EnergyConsumptionDetail> createState() =>
+      _EnergyConsumptionDetailState();
 }
 
 class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
+  late Map<String, String> args;
+
+  late String deviceId;
+
+  late String deviceName;
+
+  late String startDate;
+
+  late String endDate;
+
   final DeviceDetailController controller = Get.put(DeviceDetailController());
-  
+
   String _selectedDateRange = TTexts.chooseDateRange;
   String formattedEndDateInYears = "";
 
-
   @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+
+    if (widget.isNotify == true) {
+      args = ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+
+
+      deviceId = args['deviceId'] ?? controller.deviceList[0].mMachineUniqueId;
+      DateTime now = DateTime.now();
+      DateTime utcNow = now.toUtc();
+      DateTime istNow = utcNow.add(const Duration(hours: 5, minutes: 30));
+      DateTime istMidnight = DateTime(istNow.year, istNow.month, istNow.day);
+      startDate = args['startDate'] ?? DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
+      endDate = args['endDate'] ?? DateFormat("yyyy-MM-dd HH:mm:ss").format(now);
+
+      controller.getEnergyDetailsConsumption(startDate, deviceId, endDate);
+
+    } else {
+      DateTime now = DateTime.now();
+      DateTime utcNow = now.toUtc();
+      DateTime istNow = utcNow.add(const Duration(hours: 5, minutes: 30));
+      DateTime istMidnight = DateTime(istNow.year, istNow.month, istNow.day);
+      String formattedDateMidnight = DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
+      startDate = formattedDateMidnight;
+      String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
+      endDate = formattedDate;
+      deviceId = controller.deviceList[0].mMachineUniqueId;
+
+      controller.getEnergyDetailsConsumption(startDate, deviceId, endDate);
+    }
+  }
+
+  /*@override
   void initState() {
     super.initState();
     DateTime now = DateTime.now();
     DateTime utcNow = now.toUtc();
     DateTime istNow = utcNow.add(const Duration(hours: 5, minutes: 30));
     DateTime istMidnight = DateTime(istNow.year, istNow.month, istNow.day);
-    String formattedDateMidnight = DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
+    String formattedDateMidnight =
+        DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
     String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
 
     controller.getEnergyDetailsConsumption(formattedDateMidnight, controller.deviceList[0].mMachineUniqueId, formattedDate);
-  }
-
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -88,17 +134,25 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
 
                   if (pickedDateRange != null) {
                     // Formatting the date to 1-08-2024 format
-                    String formattedStartDate = DateFormat('d-MM-yyyy').format(pickedDateRange.start);
-                    String formattedStartDateInYears = DateFormat("yyyy-MM-dd HH:mm:ss").format(pickedDateRange.start);
+                    String formattedStartDate =
+                        DateFormat('d-MM-yyyy').format(pickedDateRange.start);
+                    String formattedStartDateInYears =
+                        DateFormat("yyyy-MM-dd HH:mm:ss")
+                            .format(pickedDateRange.start);
 
-                    String formattedEndDate = DateFormat('d-MM-yyyy').format(pickedDateRange.end);
-                     formattedEndDateInYears = DateFormat("yyyy-MM-dd HH:mm:ss").format(pickedDateRange.end);
-
+                    String formattedEndDate =
+                        DateFormat('d-MM-yyyy').format(pickedDateRange.end);
+                    formattedEndDateInYears = DateFormat("yyyy-MM-dd HH:mm:ss")
+                        .format(pickedDateRange.end);
 
                     if (formattedStartDate == formattedEndDate) {
-                      DateTime pickedDateRange = DateTime.parse(formattedEndDateInYears);
-                      DateTime updatedDateTime = pickedDateRange.copyWith(hour: 23, minute: 59, second: 59);
-                      formattedEndDateInYears = DateFormat('yyyy-MM-dd HH:mm:ss').format(updatedDateTime);
+                      DateTime pickedDateRange =
+                          DateTime.parse(formattedEndDateInYears);
+                      DateTime updatedDateTime = pickedDateRange.copyWith(
+                          hour: 23, minute: 59, second: 59);
+                      formattedEndDateInYears =
+                          DateFormat('yyyy-MM-dd HH:mm:ss')
+                              .format(updatedDateTime);
 
                       print("Start and End dates are the same.");
                     } else {
@@ -109,7 +163,11 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
                       _selectedDateRange =
                           "From $formattedStartDate To $formattedEndDate";
 
-                      controller.getEnergyDetailsConsumption(formattedStartDateInYears, controller.deviceList[0].mMachineUniqueId, formattedEndDateInYears);
+
+                      startDate = formattedStartDateInYears;
+                      endDate = formattedEndDateInYears;
+
+                      controller.getEnergyDetailsConsumption(startDate, deviceId, endDate);
                     });
                   }
                 },
@@ -149,11 +207,16 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
                   return const DeviceDetailShimmer();
                 }
 
-                double onPeak = controller.consumptionDetails.value.onPeakUnit?.value?? 0.0;
-                double offPeak = controller.consumptionDetails.value.offPeakUnit?.value?? 0.0;
-                double normal  = controller.consumptionDetails.value.normalUnit?.value?? 0.0;
-                double totalCount =  onPeak + offPeak + normal;
-
+                double onPeak =
+                    controller.consumptionDetails.value.onPeakUnit?.value ??
+                        0.0;
+                double offPeak =
+                    controller.consumptionDetails.value.offPeakUnit?.value ??
+                        0.0;
+                double normal =
+                    controller.consumptionDetails.value.normalUnit?.value ??
+                        0.0;
+                double totalCount = onPeak + offPeak + normal;
 
                 /* if (controller.energyConsumptionData.value.normalUnit != null) {
                         return const TImageLoaderWidget(
@@ -171,15 +234,16 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
                       totalCount: totalCount,
                       legendPosition: pie_chart.LegendPosition.bottom,
                       showLegendsInRow: true,
-                      onPressed: () =>
-                          Get.to(() => const EnergyConsumptionDetail()),
+                      onPressed: () {},
                       consumptionDetail: controller.consumptionDetails.value,
                     ),
 
                     SizedBox(height: 20.h),
 
                     /// Bar Graphs Section
-                     MultipleBarGraphCard(consumptionDetail: controller.consumptionDetails.value, ),
+                    MultipleBarGraphCard(
+                      consumptionDetail: controller.consumptionDetails.value,
+                    ),
 
                     SizedBox(height: 20.h),
 
