@@ -28,7 +28,6 @@ class _SplashState extends State<Splash> {
         AwesomeNotifications().requestPermissionToSendNotifications();
       }
     });
-
     _checkAndUpdate();
     super.initState();
   }
