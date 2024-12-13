@@ -25,7 +25,6 @@ class Myapp extends StatelessWidget {
       splitScreenMode: true,
       child: GetMaterialApp(
         routes: {
-
           '/costEstimateDetail': (context) => CostEstimate(isNotify: true,),
           '/demandDetail': (context) => DemandEstimateDetail(isNotify: true,),
           '/consumptionDetail': (context) => EnergyConsumptionDetail(isNotify: true,),

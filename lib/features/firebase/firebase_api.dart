@@ -47,11 +47,11 @@ class FirebaseApi {
     String endDate = data['end_date'] ?? "";
 
     navigatorKey.currentState?.pushNamed(
-      route/*"/costEstimateDetail"*/,
+     route/*"/powerDetail"*/,
       arguments: {
         'deviceId': deviceId/*"3071123300001"*/,
-        'startDate': startDate/*"2024-12-11 00:00:00"*/,
-        'endDate': endDate/*"2024-12-11 23:00:00"*/,
+        'startDate': startDate/*"2024-12-01 00:00:00"*/,
+        'endDate': endDate/*"2024-12-13 23:00:00"*/,
       },
     );
   }
