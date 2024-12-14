@@ -1,6 +1,7 @@
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/demand_estimate_card.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/demand_tiem_line_card.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/device_card_details_app_bar.dart';
+import 'package:auro/features/navigation/view/bottom_nav_screen/controller/profile_detail_cotroller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -35,17 +36,15 @@ class _DemandEstimateDetailState extends State<DemandEstimateDetail> {
 
   late String endDate;
 
-
-
-
   final DeviceDetailController controller = Get.put(DeviceDetailController());
+  final userController = Get.put(ProfileDetailController());
 
 
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-
+    userController.getUserData();
     if (widget.isNotify == true) {
 
       args = ModalRoute.of(context)!.settings.arguments as Map<String, String>;
@@ -219,7 +218,7 @@ class _DemandEstimateDetailState extends State<DemandEstimateDetail> {
                 if (controller.isDemandDetailLoading.value) {
                   return const DeviceDetailShimmer();
                 }
-                return DemandEstimateCard(demandDetailModel: controller.demandDetailModel.value,);
+                return DemandEstimateCard(demandDetailModel: controller.demandDetailModel.value, totalLoad: double.tryParse(userController.userModel[0].custTotalload ?? '1.0') ?? 1.0,);
               }),
 
 

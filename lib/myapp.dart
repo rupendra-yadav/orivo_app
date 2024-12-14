@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import 'features/device_details/view/device_detail_navigation_screen.dart';
 import 'features/device_details/view/device_detail_screens/detali_pages/cost_estimate_detail.dart';
 import 'features/device_details/view/device_detail_screens/detali_pages/demand_estimate_detail.dart';
 import 'features/device_details/view/device_detail_screens/detali_pages/energy_consumption_detail.dart';
@@ -29,6 +30,7 @@ class Myapp extends StatelessWidget {
           '/demandDetail': (context) => DemandEstimateDetail(isNotify: true,),
           '/consumptionDetail': (context) => EnergyConsumptionDetail(isNotify: true,),
           '/powerDetail': (context) => PowerQualityDetail(isNotify: true,),
+          // '/history': (context) => DeviceDetailsNavigationScreen(deviceListModel: null,),
         },
         title: TTexts.appName,
         themeMode: ThemeMode.light,

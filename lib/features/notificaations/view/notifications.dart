@@ -28,6 +28,7 @@ class Notifications extends StatelessWidget {
       body: Padding(
         padding: SpacingStyle.paddingWithDefaultSpace,
         child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
               /// Notification Card
@@ -43,8 +44,10 @@ class Notifications extends StatelessWidget {
                 }
 
                 return  SizedBox(
-                  height:  MediaQuery.of(Get.context!).size.height,
+                  height:  MediaQuery.of(context).size.height,
                   child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
                     scrollDirection: Axis.vertical,
                     itemCount: controller.notificationList.length,
                     itemBuilder: (context,index){

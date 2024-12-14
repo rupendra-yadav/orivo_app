@@ -41,8 +41,8 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
 
   final DeviceDetailController controller = Get.put(DeviceDetailController());
   String _selectedDateRange = TTexts.chooseDateRange;
-   int sameDate = 0;
-  String EndDate ="";
+  int sameDate = 0;
+  String EndDate = "";
 
 
   @override
@@ -71,8 +71,10 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
 
       // Format the date and time to the desired format
 
-      startDate = args['startDate'] ?? DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
-      endDate = args['endDate'] ?? DateFormat("yyyy-MM-dd HH:mm:ss").format(now);
+      startDate = args['startDate'] ??
+          DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
+      endDate =
+          args['endDate'] ?? DateFormat("yyyy-MM-dd HH:mm:ss").format(now);
 
 
       controller.getPfDetails(startDate, deviceId, endDate);
@@ -82,43 +84,37 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
       controller.getVoltageDetails(startDate, deviceId, endDate);
 
       controller.getCurrentDetails(startDate, deviceId, endDate);
-
-
-
-    }else{
-
-
-
+    } else {
       DateTime now = DateTime.now();
-    DateTime utcNow = now.toUtc();
+      DateTime utcNow = now.toUtc();
 
-    // Convert UTC date and time to IST
-    DateTime istNow = utcNow.add(const Duration(hours: 5, minutes: 30));
+      // Convert UTC date and time to IST
+      DateTime istNow = utcNow.add(const Duration(hours: 5, minutes: 30));
 
-    // Set the time to 00:00:00 (midnight) in IST for the same date
-    DateTime istMidnight = DateTime(istNow.year, istNow.month, istNow.day);
+      // Set the time to 00:00:00 (midnight) in IST for the same date
+      DateTime istMidnight = DateTime(istNow.year, istNow.month, istNow.day);
 
-    // Format the date and time to the desired format
-    String formattedDateMidnight = DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
-    String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
+      // Format the date and time to the desired format
+      String formattedDateMidnight = DateFormat("yyyy-MM-dd HH:mm:ss").format(
+          istMidnight);
+      String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
 
-    deviceId =   controller.deviceList[0].mMachineUniqueId;
-      startDate = startDate;
-      endDate = endDate;
+      deviceId = controller.deviceList[0].mMachineUniqueId;
+      startDate = formattedDateMidnight;
+      endDate = formattedDate;
 
 
-    controller.getPfDetails(startDate, deviceId, endDate);
+      controller.getPfDetails(startDate, deviceId, endDate);
 
-    controller.getFrequencyDetails(startDate, deviceId, endDate);
+      controller.getFrequencyDetails(startDate, deviceId, endDate);
 
-    controller.getVoltageDetails(startDate, deviceId, endDate);
+      controller.getVoltageDetails(startDate, deviceId, endDate);
 
-    controller.getCurrentDetails(startDate, deviceId, endDate);
+      controller.getCurrentDetails(startDate, deviceId, endDate);
     }
-
   }
 
- /* @override
+  /* @override
   void initState() {
     super.initState();
 
@@ -154,6 +150,7 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+
               /// Date Range Section
               GestureDetector(
                 onTap: () async {
@@ -187,26 +184,33 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
 
                   if (pickedDateRange != null) {
                     // Formatting the date to 1-08-2024 format
-                    String formattedStartDate = DateFormat('d-MM-yyyy').format(pickedDateRange.start);
+                    String formattedStartDate = DateFormat('d-MM-yyyy').format(
+                        pickedDateRange.start);
 
-                    String StartDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(pickedDateRange.start);
+                    String StartDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(
+                        pickedDateRange.start);
 
-                    String formattedEndDate = DateFormat('d-MM-yyyy').format(pickedDateRange.end);
+                    String formattedEndDate = DateFormat('d-MM-yyyy').format(
+                        pickedDateRange.end);
 
-                     EndDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(pickedDateRange.end);
+                    EndDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(
+                        pickedDateRange.end);
 
                     setState(() {
                       _selectedDateRange =
-                          "From $formattedStartDate To $formattedEndDate";
+                      "From $formattedStartDate To $formattedEndDate";
                     });
 
                     if (formattedStartDate == formattedEndDate) {
                       sameDate = 1;
 
-                      DateTime pickedDateRange = DateTime.parse(EndDate); // Original date and time
+                      DateTime pickedDateRange = DateTime.parse(
+                          EndDate); // Original date and time
 
-                      DateTime updatedDateTime = pickedDateRange.copyWith(hour: 23, minute: 59, second: 59);
-                      EndDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(updatedDateTime);
+                      DateTime updatedDateTime = pickedDateRange.copyWith(
+                          hour: 23, minute: 59, second: 59);
+                      EndDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(
+                          updatedDateTime);
                       print("EndDateCHECK");
                       print(EndDate);
 
@@ -217,14 +221,14 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
                     }
 
 
-                    controller.getPfDetails(StartDate,deviceId, EndDate);
+                    controller.getPfDetails(StartDate, deviceId, EndDate);
 
-                    controller.getVoltageDetails(StartDate,deviceId, EndDate);
+                    controller.getVoltageDetails(StartDate, deviceId, EndDate);
 
-                    controller.getCurrentDetails(StartDate,deviceId, EndDate);
+                    controller.getCurrentDetails(StartDate, deviceId, EndDate);
 
-                    controller.getFrequencyDetails(StartDate, deviceId, EndDate);
-
+                    controller.getFrequencyDetails(
+                        StartDate, deviceId, EndDate);
                   }
                 },
                 child: Center(
@@ -265,37 +269,46 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
                 if (controller.isPfDetailsLoading.value) {
                   return const DeviceDetailShimmer();
                 }
-                return TotalPowerFactorCard(pfDetailModel: controller.pfDetailModel.value,dateType: sameDate,);
+                return TotalPowerFactorCard(
+                  pfDetailModel: controller.pfDetailModel.value,
+                  dateType: sameDate,);
               }),
 
               SizedBox(height: 20.h),
 
               /// Voltage
-              Obx((){
+              Obx(() {
                 if (controller.isVoltageDetailLoading.value) {
                   return const DeviceDetailShimmer();
                 }
-                return  VoltageCard(voltageDetailModel: controller.voltageDetailsModel.value,dateType: sameDate,);
+                return VoltageCard(
+                  voltageDetailModel: controller.voltageDetailsModel.value,
+                  dateType: sameDate,);
               }),
 
 
               SizedBox(height: 20.h),
 
               ///Curent
-              Obx((){
+              Obx(() {
                 if (controller.isCurrentDetailLoading.value) {
                   return const DeviceDetailShimmer();
                 }
-                return CurrentCard(currentDetailModel: controller.currentDetailsModel.value,dateType: sameDate,);
+                return CurrentCard(
+                  currentDetailModel: controller.currentDetailsModel.value,
+                  dateType: sameDate,);
               }),
 
               SizedBox(height: 20.h),
 
               ///Frequency
-              Obx((){     if (controller.isFrequencyDetailLoading.value) {
-                return const DeviceDetailShimmer();
-              }
-              return FrequencyCard(frequencyDetailsModel: controller.frequencyDetailsModel.value,dateType: sameDate,);
+              Obx(() {
+                if (controller.isFrequencyDetailLoading.value) {
+                  return const DeviceDetailShimmer();
+                }
+                return FrequencyCard(
+                  frequencyDetailsModel: controller.frequencyDetailsModel.value,
+                  dateType: sameDate,);
               }),
             ],
           ),

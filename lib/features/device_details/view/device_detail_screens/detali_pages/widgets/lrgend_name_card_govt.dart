@@ -228,8 +228,12 @@ class _LegendNameCardGovtState extends State<LegendNameCardGovt> {
                       ),
                       SizedBox(width: 50.w,),
                       TextView(
-                        text:NumberFormater().numberComma(number:(((widget.costEstimateDetailModel.normalFpps?.value ?? 0.0) * (widget.costEstimateDetailModel.fppsRate?.value ?? 0.0))+
-                            ((widget.costEstimateDetailModel.cess?.value ?? 0.0)*(widget.costEstimateDetailModel.cessRate?.value ?? 0.0)))),
+                        text:
+
+                        NumberFormater().numberComma(number:(widget.costEstimateDetailModel.govCost?.value ?? 0.0)),
+
+                        /*NumberFormater().numberComma(number:(((widget.costEstimateDetailModel.normalFpps?.value ?? 0.0) * (widget.costEstimateDetailModel.fppsRate?.value ?? 0.0))+
+                            ((widget.costEstimateDetailModel.cess?.value ?? 0.0)*(widget.costEstimateDetailModel.cessRate?.value ?? 0.0))))*/
                         fontSize: 20,
                         bold: true,
                         textColor: widget.color,

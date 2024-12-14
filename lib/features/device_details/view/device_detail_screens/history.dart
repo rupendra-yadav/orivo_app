@@ -43,7 +43,7 @@ class _HistoryState extends State<History> {
   late String endDate = "";
   late String pickedDate = "";
    int indexPos = 0 ;
-   int slot = 2 ;
+   int slot = 1 ;
   String fieldId =  "";
 
   String _selectedStartDate = TTexts.selectFromDate;
@@ -100,8 +100,9 @@ class _HistoryState extends State<History> {
         if (slot == 4){
           slot = 1;
         }
+         slot++;
         controller.getHistory(fieldParameter,"", "", controller.deviceList[0].mMachineUniqueId, fieldId, duration,slot);
-        slot++;
+
       }
     }
   }
@@ -111,11 +112,8 @@ class _HistoryState extends State<History> {
       selectedTimeIndex = index;
       indexPos = index; // Initialize indexPos here
     });
-    if (slot == 4){
-      slot = 1;
-    }
+
     controller.getHistory(fieldParameter,"", "", controller.deviceList[0].mMachineUniqueId, fieldName, timeValue, slot);
-    slot++;
   }
 
   @override

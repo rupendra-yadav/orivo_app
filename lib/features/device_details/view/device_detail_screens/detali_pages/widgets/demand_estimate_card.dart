@@ -6,17 +6,20 @@ import 'package:syncfusion_flutter_gauges/gauges.dart';
 import '../../../../../../common/widgets/text/text_view.dart';
 import '../../../../../../utils/constant/colors.dart';
 import '../../../../../../utils/constant/text_strings.dart';
+import '../../../../../../utils/preferences/cache_manager.dart';
 import '../../model/demand_detail_model.dart';
 import '../../widgets/custom_bars.dart';
 
 
 class DemandEstimateCard extends StatelessWidget {
-  const DemandEstimateCard({
+   DemandEstimateCard({
     super.key,
     required this.demandDetailModel,
+    required this.totalLoad,
   });
 
   final DemandDetailModel demandDetailModel;
+  final double totalLoad;
 
   @override
   Widget build(BuildContext context) {
@@ -63,9 +66,7 @@ class DemandEstimateCard extends StatelessWidget {
                 radiusFactor:0.8.r,
                 axisLineStyle: const AxisLineStyle(thickness: 20,cornerStyle: CornerStyle.bothCurve),
                 minimum: 0,
-                maximum: ((demandDetailModel.highestDemand?.value?.toDouble() ?? 1) != 0)
-                    ? (demandDetailModel.highestDemand?.value?.toDouble() ?? 1)
-                    : 1,
+                maximum: totalLoad,
                 axisLabelStyle: const GaugeTextStyle(
                   color: Colors.white, // Set text color to white
                   fontSize: 12, // Optional: Set font size
@@ -116,7 +117,7 @@ tickOffset: 5,
 
             Center(
               child: TextView(
-                text:  "${demandDetailModel.currentDemand?.value?.round().toString() ??
+                text:  "${demandDetailModel.currentDemand?.value?.toString() ??
                     '0'} ${demandDetailModel.currentDemand?.unit?.toString() ?? ''}",
                 fontSize: 30,
                 bold: true,

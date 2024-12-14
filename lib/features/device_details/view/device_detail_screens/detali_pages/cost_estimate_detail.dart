@@ -299,10 +299,7 @@ class _CostEstimateState extends State<CostEstimate> {
                   dataEntries.sort((a, b) => b.value.compareTo(a.value));
 
                   // Map the sorted data entries to colors
-                  return List<MapEntry<String, Color>>.generate(
-                    dataEntries.length,
-                    (index) =>
-                        MapEntry(dataEntries[index].key, colorList[index]),
+                  return List<MapEntry<String, Color>>.generate(dataEntries.length, (index) => MapEntry(dataEntries[index].key, colorList[index]),
                   );
                 }
 

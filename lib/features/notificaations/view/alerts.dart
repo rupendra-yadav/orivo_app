@@ -28,14 +28,15 @@ final String id ;
     return Scaffold(
       backgroundColor: TColors.primary,
       appBar: const NotificationAppBar(title: "Device Alerts",),
-      body: Padding(
-        padding: SpacingStyle.paddingWithDefaultSpace,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              /// Notification Card
+      body: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        child: Column(
+          children: [
+            /// Notification Card
 
-              Obx((){
+            Padding(
+              padding: SpacingStyle.paddingWithDefaultSpace,
+              child: Obx((){
 
                 if (controller.isDeviceAlertNotificationLoading.value) return const DeviceListShimmer();
 
@@ -47,19 +48,20 @@ final String id ;
                 }
 
                 return  SizedBox(
-                  height:  MediaQuery.of(Get.context!).size.height,
+                  height: MediaQuery.of(context).size.height,
                   child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
                       scrollDirection: Axis.vertical,
                       itemCount: controller.deviceAlertNotificationList.length,
                       itemBuilder: (context,index){
-
                         return AlertCard(deviceAlertNotificationModel: controller.deviceAlertNotificationList[index],);
                       }),
                 ) ;
               }),
-              
-            ],
-          ),
+            ),
+
+          ],
         ),
       ),
     );
