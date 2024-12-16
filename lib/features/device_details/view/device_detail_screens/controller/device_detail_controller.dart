@@ -397,6 +397,9 @@ class DeviceDetailController extends GetxController {
         print("indexPosTest");
         print(indexPos);
       }
+      if (indexPos == 4){
+        indexPos = 1;
+      }
 
       switch (indexPos) {
         case 1:
