@@ -16,17 +16,10 @@ import 'package:flutter/foundation.dart'
 /// ```
 class DefaultFirebaseOptions {
 
-
-
   static FirebaseOptions get currentPlatform {
 
-
-
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -51,7 +44,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDNE07ll70aNDsKpQI3LgHMOaFRxiOowjo',
-    appId: '1:291418405084:android:da7b13824912a703961c19',
+    appId: '1:291418405084:android:1dde9bb8de56e58b961c19',
     messagingSenderId: '291418405084',
     projectId: 'orivo-232c5',
     storageBucket: 'orivo-232c5.firebasestorage.app',
@@ -59,11 +52,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAOyGGxXrao-eegH86bhDQCnE0c585I7G8',
-    appId: '1:291418405084:ios:364ebdb8a75c2f8b961c19',
+    appId: '1:291418405084:ios:2739ba410df06ef9961c19',
     messagingSenderId: '291418405084',
     projectId: 'orivo-232c5',
     storageBucket: 'orivo-232c5.firebasestorage.app',
-    iosBundleId: 'com.logixhunt.auro',
+    iosBundleId: 'com.orivotech.orivo',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -85,7 +78,14 @@ class DefaultFirebaseOptions {
     measurementId: 'G-0B3X800L2H',
   );
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyAvZ9oakps-W6HmE9DGQ72d9bKRluVQKyM',
+    appId: '1:291418405084:web:b731d0ab8a957820961c19',
+    messagingSenderId: '291418405084',
+    projectId: 'orivo-232c5',
+    authDomain: 'orivo-232c5.firebaseapp.com',
+    storageBucket: 'orivo-232c5.firebasestorage.app',
+    measurementId: 'G-0B3X800L2H',
+  );
 
 }
-
-

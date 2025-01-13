@@ -21,8 +21,23 @@ class PowerDemandCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+ /*   double vall = demandModel.currentDemand?.value?.toDouble() ?? 0;
+    double total = totalLoad != null ? double.parse(totalLoad) : 0;*/
+
+
+
     double vall = demandModel.currentDemand?.value?.toDouble() ?? 0;
-    double total = totalLoad != null ? double.parse(totalLoad) : 0;
+
+// Check if totalLoad is a valid number before parsing
+    double total = 1;
+    if (totalLoad != null && totalLoad.isNotEmpty) {
+      try {
+        total = double.parse(totalLoad);
+      } catch (e) {
+        print('Error parsing totalLoad: $e');
+        total = 1; // Default to 1 if parsing fails
+      }
+    }
 
     // double total = demandModel.currentDemand?.value?.toInt() ?? 1;
 
