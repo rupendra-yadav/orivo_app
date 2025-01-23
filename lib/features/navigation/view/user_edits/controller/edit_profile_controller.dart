@@ -92,7 +92,11 @@ class EditProfileController extends GetxController {
         print("Camera permission granted");
       }
       sendImageMessage(true);
-    } else {
+    }
+    else if(permissionStatus.isPermanentlyDenied){
+      openAppSettings();
+    }
+    else {
       if (kDebugMode) {
         print("Requesting camera permission");
       }
@@ -126,7 +130,11 @@ class EditProfileController extends GetxController {
         print("Gallery permission granted");
       }
       await sendImageMessage(false);
-    } else {
+    }
+    else if(permissionStatus.isPermanentlyDenied){
+      openAppSettings();
+    }
+    else {
       if (kDebugMode) {
         print("Requesting gallery permission");
       }
