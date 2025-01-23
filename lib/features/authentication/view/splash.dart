@@ -23,11 +23,13 @@ class _SplashState extends State<Splash> {
 
   @override
   void initState() {
+
     AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
       if (!isAllowed) {
         AwesomeNotifications().requestPermissionToSendNotifications();
       }
     });
+
     _checkAndUpdate();
     super.initState();
   }
