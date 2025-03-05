@@ -9,6 +9,7 @@ import '../../../utils/helpers/network_manager.dart';
 import '../../../utils/local_storage/storage_utility.dart';
 import '../../../utils/popups/full_screen_loader.dart';
 import '../../../utils/popups/loaders.dart';
+import '../../../utils/preferences/cache_manager.dart';
 
 class LoginController extends GetxController {
   static LoginController get instance => Get.find();
@@ -78,4 +79,62 @@ class LoginController extends GetxController {
       }
     }
   }
+
+
+  Future<void> login() async {
+    try {
+
+      TFullScreenLoader.openLoadingDialog('Logging you in...');
+
+      //check internet Connection
+      final isConnected = await networkManager.isConnected();
+      if (!isConnected) {
+        TFullScreenLoader.stopLoading();
+        return;
+      }
+
+      //form validation
+      if (!loginFormKey.currentState!.validate()) {
+        TFullScreenLoader.stopLoading();
+        return;
+      }
+
+      // Login user using number and password
+      final response = await _repository.login(phoneNumber.text.trim(), password.text.trim(),/*SharedPrefs.getString("UUID")??""*/"12345");
+
+      TFullScreenLoader.stopLoading();
+
+      if (response['success'] == true) {
+
+        /// this is to Access data
+        Map<String, dynamic> userDataMap = _localStorage.readData(_userDataKey) ?? {};
+        UserDetail user = UserDetail.fromJson(userDataMap);
+        try {
+          if (kDebugMode) {
+            print(user.mCustName);
+          }
+        } catch (e) {
+
+          TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+        }
+
+        /// to navigate page to Navigation Screen
+        TLoaders.successSnackBar(title: 'Success', message: response['message']);
+        Get.offAll(() => const NavigationScreen());
+
+      }else{
+        TLoaders.errorSnackBar(title: 'Error', message: response['message']);
+        if (kDebugMode) {
+          print(response['response']);
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e.toString());
+      }
+    }
+  }
+
+
+
 }

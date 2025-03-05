@@ -4,18 +4,15 @@ import 'package:http/http.dart' as http;
 
 import '../../utils/constant/api_constants.dart';
 
-class THttpHelper {
-  static const String _baseUrl = tBaseUrl;
+class THttpHelper3 {
+  static const String _baseUrl = tBaseUrl3;
 
   /// Helper method to make a GET request
   static Future<Map<String, dynamic>> get(
       String endpoint, {
         String accessToken = "",
-        Map<String, dynamic>? queryParams,
-        dynamic data,
-      }) async {
-    final uri = Uri.parse('$_baseUrl/$endpoint').replace(
-      queryParameters: queryParams,
+        Map<String, dynamic>? queryParams, dynamic data,}) async {
+    final uri = Uri.parse('$_baseUrl$endpoint').replace(queryParameters: queryParams,
     );
 
     if (kDebugMode) {
@@ -48,21 +45,87 @@ class THttpHelper {
     return _handleResponse(response);
   }
 
-  /// Helper method to make a POST request
-  static Future<Map<String, dynamic>> post(String endpoint, dynamic data,
+
+  static Future<Map<String, dynamic>> redirectPost(String endpoint, dynamic data,
       {String accessToken = ""}) async {
     if (kDebugMode) {
-      print('POST Request: $_baseUrl/$endpoint');
+      print('POST Request: $_baseUrl$endpoint');
       print('POST Data: $data');
     }
 
-    final response = await http.post(
-      Uri.parse('$_baseUrl/$endpoint'),
-      headers: accessToken.isEmpty ? {'Content-Type': 'application/x-www-form-urlencoded'} : {
+    Uri uri = Uri.parse('$_baseUrl$endpoint');
+    int redirectCount = 0;
+    bool redirect = true;
+    http.Response? response;  // Initialize response as nullable
+
+    while (redirect && redirectCount < 5) {
+      response = await http.post(
+        uri,
+        headers: accessToken.isEmpty
+            ? {'Content-Type': 'application/x-www-form-urlencoded'}
+            : {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer $accessToken'
+        },
+        body: _encodeFormData(data),  // Ensure form URL encoding
+      );
+
+      if (kDebugMode) {
+        print('POST Response: ${response.body}');
+      }
+
+      // Handle redirect status codes (3xx)
+      if (response.statusCode == 308 || response.statusCode == 301 || response.statusCode == 302) {
+        String? redirectUrl = response.headers['location'];
+        if (redirectUrl != null) {
+          uri = Uri.parse(redirectUrl);
+          redirectCount++;
+          if (kDebugMode) {
+            print('Redirecting to $redirectUrl');
+          }
+        } else {
+          throw Exception('Redirection without location header');
+        }
+      } else {
+        redirect = false; // No redirect, exit loop
+      }
+    }
+
+    // Check if response is non-null before passing it to _handleResponse
+    if (response != null) {
+      return _handleResponse(response);
+    } else {
+      throw Exception('Failed to get a valid response.');
+    }
+  }
+
+
+
+
+  /// Helper method to make a POST request
+  static Future<Map<String, dynamic>> post(String endpoint,Map<String, dynamic>? queryParams, dynamic data, {String accessToken = ""}) async {
+    if (kDebugMode) {
+      print('POST Request: $_baseUrl$endpoint${Uri(queryParameters:queryParams)}');
+      print('POST Data: $data');
+    }
+
+    // final response = await http.post(
+    //   Uri.parse('$_baseUrl/$endpoint'),
+    //   headers: {'Content-Type': 'application/json'},
+    //   body: json.encode(data),
+    // );
+
+    final response = await http.post(Uri.parse('$_baseUrl$endpoint').replace(queryParameters:queryParams),
+
+      headers: accessToken.isEmpty
+          ? {'Content-Type': 'application/x-www-form-urlencoded'}
+          : {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Authorization': 'Bearer $accessToken'
+
       },
       body: _encodeFormData(data),
+        // Set a reasonable limit for redirects
     );
 
     if (kDebugMode) {
@@ -71,6 +134,9 @@ class THttpHelper {
 
     return _handleResponse(response);
   }
+
+
+
 
   /// Helper method to make a PATCH request with form data
   static Future<Map<String, dynamic>> patchFormData(
@@ -243,9 +309,15 @@ class THttpHelper {
   }
 
   // Helper method to encode form data
-  static String _encodeFormData(Map<String, dynamic> data) {
+  /*static String _encodeFormData(Map<String, dynamic> data) {
     return data.keys
         .map((key) => '$key=${Uri.encodeComponent(data[key])}')
+        .join('&');
+  }*/
+
+  static String _encodeFormData(Map<String, dynamic> data) {
+    return data.keys
+        .map((key) => '$key=${Uri.encodeComponent(data[key].toString())}')
         .join('&');
   }
 }

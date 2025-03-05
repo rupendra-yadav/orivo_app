@@ -8,15 +8,9 @@ class THttpHelper2 {
   static const String _baseUrl = tBaseUrl2;
 
   /// Helper method to make a GET request
-  static Future<Map<String, dynamic>> get(
-      String endpoint, {
-        String accessToken = "",
-        Map<String, dynamic>? queryParams,
-        dynamic data,
-      }) async {
-    final uri = Uri.parse('$_baseUrl$endpoint').replace(
-      queryParameters: queryParams,
-    );
+  static Future<Map<String, dynamic>> get(String endpoint, {String accessToken = "", Map<String, dynamic>? queryParams, dynamic data,}) async {
+
+    final uri = Uri.parse('$_baseUrl$endpoint').replace(queryParameters: queryParams,);
 
     if (kDebugMode) {
       print('GET Request: $uri');
@@ -118,8 +112,7 @@ class THttpHelper2 {
     //   body: json.encode(data),
     // );
 
-    final response = await http.post(
-      Uri.parse('$_baseUrl/$endpoint'),
+    final response = await http.post(Uri.parse('$_baseUrl/$endpoint'),
 
       headers: accessToken.isEmpty
           ? {'Content-Type': 'application/x-www-form-urlencoded'}

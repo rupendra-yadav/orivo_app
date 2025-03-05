@@ -110,7 +110,9 @@ class Login extends StatelessWidget {
                             minWidth: 185.w,
                             title: TTexts.logMeIn,
                             onPressed: () {
+                              loginController.login();
                               loginController.userLogin();
+
                             }),
                       ),
                       SizedBox(

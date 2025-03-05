@@ -1,6 +1,7 @@
 
 const String tBaseUrl = "https://webdevelopercg.com/electricity/myadmin";
 const String tBaseUrl2 = "http://3.232.30.235:5001/api/v1/";
+const String tBaseUrl3 = "http://3.232.30.235:5002/api/v1/";
 const String tBaseImageUrl = "";
 
 
@@ -26,6 +27,13 @@ class APIKeys{
 
   static const String machineDetailsDataItemsEND = "readflux.php";
   static const String machineDetailsGraphDataEND = "readfieldwisedata.php";
+
+//////////////////Version 2 API/////////////////////////////////////////////////
+
+  static const String refresh = "auth/refresh";
+  static const String login = "auth/login";
+
+
 }
 
 ///End Keys

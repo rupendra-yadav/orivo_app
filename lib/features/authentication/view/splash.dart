@@ -102,6 +102,13 @@ class _SplashState extends State<Splash> {
       }
     }
 
+
+    splashController.refreshToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2VkMzNiOS1mOWE4LTExZWYtYTI2OS0wYWI2ODY2YjdhNDciLCJleHAiOjE3NDExNzA1MTd9.MmqD0mXmQqfUIY-dJbltSMx2PBq7ApOZgKk_l0XyMBk",
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2VkMzNiOS1mOWE4LTExZWYtYTI2OS0wYWI2ODY2YjdhNDciLCJkZXZpY2VfaWQiOiIwNjBmMWZjNS01YjYxLTRkMDQtYTliOC0wZmI5NTE1MjhkYmEiLCJleHAiOjE3NDE3NzM1MTd9.bUjmCzs281m38yhlF2Wljfpri6lOfgdiUKUBzPshPVA",
+        SharedPrefs.getString("UUID")??"");
+
+
+
     return Scaffold(
       backgroundColor: TColors.primary,
       body: Image(
