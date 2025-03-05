@@ -66,7 +66,7 @@ class VerifyOtp extends StatelessWidget {
                       /// setting image for OTP
                       Center(
                         child: Image.asset(
-                          TImages.imgLoginBgNew1,height: 230.h,width: 230.w,
+                          TImages.imgLoginNew,height: 230.h,width: 230.w,
                         ),
                       ),
                       SizedBox(
@@ -93,6 +93,9 @@ class VerifyOtp extends StatelessWidget {
                           length: 6,
                           keyboardType: TextInputType.number,
                           onChanged: (value) {},
+                          onCompleted: (pin){
+                            verifyOtpController.verifyOtp(resetPass);
+                          },
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           animationType: AnimationType.slide,
                           autoFocus: true,

@@ -3,6 +3,7 @@ import 'package:auro/features/navigation/view/navigation_screen.dart';
 import 'package:auro/features/navigation/view/user_edits/view/reset_password.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../data/repository/authentication_repository.dart';
@@ -29,6 +30,7 @@ class VerifyOtpController extends GetxController {
 
   Future<void> verifyOtp(int resetPassword) async {
     try {
+
       TFullScreenLoader.openLoadingDialog('Verifying OTP...!');
 
       //check internet Connection

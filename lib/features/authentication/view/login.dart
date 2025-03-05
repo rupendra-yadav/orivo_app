@@ -45,7 +45,7 @@ class Login extends StatelessWidget {
                       /// setting image for login
                       Center(
                         child: Image.asset(
-                          TImages.imgLoginBgNew1, height: 230.h, width: 230.w,
+                          TImages.imgLoginNew, height: 152.h, width: 203.w,
                         ),
                       ),
                       SizedBox(

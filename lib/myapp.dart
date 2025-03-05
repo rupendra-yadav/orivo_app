@@ -30,6 +30,7 @@ class Myapp extends StatelessWidget {
           '/demandDetail': (context) => DemandEstimateDetail(isNotify: true,),
           '/consumptionDetail': (context) => EnergyConsumptionDetail(isNotify: true,),
           '/powerDetail': (context) => PowerQualityDetail(isNotify: true,),
+          '/splash': (context) => Splash(isNotify: true,),
           // '/history': (context) => DeviceDetailsNavigationScreen(deviceListModel: null,),
         },
         title: TTexts.appName,
@@ -37,7 +38,7 @@ class Myapp extends StatelessWidget {
         theme: TAppTheme.lightTheme,
         darkTheme: TAppTheme.darkTheme,
         debugShowCheckedModeBanner: true,
-        home: const Splash(),
+        home: const Splash(isNotify: false,),
         navigatorKey: navigatorKey,
       ),
     );

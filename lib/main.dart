@@ -1,10 +1,15 @@
+import 'dart:io';
+
 import 'package:auro/myapp.dart';
 import 'package:auro/utils/constant/colors.dart';
+import 'package:auro/utils/constant/text_strings.dart';
 import 'package:auro/utils/helpers/network_manager.dart';
 import 'package:auro/utils/preferences/cache_manager.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:path/path.dart';
@@ -15,6 +20,7 @@ import 'features/firebase/firebase_api.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
 
   await SharedPrefs.init();
@@ -60,3 +66,6 @@ Future<void> main() async {
 
   runApp(const Myapp());
 }
+
+
+

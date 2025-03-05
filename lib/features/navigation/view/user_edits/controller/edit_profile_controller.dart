@@ -40,6 +40,9 @@ class EditProfileController extends GetxController {
   // File? imageData;
   Rx<File?> imageData = Rx<File?>(null);
 
+
+
+
   Future<void> updateProfile() async {
     //check internet Connection
     final isConnected = await networkManager.isConnected();
@@ -47,7 +50,7 @@ class EditProfileController extends GetxController {
       TFullScreenLoader.stopLoading();
       return;
     }
-    //form validation
+    // form validation
     // if (!updateProfileFormKey.currentState!.validate()) {
     //   TFullScreenLoader.stopLoading();
     //   return;
@@ -57,6 +60,16 @@ class EditProfileController extends GetxController {
         _localStorage.readData(_userDataKey) ?? {};
     UserDetail user = UserDetail.fromJson(userDataMap);
     try {
+
+      /* final File? imageFile = imageData.value;
+
+      if (imageFile == null) {
+        if (kDebugMode) {
+          print("Error: No image selected.");
+        }
+        return;
+      }*/
+
       final response = await _repository.updateUserData(
           user.mCustId,
           name.text.trim().isEmpty?user.mCustName:name.text.trim(),

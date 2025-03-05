@@ -12,6 +12,7 @@ class TImages {
   static const String imgSplashNew = "assets/images/img_splash_new.png";
   static const String imgListBg = "assets/images/img_list_bg.png";
   static const String imgAlertTriangle = "assets/images/img_alert_triangle.png";
+  static const String imgLoginNew = "assets/images/img_login_new.png";
 
   /// Image Path
   //Device Image Path

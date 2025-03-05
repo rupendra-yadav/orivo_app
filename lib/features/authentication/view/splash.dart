@@ -8,11 +8,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:in_app_update/in_app_update.dart';
+import 'package:uuid/uuid.dart';
 
+import '../../../myapp.dart';
+import '../../../utils/preferences/cache_manager.dart';
 import '../contoller/splash_controller.dart';
 
 class Splash extends StatefulWidget {
-  const Splash({super.key});
+  const Splash({super.key, required this.isNotify});
+
+  final bool isNotify;
 
   @override
   State<Splash> createState() => _SplashState();
@@ -21,9 +26,34 @@ class Splash extends StatefulWidget {
 class _SplashState extends State<Splash> {
   final splashController = Get.put(SplashController());
 
+  late Map<String, String> arguments;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (widget.isNotify == true) {
+      arguments =
+          ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+
+      String route = arguments['route'] ?? "";
+      String deviceId = arguments['deviceId'] ?? "";
+      String startDate = arguments['startDate'] ?? "";
+      String endDate = arguments['endDate'] ?? "";
+
+      navigatorKey.currentState?.pushNamed(
+        route,
+        arguments: {
+          'deviceId': deviceId,
+          'startDate': startDate,
+          'endDate': endDate,
+        },
+      );
+    }
+  }
+
   @override
   void initState() {
-
     AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
       if (!isAllowed) {
         AwesomeNotifications().requestPermissionToSendNotifications();
@@ -32,6 +62,12 @@ class _SplashState extends State<Splash> {
 
     _checkAndUpdate();
     super.initState();
+  }
+
+  String generateUuid() {
+    final uuid = Uuid();
+    SharedPrefs.setString("UUID", uuid.v4());
+    return uuid.v4(); // Generates a v4 UUID
   }
 
   Future<void> _checkAndUpdate() async {
@@ -54,6 +90,18 @@ class _SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
+
+    if (SharedPrefs.getString("UUID") == null) {
+      generateUuid();
+      if (kDebugMode) {
+        print('New UUID.v4 --> ${generateUuid()}');
+      }
+    } else {
+      if (kDebugMode) {
+        print('Old UUID.v4 --> ${SharedPrefs.getString("UUID")}');
+      }
+    }
+
     return Scaffold(
       backgroundColor: TColors.primary,
       body: Image(

@@ -8,6 +8,7 @@ import 'package:iconsax/iconsax.dart';
 
 import '../../../common/widgets/buttons/button.dart';
 import '../../../common/widgets/inputFields/input_text.dart';
+import '../../../common/widgets/text/text_view.dart';
 import '../../../utils/constant/colors.dart';
 import '../../../utils/constant/image_string.dart';
 import '../../../utils/constant/text_strings.dart';
@@ -38,10 +39,10 @@ class SendOtp extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      /// setting image for login
+                      ///  image for login
                       Center(
                         child: Image.asset(
-                          TImages.imgLoginBgNew1
+                          TImages.imgLoginNew
                           ,height: 230.h,width: 230.w,
                         ),
                       ),
@@ -52,9 +53,14 @@ class SendOtp extends StatelessWidget {
                       /// User login heading
                       const Text(TTexts.sendOTPHead,
                           style: TextStyle(fontSize: 24, color: TColors.white)),
-                      const Text(TTexts.sendOtpCred,
-                          style: TextStyle(
-                              fontSize: 12, color: TColors.lightGrey)),
+                      InkWell(
+                        onLongPress: (){
+                          newUserDialog(context);
+                        },
+                        child: const Text(TTexts.sendOtpCred,
+                            style: TextStyle(
+                                fontSize: 12, color: TColors.lightGrey)),
+                      ),
                       SizedBox(
                         height: 20.h,
                       ),
@@ -63,9 +69,10 @@ class SendOtp extends StatelessWidget {
                       PrefixInputText(
                         controller: sendOtpController.mobileNumber,
                         validator:(value) => Validate.validatePhoneNumber(value),
-                        hint: TTexts.etHintLoginEmail,
-                        preFixIcon: const Icon(Iconsax.attach_circle),
-                        keyboardType: TextInputType.text,
+                        hint: TTexts.etHintLoginMobile,
+                        preFixIcon: const Icon(Iconsax.mobile),
+                        maxLength: 10,
+                        keyboardType: TextInputType.phone,
                       ),
                       SizedBox(
                         height: 5.h,
@@ -87,10 +94,11 @@ class SendOtp extends StatelessWidget {
                         child: Button(
                             height: 54.h,
                             minWidth: 185.w,
-                            title: TTexts.sendOtp,
+                            title: TTexts.sendOtpToWhatsApp,
+                            
                             onPressed: () {
-
                               sendOtpController.sendOtp(resetPass);
+
                             }),
                       ),
 
@@ -126,4 +134,45 @@ class SendOtp extends StatelessWidget {
       ),
     );
   }
+}
+
+
+newUserDialog(BuildContext context) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: true, // Prevents closing the dialog by tapping outside
+    builder: (BuildContext context) {
+      return AlertDialog(
+        backgroundColor: TColors.primaryLight1,
+        title: const TextView(
+          text: TTexts.accessRequired,
+          textColor: TColors.primary,
+          fontSize: 25,
+          bold: true,
+        ),
+        content: const SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              TextView(
+                text: TTexts.alertNewUser,
+                textColor: TColors.primary,
+              ),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: const TextView(
+              text: TTexts.dialogOk,
+              textColor: TColors.primaryDark2,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+
+        ],
+      );
+    },
+  );
 }

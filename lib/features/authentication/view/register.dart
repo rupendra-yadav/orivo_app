@@ -38,7 +38,7 @@ class Register extends StatelessWidget {
                       /// setting image for login
                       Center(
                         child: Image.asset(
-                          TImages.imgLoginBgNew1
+                          TImages.imgLoginNew
                           ,height: 230.h,width: 230.w,
                         ),
                       ),

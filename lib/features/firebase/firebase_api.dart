@@ -224,8 +224,9 @@ class FirebaseApi {
     String endDate = data['end_date'] ?? "";
 
     navigatorKey.currentState?.pushNamed(
-      route,
+   "/splash",
       arguments: {
+        'route': route,
         'deviceId': deviceId,
         'startDate': startDate,
         'endDate': endDate,
@@ -254,7 +255,7 @@ class FirebaseApi {
           print('Notification Data: ${message.data}');
         }
 
-        String channelKey = message.data['channelKey'] ?? "basic_channel";
+        String channelKey = message.data['channelKey'] ?? "basic_chanel";
         createNotification(
           channelKey: channelKey,
           title: message.notification?.title ?? "",
@@ -284,9 +285,9 @@ class FirebaseApi {
 
   /// Generate a unique ID for notifications.
   int generateUniqueId() {
-    final random = Random().nextInt(100000); // Random number for unique ID
+    final random = Random().nextInt(1000); // Random number for unique ID
     final timestamp = DateTime.now().millisecondsSinceEpoch;
-    return random + timestamp;
+    return random /*+ timestamp*/;
   }
 }
 

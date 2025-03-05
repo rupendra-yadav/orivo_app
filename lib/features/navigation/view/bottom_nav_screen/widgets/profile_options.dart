@@ -18,18 +18,21 @@ class ProfileOptions extends StatelessWidget {
     return Padding(
       padding:
       const EdgeInsets.only(left: 20.0, top: 10, bottom: 10),
-      child: Row(
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-                color: TColors.primaryLight1, fontSize: 16),
-          ),
-          const Spacer(),
-          IconButton(
-              onPressed: onPressed,
-              icon: const Icon(Iconsax.arrow_right_3,color: TColors.primaryLight1,))
-        ],
+      child: InkWell(
+        onTap: onPressed,
+        child: Row(
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                  color: TColors.primaryLight1, fontSize: 16),
+            ),
+            const Spacer(),
+            IconButton(
+                onPressed: onPressed,
+                icon: const Icon(Iconsax.arrow_right_3,color: TColors.primaryLight1,))
+          ],
+        ),
       ),
     );
   }

@@ -50,7 +50,6 @@ class _CostEstimateState extends State<CostEstimate> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // Extract arguments safely
 
     if (widget.isNotify == true) {
       args = ModalRoute.of(context)!.settings.arguments as Map<String, String>;

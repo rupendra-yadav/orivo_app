@@ -95,8 +95,7 @@ class ProfileRepository extends GetxController {
       request.fields['user_gstno'] = userGstNo;
 
       // Add the image file to the request
-      request.files
-          .add(await http.MultipartFile.fromPath('user_pic', userPic.path));
+      request.files.add(await http.MultipartFile.fromPath('user_pic', userPic.path));
 
       // Send the request and get the response
       var response = await request.send();
@@ -112,8 +111,7 @@ class ProfileRepository extends GetxController {
 
         if (jsonResponse['response'] == 'success') {
           List<dynamic> useData = jsonResponse['data'];
-          List<UserModel> userDetails =
-              useData.map((data) => UserModel.fromJson(data)).toList();
+          List<UserModel> userDetails = useData.map((data) => UserModel.fromJson(data)).toList();
           return userDetails;
         } else {
           throw Exception(jsonResponse['message']);

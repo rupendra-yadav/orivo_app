@@ -13,8 +13,7 @@ class AuthenticationRepository extends GetxController {
   final TLocalStorage _localStorage = TLocalStorage();
 
   ///----User Login
-  Future<Map<String, dynamic>> userLogin(
-      String mobileNumber, String password) async {
+  Future<Map<String, dynamic>> userLogin(String mobileNumber, String password) async {
     try {
       Map<String, dynamic> data = {
         'user_mobile': mobileNumber,
@@ -48,6 +47,8 @@ class AuthenticationRepository extends GetxController {
       return {'response': 'error', 'message': e.toString()};
     }
   }
+
+
 
   ///-----Register User
   Future<Map<String, dynamic>>  registerUser(

@@ -13,6 +13,7 @@ class PrefixInputText extends StatefulWidget {
     this.controller,
     this.validator,
     this.obscureText = false,
+     this.enable = true,
   });
 
   final String hint;
@@ -22,6 +23,7 @@ class PrefixInputText extends StatefulWidget {
   final TextEditingController? controller;
   final String? Function(String?)? validator;
   final bool obscureText;
+  final bool enable;
 
   @override
   _PrefixInputTextState createState() => _PrefixInputTextState();
@@ -47,6 +49,7 @@ class _PrefixInputTextState extends State<PrefixInputText> {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10.0.h),
       child: TextFormField(
+        enabled: widget.enable,
         obscureText: _obscureText,
         controller: widget.controller,
         validator: widget.validator,
@@ -55,7 +58,7 @@ class _PrefixInputTextState extends State<PrefixInputText> {
         style: const TextStyle(color: TColors.white, fontSize: 18),
         decoration: InputDecoration(
           hintText: widget.hint,
-          hintStyle: const TextStyle(color: TColors.white, fontSize: 18),
+          hintStyle: const TextStyle(color: TColors.primaryLight1, fontSize: 18),
           prefixIcon: widget.preFixIcon,
           fillColor: TColors.primaryDark2,
           filled: true,

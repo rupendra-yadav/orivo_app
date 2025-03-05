@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../../../../../common/widgets/text/text_view.dart';
 import '../../../../../../utils/constant/colors.dart';
 import '../../../../../../utils/helpers/number_formaters.dart';
-import '../../controller/device_detail_controller.dart';
 import '../../model/cost_estimate_detail_model.dart';
 import '../../widgets/demand_distribution_card.dart';
 
 class LegendNameCardDemand extends StatefulWidget {
   const LegendNameCardDemand({
     super.key,
-    required this.costEstimateDetailModel,  required this.color,
+    required this.costEstimateDetailModel,
+    required this.color,
   });
 
   final CostEstimateDetailModel costEstimateDetailModel;
@@ -25,16 +23,21 @@ class LegendNameCardDemand extends StatefulWidget {
 }
 
 class _LegendNameCardDemandState extends State<LegendNameCardDemand> {
-
   bool _isDetailVisible = false;
 
   @override
   Widget build(BuildContext context) {
-    double gTotal= 0;
-    for(int i = 0; i< widget.costEstimateDetailModel.demandDistribution!.length;i++){
-      gTotal = gTotal + ((widget.costEstimateDetailModel.demandDistribution![i].cost?.toDouble() ?? 0.0) /** (widget.costEstimateDetailModel.demandDistribution![i].demand?.toDouble() ?? 0.0)*/);
+    double gTotal = 0;
+    if (widget.costEstimateDetailModel.demandDistribution != null) {
+      for (int i = 0;
+          i < widget.costEstimateDetailModel.demandDistribution!.length;
+          i++) {
+        gTotal = gTotal +
+            ((widget.costEstimateDetailModel.demandDistribution![i].cost
+                    ?.toDouble() ??
+                0.0) /** (widget.costEstimateDetailModel.demandDistribution![i].demand?.toDouble() ?? 0.0)*/);
+      }
     }
-
 
     return Column(
       children: [
@@ -57,7 +60,10 @@ class _LegendNameCardDemandState extends State<LegendNameCardDemand> {
                 SizedBox(width: 5.w),
                 const TextView(text: "Demand : ", fontSize: 20),
                 TextView(
-                  text: NumberFormater().numberComma(number:(widget.costEstimateDetailModel.totolDemandCost?.value ?? 0.0)),
+                  text: NumberFormater().numberComma(
+                      number: (widget
+                              .costEstimateDetailModel.totolDemandCost?.value ??
+                          0.0)),
                   // Referencing widget.titleValue
                   fontSize: 20,
                   textColor: widget.color,
@@ -84,11 +90,11 @@ class _LegendNameCardDemandState extends State<LegendNameCardDemand> {
             color: Colors.transparent,
             elevation: 0.h,
             child: Padding(
-              padding: EdgeInsets.symmetric( vertical: 5.h),
+              padding: EdgeInsets.symmetric(vertical: 5.h),
               child: Column(
                 children: [
                   /// Demand Charge
-                /*  Row(
+                  /*  Row(
                     children: [
                       const TextView(text: "Demand Charge"),
                       SizedBox(width: 10.w),
@@ -131,10 +137,10 @@ class _LegendNameCardDemandState extends State<LegendNameCardDemand> {
 
                   /// Grand Total
 
-                 /* SizedBox(
+                  /* SizedBox(
                     height: 15.h,
                   ),*/
-                 /* Row(
+                  /* Row(
                     children: [
                       Expanded(child: TextView(text: "Cost")),
                       Expanded(child: TextView(text: "Demand")),
@@ -149,9 +155,14 @@ class _LegendNameCardDemandState extends State<LegendNameCardDemand> {
                     ),
                     child: ListView.builder(
                       shrinkWrap: true,
-                      itemCount: widget.costEstimateDetailModel.demandDistribution?.length ?? 0,
+                      itemCount: widget.costEstimateDetailModel
+                              .demandDistribution?.length ??
+                          0,
                       itemBuilder: (context, index) {
-                        return DemandDistributionCard(demandDistribution: widget.costEstimateDetailModel.demandDistribution![index], color: widget.color,
+                        return DemandDistributionCard(
+                          demandDistribution: widget.costEstimateDetailModel
+                              .demandDistribution![index],
+                          color: widget.color,
                         );
                       },
                     ),
@@ -163,15 +174,17 @@ class _LegendNameCardDemandState extends State<LegendNameCardDemand> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                       TextView(
+                      TextView(
                         text: "Total :",
                         fontSize: 20,
                         bold: false,
                         textColor: widget.color,
                       ),
-                      SizedBox(width: 50.w,),
+                      SizedBox(
+                        width: 50.w,
+                      ),
                       TextView(
-                        text: NumberFormater().numberComma(number:gTotal),
+                        text: NumberFormater().numberComma(number: gTotal),
                         fontSize: 20,
                         bold: true,
                         textColor: widget.color,

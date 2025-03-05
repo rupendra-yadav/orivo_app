@@ -88,75 +88,82 @@ class _ProfileState extends State<Profile> {
                 right: 20.w,
                 child: Row(
                   children: [
-                    Obx(() {
-                       if (controller.isUserDataLoading.value) {
+                    Expanded(
+                      child: Obx(() {
+                         if (controller.isUserDataLoading.value) {
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(50.r),
+                            child: TShimmerEffect(width: 80.w, height: 80.h),
+                          );
+                        }
+
+                        String imageUrl  = controller.userModel != null && controller.userModel.isNotEmpty? controller.userModel[0].mCustImage: "";
+                      
                         return ClipRRect(
                           borderRadius: BorderRadius.circular(50.r),
-                          child: TShimmerEffect(width: 80.w, height: 80.h),
-                        );
-                      }
-
-                      return ClipRRect(
-                        borderRadius: BorderRadius.circular(50.r),
-                        child: CachedNetworkImage(
-                          imageUrl: TImages.userImagePath +
-                              controller.userModel[0].mCustImage,
-                          // Provide a fallback empty string if null or empty
-                          width: 80.w,
-                          height: 80.h,
-                          fit: BoxFit.fill,
-                          placeholder: (context, url) => const Center(
-                            child: CircularProgressIndicator(),
+                          child: CachedNetworkImage(
+                            imageUrl: TImages.userImagePath + imageUrl,
+                            // Provide a fallback empty string if null or empty
+                            width: 80.w,
+                            height: 80.h,
+                            fit: BoxFit.fill,
+                            placeholder: (context, url) => const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                            errorWidget: (context, url, error) {
+                              // Check gender and provide appropriate default image
+                              return Image.asset(
+                                TImages.imgUser,
+                                width: 80.w,
+                                height: 80.h,
+                                fit: BoxFit.fill,
+                              );
+                            },
                           ),
-                          errorWidget: (context, url, error) {
-                            // Check gender and provide appropriate default image
-                            return Image.asset(
-                              TImages.imgUser,
-                              width: 80.w,
-                              height: 80.h,
-                              fit: BoxFit.fill,
-                            );
-                          },
-                        ),
-                      );
-                    }),
+                        );
+                      }),
+                    ),
                     SizedBox(width: 10.w),
-                    Obx(() {
-                        if (controller.isUserDataLoading.value) {
+                    Expanded(
+                      child: Obx(() {
+                          if (controller.isUserDataLoading.value) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              TShimmerEffect(width: 66.w, height: 15.h),
+                              SizedBox(height: 10.h,),
+                              TShimmerEffect(width: 33.w, height: 10.h),
+                            ],
+                          );
+                        }
+                      
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            TShimmerEffect(width: 66.w, height: 15.h),
-                            SizedBox(height: 10.h,),
-                            TShimmerEffect(width: 33.w, height: 10.h),
+                            Text(
+                              controller.userModel!= null && controller.userModel.isNotEmpty? controller.userModel[0].mCustName :"Name" ,
+                              style: const TextStyle(
+                                  color: TColors.white, fontSize: 24),
+                            ),
+                            Text(
+                              controller.userModel!= null && controller.userModel.isNotEmpty?controller.userModel[0].mCustCompany:"Company",
+                              style: const TextStyle(
+                                  color: TColors.secondary, fontSize: 12),
+                            ),
                           ],
                         );
-                      }
-
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            controller.userModel[0].mCustName,
-                            style: const TextStyle(
-                                color: TColors.white, fontSize: 24),
-                          ),
-                          Text(
-                            controller.userModel[0].mCustCompany,
-                            style: const TextStyle(
-                                color: TColors.secondary, fontSize: 12),
-                          ),
-                        ],
-                      );
-                    }),
+                      }),
+                    ),
                     const Spacer(),
-                    IconButton(
-                      onPressed: () => Get.to(() => EditProfile(
-                            userModel: controller.userModelData,
-                          )),
-                      icon: const Icon(
-                        Iconsax.edit_2,
-                        color: TColors.white,
+                    Expanded(
+                      child: IconButton(
+                        onPressed: () => Get.to(() => EditProfile(
+                              userModel: controller.userModelData,
+                            )),
+                        icon: const Icon(
+                          Iconsax.edit_2,
+                          color: TColors.white,
+                        ),
                       ),
                     ),
                   ],
@@ -250,7 +257,7 @@ class _ProfileState extends State<Profile> {
                   title: TTexts.termsOfUse,
                   onPressed: () => Get.to(() => const CustomWebView(
                       initialUrl: TTexts.termsOfUseLink,
-                      title: TTexts.privacyPolicy)),
+                      title: TTexts.termsOfUse)),
                 ),
                 Divider(height: 1.h, color: TColors.primaryLight1),
 

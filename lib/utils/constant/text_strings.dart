@@ -1,8 +1,9 @@
 class TTexts {
-  static const String appName = "Auro";
+  static const String appName = "Orivo";
   static const String userLogin = "User Login";
 
   static const String etHintLoginEmail = "Your Email / Mobile Number";
+  static const String etHintLoginMobile = "Enter Mobile Number";
   static const String etHintLoginPass = "Your Password";
   static const String etHintCompanyName = "Company name";
   static const String etHintFullName = "Full name";
@@ -25,6 +26,8 @@ class TTexts {
   static const String sendOtpCred = "Please enter your credentials to continue";
   static const String signInWithPassword = "Sign in with Password";
   static const String sendOtp = "Send OTP";
+  static const String sendOtpToWhatsApp = "Send OTP To WhatsApp";
+
   static const String verifyOTP = "Verify OTP";
   static const String verify = "Verify";
   static const String verifyOtpDetails =
@@ -42,6 +45,8 @@ class TTexts {
   static const String settings = "settings";
   static const String userName = "Aditi Agrawal";
   static const String userDesignation = "Managing Director";
+  static const String alertNewUser = "It looks like you’re a new user. To gain access, please contact the Orivo support for approval.";
+  static const String accessRequired = "Access Required...?";
 
   ///Profile
   static const String helpSupport = "Help & Support";
@@ -50,7 +55,7 @@ class TTexts {
   static const String termsOfUse = "Terms of use";
   static const String changePassword = "Change Password";
   static const String logout = "Logout";
-  static const String versionAndDevelopedBy = "Designed & Developed By Logixhunt";
+  static const String versionAndDevelopedBy = "Designed & Developed By Orivo";
   static const String dialogLogout = "Logout...!";
   static const String dialogMessage = "Are You Sure You Want To Logout...?";
   static const String dialogOk = "Ok";
