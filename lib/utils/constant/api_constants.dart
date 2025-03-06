@@ -32,6 +32,9 @@ class APIKeys{
 
   static const String refresh = "auth/refresh";
   static const String login = "auth/login";
+  static const String otpSend = "otp/send";
+  static const String otpVerify = "otp/verify";
+  static const String authLogout = "auth/logout";
 
 
 }

@@ -178,28 +178,46 @@ class AuthenticationRepository extends GetxController {
         print('login Response: $response');
       }
 
-      if (response['response'] == 'success') {
-        List<dynamic> userDataList = response['user'];
+
+      if(response['access_token'].toString().isNotEmpty && response['refresh_token'].toString().isNotEmpty){
+        if (kDebugMode) {
+          print("AccessToken --> ${response['access_token']}");
+          print("RefreshToken --> ${response['refresh_token']}");
+        }
 
         SharedPrefs.setString("accessToken",response['access_token']);
         SharedPrefs.setString("refreshToken",response['refresh_token']);
 
         return {'success': true, 'message': 'Logged in successfully'};
-
-        /// SetData in Model...
-        // if (userDataList.isNotEmpty) {
-        //   Map<String, dynamic> userData = userDataList.first;
-        //   UserDetail user = UserDetail.fromJson(userData);
-        //   _localStorage.saveData(_userDataKey, user.toJson());
-        //
-        //   return {'success': true, 'message': 'Logged in successfully'};
-        // } else {
-        //   return {'success': false, 'message': 'User data is empty'};
-        // }
-      } else {
-        // Error occurred, return response
+      }else{
         return {'success': false, 'message': response['message']};
       }
+
+
+
+      // if (response['response'] == 'success') {
+      //   List<dynamic> userDataList = response['user'];
+      //
+      //
+      //   return {'success': true, 'message': 'Logged in successfully'};
+      //
+      //   /// SetData in Model...
+      //   if (userDataList.isNotEmpty) {
+      //     Map<String, dynamic> userData = userDataList.first;
+      //     UserDetail user = UserDetail.fromJson(userData);
+      //     _localStorage.saveData(_userDataKey, user.toJson());
+      //
+      //     return {'success': true, 'message': 'Logged in successfully'};
+      //   } else {
+      //     return {'success': false, 'message': 'User data is empty'};
+      //   }
+      // } else {
+      //   // Error occurred, return response
+      //   return {'success': false, 'message': response['message']};
+      // }
+
+
+
     } catch (e) {
       return {'response': 'error', 'message': e.toString()};
     }
@@ -245,6 +263,78 @@ class AuthenticationRepository extends GetxController {
     }
   }
 
-  ///
+  ///-----Send OTP2
+  Future<Map<String, dynamic>> sendOtp2(String mobileNumber,String uuid ) async {
+    try {
+      Map<String, dynamic> data = {
+        'mobile_no': mobileNumber
+      };
+
+      Map<String, dynamic> queryParams = {
+        'device_id': uuid,
+      };
+
+      Map<String, dynamic> response = await THttpHelper3.postRaw(APIKeys.otpSend,queryParams, data);
+
+      if (kDebugMode) {
+        print('otpSend Response: $response');
+      }
+
+      if (response['message'] == 'OTP sent successfully') {
+
+        return {'success': true, 'message': 'OTP Send Successfully'};
+      } else {
+        // Error occurred, return response
+        return {'success': false, 'message': response['message']};
+      }
+    } catch (e) {
+      return {'response': 'error', 'message': e.toString()};
+    }
+  }
+
+  ///-----Verify  OTP
+  Future<Map<String, dynamic>> verifyOtp2(String userId,String otp,String uuid) async {
+    try {
+      Map<String, dynamic> data = {
+        'user_mobile': userId,
+        'otp': otp,
+      };
+
+      Map<String, dynamic> queryParams = {
+        'device_id': uuid,
+      };
+
+
+      Map<String, dynamic> response = await THttpHelper3.post(APIKeys.otpVerify, data,queryParams);
+
+      if (kDebugMode) {
+        print('verify_otp Response: $response');
+      }
+
+      if (response['response'] == 'success') {
+        List<dynamic> userDataList = response['user'];
+
+        /// SetData in Model...
+        if (userDataList.isNotEmpty) {
+          Map<String, dynamic> userData = userDataList.first;
+          UserDetail user = UserDetail.fromJson(userData);
+          _localStorage.saveData(_userDataKey, user.toJson());
+
+          return {'success': true, 'message': 'Logged in successfully'};
+        } else {
+          return {'success': false, 'message': 'User data is empty'};
+        }
+
+
+
+        return {'success': true, 'message': 'OTP Send Successfully'};
+      } else {
+        // Error occurred, return response
+        return {'success': false, 'message': response['message']};
+      }
+    } catch (e) {
+      return {'response': 'error', 'message': e.toString()};
+    }
+  }
 
 }

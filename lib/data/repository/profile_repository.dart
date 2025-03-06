@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import '../http/http_client.dart';
+import '../http/http_client3.dart';
 
 class ProfileRepository extends GetxController {
   static ProfileRepository get instance => Get.find();
@@ -40,8 +41,7 @@ class ProfileRepository extends GetxController {
   }
 
   ///Update Password
-  Future<Map<String, dynamic>> updatePassword(
-      String userId, userPass, userConPass) async {
+  Future<Map<String, dynamic>> updatePassword(String userId, userPass, userConPass) async {
     try {
       Map<String, dynamic> request = {
         'user_id': userId,
@@ -68,17 +68,7 @@ class ProfileRepository extends GetxController {
   }
 
   ///Update user data
-  Future<List<UserModel>> updateUserData(
-      String userId,
-      String userName,
-      String userState,
-      String userCity,
-      String userAddress,
-      String userCompany,
-      String userCompanyType,
-      String userOwnerName,
-      String userGstNo,
-      File userPic) async {
+  Future<List<UserModel>> updateUserData(String userId, String userName, String userState, String userCity, String userAddress, String userCompany, String userCompanyType, String userOwnerName, String userGstNo, File userPic) async {
     try {
       var request = http.MultipartRequest(
           'POST', Uri.parse('https://webdevelopercg.com/electricity/myadmin/Api/update_profile'));
@@ -155,8 +145,6 @@ class ProfileRepository extends GetxController {
     }
   }
 
-
-
   ///update Phone Number status
   Future<List<UserModel>> updatePhoneNumberStatus(String userId,String status1, String status2,String status3) async {
     try {
@@ -189,6 +177,42 @@ class ProfileRepository extends GetxController {
     }
   }
 
+  ///Get user data
+  Future<Map<String, dynamic>> logout(String reFreshToken ,String uuid) async {
+    try {
+      Map<String, dynamic> request = {'refresh_token': reFreshToken};
+
+      Map<String, dynamic> queryParams = {
+        'device_id': uuid,
+      };
+
+      Map<String, dynamic> response = await THttpHelper3.post(APIKeys.authLogout, queryParams,request);
+
+      if (kDebugMode) {
+        print('authLogout  Response: $response');
+      }
+
+      if (response['message'] == 'Logged out from this device') {
+        return {'success': true, 'message': response['message']};
+      }else{
+        return {'success': true, 'message': response['message']};
+      }
 
 
+
+
+     /* if (response['response'] == 'success') {
+        List<dynamic> useData = response['data'];
+
+        List<UserModel> userDetails =
+        useData.map((data) => UserModel.fromJson(data)).toList();
+
+        return userDetails;
+      } else {
+        throw Exception(response['message']);
+      }*/
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
 }

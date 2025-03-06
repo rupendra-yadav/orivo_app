@@ -58,7 +58,16 @@ class SplashController extends GetxController {
 
       //TFullScreenLoader.stopLoading();
 
-      if (response['success'] == true) {
+
+      if(response['access_token'].toString().isNotEmpty){
+        Get.offAll(() => const NavigationScreen());
+      }else{
+        TLoaders.errorSnackBar(title: "Logged Out", message: "You have been logged out...!");
+        Get.offAll(const Login());
+      }
+
+
+     /* if (response['success'] == true) {
 
         /// this is to Access data
         Map<String, dynamic> userDataMap = _localStorage.readData(_userDataKey) ?? {};
@@ -73,15 +82,14 @@ class SplashController extends GetxController {
         }
 
         /// to navigate page to Navigation Screen
-        TLoaders.successSnackBar(title: 'Success', message: response['message']);
-        Get.offAll(() => const NavigationScreen());
+
 
       }else{
         TLoaders.errorSnackBar(title: 'Error', message: response['message']);
         if (kDebugMode) {
           print(response['response']);
         }
-      }
+      }*/
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());

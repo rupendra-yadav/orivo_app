@@ -13,6 +13,7 @@ import 'package:uuid/uuid.dart';
 import '../../../myapp.dart';
 import '../../../utils/preferences/cache_manager.dart';
 import '../contoller/splash_controller.dart';
+import 'login.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key, required this.isNotify});
@@ -81,15 +82,19 @@ class _SplashState extends State<Splash> {
           return;
         }
       }
-      splashController.screenRedirect();
+      //splashController.screenRedirect();
+
+      reFresh();
+
     } catch (e) {
       debugPrint('Error checking for updates: $e');
-      splashController.screenRedirect();
+      reFresh();
+     // splashController.screenRedirect();
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
+
+  void reFresh (){
 
     if (SharedPrefs.getString("UUID") == null) {
       generateUuid();
@@ -102,13 +107,18 @@ class _SplashState extends State<Splash> {
       }
     }
 
+    if (SharedPrefs.getString("refreshToken") != null && SharedPrefs.getString("accessToken") != null) {
+      splashController.refreshToken(
+          SharedPrefs.getString("refreshToken")??"",
+          SharedPrefs.getString("accessToken")??"",
+          SharedPrefs.getString("UUID")??"");
+    }else{
+      Get.offAll(const Login());
+    }
+  }
 
-    splashController.refreshToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2VkMzNiOS1mOWE4LTExZWYtYTI2OS0wYWI2ODY2YjdhNDciLCJleHAiOjE3NDExNzA1MTd9.MmqD0mXmQqfUIY-dJbltSMx2PBq7ApOZgKk_l0XyMBk",
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2VkMzNiOS1mOWE4LTExZWYtYTI2OS0wYWI2ODY2YjdhNDciLCJkZXZpY2VfaWQiOiIwNjBmMWZjNS01YjYxLTRkMDQtYTliOC0wZmI5NTE1MjhkYmEiLCJleHAiOjE3NDE3NzM1MTd9.bUjmCzs281m38yhlF2Wljfpri6lOfgdiUKUBzPshPVA",
-        SharedPrefs.getString("UUID")??"");
-
-
-
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: TColors.primary,
       body: Image(

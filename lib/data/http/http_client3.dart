@@ -135,7 +135,37 @@ class THttpHelper3 {
     return _handleResponse(response);
   }
 
+  /// Helper method to make a POST request
+  static Future<Map<String, dynamic>> postRaw(String endpoint,Map<String, dynamic>? queryParams, dynamic data, {String accessToken = ""}) async {
+    if (kDebugMode) {
+      print('POST Request: $_baseUrl$endpoint${Uri(queryParameters:queryParams)}');
+      print('POST Data: $data');
+    }
 
+    // final response = await http.post(
+    //   Uri.parse('$_baseUrl/$endpoint'),
+    //   headers: {'Content-Type': 'application/json'},
+    //   body: json.encode(data),
+    // );
+
+    final response = await http.post(Uri.parse('$_baseUrl$endpoint').replace(queryParameters:queryParams),
+
+      headers: accessToken.isEmpty
+          ? { "Content-Type": "application/json"}
+          : {"Content-Type": "application/json",
+        'Authorization': 'Bearer $accessToken'
+
+      },
+      body: jsonEncode(data),
+      // Set a reasonable limit for redirects
+    );
+
+    if (kDebugMode) {
+      print('POST Response: ${response.body}');
+    }
+
+    return _handleResponse(response);
+  }
 
 
   /// Helper method to make a PATCH request with form data
@@ -320,4 +350,11 @@ class THttpHelper3 {
         .map((key) => '$key=${Uri.encodeComponent(data[key].toString())}')
         .join('&');
   }
+
+  /*String _encodeFormData(Map<String, dynamic> data) {
+    return data.entries
+        .map((e) => '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value.toString())}')
+        .join('&');
+  }*/
+
 }

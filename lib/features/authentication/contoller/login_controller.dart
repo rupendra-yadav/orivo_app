@@ -100,13 +100,13 @@ class LoginController extends GetxController {
       }
 
       // Login user using number and password
-      final response = await _repository.login(phoneNumber.text.trim(), password.text.trim(),/*SharedPrefs.getString("UUID")??""*/"12345");
+      final response = await _repository.login(phoneNumber.text.trim(), password.text.trim(),SharedPrefs.getString("UUID")??""/*"12345"*/);
 
       TFullScreenLoader.stopLoading();
 
       if (response['success'] == true) {
 
-        /// this is to Access data
+       /* /// this is to Access data
         Map<String, dynamic> userDataMap = _localStorage.readData(_userDataKey) ?? {};
         UserDetail user = UserDetail.fromJson(userDataMap);
         try {
@@ -116,7 +116,7 @@ class LoginController extends GetxController {
         } catch (e) {
 
           TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
-        }
+        }*/
 
         /// to navigate page to Navigation Screen
         TLoaders.successSnackBar(title: 'Success', message: response['message']);

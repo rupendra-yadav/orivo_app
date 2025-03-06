@@ -34,6 +34,8 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  final controller = Get.put(ProfileDetailController());
+
   String version = "Loading...";
 
   @override
@@ -58,13 +60,72 @@ class _ProfileState extends State<Profile> {
     return packageInfo.version;
   }
 
+
+
+  ///LogoutDialog
+  logoutAlertDialog(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true, // Prevents closing the dialog by tapping outside
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: TColors.primaryLight1,
+          title: const TextView(
+            text: TTexts.dialogLogout,
+            textColor: TColors.primary,
+            fontSize: 25,
+            bold: true,
+          ),
+          content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                TextView(
+                  text: TTexts.dialogMessage,
+                  textColor: TColors.primary,
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const TextView(
+                text: TTexts.dialogOk,
+                textColor: TColors.primaryDark2,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+                controller.logout();
+
+                // SharedPrefs.setBool("isLoggedIn", false);
+                // Get.offAll(() => const Login());
+                // Handle OK action
+              },
+            ),
+            TextButton(
+              child: const TextView(
+                text: TTexts.dialogCancel,
+                textColor: TColors.accentDark1,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ProfileDetailController());
+
 
     final TLocalStorage _localStorage = TLocalStorage();
 
     controller.getUserData();
+    controller.logout();
 
 
     return Scaffold(
@@ -276,8 +337,7 @@ class _ProfileState extends State<Profile> {
                   onPressed: () {
                     _localStorage.clearAll();
 
-                    showMyDialog(
-                        context); // Show the dialog when button is pressed
+                    logoutAlertDialog(context); // Show the dialog when button is pressed
                   },
                 ),
               ],
@@ -303,55 +363,4 @@ class _ProfileState extends State<Profile> {
   }
 }
 
-/// function for Logout Dialog
 
-showMyDialog(BuildContext context) async {
-  return showDialog<void>(
-    context: context,
-    barrierDismissible: true, // Prevents closing the dialog by tapping outside
-    builder: (BuildContext context) {
-      return AlertDialog(
-        backgroundColor: TColors.primaryLight1,
-        title: const TextView(
-          text: TTexts.dialogLogout,
-          textColor: TColors.primary,
-          fontSize: 25,
-          bold: true,
-        ),
-        content: const SingleChildScrollView(
-          child: ListBody(
-            children: <Widget>[
-              TextView(
-                text: TTexts.dialogMessage,
-                textColor: TColors.primary,
-              ),
-            ],
-          ),
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: const TextView(
-              text: TTexts.dialogOk,
-              textColor: TColors.primaryDark2,
-            ),
-            onPressed: () {
-              Navigator.of(context).pop();
-              SharedPrefs.setBool("isLoggedIn", false);
-              Get.offAll(() => const Login());
-              // Handle OK action
-            },
-          ),
-          TextButton(
-            child: const TextView(
-              text: TTexts.dialogCancel,
-              textColor: TColors.accentDark1,
-            ),
-            onPressed: () {
-              Navigator.of(context).pop(); // Close the dialog
-            },
-          ),
-        ],
-      );
-    },
-  );
-}

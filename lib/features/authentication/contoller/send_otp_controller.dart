@@ -56,4 +56,43 @@ class SendOtpController extends GetxController {
       }
     }
   }
+
+  Future<void> otpSend(int redirect) async {
+    try {
+      TFullScreenLoader.openLoadingDialog('Sending OTP...!');
+
+      //check internet Connection
+      final isConnected = await networkManager.isConnected();
+      if (!isConnected) {
+        TFullScreenLoader.stopLoading();
+        return;
+      }
+
+      //form validation
+      if (!sendOtpFormKey.currentState!.validate()) {
+        TFullScreenLoader.stopLoading();
+        return;
+      }
+
+      final response = await _repository.sendOtp2(mobileNumber.text.trim(),SharedPrefs.getString("UUID")??"");
+
+      SharedPrefs.setString("mobileNumber", mobileNumber.text.trim());
+      TFullScreenLoader.stopLoading();
+
+      if (response['success']== true) {
+        TLoaders.successSnackBar(title: 'Success', message: response['message']);
+        Get.to(() =>  VerifyOtp(resetPass: redirect,));
+      } else {
+        TLoaders.errorSnackBar(title: 'Error', message: response['message']);
+        if (kDebugMode) {
+          print(response['response']);
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e.toString());
+      }
+    }
+  }
+
 }

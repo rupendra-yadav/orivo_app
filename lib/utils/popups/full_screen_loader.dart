@@ -12,20 +12,9 @@ class TFullScreenLoader {
     showDialog(
       context: Get.overlayContext!,
       barrierDismissible: false,
-      builder: (_) => PopScope(
+      builder: (_) => const PopScope(
         canPop: false,
-        child: Container(
-          color: THelperFunctions.isDarkMode(Get.context!) ? TColors.dark : TColors.primaryDark1,
-          width: double.infinity,
-          height: double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TAnimationLoaderWidget(text: text),
-            ],
-          ),
-        ),
+        child: Center(child: CircularProgressIndicator(color: TColors.secondary,)),
       ),
     );
   }

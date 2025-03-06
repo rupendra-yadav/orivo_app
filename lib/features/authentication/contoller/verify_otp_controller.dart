@@ -94,9 +94,10 @@ class VerifyOtpController extends GetxController {
     }
   }
 
-  Future<void> sendOtp(String mobile) async {
+  Future<void> verifyOtp2(int resetPassword) async {
     try {
-      // TFullScreenLoader.openLoadingDialog('Sending OTP...!');
+
+      TFullScreenLoader.openLoadingDialog('Verifying OTP...!');
 
       //check internet Connection
       final isConnected = await networkManager.isConnected();
@@ -106,19 +107,41 @@ class VerifyOtpController extends GetxController {
       }
 
       //form validation
-      /* if (!sendOtpFormKey.currentState!.validate()) {
+      //
+      if (!verifyOtpFormKey.currentState!.validate()) {
         TFullScreenLoader.stopLoading();
         return;
-      }*/
+      }
+      Map<String, dynamic> userDataMap = _localStorage.readData(_userDataKey) ?? {};
+      UserDetail user = UserDetail.fromJson(userDataMap);
+      try {
+        if (kDebugMode) {
+          print(user.mCustName);
+        }
+        id = user.mCustMobile;
+      } catch (e) {
+        if (kDebugMode) {
+          print(e.toString());
+        }
+      }
 
-      final response = await _repository.sendOtp(mobile);
+      final response = await _repository.verifyOtp2(SharedPrefs.getString("mobileNumber")??"", otp.text.trim() ,SharedPrefs.getString("UUID")??"");
 
       TFullScreenLoader.stopLoading();
 
+      SharedPrefs.setString("mobileNumber", "");
+
       if (response['success'] == true) {
-        TLoaders.successSnackBar(
-            title: 'Success', message: response['message']);
-        // Get.to(() =>  VerifyOtp(resetPass: 0,));
+
+        TLoaders.successSnackBar(title: 'Success', message: response['message']);
+        if (resetPassword == 1) {
+          Get.offAll(() =>  ResetPassword(flow: resetPassword,));
+        } else if(resetPassword == 2){
+          Get.offAll(() =>  ResetPassword(flow: resetPassword,));
+        } else {
+          Get.offAll(() => const NavigationScreen());
+        }
+
       } else {
         TLoaders.errorSnackBar(title: 'Error', message: response['message']);
         if (kDebugMode) {
@@ -131,4 +154,42 @@ class VerifyOtpController extends GetxController {
       }
     }
   }
+
+  // Future<void> sendOtp(String mobile) async {
+  //   try {
+  //     // TFullScreenLoader.openLoadingDialog('Sending OTP...!');
+  //
+  //     //check internet Connection
+  //     final isConnected = await networkManager.isConnected();
+  //     if (!isConnected) {
+  //       TFullScreenLoader.stopLoading();
+  //       return;
+  //     }
+  //
+  //     //form validation
+  //     /* if (!sendOtpFormKey.currentState!.validate()) {
+  //       TFullScreenLoader.stopLoading();
+  //       return;
+  //     }*/
+  //
+  //     final response = await _repository.sendOtp(mobile);
+  //
+  //     TFullScreenLoader.stopLoading();
+  //
+  //     if (response['success'] == true) {
+  //       TLoaders.successSnackBar(
+  //           title: 'Success', message: response['message']);
+  //       // Get.to(() =>  VerifyOtp(resetPass: 0,));
+  //     } else {
+  //       TLoaders.errorSnackBar(title: 'Error', message: response['message']);
+  //       if (kDebugMode) {
+  //         print(response['response']);
+  //       }
+  //     }
+  //   } catch (e) {
+  //     if (kDebugMode) {
+  //       print(e.toString());
+  //     }
+  //   }
+  // }
 }

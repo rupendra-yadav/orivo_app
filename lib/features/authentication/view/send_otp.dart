@@ -42,8 +42,7 @@ class SendOtp extends StatelessWidget {
                       ///  image for login
                       Center(
                         child: Image.asset(
-                          TImages.imgLoginNew
-                          ,height: 230.h,width: 230.w,
+                          TImages.imgOTPNew1,height: 147.h,width: 342.w,
                         ),
                       ),
                       SizedBox(
@@ -97,7 +96,8 @@ class SendOtp extends StatelessWidget {
                             title: TTexts.sendOtpToWhatsApp,
                             
                             onPressed: () {
-                              sendOtpController.sendOtp(resetPass);
+                             // sendOtpController.sendOtp(resetPass);
+                              sendOtpController.otpSend(resetPass);
 
                             }),
                       ),

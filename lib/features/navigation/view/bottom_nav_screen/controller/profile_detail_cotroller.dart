@@ -1,9 +1,12 @@
 import 'package:auro/data/repository/profile_repository.dart';
+import 'package:auro/features/authentication/view/login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
+import '../../../../../utils/helpers/network_manager.dart';
 import '../../../../../utils/local_storage/storage_utility.dart';
+import '../../../../../utils/popups/full_screen_loader.dart';
 import '../../../../../utils/popups/loaders.dart';
 import '../../../../../utils/preferences/cache_manager.dart';
 import '../../../../authentication/model/user_detail.dart';
@@ -12,6 +15,7 @@ import '../model/user_detail_model.dart';
 class ProfileDetailController extends GetxController {
   static ProfileDetailController get instance => Get.find();
 
+  final NetworkManager networkManager = Get.find<NetworkManager>();
   final _profileRepository = Get.put(ProfileRepository());
   RxList<UserModel> userModel = <UserModel>[].obs;
   late UserModel userModelData;
@@ -145,4 +149,42 @@ class ProfileDetailController extends GetxController {
       isUserNumberUpdateLoading.value = false;
     }
   }
+
+
+  ///use Details
+  Future<void> logout() async {
+    try {
+
+      TFullScreenLoader.openLoadingDialog('Logging you Out...');
+
+      //check internet Connection
+      final isConnected = await networkManager.isConnected();
+      if (!isConnected) {
+        TFullScreenLoader.stopLoading();
+        return;
+      }
+      final response = await _profileRepository.logout(SharedPrefs.getString("refreshToken")??"",SharedPrefs.getString("UUID")??"");
+
+      TFullScreenLoader.stopLoading();
+
+      if (response['success'] == true) {
+
+        /// to navigate page to Login Screen
+        TLoaders.successSnackBar(title: 'Success', message: response['message']);
+        SharedPrefs.clear();
+        Get.offAll(() => const Login());
+
+      }else{
+        TLoaders.errorSnackBar(title: 'Error', message: response['message']);
+        if (kDebugMode) {
+          print(response['response']);
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e.toString());
+      }
+    }
+  }
+
 }
