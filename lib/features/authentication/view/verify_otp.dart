@@ -94,7 +94,8 @@ class VerifyOtp extends StatelessWidget {
                           keyboardType: TextInputType.number,
                           onChanged: (value) {},
                           onCompleted: (pin){
-                            verifyOtpController.verifyOtp(resetPass);
+                            // verifyOtpController.verifyOtp(resetPass);
+                            verifyOtpController.verifyOtp2(resetPass);
                           },
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           animationType: AnimationType.slide,
@@ -126,7 +127,7 @@ class VerifyOtp extends StatelessWidget {
                             minWidth: 185.w,
                             title: TTexts.verify,
                             onPressed: () {
-                              verifyOtpController.verifyOtp(resetPass);
+                              verifyOtpController.verifyOtp2(resetPass);
                             }),
                       ),
 

@@ -1,3 +1,4 @@
+import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/energy_consumption_detail.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
@@ -61,6 +62,7 @@ class SplashController extends GetxController {
 
       if(response['access_token'].toString().isNotEmpty){
         Get.offAll(() => const NavigationScreen());
+        // Get.offAll(() => const EnergyConsumptionDetail(isNotify: false));
       }else{
         TLoaders.errorSnackBar(title: "Logged Out", message: "You have been logged out...!");
         Get.offAll(const Login());

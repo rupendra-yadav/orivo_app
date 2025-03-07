@@ -25,6 +25,11 @@ class TColors {
   static const Color green = Color(0xFF00820D);
   static const Color ochre = Color(0xFF9F6000);
   static const Color graphLine = Color(0xFFFEB546);
+  static const Color graphBarColor = Color(0xFFF76212);
+  static const Color multiGraphBarColor = Color(0xFFF76212);
+  static const Color multiGraphBarColor1 = Color(0xFFFEB546);
+  static const Color multiGraphBarColor2 = Color(0xFFFFC0BB);
+  static const Color multiGraphBarColor3 = Color(0xFF344BFD);
 
   static const Color secondary = Color(0xFF0CF2E0);
   static const Color secondaryDark1 = Color(0xFF385000);

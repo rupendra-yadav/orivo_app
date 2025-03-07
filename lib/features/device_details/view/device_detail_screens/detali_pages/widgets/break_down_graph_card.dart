@@ -20,51 +20,96 @@ class BreakDownGraphCard extends StatelessWidget {
       child: Padding(
         padding:  EdgeInsets.symmetric(vertical: 10.h),
         child: SfCartesianChart(
-
-          borderWidth: 0,
+          backgroundColor: TColors.primaryDark1,
           plotAreaBorderWidth: 0,
-
-          title: const ChartTitle(
-            text: TTexts.breakDownCardTitle,
-            textStyle: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.bold),
+          primaryXAxis: CategoryAxis(
+            majorGridLines: const MajorGridLines(width: 0),
+            axisLine: const AxisLine(width: 0),
+            labelStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
           ),
-
-          primaryXAxis: const CategoryAxis(
-            labelStyle: TextStyle(color: Colors.white),
-            majorGridLines: MajorGridLines(width: 0),
-            axisLine: AxisLine(width: 0),
+          primaryYAxis: NumericAxis(
+            isVisible: false, // Hide the Y axis
+            majorGridLines: const MajorGridLines(width: 0),  // Hide the major grid lines
+            axisLine: const AxisLine(width: 0),  // Hides the axis line
+            labelStyle: const TextStyle(color: Colors.transparent), // Hides the labels
           ),
-          primaryYAxis: const NumericAxis(
-            isVisible: false, // Hide Y axis
-          ),
+          series: <StackedColumn100Series<ChartData, String>>[
+            StackedColumn100Series<ChartData, String>(
+              dataSource: [
+                ChartData('M', 10),
+                ChartData('M', 40),
+                ChartData('T', 60),
+                ChartData('W', 40),
+                ChartData('W', 10),
+                ChartData('T', 80),
+                ChartData('F', 50),
+                ChartData('F', 70),
+                ChartData('S', 90),
 
-
-          series: <SplineSeries<ChartData, String>>[
-            SplineSeries<ChartData, String>(
-              dataSource: getChartData(),
+                ChartData('Today', 30),
+              ],
               xValueMapper: (ChartData data, _) => data.x,
               yValueMapper: (ChartData data, _) => data.y,
-              color: TColors.downGraphLine,
-              // Line color
-              width: 4,
-              markerSettings: const MarkerSettings(
-                isVisible: false,
-                color: TColors.downGraphLine,
-                borderWidth: 2,
-                borderColor: TColors.downGraphLine,
-              ),
+              color: TColors.graphBarColor,
+              borderRadius: BorderRadius.circular(100.r),
+              dataLabelSettings: const DataLabelSettings(isVisible: false),
             ),
           ],
-          tooltipBehavior: TooltipBehavior(
-            enable: true,
-            header: '',
-            format: 'point.x : point.y hrs',
-            textStyle: const TextStyle(color: Colors.white),
-          ),
         ),
+
+
+
+
+
+
+
+        //
+        // SfCartesianChart(
+        //
+        //   borderWidth: 0,
+        //   plotAreaBorderWidth: 0,
+        //
+        //   title: const ChartTitle(
+        //     text: TTexts.breakDownCardTitle,
+        //     textStyle: TextStyle(
+        //         color: Colors.white,
+        //         fontSize: 16,
+        //         fontWeight: FontWeight.bold),
+        //   ),
+        //
+        //   primaryXAxis: const CategoryAxis(
+        //     labelStyle: TextStyle(color: Colors.white),
+        //     majorGridLines: MajorGridLines(width: 0),
+        //     axisLine: AxisLine(width: 0),
+        //   ),
+        //   primaryYAxis: const NumericAxis(
+        //     isVisible: false, // Hide Y axis
+        //   ),
+        //
+        //
+        //   series: <SplineSeries<ChartData, String>>[
+        //     SplineSeries<ChartData, String>(
+        //       dataSource: getChartData(),
+        //       xValueMapper: (ChartData data, _) => data.x,
+        //       yValueMapper: (ChartData data, _) => data.y,
+        //       color: TColors.downGraphLine,
+        //       // Line color
+        //       width: 4,
+        //       markerSettings: const MarkerSettings(
+        //         isVisible: false,
+        //         color: TColors.downGraphLine,
+        //         borderWidth: 2,
+        //         borderColor: TColors.downGraphLine,
+        //       ),
+        //     ),
+        //   ],
+        //   tooltipBehavior: TooltipBehavior(
+        //     enable: true,
+        //     header: '',
+        //     format: 'point.x : point.y hrs',
+        //     textStyle: const TextStyle(color: Colors.white),
+        //   ),
+        // ),
       ),
     );
   }

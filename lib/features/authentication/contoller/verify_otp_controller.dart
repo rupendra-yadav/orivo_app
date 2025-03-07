@@ -155,41 +155,4 @@ class VerifyOtpController extends GetxController {
     }
   }
 
-  // Future<void> sendOtp(String mobile) async {
-  //   try {
-  //     // TFullScreenLoader.openLoadingDialog('Sending OTP...!');
-  //
-  //     //check internet Connection
-  //     final isConnected = await networkManager.isConnected();
-  //     if (!isConnected) {
-  //       TFullScreenLoader.stopLoading();
-  //       return;
-  //     }
-  //
-  //     //form validation
-  //     /* if (!sendOtpFormKey.currentState!.validate()) {
-  //       TFullScreenLoader.stopLoading();
-  //       return;
-  //     }*/
-  //
-  //     final response = await _repository.sendOtp(mobile);
-  //
-  //     TFullScreenLoader.stopLoading();
-  //
-  //     if (response['success'] == true) {
-  //       TLoaders.successSnackBar(
-  //           title: 'Success', message: response['message']);
-  //       // Get.to(() =>  VerifyOtp(resetPass: 0,));
-  //     } else {
-  //       TLoaders.errorSnackBar(title: 'Error', message: response['message']);
-  //       if (kDebugMode) {
-  //         print(response['response']);
-  //       }
-  //     }
-  //   } catch (e) {
-  //     if (kDebugMode) {
-  //       print(e.toString());
-  //     }
-  //   }
-  // }
 }

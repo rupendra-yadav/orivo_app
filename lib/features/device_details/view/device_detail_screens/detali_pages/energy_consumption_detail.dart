@@ -1,4 +1,5 @@
 import 'package:auro/common/widgets/text/text_view.dart';
+import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/break_down_graph_card.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/device_card_details_app_bar.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/multiple_bar_graph_card.dart';
 import 'package:auro/utils/constant/colors.dart';
@@ -58,7 +59,7 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
       startDate = args['startDate'] ?? DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
       endDate = args['endDate'] ?? DateFormat("yyyy-MM-dd HH:mm:ss").format(now);
 
-      controller.getEnergyDetailsConsumption(startDate, deviceId, endDate);
+     // controller.getEnergyDetailsConsumption(startDate, deviceId, endDate);
 
     } else {
       DateTime now = DateTime.now();
@@ -69,9 +70,9 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
       startDate = formattedDateMidnight;
       String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
       endDate = formattedDate;
-      deviceId = controller.deviceList[0].mMachineUniqueId;
+     // deviceId = controller.deviceList[0].mMachineUniqueId;
 
-      controller.getEnergyDetailsConsumption(startDate, deviceId, endDate);
+     // controller.getEnergyDetailsConsumption(startDate, deviceId, endDate);
     }
   }
 
@@ -232,7 +233,7 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
                     /// Pie Chart Section
                     DetailPieCard(
                       totalCount: totalCount,
-                      legendPosition: pie_chart.LegendPosition.bottom,
+                     // legendPosition: pie_chart.LegendPosition.bottom,
                       showLegendsInRow: true,
                       onPressed: () {},
                       consumptionDetail: controller.consumptionDetails.value,
@@ -248,7 +249,7 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
                     SizedBox(height: 20.h),
 
                     /// Breakdown Card
-                    //const BreakDownGraphCard(),
+                    const BreakDownGraphCard(),
                   ],
                 );
               }),

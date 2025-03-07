@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pie_chart/pie_chart.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../common/widgets/text/text_view.dart';
 import '../../../../../utils/constant/colors.dart';
@@ -13,7 +15,7 @@ class DetailPieCard extends StatelessWidget {
   const DetailPieCard({
     super.key,
     required this.totalCount,
-    required this.legendPosition,
+   // required this.legendPosition,
     required this.onPressed,
     this.showLegendsInRow = false,
     required this.consumptionDetail,
@@ -24,7 +26,7 @@ class DetailPieCard extends StatelessWidget {
   final bool showLegendsInRow;
   final ConsumptionDetail consumptionDetail;
 
-  final LegendPosition legendPosition;
+ // final LegendPosition legendPosition;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +46,18 @@ class DetailPieCard extends StatelessWidget {
       updatedDataMap['$key: $value'] = value;
     });
 
-    print(updatedDataMap);
+    if (kDebugMode) {
+      print(updatedDataMap);
+    }
+
+
+    final List<ChartData> chartData = [
+      ChartData('USA', 10, '60%'),
+      ChartData('China', 11, '70%'),
+      ChartData('Russia', 9, '50%'),
+      ChartData('Germany', 10, '60%')
+    ];
+
 
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10.h),
@@ -68,7 +81,7 @@ class DetailPieCard extends StatelessWidget {
 
                 ///Pie Chart
 
-                PieChart(
+               /* PieChart(
                   dataMap: updatedDataMap,
                   animationDuration: const Duration(milliseconds: 800),
                   chartLegendSpacing: 32.w,
@@ -103,7 +116,7 @@ class DetailPieCard extends StatelessWidget {
                   ),
                   legendOptions: LegendOptions(
                     showLegendsInRow: showLegendsInRow,
-                    legendPosition: legendPosition,
+                   // legendPosition: legendPosition,
                     showLegends: true,
                     legendShape: BoxShape.circle,
                     legendTextStyle: const TextStyle(
@@ -120,7 +133,24 @@ class DetailPieCard extends StatelessWidget {
                   ),
                   // gradientList: ---To add gradient colors---
                   // emptyColorGradient: ---Empty Color gradient---
-                ),
+                ),*/
+
+
+
+                SfCircularChart(
+                    series: <CircularSeries>[
+                      PieSeries<ChartData, String>(
+                          dataSource: chartData,
+                          xValueMapper: (ChartData data, _) => data.x,
+                          yValueMapper: (ChartData data, _) => data.y,
+                          // Radius for each segment from data source
+                          pointRadiusMapper: (ChartData data, _) => data.size
+                      )
+                    ]
+                )
+
+
+
               ],
             ),
           ),
@@ -128,4 +158,11 @@ class DetailPieCard extends StatelessWidget {
       ),
     );
   }
+}
+
+class ChartData {
+  ChartData(this.x, this.y, this.size);
+  final String x;
+  final double y;
+  final String size;
 }
