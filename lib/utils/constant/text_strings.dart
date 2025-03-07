@@ -63,6 +63,7 @@ class TTexts {
   static const String transactions = "Transactions";
   static const String noActiveSubscription = "No Active Subscription";
   static const String subscribe = "Subscribe";
+  static const String logoutFromAllDevices = "Logout from all Devices";
 
   ///Setting
   static const String deviceSettings = "Device Settings";

@@ -71,7 +71,7 @@ class _CostEstimateState extends State<CostEstimate> {
         SharedPrefs.getString("userLoad").toString(),
       );
     }else{
-      deviceId = controller.deviceList[0].mMachineUniqueId;
+      //deviceId = controller.deviceList[0].mMachineUniqueId;
       deviceName =  TTexts.costEstimate;
 
       DateTime now =
@@ -84,12 +84,12 @@ class _CostEstimateState extends State<CostEstimate> {
            DateFormat("yyyy-MM-dd HH:mm:ss").format(now);
 
       // Fetch data
-      controller.getCostEstimateDetails(
-        startDate,
-        deviceId,
-        endDate,
-        SharedPrefs.getString("userLoad").toString(),
-      );
+      // controller.getCostEstimateDetails(
+      //   startDate,
+      //   deviceId,
+      //   endDate,
+      //   SharedPrefs.getString("userLoad").toString(),
+      // );
     }
   }
 
@@ -307,18 +307,26 @@ class _CostEstimateState extends State<CostEstimate> {
                   child: Container(
                     decoration: BoxDecoration(
                       color: TColors.primaryDark1,
-                      borderRadius: BorderRadius.circular(10.r),
+                      borderRadius: BorderRadius.circular(20.r),
                     ),
                     width: double.infinity,
                     child: Padding(
                       padding: EdgeInsets.symmetric(
-                        vertical: 20.h,
+
                         horizontal: 10.w,
                       ),
                       child: Column(
                         children: [
-                          // Pie Chart
-                          SizedBox(height: 20.h),
+                          Padding(
+                            padding:  EdgeInsets.symmetric(horizontal: 10.h,vertical: 10.w),
+                            child: Align(
+                                alignment: Alignment.topRight,
+                                child: Icon(
+                                  Icons.info_outline,
+                                  color: TColors.white,
+                                )),
+                          ),
+                          // SizedBox(height: 20.h),
                           PieChart(
                             dataMap: updatedDataMap2,
                             animationDuration:

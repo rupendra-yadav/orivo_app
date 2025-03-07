@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:auro/common/widgets/shimmer/shimmer.dart';
 import 'package:auro/common/widgets/text/text_view.dart';
 import 'package:auro/features/authentication/view/login.dart';
@@ -37,6 +39,9 @@ class _ProfileState extends State<Profile> {
   final controller = Get.put(ProfileDetailController());
 
   String version = "Loading...";
+
+
+
 
   @override
   void initState() {
@@ -204,12 +209,12 @@ class _ProfileState extends State<Profile> {
                             Text(
                               controller.userModel!= null && controller.userModel.isNotEmpty? controller.userModel[0].mCustName :"Name" ,
                               style: const TextStyle(
-                                  color: TColors.white, fontSize: 24),
+                                  color: TColors.white, fontSize: 24,fontWeight:FontWeight.bold),
                             ),
                             Text(
                               controller.userModel!= null && controller.userModel.isNotEmpty?controller.userModel[0].mCustCompany:"Company",
                               style: const TextStyle(
-                                  color: TColors.secondary, fontSize: 12),
+                                  color: TColors.secondary, fontSize: 12,),
                             ),
                           ],
                         );
@@ -338,6 +343,16 @@ class _ProfileState extends State<Profile> {
                     _localStorage.clearAll();
 
                     logoutAlertDialog(context); // Show the dialog when button is pressed
+                  },
+                ),
+
+                Divider(height: 1.h, color: TColors.primaryLight1),
+                ProfileOptions(
+                  title: TTexts.logoutFromAllDevices,
+                  onPressed: () {
+                   // _localStorage.clearAll();
+
+                   // logoutAlertDialog(context); // Show the dialog when button is pressed
                   },
                 ),
               ],
