@@ -31,7 +31,6 @@ class _VerifyOtpState extends State<VerifyOtp> {
   int _start = 60; // 3 minutes in seconds
   bool _canResend = false;
   Timer? _timer;
-
   String counterText = "";
 
   void startTimer() {
@@ -123,8 +122,7 @@ class _VerifyOtpState extends State<VerifyOtp> {
                       ),
 
                       /// OTP heading
-                      const Text(TTexts.verifyOTP,
-                          style: TextStyle(fontSize: 24, color: TColors.white)),
+                      const Text(TTexts.verifyOTP, style: TextStyle(fontSize: 24, color: TColors.white)),
                       const Text(TTexts.verifyOtpDetails,
                           style: TextStyle(
                               fontSize: 12, color: TColors.lightGrey)),

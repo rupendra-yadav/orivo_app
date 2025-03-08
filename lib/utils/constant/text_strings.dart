@@ -15,7 +15,7 @@ class TTexts {
       "Please enter your credentials to get you going";
   static const String signInWithOTP = "Sign in with OTP";
   static const String doYouHaveAccount = "Didn’t have an account ";
-  static const String rememberThePassword = "Didn’t Remember The Password ? ";
+  static const String rememberThePassword = "Forgot Password ?.";
   static const String alreadyHasAcccount = "Already has an account ";
   static const String registerHere = "Register here";
   static const String resetHere = "Reset here";
@@ -29,10 +29,11 @@ class TTexts {
   static const String sendOtpToWhatsApp = "Send OTP To WhatsApp";
 
   static const String verifyOTP = "Verify OTP";
+  static const String enterOTP = "Enter OTP";
   static const String verify = "Verify";
   static const String verifyOtpDetails =
       "We have sent you a shot code to your number and email, enter it bellow to confirm its yours";
-  static const String dontGetTheCode = "Didn’t get the code?";
+  static const String dontGetTheCode = "Didn’t get the OTP ? ";
   static const String reSendIt = " Resend It..";
   static const String createAccount = "Create Account";
   static const String registerCred =
@@ -196,6 +197,15 @@ class TTexts {
   static const String onTimeRange = "5 PM - 11 PM";
   static const String offTimeRange = "9 AM - 5 PM";
   static const String breakDownCardTitle = "Light off/Breakdown/Down Time";
+
+  static const String normalSlot = "Normal Slot";
+  static const String offPeakSlot = "Off Peak Slot";
+  static const String onPeakSlot = "On Peak Slot";
+
+  static const String timeOfDay = "Time of Day Scheme(TOD Scheme)";
+  static const String onPeakSlotDesc = "Timing : 5 PM to 11 PM (current day)Tariff:₹7.32 per unit";
+  static const String offPeakSlotDesc = "Timing : 9 AM to 5 PM (current day)Tariff : ₹4.88 per unit";
+  static const String normalPeakSlotDesc = "Timing :  11 PM (previous day)  to   9 AM (current day)Tariff : ₹6.10 per unit";
 
   /// Cost Estimate Details
   static const String costEstimate = "Cost Estimate";

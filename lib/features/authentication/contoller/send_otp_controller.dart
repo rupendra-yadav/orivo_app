@@ -19,6 +19,8 @@ class SendOtpController extends GetxController {
 
   GlobalKey<FormState> sendOtpFormKey = GlobalKey<FormState>();
 
+  final isOtpSend = false.obs;
+
   Future<void> sendOtp(int redirect) async {
     try {
       TFullScreenLoader.openLoadingDialog('Sending OTP...!');
@@ -80,10 +82,14 @@ class SendOtpController extends GetxController {
       TFullScreenLoader.stopLoading();
 
       if (response['success']== true) {
+        isOtpSend.value = true;
         TLoaders.successSnackBar(title: 'Success', message: response['message']);
-        Get.to(() =>  VerifyOtp(resetPass: redirect,));
+        //Get.to(() =>  VerifyOtp(resetPass: redirect,));
+
       } else {
+        isOtpSend.value = false;
         TLoaders.errorSnackBar(title: 'Error', message: response['message']);
+
         if (kDebugMode) {
           print(response['response']);
         }

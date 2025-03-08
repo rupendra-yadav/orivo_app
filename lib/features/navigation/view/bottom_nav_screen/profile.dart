@@ -350,9 +350,9 @@ class _ProfileState extends State<Profile> {
                 ProfileOptions(
                   title: TTexts.logoutFromAllDevices,
                   onPressed: () {
-                   // _localStorage.clearAll();
+                   _localStorage.clearAll();
 
-                   // logoutAlertDialog(context); // Show the dialog when button is pressed
+                   logoutAlertDialog(context); // Show the dialog when button is pressed
                   },
                 ),
               ],
@@ -366,7 +366,7 @@ class _ProfileState extends State<Profile> {
               padding: EdgeInsets.only(
                   top: TDeviceUtils.getBottomNavigationBarHeight()),
               child:  Text(
-                'Version ${version} \n${TTexts.versionAndDevelopedBy}',
+                'Version $version \n${TTexts.versionAndDevelopedBy}',
                 textAlign: TextAlign.center,
                 style: TextStyle(color: TColors.primaryLight1, fontSize: 10),
               ),

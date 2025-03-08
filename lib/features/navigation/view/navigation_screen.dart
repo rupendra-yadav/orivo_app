@@ -93,12 +93,12 @@ class NavigationScreen extends StatelessWidget {
                 iconSize: 25,
                 items: const [
                   BottomNavigationBarItem(
-                      icon: Icon(Iconsax.cloud_lightning),
+                      icon: Icon(Icons.home),
                       label: TTexts.device,
                       tooltip: TTexts.device),
 
                   BottomNavigationBarItem(
-                      icon: Icon(Iconsax.profile_circle5),
+                      icon: Icon(Icons.person),
                       label: TTexts.profile,
                       tooltip: TTexts.profile),
                 ],

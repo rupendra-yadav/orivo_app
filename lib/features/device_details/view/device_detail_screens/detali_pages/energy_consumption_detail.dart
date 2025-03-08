@@ -10,7 +10,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
-import 'package:pie_chart/pie_chart.dart' as pie_chart;
 
 import '../controller/device_detail_controller.dart';
 import '../widgets/detail_pie_card.dart';
@@ -50,45 +49,34 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
     if (widget.isNotify == true) {
       args = ModalRoute.of(context)!.settings.arguments as Map<String, String>;
 
-
       deviceId = args['deviceId'] ?? controller.deviceList[0].mMachineUniqueId;
       DateTime now = DateTime.now();
       DateTime utcNow = now.toUtc();
       DateTime istNow = utcNow.add(const Duration(hours: 5, minutes: 30));
       DateTime istMidnight = DateTime(istNow.year, istNow.month, istNow.day);
-      startDate = args['startDate'] ?? DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
-      endDate = args['endDate'] ?? DateFormat("yyyy-MM-dd HH:mm:ss").format(now);
+      startDate = args['startDate'] ??
+          DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
+      endDate =
+          args['endDate'] ?? DateFormat("yyyy-MM-dd HH:mm:ss").format(now);
 
-     // controller.getEnergyDetailsConsumption(startDate, deviceId, endDate);
-
+      // controller.getEnergyDetailsConsumption(startDate, deviceId, endDate);
     } else {
       DateTime now = DateTime.now();
       DateTime utcNow = now.toUtc();
       DateTime istNow = utcNow.add(const Duration(hours: 5, minutes: 30));
       DateTime istMidnight = DateTime(istNow.year, istNow.month, istNow.day);
-      String formattedDateMidnight = DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
+      String formattedDateMidnight =
+          DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
       startDate = formattedDateMidnight;
       String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
       endDate = formattedDate;
-     // deviceId = controller.deviceList[0].mMachineUniqueId;
+      // deviceId = controller.deviceList[0].mMachineUniqueId;
 
-     // controller.getEnergyDetailsConsumption(startDate, deviceId, endDate);
+      // controller.getEnergyDetailsConsumption(startDate, deviceId, endDate);
     }
   }
 
-  /*@override
-  void initState() {
-    super.initState();
-    DateTime now = DateTime.now();
-    DateTime utcNow = now.toUtc();
-    DateTime istNow = utcNow.add(const Duration(hours: 5, minutes: 30));
-    DateTime istMidnight = DateTime(istNow.year, istNow.month, istNow.day);
-    String formattedDateMidnight =
-        DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
-    String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
 
-    controller.getEnergyDetailsConsumption(formattedDateMidnight, controller.deviceList[0].mMachineUniqueId, formattedDate);
-  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -164,11 +152,11 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
                       _selectedDateRange =
                           "From $formattedStartDate To $formattedEndDate";
 
-
                       startDate = formattedStartDateInYears;
                       endDate = formattedEndDateInYears;
 
-                      controller.getEnergyDetailsConsumption(startDate, deviceId, endDate);
+                      controller.getEnergyDetailsConsumption(
+                          startDate, deviceId, endDate);
                     });
                   }
                 },
@@ -233,7 +221,7 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
                     /// Pie Chart Section
                     DetailPieCard(
                       totalCount: totalCount,
-                     // legendPosition: pie_chart.LegendPosition.bottom,
+                      // legendPosition: pie_chart.LegendPosition.bottom,
                       showLegendsInRow: true,
                       onPressed: () {},
                       consumptionDetail: controller.consumptionDetails.value,

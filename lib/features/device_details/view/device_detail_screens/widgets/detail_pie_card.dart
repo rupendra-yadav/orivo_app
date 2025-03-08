@@ -5,6 +5,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../common/widgets/text/text_view.dart';
 import '../../../../../utils/constant/colors.dart';
+import '../../../../../utils/constant/text_strings.dart';
 import '../model/consumption_detail_model.dart';
 
 class DetailPieCard extends StatelessWidget {
@@ -53,6 +54,59 @@ class DetailPieCard extends StatelessWidget {
       ChartData('Germany', 10, '80%', const Color(0xFF00820D))
     ];
 
+
+    infoDialog(BuildContext context) async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: true,
+        // Prevents closing the dialog by tapping outside
+        builder: (BuildContext context) {
+          return Dialog(
+            backgroundColor: TColors.primaryDark1,
+            insetPadding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 10.h),
+            child:  Padding(
+              padding:  EdgeInsets.symmetric(horizontal: 30.w,vertical: 10.h),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Center(child: TextView(text: TTexts.energyConsumption, textColor: TColors.white, fontSize: 18, bold: true,)),
+
+                  SizedBox(height: 15.h,),
+
+                  TextView(text: TTexts.timeOfDay, textColor: TColors.white, fontSize: 18, bold: true,),
+                  SizedBox(height: 15.h,),
+                  TextView(text: "1. ${TTexts.normalSlot}", textColor: TColors.white, fontSize: 18, bold: true,),
+                  SizedBox(height: 5.h,),
+                  Padding(padding:  EdgeInsets.only(left: 15.w), child: TextView(text: TTexts.normalPeakSlotDesc, textColor: TColors.white, fontSize: 18, bold: true,),),
+                  SizedBox(height: 15.h,),
+                  TextView(text: "2. ${TTexts.offPeakSlot}", textColor: TColors.white, fontSize: 18, bold: true,),
+                  SizedBox(height: 5.h,),
+                  Padding(padding:  EdgeInsets.only(left: 15.w), child: TextView(text: TTexts.offPeakSlotDesc, textColor: TColors.white, fontSize: 18, bold: true,),),
+                  SizedBox(height: 15.h,),
+                  TextView(text: '3. ${TTexts.onPeakSlot}', textColor: TColors.white, fontSize: 18, bold: true,),
+                  SizedBox(height: 5.h,),
+                  Padding(padding:  EdgeInsets.only(left: 15.w), child: TextView(text: TTexts.onPeakSlotDesc, textColor: TColors.white, fontSize: 18, bold: true,),),
+                  SizedBox(height: 20.h,),
+
+
+                  /// Close OK
+                  Center(
+                    child: InkWell(
+                      onTap: (){
+                        Navigator.pop(context);
+                      },
+                      child: TextView(text: TTexts.dialogOk, textColor: TColors.white, fontSize: 18, bold: true,),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      );
+    }
+
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10.h),
       child: InkWell(
@@ -69,12 +123,17 @@ class DetailPieCard extends StatelessWidget {
 
               Padding(
                 padding:  EdgeInsets.symmetric(horizontal: 10.h,vertical: 10.w),
-                child: Align(
-                    alignment: Alignment.topRight,
-                    child: Icon(
-                      Icons.info_outline,
-                      color: TColors.white,
-                    )),
+                child: InkWell(
+                  onTap: () {
+                    infoDialog(context);
+                  },
+                  child: Align(
+                      alignment: Alignment.topRight,
+                      child: Icon(
+                        Icons.info_outline,
+                        color: TColors.white,
+                      )),
+                ),
               ),
 
               // SizedBox(
