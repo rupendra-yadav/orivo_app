@@ -11,6 +11,7 @@ import '../../../utils/popups/full_screen_loader.dart';
 import '../../../utils/popups/loaders.dart';
 import '../../../utils/preferences/cache_manager.dart';
 import '../../navigation/view/navigation_screen.dart';
+import '../../notificaations/view/alerts.dart';
 import '../model/user_detail.dart';
 import '../view/login.dart';
 
@@ -62,7 +63,8 @@ class SplashController extends GetxController {
 
 
       if(response['access_token'].toString().isNotEmpty){
-         //Get.offAll(() => const NavigationScreen());
+        // Get.offAll(() => const NavigationScreen());
+        //Get.offAll(() => const Alerts(id: '',));
         // Get.offAll(() => const EnergyConsumptionDetail(isNotify: false));
          Get.offAll(() => const CostEstimate(isNotify: false));
       }else{

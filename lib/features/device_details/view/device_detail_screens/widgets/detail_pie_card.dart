@@ -58,7 +58,7 @@ class DetailPieCard extends StatelessWidget {
     infoDialog(BuildContext context) async {
       return showDialog<void>(
         context: context,
-        barrierDismissible: true,
+        barrierDismissible: false,
         // Prevents closing the dialog by tapping outside
         builder: (BuildContext context) {
           return Dialog(

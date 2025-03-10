@@ -217,6 +217,23 @@ class TTexts {
   static const String averageKva = "Average KvA : 320 KvA";
   static const String highestKva = "Higest Kva : 600 KvA";
   static const String loadFactor = "Load Factor : 70 %";
+  static const String demandCharges = "Demand Charges";
+  static const String energyCost = "Energy Cost";
+  static const String govtCost = "Govt Cost";
+  static const String govtTariffScheme = "Govt Tariff Scheme - Hv4";
+
+  static const String  normalFPPAS = "Normal FPPAS";
+  static const String  tODOfRate = "TOD of Rate \nTariff : ₹6.10 per unit";
+
+  static const String  electricityDuty = "Electricity Duty";
+  static const String  tariff4 = "Timing : 9 AM to 5 PM (current day)\nTariff : ₹4.88 per unit";
+
+  static const String  cess = "Cess";
+  static const String  tariff7 = "Timing : 5 PM to 11 PM (current day)\nTariff :₹7.32 per unit";
+
+  static const String  for33KV = "For 33 KV line The Demand Charges is 500\nThe minimum billed Demand Charges is 80% of 800 KvA";
+
+
 
   /// Power Quality
   static const String powerQuality = "Power Quality";
@@ -252,4 +269,13 @@ class TTexts {
   static const String only25 = "Only Rs 2,500/month";
   static const String only3 = "Only Rs 3,000/month";
 
+
+
+  /// Alert
+  static const String loadAlert = "Alerts - Load Alert";
+  static const String loadAlertPower = "Alerts - Power Factor";
+  static const String loadAlertPowerOff = "Alerts - Power Off";
+  static const String powerOffAlert = "⚠️ Power Off Alert\n💡 Your power is currently off.\n\nWhat to Do?\n1. 🔌 Check your main power supply.\n2. 📞 Contact your utility provider if the issue persists.\n3. 🛠 Contact customer service if there is problem with the device ";
+  static const String whatIsPower = "What is Power Factor?  \n\nPower Factor (PF) measures how effectively your appliances use electricity. It ranges from 0 to 1, where:   \n1.0 (100%) = Maximum Efficiency\n< 1.0 = Energy Wastage (extra charges may apply!)\n\nWhy Does It Matter?\nReduce Wastage: A low PF increases energy waste.\nAvoid Penalties: Utility companies may charge extra for PF below a threshold (e.g., 0.9).\nSave Money: Improved PF = lower energy bills.\n  \n\nHow to Improve Your Power Factor\n• ⚙️ Install capacitor banks to correct PF.\n• ⏱ Optimize appliance usage during off-peak hours.\n• 🚨 Monitor heavy machinery that may lower PF. \n\nApp Actionable Tip\n🔧 Check the 'Power Factor' tab in the app to:\nIdentify energy-draining devices.\nSet up alerts for low PF.\n\nView recommendations for reducing energy waste.";
+  static const String excessDemandAlert = "⚡ Excess Demand Alert!\nYour energy demand has exceeded the\nthreshold!\nReal-time monitoring shows a spike in power usage.\n\nWhy This Matters\n • 🌟 Avoid Penalties: Excess demand may lead to additional charges.\n • 🔋 Prevent Overloading: Protect your devices and system from potential overloads.\n\n\nTips to Lower Demand\n 1. 🕒 Shift Usage: Reschedule heavy appliances to off-peak hours.\n 2. 🔌 Turn Off Devices: Switch off non-essential appliances.\n 3. ⚙️ Optimize Power: Use energy-efficient settings on equipment.\n\nTake Action Now\n🔧 View Devices: Identify energy-draining appliances. 📊 Analyze Trends: Check hourly usage in the app.";
 }

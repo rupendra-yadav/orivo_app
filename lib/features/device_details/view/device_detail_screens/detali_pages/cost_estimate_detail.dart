@@ -141,7 +141,7 @@ class _CostEstimateState extends State<CostEstimate> {
   infoDialog(BuildContext context) async {
     return showDialog<void>(
       context: context,
-      barrierDismissible: true,
+      barrierDismissible: false,
       // Prevents closing the dialog by tapping outside
       builder: (BuildContext context) {
         return Dialog(
@@ -153,7 +153,7 @@ class _CostEstimateState extends State<CostEstimate> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Center(child: TextView(text: TTexts.energyConsumption, textColor: TColors.white, fontSize: 18, bold: true,)),
+                Center(child: TextView(text: "Example ## ${TTexts.energyConsumption}", textColor: TColors.white, fontSize: 18, bold: true,)),
 
                 SizedBox(height: 15.h,),
 
@@ -170,7 +170,7 @@ class _CostEstimateState extends State<CostEstimate> {
                 TextView(text: '3. ${TTexts.onPeakSlot}', textColor: TColors.white, fontSize: 18, bold: true,),
                 SizedBox(height: 5.h,),
                 Padding(padding:  EdgeInsets.only(left: 15.w), child: TextView(text: TTexts.onPeakSlotDesc, textColor: TColors.white, fontSize: 18, bold: true,),),
-                SizedBox(height: 20.h,),
+                SizedBox(height: 25.h,),
 
 
                 /// Close OK
@@ -189,8 +189,6 @@ class _CostEstimateState extends State<CostEstimate> {
       },
     );
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -369,6 +367,7 @@ class _CostEstimateState extends State<CostEstimate> {
                       padding: EdgeInsets.symmetric(
 
                         horizontal: 10.w,
+                        vertical: 10.h
                       ),
                       child: Column(
                         children: [
@@ -477,86 +476,6 @@ class _CostEstimateState extends State<CostEstimate> {
                     ),
                   ),
                 );
-
-                /*Padding(
-                  padding: EdgeInsets.symmetric(vertical: 20.h),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: TColors.primaryDark1,
-                      borderRadius: BorderRadius.circular(10.r),
-                    ),
-                    width: double.infinity,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 20.h,
-                        horizontal: 10.w,
-                      ),
-                      child: Column(
-                        children: [
-                          // Pie Chart
-                          SizedBox(height: 20.h),
-                          PieChart(
-                            dataMap: updatedDataMap2,
-                            animationDuration:
-                                const Duration(milliseconds: 800),
-                            chartLegendSpacing: 32.w,
-                            chartRadius:
-                                MediaQuery.of(context).size.width / 3.2,
-                            colorList: colorList2,
-                            initialAngleInDegree: 0,
-                            chartType: ChartType.ring,
-                            ringStrokeWidth: 10.w,
-                            centerWidget: Container(
-                              width: 87.w,
-                              height: 87.w,
-                              decoration: BoxDecoration(
-                                color: TColors.primaryDark1,
-                                borderRadius: BorderRadius.circular(100.r),
-                              ),
-                              child: Center(
-                                child: TextView(
-                                  text: "${totalCount.toStringAsFixed(2)} Rs",
-                                  textColor: Colors.white,
-                                  bold: true,
-                                  fontSize: 11,
-                                ),
-                              ),
-                            ),
-                            legendOptions:
-                                const LegendOptions(showLegends: false),
-                            chartValuesOptions: const ChartValuesOptions(
-                              showChartValueBackground: true,
-                              showChartValues: false,
-                              showChartValuesInPercentage: false,
-                              showChartValuesOutside: false,
-                              chartValueBackgroundColor: TColors.primary,
-                              decimalPlaces: 1,
-                            ),
-                          ),
-                          SizedBox(height: 20.h),
-
-                          // Legend Cards with Colors
-                          LegendNameCard(
-                            costEstimateDetailModel:
-                                controller.costEstimateDetailsModel.value,
-                            color: colorList2[0], // Pass appropriate color
-                          ),
-                          LegendNameCardGovt(
-                            costEstimateDetailModel:
-                                controller.costEstimateDetailsModel.value,
-                            color: colorList2[1], // Pass appropriate color
-                          ),
-                          LegendNameCardDemand(
-                            costEstimateDetailModel:
-                                controller.costEstimateDetailsModel.value,
-                            color: colorList2[2], // Pass appropriate color
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                )*/
-                ;
               }),
             ],
           ),

@@ -4,6 +4,7 @@ import 'package:iconsax/iconsax.dart';
 
 import '../../../../../../common/widgets/text/text_view.dart';
 import '../../../../../../utils/constant/colors.dart';
+import '../../../../../../utils/constant/text_strings.dart';
 import '../../../../../../utils/helpers/number_formaters.dart';
 import '../../model/cost_estimate_detail_model.dart';
 
@@ -23,6 +24,60 @@ class LegendNameCardGovt extends StatefulWidget {
 
 class _LegendNameCardGovtState extends State<LegendNameCardGovt> {
   bool _isDetailVisible = false;
+
+  infoDialog(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      // Prevents closing the dialog by tapping outside
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: TColors.primaryDark1,
+          insetPadding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 10.h),
+          child:  Padding(
+            padding:  EdgeInsets.symmetric(horizontal: 30.w,vertical: 10.h),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Center(child: TextView(text: TTexts.govtTariffScheme, textColor: TColors.white, fontSize: 18, bold: true,)),
+
+                SizedBox(height: 15.h,),
+
+                TextView(text: TTexts.govtCost, textColor: TColors.white, fontSize: 18, bold: true,),
+                SizedBox(height: 15.h,),
+                TextView(text: "1. ${TTexts.normalFPPAS}", textColor: TColors.white, fontSize: 18, bold: true,),
+                SizedBox(height: 5.h,),
+                Padding(padding:  EdgeInsets.only(left: 15.w), child: TextView(text: TTexts.tODOfRate, textColor: TColors.white, fontSize: 18, bold: true,),),
+                SizedBox(height: 15.h,),
+                TextView(text: "2. ${TTexts.electricityDuty}", textColor: TColors.white, fontSize: 18, bold: true,),
+                SizedBox(height: 5.h,),
+                Padding(padding:  EdgeInsets.only(left: 15.w), child: TextView(text: TTexts.tariff4, textColor: TColors.white, fontSize: 18, bold: true,),),
+                SizedBox(height: 15.h,),
+                TextView(text: '3. ${TTexts.cess}', textColor: TColors.white, fontSize: 18, bold: true,),
+                SizedBox(height: 5.h,),
+                Padding(padding:  EdgeInsets.only(left: 15.w), child: TextView(text: TTexts.tariff7, textColor: TColors.white, fontSize: 18, bold: true,),),
+                SizedBox(height: 20.h,),
+
+
+                /// Close OK
+                Center(
+                  child: InkWell(
+                    onTap: (){
+                      Navigator.pop(context);
+                    },
+                    child: TextView(text: TTexts.dialogOk, textColor: TColors.white, fontSize: 18, bold: true,),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +112,15 @@ class _LegendNameCardGovtState extends State<LegendNameCardGovt> {
                 ),
                 const TextView(text: " Rs", fontSize: 20),
                 const Spacer(),
+                InkWell(
+                  onTap: (){
+                    infoDialog(context);
+                  },
+                  child: Icon(
+                    Icons.info_outline,
+                    color: TColors.white,
+                  ),
+                ),
                 IconButton(
                   onPressed: () {
                     // Toggle visibility of LegendDetailCard
