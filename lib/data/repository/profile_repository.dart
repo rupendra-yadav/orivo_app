@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
+import '../../features/navigation/view/bottom_nav_screen/model/user_detail_model2.dart';
 import '../http/http_client.dart';
 import '../http/http_client3.dart';
 
@@ -177,6 +178,11 @@ class ProfileRepository extends GetxController {
     }
   }
 
+
+
+  //////////////////////////////////Gen2////////////////////////////////////////
+
+
   ///Get user data
   Future<Map<String, dynamic>> logout(String reFreshToken ,String uuid) async {
     try {
@@ -211,6 +217,30 @@ class ProfileRepository extends GetxController {
       } else {
         throw Exception(response['message']);
       }*/
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+
+  ///Get user data
+  Future<List<UserModel2>> getUserData2(String mobileNo,String accessToken) async {
+    try {
+      Map<String, dynamic> request = {'mobile_no': mobileNo};
+
+      Map<String, dynamic> response =
+      await THttpHelper3.postRaw(APIKeys.userProfile,null, request,accessToken: accessToken);
+
+      if (response['response'] == 'success') {
+        List<dynamic> useData = response['data'];
+
+        List<UserModel2> userDetails =
+        useData.map((data) => UserModel2.fromJson(data)).toList();
+
+        return userDetails;
+      } else {
+        throw Exception(response['message']);
+      }
     } catch (e) {
       throw Exception(e.toString());
     }

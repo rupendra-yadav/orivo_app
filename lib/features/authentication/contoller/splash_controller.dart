@@ -63,10 +63,10 @@ class SplashController extends GetxController {
 
 
       if(response['access_token'].toString().isNotEmpty){
-        // Get.offAll(() => const NavigationScreen());
+         Get.offAll(() => const NavigationScreen());
         //Get.offAll(() => const Alerts(id: '',));
         // Get.offAll(() => const EnergyConsumptionDetail(isNotify: false));
-         Get.offAll(() => const CostEstimate(isNotify: false));
+        // Get.offAll(() => const CostEstimate(isNotify: false));
       }else{
         TLoaders.errorSnackBar(title: "Logged Out", message: "You have been logged out...!");
         Get.offAll(const Login());

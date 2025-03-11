@@ -40,9 +40,6 @@ class _ProfileState extends State<Profile> {
 
   String version = "Loading...";
 
-
-
-
   @override
   void initState() {
     // TODO: implement initState
@@ -129,7 +126,7 @@ class _ProfileState extends State<Profile> {
 
     final TLocalStorage _localStorage = TLocalStorage();
 
-    controller.getUserData();
+    controller.getUserData2();
     controller.logout();
 
 

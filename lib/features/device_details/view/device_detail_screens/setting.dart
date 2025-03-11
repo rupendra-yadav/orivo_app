@@ -90,17 +90,17 @@ class Setting extends StatelessWidget {
                         },
                         child: SettingDeviceDetailCard(
                           title: TTexts.deviceAName,
-                          text: controller.deviceList[0].mMachineTitle,
+                          text: controller.deviceList[0].name,
                         ),
                       ),
                       SettingDeviceDetailCard(
                         title: TTexts.installationDate,
                         text: DateHelper().formatDateTime(
-                            controller.deviceList[0].mMachineAddedon),
+                            controller.deviceList[0].installationDate),
                       ),
                       SettingDeviceDetailCard(
                         title: TTexts.deviceModalNumber,
-                        text: controller.deviceList[0].mMachineModelNumber,
+                        text: controller.deviceList[0].description,
                       ),
                       SizedBox(
                         height: 20.h,

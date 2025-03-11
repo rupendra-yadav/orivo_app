@@ -104,19 +104,19 @@ class DeviceDetailController extends GetxController {
 
       deviceList.assignAll(deviceLis);
 
-      SharedPrefs.setString("deviceId",deviceList[0].mMachineUniqueId);
+      SharedPrefs.setString("deviceId",deviceList[0].userDeviceId);
 
       deviceListModel = deviceList[0];
 
-      getEnergyConsumption(startDatePrep, deviceListModel.mMachineUniqueId,startDate);
+      getEnergyConsumption(startDatePrep, deviceListModel.userDeviceId,startDate);
 
-      getCostEstimate(startDatePrep, deviceListModel.mMachineUniqueId, startDate,totalLoad);
+      getCostEstimate(startDatePrep, deviceListModel.userDeviceId, startDate,totalLoad);
 
-      getDemand(startDatePrep, deviceListModel.mMachineUniqueId, startDate);
+      getDemand(startDatePrep, deviceListModel.userDeviceId, startDate);
 
-      getTotalPowerFactors(startDatePrep, deviceListModel.mMachineUniqueId, startDate);
+      getTotalPowerFactors(startDatePrep, deviceListModel.userDeviceId, startDate);
 
-      getBaseMetric(startDatePrep, deviceListModel.mMachineUniqueId, startDate);
+      getBaseMetric(startDatePrep, deviceListModel.userDeviceId, startDate);
 
     } catch (e) {
       if (kDebugMode) {
@@ -370,7 +370,7 @@ class DeviceDetailController extends GetxController {
       // Assign the object to the Rx variable
       historyFieldModel.value = HistoryFieldModel.fromJson(responsee);
 
-      getHistory(historyFieldModel.value.filters![0].name!,"", "", deviceListModel.mMachineUniqueId, historyFieldModel.value.filters![0].id!, "-1h", 1);
+      getHistory(historyFieldModel.value.filters![0].name!,"", "", deviceListModel.userDeviceId, historyFieldModel.value.filters![0].id!, "-1h", 1);
     } catch (e) {
       if (kDebugMode) {
         print("historyFields SetModel");

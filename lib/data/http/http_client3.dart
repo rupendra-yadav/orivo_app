@@ -136,37 +136,36 @@ class THttpHelper3 {
   }
 
   /// Helper method to make a POST request
-  static Future<Map<String, dynamic>> postRaw(String endpoint,Map<String, dynamic>? queryParams, dynamic data, {String accessToken = ""}) async {
+
+  static Future<Map<String, dynamic>> postRaw(String endpoint, Map<String, dynamic>? queryParams, dynamic data, {String accessToken = ""}) async {
     if (kDebugMode) {
       print('POST Request: $_baseUrl$endpoint${Uri(queryParameters:queryParams)}');
-      print('POST Data: $data');
+      print('Authorization: $accessToken');
+      print('POST RequestBody: ${jsonEncode(data)}');
+
     }
 
-    // final response = await http.post(
-    //   Uri.parse('$_baseUrl/$endpoint'),
-    //   headers: {'Content-Type': 'application/json'},
-    //   body: json.encode(data),
-    // );
+    Uri uri = Uri.parse('$_baseUrl$endpoint');
 
-    final response = await http.post(Uri.parse('$_baseUrl$endpoint').replace(queryParameters:queryParams),
+    if (queryParams != null && queryParams.isNotEmpty) { // Add this check
+      uri = uri.replace(queryParameters: queryParams);
+    }
 
+    final response = await http.post(uri,
       headers: accessToken.isEmpty
-          ? { "Content-Type": "application/json"}
-          : {"Content-Type": "application/json",
-        'Authorization': 'Bearer $accessToken'
-
-      },
+          ? {"Content-Type": "application/json"}
+          : {"Content-Type": "application/json", 'Authorization': 'Bearer $accessToken'},
       body: jsonEncode(data),
       // Set a reasonable limit for redirects
     );
 
     if (kDebugMode) {
-      print('POST Response: ${response.body}');
+      print('POST Response: ${response.statusCode}');
+      print('POST $endpoint ResponseBody: ${response.body}');
     }
 
     return _handleResponse(response);
   }
-
 
   /// Helper method to make a PATCH request with form data
   static Future<Map<String, dynamic>> patchFormData(

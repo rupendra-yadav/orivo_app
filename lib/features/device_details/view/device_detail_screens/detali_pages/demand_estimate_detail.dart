@@ -50,7 +50,7 @@ class _DemandEstimateDetailState extends State<DemandEstimateDetail> {
       args = ModalRoute.of(context)!.settings.arguments as Map<String, String>;
 
       // Initialize values safely
-      deviceId = args['deviceId'] ?? controller.deviceList[0].mMachineUniqueId;
+      deviceId = args['deviceId'] ?? controller.deviceList[0].userDeviceId;
 
       DateTime now =
       DateTime.now().toUtc().add(const Duration(hours: 5, minutes: 30));
@@ -78,7 +78,7 @@ class _DemandEstimateDetailState extends State<DemandEstimateDetail> {
       String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
       endDate = formattedDate;
 
-      deviceId = controller.deviceList[0].mMachineUniqueId;
+      deviceId = controller.deviceList[0].userDeviceId;
       // Call the API with the current date
       controller.getDemandDetail(startDate, deviceId, endDate);
     }

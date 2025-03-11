@@ -57,7 +57,7 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
           .arguments as Map<String, String>;
 
 
-      deviceId = args['deviceId'] ?? controller.deviceList[0].mMachineUniqueId;
+      deviceId = args['deviceId'] ?? controller.deviceList[0].userDeviceId;
 
 
       DateTime now = DateTime.now();
@@ -99,7 +99,7 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
           istMidnight);
       String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
 
-      deviceId = controller.deviceList[0].mMachineUniqueId;
+      deviceId = controller.deviceList[0].userDeviceId;
       startDate = formattedDateMidnight;
       endDate = formattedDate;
 

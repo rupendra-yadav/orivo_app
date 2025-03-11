@@ -30,11 +30,18 @@ class APIKeys{
 
 //////////////////Version 2 API/////////////////////////////////////////////////
 
+  ///Auth
   static const String refresh = "auth/refresh";
   static const String login = "auth/login";
   static const String otpSend = "otp/send";
   static const String otpVerify = "otp/verify";
   static const String authLogout = "auth/logout";
+
+  ///DeviceList
+  static const String userDevices = "user/devices";
+
+  /// user
+  static const String userProfile = "user/profile";
 
 
 }

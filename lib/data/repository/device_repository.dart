@@ -5,8 +5,9 @@ import 'package:auro/utils/constant/api_constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
-import '../../features/device_details/view/device_detail_screens/model/dart_items.dart';
 import '../../features/device_details/view/device_detail_screens/model/graph_data_model_api.dart';
+import '../../utils/preferences/cache_manager.dart';
+import '../http/http_client3.dart';
 
 
 class DeviceRepository extends GetxController {
@@ -39,6 +40,129 @@ class DeviceRepository extends GetxController {
       throw Exception(e.toString());
     }
   }
+
+  ///Device List Gen2
+  // Future<List<DeviceListModel?>> getDeviceList2(String userMobile,String accessToken) async {
+  //   try {
+  //     Map<String, dynamic> request = {"mobile_no": userMobile};
+  //
+  //      Map<String, dynamic> response = await THttpHelper3.postRaw(APIKeys.userDevices, null,request,accessToken: accessToken);
+  //
+  //     if (kDebugMode) {
+  //       print('userDevices  Response: $response');
+  //       print('userDevices  Response: ${response.toString()}');
+  //     }
+  //
+  //     if (response is List) {
+  //       // Directly map the list to DeviceListModel objects
+  //
+  //       try {  // Add a try-catch block around the mapping
+  //         List<DeviceListModel?> deviceList = (response as List<dynamic>).map((data) {
+  //           try {
+  //             return DeviceListModel.fromJson(data);
+  //           } catch (e) {
+  //             print("Error parsing a DeviceListModel: $e.  Data was: $data"); // Log the error and the data that caused it
+  //             return null; // Or throw the error again, depending on your needs
+  //           }
+  //         })
+  //             .where((element) => element != null) // remove null values in the list
+  //             .toList();
+  //
+  //         return deviceList;
+  //
+  //       } catch (e) {
+  //         print("Error mapping the list: $e");  // Log errors during list mapping
+  //         throw Exception("Error processing device list: $e"); // Rethrow the exception
+  //       }
+  //     }
+  //
+  //     // if (response['response'] == 'success') {
+  //       List<dynamic> deviceListData = response as List;
+  //
+  //       List<DeviceListModel> deviceList = deviceListData
+  //           .map((data) => DeviceListModel.fromJson(data))
+  //           .toList();
+  //
+  //       return deviceList;
+  //     // } else {
+  //     //   throw Exception(response['message']);
+  //     // }
+  //
+  //   } catch (e) {
+  //     if (kDebugMode) {
+  //       print("error Try  Catch on Device --> $e");
+  //     }
+  //     throw Exception(e.toString());
+  //   }
+  // }
+
+
+  Future<List<DeviceListModel>> getDeviceList2(String userMobile, String accessToken) async {
+    try {
+      Map<String, dynamic> request = {"mobile_no": userMobile};
+
+      dynamic response = await THttpHelper3.postRaw(APIKeys.userDevices, null, request, accessToken: accessToken);
+
+      if (kDebugMode) {
+        print('Raw API Response: $response');
+        print('Type of Response: ${response.runtimeType}');
+      }
+
+      if (response is List) {
+        // Directly map the list to DeviceListModel objects
+        try {
+          List<DeviceListModel> deviceList = (response as List<dynamic>)
+              .map((data) {
+            try {
+              return DeviceListModel.fromJson(data);
+            } catch (e) {
+              print("Error parsing a DeviceListModel: $e.  Data was: $data"); // Log the error and the data that caused it
+              throw Exception("Invalid Device Entry");  // rethrow the exception so that the caller knows there was an issue!
+            }
+          })
+              .toList();
+
+          return deviceList;
+        } catch (e) {
+          print("Error mapping the list: $e");  // Log errors during list mapping
+          throw Exception("Error processing device list: $e"); // Rethrow the exception
+        }
+      }
+      else if (response is Map<String, dynamic> && response.containsKey('response')) { // if response is map
+
+        // Old Logic with handling a Map having a response (as in the older responses)
+        if(response['response'] == 'success'){
+          // Added check here, so that it'll never be anything else
+          if(response.containsKey("data") && response["data"] is List){
+            List<dynamic> deviceListData = response['data'] as List;
+            List<DeviceListModel> deviceList = deviceListData
+                .map((data) => DeviceListModel.fromJson(data))
+                .toList();
+
+            return deviceList;
+          } else {
+            // if the response is "success" but the data is not a List, there is definitely something wrong
+            throw Exception("Response success but missing 'data' List");
+          }
+
+
+        } else {
+          throw Exception(response['message'] ?? "An error occurred.");
+        }
+
+      }
+      else {
+        // Handle unexpected response format
+        throw Exception("Unexpected response format from API.");
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print("error Try Catch on Device --> $e");
+      }
+      throw Exception(e.toString());
+    }
+  }
+
 
   ///Device Details
   Future<List<DeviceListModel>> getDeviceDetail(String deviceId) async {
@@ -127,8 +251,7 @@ class DeviceRepository extends GetxController {
   }
 
   ///Energy Consumption
-  Future<Map<String, dynamic>> getEnergyConsumption(
-      String date, String deviceId,String stop) async {
+  Future<Map<String, dynamic>> getEnergyConsumption(String date, String deviceId,String stop) async {
     try {
       Map<String, dynamic> request = {
         "device_id": deviceId,
@@ -168,8 +291,7 @@ class DeviceRepository extends GetxController {
   }
 
   ///Energy Detail Consumption
-  Future<Map<String, dynamic>> getEnergyDetailConsumption(
-      String date, String deviceId, String stop) async {
+  Future<Map<String, dynamic>> getEnergyDetailConsumption(String date, String deviceId, String stop) async {
     try {
       Map<String, dynamic> request = {
         "device_id": deviceId,
@@ -202,8 +324,7 @@ class DeviceRepository extends GetxController {
 
 
   /// Demand
-  Future<Map<String, dynamic>> getDemand(
-      String date, String deviceId, String stop) async {
+  Future<Map<String, dynamic>> getDemand(String date, String deviceId, String stop) async {
     try {
       Map<String, dynamic> request = {
         "device_id": deviceId,
@@ -270,8 +391,7 @@ class DeviceRepository extends GetxController {
 
 
   /// Total Power Factors
-  Future<Map<String, dynamic>> getTotalPowerFactors(
-      String date, String deviceId, String stop) async {
+  Future<Map<String, dynamic>> getTotalPowerFactors(String date, String deviceId, String stop) async {
     try {
       Map<String, dynamic> request = {
         "device_id": deviceId,
@@ -382,8 +502,7 @@ class DeviceRepository extends GetxController {
   }
 
   /// History Graph
-  Future<Map<String, dynamic>> getHistory(
-      String date, String deviceId, String stop, String fieldName, String duration) async {
+  Future<Map<String, dynamic>> getHistory(String date, String deviceId, String stop, String fieldName, String duration) async {
     try {
       Map<String, dynamic> request = {
         "device_id": deviceId,
@@ -426,8 +545,7 @@ class DeviceRepository extends GetxController {
   }
 
   /// Cost Estimate Details
-  Future<Map<String, dynamic>> getCostEstimateDetails(
-      String date, String deviceId, String stop,String totalLoad) async {
+  Future<Map<String, dynamic>> getCostEstimateDetails(String date, String deviceId, String stop,String totalLoad) async {
     try {
       Map<String, dynamic> request = {
         "device_id": deviceId,

@@ -19,13 +19,13 @@ class DeviceDetailsNavigationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(DeviceDetailNavigationController());
-    controller.deviceId.value = deviceListModel.mMachineId;
+    controller.deviceId.value = deviceListModel.userDeviceId;
     return Scaffold(
       backgroundColor: TColors.primaryDark1,
 
       /// App Bar
       appBar: DeviceDetailsAppBar(
-        title: deviceListModel.mMachineTitle, deviceId: deviceListModel.mMachineUniqueId,
+        title: deviceListModel.name, deviceId: deviceListModel.userDeviceId,
       ),
 
       /// Bottom Navigation

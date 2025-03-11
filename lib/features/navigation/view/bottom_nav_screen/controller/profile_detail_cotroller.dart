@@ -11,6 +11,7 @@ import '../../../../../utils/popups/loaders.dart';
 import '../../../../../utils/preferences/cache_manager.dart';
 import '../../../../authentication/model/user_detail.dart';
 import '../model/user_detail_model.dart';
+import '../model/user_detail_model2.dart';
 
 class ProfileDetailController extends GetxController {
   static ProfileDetailController get instance => Get.find();
@@ -150,7 +151,7 @@ class ProfileDetailController extends GetxController {
     }
   }
 
-
+//////////////////////// Gen 2 /////////////////////////////////////////////////
   ///use Details
   Future<void> logout() async {
     try {
@@ -184,6 +185,31 @@ class ProfileDetailController extends GetxController {
       if (kDebugMode) {
         print(e.toString());
       }
+    }
+  }
+
+  ///use Details2
+  Future<void> getUserData2() async {
+    try {
+      /// this is to Access data
+      Map<String, dynamic> userDataMap = _localStorage.readData(_userDataKey) ?? {};
+      UserModel2 user = UserModel2.fromJson(userDataMap);
+      try {
+        isUserDataLoading.value = true;
+        final userModelResponse = await _profileRepository.getUserData2(SharedPrefs.getString("mobileNumber")??"",SharedPrefs.getString("accessToken")??"");
+        userModel.assignAll(userModelResponse as Iterable<UserModel>);
+        userModelData = userModel[0];
+
+        SharedPrefs.setString("userLoad", userModel[0].custTotalload.toString());
+      } catch (e) {
+        TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e.toString());
+      }
+    } finally {
+      isUserDataLoading.value = false;
     }
   }
 

@@ -18,8 +18,9 @@ class Device extends StatelessWidget {
     final DeviceListController controller = Get.put(DeviceListController());
 
     // Fetch the device list when the widget is built
-    controller.getDeviceList();
-    controller.updateFcm();
+    // controller.getDeviceList();
+    controller.getDeviceList2();
+   // controller.updateFcm();
 
     if (SharedPrefs.getBool("firstLaunch") == true) {
     } else {
@@ -50,7 +51,8 @@ class Device extends StatelessWidget {
           RefreshIndicator(
             // The onRefresh callback triggers the controller's getDeviceList method
             onRefresh: () async {
-              await controller.getDeviceList();
+             // await controller.getDeviceList();
+              await controller.getDeviceList2();
             },
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),

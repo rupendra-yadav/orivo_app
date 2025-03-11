@@ -68,9 +68,7 @@ class DeviceListController extends GetxController {
       try {
         isFCMLoading.value = true;
 
-        final Map<String, dynamic> responsee = await _deviceReposotory
-            .updateFCM(
-            user.mCustId, SharedPrefs.getString("FCM_TOKEN").toString());
+        final Map<String, dynamic> responsee = await _deviceReposotory.updateFCM(user.mCustId, SharedPrefs.getString("FCM_TOKEN").toString());
       } catch (e) {
         print(e.toString());
       }
@@ -86,4 +84,27 @@ class DeviceListController extends GetxController {
       isFCMLoading.value = false;
     }
   }
+
+
+  ////////////////////////////////Gen 2 API/////////////////////////////////////
+
+  Future<void> getDeviceList2() async {
+
+      try {
+        isDeviceLoading.value = true;
+
+        final deviceLis = await _deviceReposotory.getDeviceList2(SharedPrefs.getString("mobileNumber")??"",SharedPrefs.getString("accessToken")??"");
+
+       // deviceList.assignAll(deviceLis);
+
+      } catch (e) {
+        // TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+        TLoaders.errorSnackBar(title: 'Oh Snap!', message: "No Device Available...!");
+      }
+
+    finally {
+      isDeviceLoading.value = false;
+    }
+  }
+
 }

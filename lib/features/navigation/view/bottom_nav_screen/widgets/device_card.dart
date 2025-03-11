@@ -43,7 +43,7 @@ class DeviceCard extends StatelessWidget {
                 Expanded(
                   flex:1,
                   child:  CachedNetworkImage(
-                    imageUrl: TImages.deviceImagePath+deviceListModel.mMachineImage, // Provide a fallback empty string if null or empty
+                    imageUrl: TImages.deviceImagePath+deviceListModel.name, // Provide a fallback empty string if null or empty
                     width: 100.w,
                     height: 100.h,
                     fit: BoxFit.fill,
@@ -70,7 +70,7 @@ class DeviceCard extends StatelessWidget {
                       children: [
                         /// Title
                         Text(
-                          deviceListModel.mMachineTitle,
+                          deviceListModel.name,
                           style: const TextStyle(
                               color: TColors.white,
                               fontSize: 28,

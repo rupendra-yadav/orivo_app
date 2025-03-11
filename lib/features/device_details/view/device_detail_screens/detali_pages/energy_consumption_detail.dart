@@ -49,7 +49,7 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
     if (widget.isNotify == true) {
       args = ModalRoute.of(context)!.settings.arguments as Map<String, String>;
 
-      deviceId = args['deviceId'] ?? controller.deviceList[0].mMachineUniqueId;
+      deviceId = args['deviceId'] ?? controller.deviceList[0].userDeviceId;
       DateTime now = DateTime.now();
       DateTime utcNow = now.toUtc();
       DateTime istNow = utcNow.add(const Duration(hours: 5, minutes: 30));

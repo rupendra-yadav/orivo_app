@@ -55,7 +55,7 @@ class _CostEstimateState extends State<CostEstimate> {
       args = ModalRoute.of(context)!.settings.arguments as Map<String, String>;
 
       // Initialize values safely
-      deviceId = args['deviceId'] ?? controller.deviceList[0].mMachineUniqueId;
+      deviceId = args['deviceId'] ?? controller.deviceList[0].userDeviceId;
       deviceName =  TTexts.costEstimate;
       DateTime now = DateTime.now().toUtc().add(const Duration(hours: 5, minutes: 30));
       DateTime midnight = DateTime(now.year, now.month, now.day);
