@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
+import '../../../../../utils/constant/text_strings.dart';
 import '../../../../../utils/helpers/network_manager.dart';
 import '../../../../../utils/local_storage/storage_utility.dart';
 import '../../../../../utils/popups/full_screen_loader.dart';
@@ -196,7 +197,7 @@ class ProfileDetailController extends GetxController {
       UserModel2 user = UserModel2.fromJson(userDataMap);
       try {
         isUserDataLoading.value = true;
-        final userModelResponse = await _profileRepository.getUserData2(SharedPrefs.getString("mobileNumber")??"",SharedPrefs.getString("accessToken")??"");
+        final userModelResponse = await _profileRepository.getUserData2(SharedPrefs.getString("mobileNumber")??"",SharedPrefs.getString(TTexts.prefAccessToken)??"");
         userModel.assignAll(userModelResponse as Iterable<UserModel>);
         userModelData = userModel[0];
 

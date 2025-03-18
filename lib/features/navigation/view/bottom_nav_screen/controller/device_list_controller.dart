@@ -1,5 +1,6 @@
 import 'package:auro/data/repository/device_repository.dart';
 import 'package:auro/features/navigation/view/bottom_nav_screen/model/device_list_model.dart';
+import 'package:auro/utils/constant/text_strings.dart';
 import 'package:auro/utils/preferences/cache_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -23,10 +24,9 @@ class DeviceListController extends GetxController {
 
   ///--------Device List
   Future<void> getDeviceList() async {
-
     /// this is to Access data
-    Map<String, dynamic> userDataMap = _localStorage.readData(_userDataKey) ??
-        {};
+    Map<String, dynamic> userDataMap =
+        _localStorage.readData(_userDataKey) ?? {};
     UserDetail user = UserDetail.fromJson(userDataMap);
     try {
       try {
@@ -36,30 +36,29 @@ class DeviceListController extends GetxController {
 
         deviceList.assignAll(deviceLis);
 
-
         if (kDebugMode) {
           print(user.mCustName);
         }
       } catch (e) {
         // TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
-        TLoaders.errorSnackBar(title: 'Oh Snap!', message: "No Device Available...!");
+        TLoaders.errorSnackBar(
+            title: 'Oh Snap!', message: "No Device Available...!");
       }
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());
       }
-    }
-    finally {
+    } finally {
       isDeviceLoading.value = false;
     }
   }
-
 
   ///--------Update FCM
 
   Future<void> updateFcm() async {
     /// this is to Access data
-    Map<String, dynamic> userDataMap = _localStorage.readData(_userDataKey) ?? {};
+    Map<String, dynamic> userDataMap =
+        _localStorage.readData(_userDataKey) ?? {};
     UserDetail user = UserDetail.fromJson(userDataMap);
 
     try {
@@ -68,7 +67,9 @@ class DeviceListController extends GetxController {
       try {
         isFCMLoading.value = true;
 
-        final Map<String, dynamic> responsee = await _deviceReposotory.updateFCM(user.mCustId, SharedPrefs.getString("FCM_TOKEN").toString());
+        final Map<String, dynamic> responsee =
+            await _deviceReposotory.updateFCM(
+                user.mCustId, SharedPrefs.getString("FCM_TOKEN").toString());
       } catch (e) {
         print(e.toString());
       }
@@ -78,33 +79,31 @@ class DeviceListController extends GetxController {
       }
     } catch (e) {
       TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
-    }
-
-    finally {
+    } finally {
       isFCMLoading.value = false;
     }
   }
 
-
   ////////////////////////////////Gen 2 API/////////////////////////////////////
 
   Future<void> getDeviceList2() async {
+    /// this is to Access data
 
-      try {
-        isDeviceLoading.value = true;
+    try {
+      isDeviceLoading.value = true;
 
-        final deviceLis = await _deviceReposotory.getDeviceList2(SharedPrefs.getString("mobileNumber")??"",SharedPrefs.getString("accessToken")??"");
+      final deviceLis = await _deviceReposotory.getDeviceList2(
+          SharedPrefs.getString("mobileNumber") ?? "",
+          SharedPrefs.getString(TTexts.prefAccessToken) ?? "");
 
-       // deviceList.assignAll(deviceLis);
-
-      } catch (e) {
-        // TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
-        TLoaders.errorSnackBar(title: 'Oh Snap!', message: "No Device Available...!");
-      }
-
-    finally {
+      deviceList.assignAll(deviceLis);
+    } catch (e) {
+      isDeviceLoading.value = false;
+      // TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+      TLoaders.errorSnackBar(
+          title: 'Oh Snap!', message: "No Device Available...!");
+    } finally {
       isDeviceLoading.value = false;
     }
   }
-
 }

@@ -3,6 +3,7 @@ import 'package:auro/utils/constant/api_constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
+import '../../utils/constant/text_strings.dart';
 import '../../utils/local_storage/storage_utility.dart';
 import '../../utils/preferences/cache_manager.dart';
 import '../http/http_client.dart';
@@ -185,8 +186,8 @@ class AuthenticationRepository extends GetxController {
           print("RefreshToken --> ${response['refresh_token']}");
         }
 
-        SharedPrefs.setString("accessToken",response['access_token']);
-        SharedPrefs.setString("refreshToken",response['refresh_token']);
+        SharedPrefs.setString(TTexts.prefAccessToken,response['access_token']);
+        SharedPrefs.setString(TTexts.prefRefreshToken,response['refresh_token']);
 
         return {'success': true, 'message': 'Logged in successfully'};
       }else{
@@ -241,24 +242,26 @@ class AuthenticationRepository extends GetxController {
         print('refresh Response: $response');
       }
 
-      if (response['response'] == 'success') {
-        List<dynamic> userDataList = response['user'];
+      if (kDebugMode) {
+        print("AccessToken --> ${response['access_token']}");
+        print("RefreshToken --> ${response['refresh_token']}");
+      }
 
-        /// SetData in Model...
-        if (userDataList.isNotEmpty) {
-          Map<String, dynamic> userData = userDataList.first;
-          UserDetail user = UserDetail.fromJson(userData);
-          _localStorage.saveData(_userDataKey, user.toJson());
+      if(response['access_token']!= null && response['refresh_token']!= null){
 
-          return {'success': true, 'message': 'Logged in successfully'};
-        } else {
-          return {'success': false, 'message': 'User data is empty'};
-        }
-      } else {
-        // Error occurred, return response
+
+        SharedPrefs.setString(TTexts.prefAccessToken,response['access_token']);
+        SharedPrefs.setString(TTexts.prefRefreshToken,response['refresh_token']);
+
+        return {'success': true, 'message': 'Token Refreshed successfully'};
+      }else{
         return {'success': false, 'message': response['message']};
       }
+
     } catch (e) {
+      if (kDebugMode) {
+        print("Shantanu Error --> $e");
+      }
       return {'response': 'error', 'message': e.toString()};
     }
   }
@@ -318,38 +321,13 @@ class AuthenticationRepository extends GetxController {
           print("RefreshToken --> ${response['refresh_token']}");
         }
 
-        SharedPrefs.setString("accessToken",response['access_token']);
-        SharedPrefs.setString("refreshToken",response['refresh_token']);
+        SharedPrefs.setString(TTexts.prefAccessToken,response['access_token']);
+        SharedPrefs.setString(TTexts.prefRefreshToken,response['refresh_token']);
 
         return {'success': true, 'message': 'Logged in successfully'};
       }else{
         return {'success': false, 'message': response['message']};
       }
-
-
-
-
-      // if (response['response'] == 'success') {
-      //   List<dynamic> userDataList = response['user'];
-      //
-      //   /// SetData in Model...
-      //   if (userDataList.isNotEmpty) {
-      //     Map<String, dynamic> userData = userDataList.first;
-      //     UserDetail user = UserDetail.fromJson(userData);
-      //     _localStorage.saveData(_userDataKey, user.toJson());
-      //
-      //     return {'success': true, 'message': 'Logged in successfully'};
-      //   } else {
-      //     return {'success': false, 'message': 'User data is empty'};
-      //   }
-      //
-      //
-      //
-      //   return {'success': true, 'message': 'OTP Send Successfully'};
-      // } else {
-      //   // Error occurred, return response
-      //   return {'success': false, 'message': response['message']};
-      // }
     } catch (e) {
       return {'response': 'error', 'message': e.toString()};
     }

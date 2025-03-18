@@ -85,4 +85,40 @@ class NotificationController extends GetxController {
   }
 
 
+
+
+  ///TODO///////////////////// Gen 2 ////////////////////////////////////////////
+
+
+  ///--------Notification List
+  Future<void> getNotificationList2() async {
+
+    /// this is to Access data
+    Map<String, dynamic> userDataMap = _localStorage.readData(_userDataKey) ?? {};
+    UserDetail user = UserDetail.fromJson(userDataMap);
+    try {
+      try {
+        isNotificationLoading.value = true;
+
+        final deviceLis = await _deviceReposotory.getNotificationList2("","");
+
+        notificationList.assignAll(deviceLis);
+
+      } catch (e) {
+
+        TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+      }
+
+    } catch (e) {
+      if (kDebugMode) {
+        print(e.toString());
+      }
+    }
+    finally{
+      isNotificationLoading.value = false;
+    }
+  }
+
+
+
 }

@@ -11,6 +11,7 @@ import 'package:in_app_update/in_app_update.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../myapp.dart';
+import '../../../utils/constant/text_strings.dart';
 import '../../../utils/preferences/cache_manager.dart';
 import '../contoller/splash_controller.dart';
 import 'login.dart';
@@ -107,10 +108,10 @@ class _SplashState extends State<Splash> {
       }
     }
 
-    if (SharedPrefs.getString("refreshToken") != null && SharedPrefs.getString("accessToken") != null) {
+    if (SharedPrefs.getString(TTexts.prefRefreshToken) != null && SharedPrefs.getString(TTexts.prefAccessToken) != null) {
       splashController.refreshToken(
-          SharedPrefs.getString("refreshToken")??"",
-          SharedPrefs.getString("accessToken")??"",
+          SharedPrefs.getString(TTexts.prefRefreshToken)??"",
+          SharedPrefs.getString((TTexts.prefAccessToken))??"",
           SharedPrefs.getString("UUID")??"");
     }else{
       Get.offAll(const Login());

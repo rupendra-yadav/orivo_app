@@ -1,7 +1,7 @@
 import 'package:auro/features/navigation/view/bottom_nav_screen/model/device_list_model.dart';
 import 'package:auro/utils/constant/image_string.dart';
-import 'package:auro/utils/constant/text_strings.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -26,8 +26,22 @@ class DeviceCard extends StatelessWidget {
   final Color statusColor;
   final DeviceListModel deviceListModel;
 
+  String extractDriveFileId(String url) {
+    RegExp regExp = RegExp(r"\/d\/(.*?)(\/|$)");
+    Match? match = regExp.firstMatch(url);
+    return match != null ? match.group(1)! : "";
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    String? googleDriveImageUrl;
+
+    if (kDebugMode) {
+      print("FileId--> ${extractDriveFileId(deviceListModel.imagePath)}");
+    }
+    googleDriveImageUrl = 'https://drive.usercontent.google.com/download?id=${extractDriveFileId(deviceListModel.imagePath)}&export=view';
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: InkWell(
@@ -43,7 +57,8 @@ class DeviceCard extends StatelessWidget {
                 Expanded(
                   flex:1,
                   child:  CachedNetworkImage(
-                    imageUrl: TImages.deviceImagePath+deviceListModel.name, // Provide a fallback empty string if null or empty
+                    // imageUrl:"https://drive.usercontent.google.com/download?id=1V2Lkj2hPA3KQEGxxJveIDGmQKJqApIbW&export=view", // Provide a fallback empty string if null or empty
+                    imageUrl:googleDriveImageUrl??"", // Provide a fallback empty string if null or empty
                     width: 100.w,
                     height: 100.h,
                     fit: BoxFit.fill,
@@ -73,43 +88,45 @@ class DeviceCard extends StatelessWidget {
                           deviceListModel.name,
                           style: const TextStyle(
                               color: TColors.white,
-                              fontSize: 28,
+                              fontSize: 21,
                               fontWeight: FontWeight.w700),
                         ),
 
                         /// model code
-                        /*Row(
+                        Row(
                           children: [
                             const Text(
                               "MID : ",
                               style: TextStyle(color: TColors.warningDark1),
                             ),
-                            Text(
-                              deviceListModel.mMachineUniqueId,
-                              style: const TextStyle(color: TColors.warningDark1),
+                            Expanded(
+                              child: Text(
+                                deviceListModel.publicDeviceId,
+                                style: const TextStyle(color: TColors.warningDark1),
+                              ),
                             ),
                           ],
-                        ),*/
+                        ),
                         const SizedBox(height: 10),
 
                         ///status
                         Row(
                           children: [
-                            /*Container(
+                            Container(
                               decoration: BoxDecoration(
-                                  color: deviceListModel.mMachineStatus=="1"?statusColor:TColors.error,
+                                  color: deviceListModel.status=="Active"?statusColor:TColors.error,
                                   borderRadius: BorderRadius.circular(20)),
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 8.0, vertical: 2),
                                 child: Text(
-                                  deviceListModel.mMachineStatus=="1"?TTexts.online:TTexts.offline,
+                                  deviceListModel.status,
                                   style: const TextStyle(
                                       color: TColors.white, fontSize: 12),
                                 ),
                               ),
-                            ),*/
-                            const SizedBox(width: 10),
+                            ),
+                            // const SizedBox(width: 10),
                             /*Container(
                               decoration: BoxDecoration(
                                   color: TColors.ochre,
@@ -118,7 +135,7 @@ class DeviceCard extends StatelessWidget {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 8.0, vertical: 2),
                                 child: Text(
-                                  deviceListModel.mMachinePower,
+                                  deviceListModel.installationDate,
                                   style: const TextStyle(
                                       color: TColors.white, fontSize: 12),
                                 ),

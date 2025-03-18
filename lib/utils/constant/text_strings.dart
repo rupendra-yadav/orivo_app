@@ -278,4 +278,13 @@ class TTexts {
   static const String powerOffAlert = "⚠️ Power Off Alert\n💡 Your power is currently off.\n\nWhat to Do?\n1. 🔌 Check your main power supply.\n2. 📞 Contact your utility provider if the issue persists.\n3. 🛠 Contact customer service if there is problem with the device ";
   static const String whatIsPower = "What is Power Factor?  \n\nPower Factor (PF) measures how effectively your appliances use electricity. It ranges from 0 to 1, where:   \n1.0 (100%) = Maximum Efficiency\n< 1.0 = Energy Wastage (extra charges may apply!)\n\nWhy Does It Matter?\nReduce Wastage: A low PF increases energy waste.\nAvoid Penalties: Utility companies may charge extra for PF below a threshold (e.g., 0.9).\nSave Money: Improved PF = lower energy bills.\n  \n\nHow to Improve Your Power Factor\n• ⚙️ Install capacitor banks to correct PF.\n• ⏱ Optimize appliance usage during off-peak hours.\n• 🚨 Monitor heavy machinery that may lower PF. \n\nApp Actionable Tip\n🔧 Check the 'Power Factor' tab in the app to:\nIdentify energy-draining devices.\nSet up alerts for low PF.\n\nView recommendations for reducing energy waste.";
   static const String excessDemandAlert = "⚡ Excess Demand Alert!\nYour energy demand has exceeded the\nthreshold!\nReal-time monitoring shows a spike in power usage.\n\nWhy This Matters\n • 🌟 Avoid Penalties: Excess demand may lead to additional charges.\n • 🔋 Prevent Overloading: Protect your devices and system from potential overloads.\n\n\nTips to Lower Demand\n 1. 🕒 Shift Usage: Reschedule heavy appliances to off-peak hours.\n 2. 🔌 Turn Off Devices: Switch off non-essential appliances.\n 3. ⚙️ Optimize Power: Use energy-efficient settings on equipment.\n\nTake Action Now\n🔧 View Devices: Identify energy-draining appliances. 📊 Analyze Trends: Check hourly usage in the app.";
+
+
+
+  static const String prefAccessToken = "accessToken";
+  static const String prefRefreshToken = "refreshToken";
+
+
+
+
 }

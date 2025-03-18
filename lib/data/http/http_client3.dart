@@ -8,10 +8,7 @@ class THttpHelper3 {
   static const String _baseUrl = tBaseUrl3;
 
   /// Helper method to make a GET request
-  static Future<Map<String, dynamic>> get(
-      String endpoint, {
-        String accessToken = "",
-        Map<String, dynamic>? queryParams, dynamic data,}) async {
+  static Future<Map<String, dynamic>> get(String endpoint, {String accessToken = "", Map<String, dynamic>? queryParams, dynamic data,}) async {
     final uri = Uri.parse('$_baseUrl$endpoint').replace(queryParameters: queryParams,
     );
 
@@ -44,7 +41,6 @@ class THttpHelper3 {
 
     return _handleResponse(response);
   }
-
 
   static Future<Map<String, dynamic>> redirectPost(String endpoint, dynamic data,
       {String accessToken = ""}) async {
@@ -99,9 +95,6 @@ class THttpHelper3 {
     }
   }
 
-
-
-
   /// Helper method to make a POST request
   static Future<Map<String, dynamic>> post(String endpoint,Map<String, dynamic>? queryParams, dynamic data, {String accessToken = ""}) async {
     if (kDebugMode) {
@@ -135,7 +128,7 @@ class THttpHelper3 {
     return _handleResponse(response);
   }
 
-  /// Helper method to make a POST request
+  /// Helper method to make a POST Raw request
 
   static Future<Map<String, dynamic>> postRaw(String endpoint, Map<String, dynamic>? queryParams, dynamic data, {String accessToken = ""}) async {
     if (kDebugMode) {
@@ -167,10 +160,9 @@ class THttpHelper3 {
     return _handleResponse(response);
   }
 
+
   /// Helper method to make a PATCH request with form data
-  static Future<Map<String, dynamic>> patchFormData(
-      String endpoint, dynamic data,
-      {String accessToken = ""}) async {
+  static Future<Map<String, dynamic>> patchFormData(String endpoint, dynamic data, {String accessToken = ""}) async {
     if (kDebugMode) {
       print('PATCH Request: $_baseUrl/$endpoint');
       print('PATCH FormData: $data');
@@ -217,12 +209,7 @@ class THttpHelper3 {
 
 
   /// Helper method to make a PATCH request
-  static Future<Map<String, dynamic>> patch(
-      String endpoint, {
-        String accessToken = "",
-        Map<String, dynamic>? queryParams,
-        dynamic data,
-      }) async {
+  static Future<Map<String, dynamic>> patch(String endpoint, {String accessToken = "", Map<String, dynamic>? queryParams, dynamic data,}) async {
     final uri = Uri.parse('$_baseUrl/$endpoint').replace(
       queryParameters: queryParams,
     );
@@ -263,12 +250,7 @@ class THttpHelper3 {
 
 
   /// Helper method to make a DELETE request
-  static Future<Map<String, dynamic>> delete(
-      String endpoint, {
-        String accessToken = "",
-        Map<String, dynamic>? queryParams,
-        dynamic data,
-      }) async {
+  static Future<Map<String, dynamic>> delete(String endpoint, {String accessToken = "", Map<String, dynamic>? queryParams, dynamic data,}) async {
     final uri = Uri.parse('$_baseUrl/$endpoint').replace(
       queryParameters: queryParams,
     );

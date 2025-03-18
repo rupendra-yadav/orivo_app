@@ -7,6 +7,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../utils/constant/text_strings.dart';
 import '../../../../utils/preferences/cache_manager.dart';
 
 class Device extends StatelessWidget {
@@ -21,6 +22,9 @@ class Device extends StatelessWidget {
     // controller.getDeviceList();
     controller.getDeviceList2();
    // controller.updateFcm();
+
+
+    SharedPrefs.getString(TTexts.prefAccessToken);
 
     if (SharedPrefs.getBool("firstLaunch") == true) {
     } else {

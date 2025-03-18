@@ -245,4 +245,53 @@ class ProfileRepository extends GetxController {
       throw Exception(e.toString());
     }
   }
+
+  ///Update user data
+  // Future<List<UserModel>> updateUserData2(String token, String mobileNumber, String companyName, String city, String state, String address, String pinCode, String companyType, String gstNumber,) async {
+  //   try {
+  //     var request = http.MultipartRequest(
+  //         'POST', Uri.parse('https://webdevelopercg.com/electricity/myadmin/Api/update_profile'));
+  //
+  //     // Add text fields to the request
+  //     request.fields['user_id'] = userId;
+  //     request.fields['user_name'] = userName;
+  //     request.fields['user_state'] = userState;
+  //     request.fields['user_city'] = userCity;
+  //     request.fields['user_address'] = userAddress;
+  //     request.fields['user_company'] = userCompany;
+  //     request.fields['user_company_type'] = userCompanyType;
+  //     request.fields['user_owner_name'] = userOwnerName;
+  //     request.fields['user_gstno'] = userGstNo;
+  //
+  //     // Add the image file to the request
+  //     request.files.add(await http.MultipartFile.fromPath('user_pic', userPic.path));
+  //
+  //     // Send the request and get the response
+  //     var response = await request.send();
+  //
+  //     // Check for response status and handle the response
+  //     if (response.statusCode == 200) {
+  //       var responseData = await response.stream.bytesToString();
+  //       var jsonResponse = json.decode(responseData);
+  //
+  //       if (kDebugMode) {
+  //         print('update_profile Response: $jsonResponse');
+  //       }
+  //
+  //       if (jsonResponse['response'] == 'success') {
+  //         List<dynamic> useData = jsonResponse['data'];
+  //         List<UserModel> userDetails = useData.map((data) => UserModel.fromJson(data)).toList();
+  //         return userDetails;
+  //       } else {
+  //         throw Exception(jsonResponse['message']);
+  //       }
+  //     } else {
+  //       throw Exception('Failed to update profile');
+  //     }
+  //   } catch (e) {
+  //     throw Exception(e.toString());
+  //   }
+  // }
+
+
 }

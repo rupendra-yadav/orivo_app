@@ -42,6 +42,7 @@ class APIKeys{
 
   /// user
   static const String userProfile = "user/profile";
+  static const String userEditProfile = "user/edit-profile";
 
 
 }
