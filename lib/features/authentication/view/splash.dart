@@ -63,6 +63,9 @@ class _SplashState extends State<Splash> {
     });
 
     _checkAndUpdate();
+
+    _checkOs();
+
     super.initState();
   }
 
@@ -95,6 +98,18 @@ class _SplashState extends State<Splash> {
   }
 
 
+  void _checkOs(){
+    if(Platform.isIOS){
+      if (kDebugMode) {
+        print("OS is IOS");
+      }
+    }else{
+      if (kDebugMode) {
+        print("OS is Android");
+      }
+    }
+  }
+
   void reFresh (){
 
     if (SharedPrefs.getString("UUID") == null) {
@@ -107,6 +122,9 @@ class _SplashState extends State<Splash> {
         print('Old UUID.v4 --> ${SharedPrefs.getString("UUID")}');
       }
     }
+
+
+
 
     if (SharedPrefs.getString(TTexts.prefRefreshToken) != null && SharedPrefs.getString(TTexts.prefAccessToken) != null) {
       splashController.refreshToken(
