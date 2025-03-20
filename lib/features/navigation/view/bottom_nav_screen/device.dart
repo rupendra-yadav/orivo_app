@@ -20,8 +20,12 @@ class Device extends StatelessWidget {
 
     // Fetch the device list when the widget is built
     // controller.getDeviceList();
-    controller.getDeviceList2();
+    // controller.getDeviceList2();
+    controller.loadDeviceListFromPrefs();
    // controller.updateFcm();
+
+
+
 
 
     SharedPrefs.getString(TTexts.prefAccessToken);

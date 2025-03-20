@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
+import '../../../utils/constant/text_strings.dart';
 import '../../../utils/local_storage/storage_utility.dart';
 import '../../../utils/popups/loaders.dart';
 import '../../authentication/model/user_detail.dart';
@@ -100,7 +101,7 @@ class NotificationController extends GetxController {
       try {
         isNotificationLoading.value = true;
 
-        final deviceLis = await _deviceReposotory.getNotificationList2("","");
+        final deviceLis = await _deviceReposotory.getNotificationList2(SharedPrefs.getString(TTexts.prefMobileNumber)??"",SharedPrefs.getString((TTexts.prefAccessToken))??"");
 
         notificationList.assignAll(deviceLis);
 
@@ -120,5 +121,33 @@ class NotificationController extends GetxController {
   }
 
 
+  ///--------Device AlertNotification List
+  Future<void> getDeviceAlertNotificationList2(String mid) async {
+
+    /// this is to Access data
+    Map<String, dynamic> userDataMap = _localStorage.readData(_userDataKey) ?? {};
+    UserDetail user = UserDetail.fromJson(userDataMap);
+    try {
+      try {
+        isDeviceAlertNotificationLoading.value = true;
+
+        final deviceLis = await _deviceReposotory.getDeviceAlertNotificationList2(mid,SharedPrefs.getString((TTexts.prefAccessToken))??"");
+
+        deviceAlertNotificationList.assignAll(deviceLis);
+
+      } catch (e) {
+
+        TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+      }
+
+    } catch (e) {
+      if (kDebugMode) {
+        print(e.toString());
+      }
+    }
+    finally{
+      isDeviceAlertNotificationLoading.value = false;
+    }
+  }
 
 }

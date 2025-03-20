@@ -76,18 +76,14 @@ class NotificationRepository extends GetxController {
   ///Notification List
   Future<List<NotificationModel>> getNotificationList2(String mobile,String accessToken) async {
     try {
-      Map<String, dynamic> request = {"user_id": mobile};
+      Map<String, dynamic> request = {"mobile_no": mobile};
 
-      Map<String, dynamic> params = {"limit": 10, "offset": 0};
+      Map<String, dynamic> params = {"limit": "10", "offset": "0"};
 
       Map<String, dynamic> response =
-      await THttpHelper3.postRaw(APIKeys.notifications,params, request,accessToken: accessToken);
+      await THttpHelper3.postRaw(APIKeys.notificationsList,params, request,accessToken: accessToken);
 
-      if (kDebugMode) {
-        print('machine  Response: $response');
-      }
-
-      if (response['response'] == 'success') {
+      if (response['response'] == 200) {
         List<dynamic> deviceListData = response['data'];
 
         List<NotificationModel> deviceList = deviceListData
@@ -102,4 +98,35 @@ class NotificationRepository extends GetxController {
       throw Exception(e.toString());
     }
   }
+
+
+  ///Device Alert Notification List
+  Future<List<DeviceAlertNotificationModel>> getDeviceAlertNotificationList2(String machineId,String accessToken) async {
+    try {
+      Map<String, dynamic> request = {"user_device_id": machineId};
+
+      Map<String, dynamic> params = {"limit": "5", "offset": "0"};
+
+
+      Map<String, dynamic> response =
+      await THttpHelper3.postRaw(APIKeys.deviceNotification, params,request,accessToken:accessToken );
+
+      if (response['response'] == 200) {
+        List<dynamic> deviceListData = response['data'];
+
+        List<DeviceAlertNotificationModel> deviceList = deviceListData
+            .map((data) => DeviceAlertNotificationModel.fromJson(data))
+            .toList();
+
+        return deviceList;
+      } else {
+        throw Exception(response['message']);
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+
+
 }

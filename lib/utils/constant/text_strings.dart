@@ -283,6 +283,7 @@ class TTexts {
 
   static const String prefAccessToken = "accessToken";
   static const String prefRefreshToken = "refreshToken";
+  static const String prefMobileNumber = "mobileNumber";
 
 
 

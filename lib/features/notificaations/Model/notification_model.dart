@@ -1,52 +1,40 @@
 class NotificationModel {
-  String? mNotifId;
-  String? mNotifTitle;
-  String? mNotifCategory;
-  String? mNotifDate;
-  String? mNotifImage;
-  String? mNotifMediaLink;
-  String? mNotifMessage;
-  String? mNotifSendTo;
-  String? mNotifSendBy;
-  String? mNotifAddedon;
+  String createdAt;
+  String title;
+  String message;
+  String cardLink;
+  String alertType;
+  String status;
 
-  NotificationModel(
-      {this.mNotifId,
-        this.mNotifTitle,
-        this.mNotifCategory,
-        this.mNotifDate,
-        this.mNotifImage,
-        this.mNotifMediaLink,
-        this.mNotifMessage,
-        this.mNotifSendTo,
-        this.mNotifSendBy,
-        this.mNotifAddedon});
+  NotificationModel({
+    required this.createdAt,
+    required this.title,
+    required this.message,
+    required this.cardLink,
+    required this.alertType,
+    required this.status,
+  });
 
-  NotificationModel.fromJson(Map<String, dynamic> json) {
-    mNotifId = json['m_notif_id'];
-    mNotifTitle = json['m_notif_title'];
-    mNotifCategory = json['m_notif_category'];
-    mNotifDate = json['m_notif_date'];
-    mNotifImage = json['m_notif_image'];
-    mNotifMediaLink = json['m_notif_media_link'];
-    mNotifMessage = json['m_notif_message'];
-    mNotifSendTo = json['m_notif_send_to'];
-    mNotifSendBy = json['m_notif_send_by'];
-    mNotifAddedon = json['m_notif_addedon'];
+  factory NotificationModel.fromJson(Map<String, dynamic> json) {
+    return NotificationModel(
+      createdAt: json['created_at'] ?? "",
+      title: json['title'] ?? "",
+      message: json['message'] ?? "",
+      cardLink: json['card_link'] ?? "",
+      alertType: json['alert_type'] ?? "",
+      status: json['status'] ?? "",
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['m_notif_id'] = this.mNotifId;
-    data['m_notif_title'] = this.mNotifTitle;
-    data['m_notif_category'] = this.mNotifCategory;
-    data['m_notif_date'] = this.mNotifDate;
-    data['m_notif_image'] = this.mNotifImage;
-    data['m_notif_media_link'] = this.mNotifMediaLink;
-    data['m_notif_message'] = this.mNotifMessage;
-    data['m_notif_send_to'] = this.mNotifSendTo;
-    data['m_notif_send_by'] = this.mNotifSendBy;
-    data['m_notif_addedon'] = this.mNotifAddedon;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['created_at'] = createdAt;
+    data['title'] = title;
+    data['message'] = message;
+    data['card_link'] = cardLink;
+    data['alert_type'] = alertType;
+    data['status'] = status;
+
     return data;
   }
 }

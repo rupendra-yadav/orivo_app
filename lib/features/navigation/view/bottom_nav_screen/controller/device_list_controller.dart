@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:auro/data/repository/device_repository.dart';
 import 'package:auro/features/navigation/view/bottom_nav_screen/model/device_list_model.dart';
 import 'package:auro/utils/constant/text_strings.dart';
@@ -86,6 +88,8 @@ class DeviceListController extends GetxController {
 
   ////////////////////////////////Gen 2 API/////////////////////////////////////
 
+
+
   Future<void> getDeviceList2() async {
     /// this is to Access data
 
@@ -97,6 +101,9 @@ class DeviceListController extends GetxController {
           SharedPrefs.getString(TTexts.prefAccessToken) ?? "");
 
       deviceList.assignAll(deviceLis);
+
+      await saveDeviceListToPrefs(deviceLis);
+
     } catch (e) {
       isDeviceLoading.value = false;
       // TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
@@ -106,4 +113,59 @@ class DeviceListController extends GetxController {
       isDeviceLoading.value = false;
     }
   }
+
+
+
+  // Helper function to save the list of DeviceListModel to SharedPreferences
+  Future<void> saveDeviceListToPrefs(List<DeviceListModel> deviceList) async {
+    // Convert the list of DeviceListModel to a list of JSON strings
+    final List<String> deviceListJson = deviceList.map((device) => jsonEncode(device.toJson())).toList();
+
+    // Store the list of JSON strings in SharedPreferences
+    await SharedPrefs.setStringList('deviceList', deviceListJson);
+  }
+
+
+  // Helper function to retrieve the list of DeviceListModel from SharedPreferences
+  Future<List<DeviceListModel>> getDeviceListFromPrefs() async {
+    final List<String>? deviceListJson = SharedPrefs.getStringList('deviceList');
+
+    if (deviceListJson == null) {
+      return []; // Return an empty list if no data is stored
+    }
+
+    // Convert the list of JSON strings back to a list of DeviceListModel
+    final List<DeviceListModel> deviceList = deviceListJson
+        .map((jsonString) => DeviceListModel.fromJson(jsonDecode(jsonString)))
+        .toList();
+
+    return deviceList;
+  }
+
+
+  Future<void> loadDeviceListFromPrefs() async {
+    try {
+
+      final storedDeviceList = await getDeviceListFromPrefs();
+      deviceList.assignAll(storedDeviceList);
+      if(deviceList.isEmpty){
+        getDeviceList2();
+      }
+    }
+    catch (e){
+      if (kDebugMode) {
+        print("DEVICE LIST ERROR: ${e.toString()}");
+      }
+    }
+  }
+
+
+
+
+
+
+
+
+
+
 }

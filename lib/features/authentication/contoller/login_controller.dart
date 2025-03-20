@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auro/features/authentication/model/user_detail.dart';
 import 'package:auro/features/navigation/view/navigation_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -28,7 +30,6 @@ class LoginController extends GetxController {
 
   Future<void> userLogin() async {
     try {
-
       TFullScreenLoader.openLoadingDialog('Logging you in...');
 
       //check internet Connection
@@ -45,29 +46,29 @@ class LoginController extends GetxController {
       }
 
       // Login user using number and password
-      final response = await _repository.userLogin(phoneNumber.text.trim(), password.text.trim());
+      final response = await _repository.userLogin(
+          phoneNumber.text.trim(), password.text.trim());
 
       TFullScreenLoader.stopLoading();
 
       if (response['success'] == true) {
-
         /// this is to Access data
-        Map<String, dynamic> userDataMap = _localStorage.readData(_userDataKey) ?? {};
+        Map<String, dynamic> userDataMap =
+            _localStorage.readData(_userDataKey) ?? {};
         UserDetail user = UserDetail.fromJson(userDataMap);
         try {
           if (kDebugMode) {
             print(user.mCustName);
           }
         } catch (e) {
-
           TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
         }
 
         /// to navigate page to Navigation Screen
-        TLoaders.successSnackBar(title: 'Success', message: response['message']);
+        TLoaders.successSnackBar(
+            title: 'Success', message: response['message']);
         Get.offAll(() => const NavigationScreen());
-
-      }else{
+      } else {
         TLoaders.errorSnackBar(title: 'Error', message: response['message']);
         if (kDebugMode) {
           print(response['response']);
@@ -80,10 +81,9 @@ class LoginController extends GetxController {
     }
   }
 
-
   Future<void> login() async {
     try {
-
+      String deviceType = "";
       TFullScreenLoader.openLoadingDialog('Logging you in...');
 
       //check internet Connection
@@ -99,14 +99,31 @@ class LoginController extends GetxController {
         return;
       }
 
+      if (Platform.isIOS) {
+        deviceType = "ios";
+        if (kDebugMode) {
+          print("OS is IOS");
+        }
+      } else {
+        deviceType = "android";
+        if (kDebugMode) {
+          print("OS is Android");
+        }
+      }
+
       // Login user using number and password
-      final response = await _repository.login(phoneNumber.text.trim(), password.text.trim(),SharedPrefs.getString("UUID")??""/*"12345"*/);
+      final response = await _repository.login(
+          phoneNumber.text.trim(),
+          password.text.trim(),
+          SharedPrefs.getString("UUID") ?? "",
+          SharedPrefs.getString("FCM_TOKEN").toString(),
+          deviceType);
 
       TFullScreenLoader.stopLoading();
 
       if (response['success'] == true) {
         SharedPrefs.setString("mobileNumber", phoneNumber.text.trim());
-       /* /// this is to Access data
+        /* /// this is to Access data
         Map<String, dynamic> userDataMap = _localStorage.readData(_userDataKey) ?? {};
         UserDetail user = UserDetail.fromJson(userDataMap);
         try {
@@ -119,10 +136,10 @@ class LoginController extends GetxController {
         }*/
 
         /// to navigate page to Navigation Screen
-        TLoaders.successSnackBar(title: 'Success', message: response['message']);
+        TLoaders.successSnackBar(
+            title: 'Success', message: response['message']);
         Get.offAll(() => const NavigationScreen());
-
-      }else{
+      } else {
         TLoaders.errorSnackBar(title: 'Error', message: response['message']);
         if (kDebugMode) {
           print(response['response']);
@@ -134,7 +151,4 @@ class LoginController extends GetxController {
       }
     }
   }
-
-
-
 }

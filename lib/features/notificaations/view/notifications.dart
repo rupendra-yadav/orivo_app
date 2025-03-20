@@ -1,3 +1,4 @@
+import 'package:auro/common/widgets/shimmer/shimmer.dart';
 import 'package:auro/features/notificaations/Controller/notificatyion_controller.dart';
 import 'package:auro/features/notificaations/widgets/notification_appa_bar.dart';
 import 'package:auro/utils/constant/colors.dart';
@@ -11,6 +12,7 @@ import '../../../common/widgets/loaders/image_loader.dart';
 import '../../../utils/constant/image_string.dart';
 import '../../navigation/view/bottom_nav_screen/widgets/device_list_shimmer.dart';
 import '../widgets/notification_card.dart';
+import '../widgets/notification_list_shimmer.dart';
 
 
 class Notifications extends StatelessWidget {
@@ -20,7 +22,8 @@ class Notifications extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final NotificationController controller = Get.put(NotificationController());
-    controller.getNotificationList();
+    // controller.getNotificationList();
+    controller.getNotificationList2();
 
     return Scaffold(
       backgroundColor: TColors.primary,
@@ -34,7 +37,9 @@ class Notifications extends StatelessWidget {
               /// Notification Card
               Obx((){
 
-                if (controller.isNotificationLoading.value) return const DeviceListShimmer();
+                if (controller.isNotificationLoading.value) {
+                  return NotificationListShimmer();
+                }
 
                 if (controller.notificationList.isEmpty) {
                   return const TImageLoaderWidget(
@@ -65,5 +70,7 @@ class Notifications extends StatelessWidget {
     );
   }
 }
+
+
 
 

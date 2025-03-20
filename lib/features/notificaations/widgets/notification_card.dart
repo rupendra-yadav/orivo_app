@@ -23,7 +23,7 @@ class NotificationCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextView(text:  DateHelper().formatDateToday(deviceListModel.mNotifDate.toString())),
+          TextView(text:  DateHelper().formatDateToday(deviceListModel.createdAt.toString())),
           SizedBox(height: 5.h,),
           Container(
 
@@ -35,12 +35,12 @@ class NotificationCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-               TextView(text: deviceListModel.mNotifTitle.toString(),bold: true,fontSize: 18,),
+               TextView(text: deviceListModel.title.toString(),bold: true,fontSize: 18,),
                 SizedBox(height: 8.h),
-                TextView(text: deviceListModel.mNotifMessage.toString(),fontSize: 14,textColor: TColors.primaryLight1,),
+                TextView(text: deviceListModel.message.toString(),fontSize: 14,textColor: TColors.primaryLight1,),
                 Align(
                   alignment: Alignment.bottomRight,
-                  child:TextView(text: DateHelper().getTime(deviceListModel.mNotifAddedon.toString()),bold: true,fontSize: 14,textColor: TColors.secondary,),
+                  child:TextView(text: DateHelper().getTime(deviceListModel.createdAt.toString()),bold: true,fontSize: 14,textColor: TColors.secondary,),
 
                 ),
               ],

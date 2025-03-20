@@ -162,7 +162,7 @@ class AuthenticationRepository extends GetxController {
   ///////////////////// NEW APIS ///////////////////////////////////////////
 
   /// Login
-  Future<Map<String, dynamic>> login(String mobileNumber, String password,String uuid) async {
+  Future<Map<String, dynamic>> login(String mobileNumber, String password,String uuid,String fcmToken,String deviceType) async {
     try {
       Map<String, dynamic> data = {
         'username': mobileNumber,
@@ -171,6 +171,8 @@ class AuthenticationRepository extends GetxController {
 
       Map<String, dynamic> queryParams = {
         'device_id': uuid,
+        'device_fcm_token': fcmToken,
+        'device_type': deviceType,
       };
 
       Map<String, dynamic> response = await THttpHelper3.post(APIKeys.login, queryParams,data);

@@ -123,9 +123,6 @@ class _SplashState extends State<Splash> {
       }
     }
 
-
-
-
     if (SharedPrefs.getString(TTexts.prefRefreshToken) != null && SharedPrefs.getString(TTexts.prefAccessToken) != null) {
       splashController.refreshToken(
           SharedPrefs.getString(TTexts.prefRefreshToken)??"",

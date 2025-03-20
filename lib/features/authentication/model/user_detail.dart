@@ -34,43 +34,39 @@ class UserDetail {
   String mCustWhatsapp;
   String mCustAltWhatsapp;
 
-  UserDetail(
-      {required this.mCustId,
-      required this.mCustName,
-      required this.mCustUniqueId,
-      required this.mCustDesig,
-      required this.mCustMobile,
-      required this.mCustEmail,
-      required this.mCustImage,
-      required this.mCustDob,
-      required this.mCustPass,
-      required this.mCustOtp,
-      required this.mCustCompany,
-      required this.mCustState,
-      required this.mCustCity,
-      required this.mCustAddress,
-      required this.mCustPincode,
-      required this.mCustCompanyType,
-      required this.mCustOwnerName,
-      required this.mCustGstno,
-      required this.mCustFcmtoken,
-      required this.mCustStatus,
-      required this.mCustAddedon,
-      required this.mCustUpdatedon,
-
-      required this.custTotalload,
-      required this.custTarrifplan,
-      required this.custBpno,
-      required this.custCspcdlpass,
-
-      required this.mCustMobileActive,
-      required this.mCustWhatsappActive,
-      required this.mCustAltWhatsappActive,
-
-      required this.mCustWhatsapp,
-      required this.mCustAltWhatsapp,
-
-      });
+  UserDetail({
+    required this.mCustId,
+    required this.mCustName,
+    required this.mCustUniqueId,
+    required this.mCustDesig,
+    required this.mCustMobile,
+    required this.mCustEmail,
+    required this.mCustImage,
+    required this.mCustDob,
+    required this.mCustPass,
+    required this.mCustOtp,
+    required this.mCustCompany,
+    required this.mCustState,
+    required this.mCustCity,
+    required this.mCustAddress,
+    required this.mCustPincode,
+    required this.mCustCompanyType,
+    required this.mCustOwnerName,
+    required this.mCustGstno,
+    required this.mCustFcmtoken,
+    required this.mCustStatus,
+    required this.mCustAddedon,
+    required this.mCustUpdatedon,
+    required this.custTotalload,
+    required this.custTarrifplan,
+    required this.custBpno,
+    required this.custCspcdlpass,
+    required this.mCustMobileActive,
+    required this.mCustWhatsappActive,
+    required this.mCustAltWhatsappActive,
+    required this.mCustWhatsapp,
+    required this.mCustAltWhatsapp,
+  });
 
   factory UserDetail.fromJson(Map<String, dynamic> json) {
     return UserDetail(
@@ -96,16 +92,13 @@ class UserDetail {
       mCustStatus: json['m_cust_status'] ?? '',
       mCustAddedon: json['m_cust_addedon'] ?? '',
       mCustUpdatedon: json['m_cust_updatedon'] ?? '',
-
       custTotalload: json['cust_totalload'] ?? '',
       custTarrifplan: json['cust_tarrifplan'] ?? '',
       custBpno: json['cust_bpno'] ?? '',
       custCspcdlpass: json['cust_cspcdlpass'] ?? '',
-
       mCustMobileActive: json['m_cust_mobile_active'] ?? '',
       mCustWhatsappActive: json['m_cust_whatsapp_active'] ?? '',
       mCustAltWhatsappActive: json['m_cust_alt_whatsapp_active'] ?? '',
-
       mCustWhatsapp: json['m_cust_whatsapp'] ?? '',
       mCustAltWhatsapp: json['m_cust_alt_whatsapp'] ?? '',
     );
