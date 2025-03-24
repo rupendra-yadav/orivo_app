@@ -227,7 +227,7 @@ class AuthenticationRepository extends GetxController {
   }
 
   /// Refresh Token
-  Future<Map<String, dynamic>> reFresh(String refreshToken,String accessToken,String uuid) async {
+  Future<Map<String, dynamic>> reFresh(String refreshToken, String accessToken, String uuid) async {
     try {
       Map<String, dynamic> data = {
         'refresh_token': refreshToken,
@@ -238,33 +238,27 @@ class AuthenticationRepository extends GetxController {
         'device_id': uuid,
       };
 
-      Map<String, dynamic> response = await THttpHelper3.post(APIKeys.refresh,queryParams,data);
+      Map<String, dynamic> response = await THttpHelper3.postRaw(APIKeys.refresh, queryParams, data);
 
-      if (kDebugMode) {
-        print('refresh Response: $response');
-      }
-
-      if (kDebugMode) {
-        print("AccessToken --> ${response['access_token']}");
-        print("RefreshToken --> ${response['refresh_token']}");
-      }
-
-      if(response['access_token']!= null && response['refresh_token']!= null){
-
+      if(response['access_token'].toString().isNotEmpty && response['refresh_token'].toString().isNotEmpty){
+        if (kDebugMode) {
+          print("Shantanu AccessToken --> ${response['access_token']}");
+          print("Shantanu RefreshToken --> ${response['refresh_token']}");
+        }
 
         SharedPrefs.setString(TTexts.prefAccessToken,response['access_token']);
         SharedPrefs.setString(TTexts.prefRefreshToken,response['refresh_token']);
 
-        return {'success': true, 'message': 'Token Refreshed successfully'};
-      }else{
-        return {'success': false, 'message': response['message']};
+        return {'success': true, 'message': 'Logged in successfully'};
+      } else {
+        return {'success': false, 'message':'Unknown error'}; // Handle potential null message
       }
 
     } catch (e) {
       if (kDebugMode) {
-        print("Shantanu Error --> $e");
+        print("Refresh Token Catch Error --> $e");
       }
-      return {'response': 'error', 'message': e.toString()};
+      return {'success': false, 'message': e.toString()}; // Return success: false here.
     }
   }
 

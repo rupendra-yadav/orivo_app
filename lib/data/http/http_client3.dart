@@ -122,7 +122,7 @@ class THttpHelper3 {
     );
 
     if (kDebugMode) {
-      print('POST Response: ${response.body}');
+      print('$endpoint Response: ${response.body}');
     }
 
     return _handleResponse(response);

@@ -224,20 +224,21 @@ class ProfileRepository extends GetxController {
 
 
   ///Get user data
-  Future<List<UserModel2>> getUserData2(String mobileNo,String accessToken) async {
+  Future<UserModel2> getUserData2(String mobileNo, String accessToken) async {
     try {
       Map<String, dynamic> request = {'mobile_no': mobileNo};
 
       Map<String, dynamic> response =
-      await THttpHelper3.postRaw(APIKeys.userProfile,null, request,accessToken: accessToken);
+      await THttpHelper3.postRaw(APIKeys.userProfile, null, request, accessToken: accessToken);
 
-      if (response['response'] == 'success') {
-        List<dynamic> useData = response['data'];
+      if (response['response'] == 200) {  // Check for 200 instead of 'success' and change response type to Int in Backend
+        // Extract the user data from the "data" field
+        Map<String, dynamic> userData = response['data'];
 
-        List<UserModel2> userDetails =
-        useData.map((data) => UserModel2.fromJson(data)).toList();
+        // Create a UserModel2 instance
+        UserModel2 userDetails = UserModel2.fromJson(userData);
 
-        return userDetails;
+        return userDetails; // Return a single UserModel2 object
       } else {
         throw Exception(response['message']);
       }
@@ -245,6 +246,7 @@ class ProfileRepository extends GetxController {
       throw Exception(e.toString());
     }
   }
+
 
   ///Update user data
   // Future<List<UserModel>> updateUserData2(String token, String mobileNumber, String companyName, String city, String state, String address, String pinCode, String companyType, String gstNumber,) async {

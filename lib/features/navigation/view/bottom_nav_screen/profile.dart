@@ -44,6 +44,7 @@ class _ProfileState extends State<Profile> {
   void initState() {
     // TODO: implement initState
     fetchVersion();
+    controller.getUserData2();
     super.initState();
   }
 
@@ -127,7 +128,7 @@ class _ProfileState extends State<Profile> {
     final TLocalStorage _localStorage = TLocalStorage();
 
     controller.getUserData2();
-    controller.logout();
+    //controller.logout();
 
 
     return Scaffold(
@@ -160,7 +161,7 @@ class _ProfileState extends State<Profile> {
                           );
                         }
 
-                        String imageUrl  = controller.userModel != null && controller.userModel.isNotEmpty? controller.userModel[0].mCustImage: "";
+                        String imageUrl  = controller.userModelData2 != null ? controller.userModelData2.name: "";
                       
                         return ClipRRect(
                           borderRadius: BorderRadius.circular(50.r),
@@ -204,12 +205,13 @@ class _ProfileState extends State<Profile> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              controller.userModel!= null && controller.userModel.isNotEmpty? controller.userModel[0].mCustName :"Name" ,
+                              maxLines: 1,
+                              controller.userModelData2!= null ? controller.userModelData2.name :"Name" ,
                               style: const TextStyle(
                                   color: TColors.white, fontSize: 24,fontWeight:FontWeight.bold),
                             ),
                             Text(
-                              controller.userModel!= null && controller.userModel.isNotEmpty?controller.userModel[0].mCustCompany:"Company",
+                              controller.userModelData2!= null ?controller.userModelData2.companyName:"Company",
                               style: const TextStyle(
                                   color: TColors.secondary, fontSize: 12,),
                             ),

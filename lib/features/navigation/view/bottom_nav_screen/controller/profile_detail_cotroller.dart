@@ -21,6 +21,7 @@ class ProfileDetailController extends GetxController {
   final _profileRepository = Get.put(ProfileRepository());
   RxList<UserModel> userModel = <UserModel>[].obs;
   late UserModel userModelData;
+  late UserModel2 userModelData2;
 
   final isUserDataLoading = false.obs;
   final isUserNumberUpdateLoading = false.obs;
@@ -190,21 +191,46 @@ class ProfileDetailController extends GetxController {
   }
 
   ///use Details2
+  // Future<void> getUserData2() async {
+  //     try {
+  //       isUserDataLoading.value = true;
+  //       final userModelResponse = await _profileRepository.getUserData2(SharedPrefs.getString("mobileNumber")??"",SharedPrefs.getString(TTexts.prefAccessToken)??"");
+  //       userModel.assignAll(userModelResponse as Iterable<UserModel>);
+  //       userModelData = userModel[0];
+  //
+  //       SharedPrefs.setString("userLoad", userModel[0].custTotalload.toString());
+  //     } catch (e) {
+  //       TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+  //     }
+  //   finally {
+  //     isUserDataLoading.value = false;
+  //   }
+  // }
+
+
+
   Future<void> getUserData2() async {
     try {
-      /// this is to Access data
-      Map<String, dynamic> userDataMap = _localStorage.readData(_userDataKey) ?? {};
-      UserModel2 user = UserModel2.fromJson(userDataMap);
-      try {
-        isUserDataLoading.value = true;
-        final userModelResponse = await _profileRepository.getUserData2(SharedPrefs.getString("mobileNumber")??"",SharedPrefs.getString(TTexts.prefAccessToken)??"");
-        userModel.assignAll(userModelResponse as Iterable<UserModel>);
-        userModelData = userModel[0];
+      isUserDataLoading.value = true;
 
-        SharedPrefs.setString("userLoad", userModel[0].custTotalload.toString());
+      // 1. Get data from local storage (optional)
+      Map<String, dynamic> userDataMap = _localStorage.readData(_userDataKey) ?? {};
+      //UserModel2 user = UserModel2.fromJson(userDataMap); // no need to use local model
+
+      // 2. Fetch data from the network
+      try {
+        final userModelResponse = await _profileRepository.getUserData2(SharedPrefs.getString("mobileNumber") ?? "", SharedPrefs.getString(TTexts.prefAccessToken) ?? "",);
+
+        userModelData2 = userModelResponse;  // Directly assign the UserModel2 instance.  No list.
+
+        // Save user data locally (optional)
+        //_localStorage.saveData(_userDataKey, userModelData!.toJson());
+
+        SharedPrefs.setString("userLoad", userModelData2!.name.toString());  // Access properties like this
       } catch (e) {
         TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
       }
+
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());
@@ -213,5 +239,8 @@ class ProfileDetailController extends GetxController {
       isUserDataLoading.value = false;
     }
   }
-
 }
+
+
+
+
