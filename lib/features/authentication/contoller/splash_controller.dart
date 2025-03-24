@@ -85,9 +85,6 @@ class SplashController extends GetxController {
 
       Get.offAll(() => const NavigationScreen());
 
-      // Save user data locally (optional)
-      //_localStorage.saveData(_userDataKey, userModelData!.toJson());
-
       SharedPrefs.setString("userLoad", userModelData2!.name.toString()); // Access properties like this
     } catch (e) {
       TLoaders.errorSnackBar(
