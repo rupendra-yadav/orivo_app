@@ -1,3 +1,4 @@
+import 'package:auro/features/device_details/view/device_detail_screens/model/base_metric_response_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -9,16 +10,16 @@ import '../model/freq_value_model.dart';
 class MultiLineFrequencyGraph extends StatelessWidget {
   const MultiLineFrequencyGraph({
     super.key,
-    this.onPeakGraph, required this.dateType,
+    this.onPeakGraph,
+    required this.dateType,
   });
 
-  final List<Value>? onPeakGraph;
-  final int dateType ;
+  final List<VoltageTimelinePoint>? onPeakGraph;
+  final int dateType;
   // final List<NormalGraph>? onPeakGraph;
 
   @override
   Widget build(BuildContext context) {
-
     List<ChartData> chartData = <ChartData>[];
     onPeakGraph?.forEach((graph) {
       chartData.add(ChartData(
@@ -26,65 +27,61 @@ class MultiLineFrequencyGraph extends StatelessWidget {
         y: DateTime.parse(graph.x ?? ""),
       ));
     });
-    return
-
-      SfCartesianChart(
-        trackballBehavior: TrackballBehavior(
-            enable: true,
-            tooltipAlignment: ChartAlignment.center,
-            activationMode: ActivationMode.singleTap,
-            tooltipDisplayMode: TrackballDisplayMode.groupAllPoints
-        ),
-        backgroundColor: Colors.transparent,
-        primaryXAxis: DateTimeAxis(
-          interval: 1,
-          dateFormat: DateFormat('dd-MM-yyyy h:mm a'),
-          labelStyle: const TextStyle(color: Colors.white),
-          majorGridLines: const MajorGridLines(width: 0),
-          axisLine: const AxisLine(width: 0),
-          isVisible: false,
-          /* autoScrollingDelta: 5,
+    return SfCartesianChart(
+      trackballBehavior: TrackballBehavior(
+          enable: true,
+          tooltipAlignment: ChartAlignment.center,
+          activationMode: ActivationMode.singleTap,
+          tooltipDisplayMode: TrackballDisplayMode.groupAllPoints),
+      backgroundColor: Colors.transparent,
+      primaryXAxis: DateTimeAxis(
+        interval: 1,
+        dateFormat: DateFormat('dd-MM-yyyy h:mm a'),
+        labelStyle: const TextStyle(color: Colors.white),
+        majorGridLines: const MajorGridLines(width: 0),
+        axisLine: const AxisLine(width: 0),
+        isVisible: false,
+        /* autoScrollingDelta: 5,
         autoScrollingMode: AutoScrollingMode.start,*/
-        ),
-        primaryYAxis: const NumericAxis(
-          labelStyle: TextStyle(color: Colors.white,fontSize: 10),
-          axisLine: AxisLine(width: 0),
-          majorTickLines: MajorTickLines(size: 0),
-          minorTickLines: MinorTickLines(size: 0),
-        ),
+      ),
+      primaryYAxis: const NumericAxis(
+        labelStyle: TextStyle(color: Colors.white, fontSize: 10),
+        axisLine: AxisLine(width: 0),
+        majorTickLines: MajorTickLines(size: 0),
+        minorTickLines: MinorTickLines(size: 0),
+      ),
 
-        /*  zoomPanBehavior: ZoomPanBehavior(
+      /*  zoomPanBehavior: ZoomPanBehavior(
         enablePanning: true,
         zoomMode: ZoomMode.x,
       ),*/
-        series: <CartesianSeries>[
-
-          LineSeries<ChartData, DateTime>(
-            name: TTexts.frequency,
-            dataSource: chartData,
-            xValueMapper: (ChartData data, _) => data.y,
-            yValueMapper: (ChartData data, _) => data.x,
-            color: TColors.totalPowerFactorGraphLine4,
-            width: 3,
-          ),
-        ],
-        plotAreaBorderColor: Colors.transparent,
-        borderColor: Colors.transparent,
-        borderWidth: 0,
-        tooltipBehavior: TooltipBehavior(
-          enable: true,
-          activationMode: ActivationMode.singleTap,
-          // Show tooltip on tap
-          shouldAlwaysShow: true,
-          // Keeps tooltip visible after tap
-          header: '',
-          format: 'point.y on point.x',
-          // Custom format to show y-value
-          textStyle: const TextStyle(color: Colors.white),
+      series: <CartesianSeries>[
+        LineSeries<ChartData, DateTime>(
+          name: TTexts.frequency,
+          dataSource: chartData,
+          xValueMapper: (ChartData data, _) => data.y,
+          yValueMapper: (ChartData data, _) => data.x,
+          color: TColors.totalPowerFactorGraphLine4,
+          width: 3,
         ),
-      )
+      ],
+      plotAreaBorderColor: Colors.transparent,
+      borderColor: Colors.transparent,
+      borderWidth: 0,
+      tooltipBehavior: TooltipBehavior(
+        enable: true,
+        activationMode: ActivationMode.singleTap,
+        // Show tooltip on tap
+        shouldAlwaysShow: true,
+        // Keeps tooltip visible after tap
+        header: '',
+        format: 'point.y on point.x',
+        // Custom format to show y-value
+        textStyle: const TextStyle(color: Colors.white),
+      ),
+    )
 
-      /*SfCartesianChart(
+        /*SfCartesianChart(
       trackballBehavior: TrackballBehavior(
           enable: true,
           tooltipAlignment: ChartAlignment.center,
@@ -102,13 +99,13 @@ class MultiLineFrequencyGraph extends StatelessWidget {
       primaryYAxis: const NumericAxis(
         isVisible: false, // Hide Y axis
       ),
-     *//* zoomPanBehavior: ZoomPanBehavior(
+     */ /* zoomPanBehavior: ZoomPanBehavior(
         enablePinching: true,
         enablePanning: true,
         enableDoubleTapZooming: true,
         enableMouseWheelZooming: false,
         enableSelectionZooming: true,
-      ),*//*
+      ),*/ /*
       series: <SplineSeries<ChartData, DateTime>>[
         SplineSeries<ChartData, DateTime>(
           dataSource: chartData,
@@ -132,13 +129,14 @@ class MultiLineFrequencyGraph extends StatelessWidget {
         format: 'point.y on point.x',
         textStyle: const TextStyle(color: Colors.white),
       ),
-    )*/;
+    )*/
+        ;
   }
 }
 
 class ChartData {
-  final double x;    // The numeric value (y-axis)
-  final DateTime y;  // The date (x-axis)
+  final double x; // The numeric value (y-axis)
+  final DateTime y; // The date (x-axis)
 
   ChartData({required this.x, required this.y});
 }

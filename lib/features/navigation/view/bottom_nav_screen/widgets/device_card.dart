@@ -34,13 +34,15 @@ class DeviceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     String? googleDriveImageUrl;
 
     if (kDebugMode) {
       print("FileId--> ${extractDriveFileId(deviceListModel.imagePath)}");
     }
-    googleDriveImageUrl = 'https://drive.usercontent.google.com/download?id=${extractDriveFileId(deviceListModel.imagePath)}&export=view';
+    // googleDriveImageUrl =
+    // 'https://drive.usercontent.google.com/download?id=${extractDriveFileId(deviceListModel.imagePath)}&export=view';
+    googleDriveImageUrl =
+        'https://drive.usercontent.google.com/download?id=${deviceListModel.imagePath}&export=view';
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0),
@@ -55,10 +57,11 @@ class DeviceCard extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                  flex:1,
-                  child:  CachedNetworkImage(
+                  flex: 1,
+                  child: CachedNetworkImage(
                     // imageUrl:"https://drive.usercontent.google.com/download?id=1V2Lkj2hPA3KQEGxxJveIDGmQKJqApIbW&export=view", // Provide a fallback empty string if null or empty
-                    imageUrl:googleDriveImageUrl??"", // Provide a fallback empty string if null or empty
+                    imageUrl: googleDriveImageUrl ??
+                        "", // Provide a fallback empty string if null or empty
                     width: 100.w,
                     height: 100.h,
                     fit: BoxFit.fill,
@@ -102,7 +105,8 @@ class DeviceCard extends StatelessWidget {
                             Expanded(
                               child: Text(
                                 deviceListModel.publicDeviceId,
-                                style: const TextStyle(color: TColors.warningDark1),
+                                style: const TextStyle(
+                                    color: TColors.warningDark1),
                               ),
                             ),
                           ],
@@ -114,7 +118,9 @@ class DeviceCard extends StatelessWidget {
                           children: [
                             Container(
                               decoration: BoxDecoration(
-                                  color: deviceListModel.status=="Active"?statusColor:TColors.error,
+                                  color: deviceListModel.status == "Active"
+                                      ? statusColor
+                                      : TColors.error,
                                   borderRadius: BorderRadius.circular(20)),
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(

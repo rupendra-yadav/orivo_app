@@ -1,4 +1,6 @@
 import 'package:auro/features/notificaations/Model/notification_model.dart';
+import 'package:auro/utils/constant/text_strings.dart';
+import 'package:auro/utils/preferences/cache_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,7 +21,7 @@ class NotificationRepository extends GetxController {
       Map<String, dynamic> request = {"user_id": userId};
 
       Map<String, dynamic> response =
-      await THttpHelper.post(APIKeys.notifications, request);
+          await THttpHelper.post(APIKeys.notifications, request);
 
       if (kDebugMode) {
         print('machine  Response: $response');
@@ -41,14 +43,16 @@ class NotificationRepository extends GetxController {
     }
   }
 
-
   ///Device Alert Notification List
-  Future<List<DeviceAlertNotificationModel>> getDeviceAlertNotificationList(String machineId) async {
+  Future<List<DeviceAlertNotificationModel>> getDeviceAlertNotificationList(
+      String machineId) async {
     try {
-      Map<String, dynamic> request = {"machine_id": machineId};
+      Map<String, dynamic> queryParams = {"limit": 50, "offset": 0};
+      Map<String, dynamic> request = {"user_device_id": machineId};
 
-      Map<String, dynamic> response =
-      await THttpHelper.post(APIKeys.deviceNotification, request);
+      Map<String, dynamic> response = await THttpHelper3.postRaw(
+          APIKeys.deviceAlertList, queryParams, request,
+          accessToken: SharedPrefs.getString(TTexts.prefAccessToken) ?? "");
 
       if (kDebugMode) {
         print('machine  Response: $response');
@@ -70,18 +74,19 @@ class NotificationRepository extends GetxController {
     }
   }
 
-
   //TODO////////////////////Gen 2///////////////////////////////////////////////
 
   ///Notification List
-  Future<List<NotificationModel>> getNotificationList2(String mobile,String accessToken) async {
+  Future<List<NotificationModel>> getNotificationList2(
+      String mobile, String accessToken) async {
     try {
       Map<String, dynamic> request = {"mobile_no": mobile};
 
       Map<String, dynamic> params = {"limit": "10", "offset": "0"};
 
-      Map<String, dynamic> response =
-      await THttpHelper3.postRaw(APIKeys.notificationsList,params, request,accessToken: accessToken);
+      Map<String, dynamic> response = await THttpHelper3.postRaw(
+          APIKeys.notificationsList, params, request,
+          accessToken: accessToken);
 
       if (response['response'] == 200) {
         List<dynamic> deviceListData = response['data'];
@@ -99,17 +104,17 @@ class NotificationRepository extends GetxController {
     }
   }
 
-
   ///Device Alert Notification List
-  Future<List<DeviceAlertNotificationModel>> getDeviceAlertNotificationList2(String machineId,String accessToken) async {
+  Future<List<DeviceAlertNotificationModel>> getDeviceAlertNotificationList2(
+      String machineId, String accessToken) async {
     try {
       Map<String, dynamic> request = {"user_device_id": machineId};
 
       Map<String, dynamic> params = {"limit": "5", "offset": "0"};
 
-
-      Map<String, dynamic> response =
-      await THttpHelper3.postRaw(APIKeys.deviceNotification, params,request,accessToken:accessToken );
+      Map<String, dynamic> response = await THttpHelper3.postRaw(
+          APIKeys.deviceNotification, params, request,
+          accessToken: accessToken);
 
       if (response['response'] == 200) {
         List<dynamic> deviceListData = response['data'];
@@ -126,7 +131,4 @@ class NotificationRepository extends GetxController {
       throw Exception(e.toString());
     }
   }
-
-
-
 }

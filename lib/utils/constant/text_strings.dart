@@ -41,12 +41,13 @@ class TTexts {
   static const String device = "Device";
   static const String profile = "Profile";
   static const String history = "History";
-  static const String insights = "Insights";
+  static const String insights = "Elec. Bill";
   static const String home = "Home";
   static const String settings = "settings";
   static const String userName = "Aditi Agrawal";
   static const String userDesignation = "Managing Director";
-  static const String alertNewUser = "It looks like you’re a new user. To gain access, please contact the Orivo support for approval.";
+  static const String alertNewUser =
+      "It looks like you’re a new user. To gain access, please contact the Orivo support for approval.";
   static const String accessRequired = "Access Required...?";
 
   ///Profile
@@ -70,7 +71,7 @@ class TTexts {
   static const String deviceSettings = "Device Settings";
   static const String notifications = "Notification";
   static const String deviceDetails = "Device Details";
-  static const String deviceAInfo = "Device Info";
+  static const String deviceAInfo = "Device Information";
   static const String deviceAName = "Device Name";
   static const String totalLoad = "Total Load";
   static const String a_ = ":";
@@ -106,7 +107,7 @@ class TTexts {
   static const String values = "0";
   static const String online = "Online";
   static const String offline = "Offline";
-  static const String energyConsumption = "Energy Consumption";
+  static const String energyConsumption = "Energy Consumption (units)";
   static const String costEstimation = "Cost Estimate";
   static const String frequency = "Frequency";
   static const String totalVoltage = "Total Voltage";
@@ -131,10 +132,14 @@ class TTexts {
 
   ///Links
   static const String appleLink = "https://www.google.co.in/";
-  static const String termsOfUseLink = "https://webdevelopercg.com/electricity/terms.php";
-  static const String privacyPolicyLink = "https://webdevelopercg.com/electricity/privacy.php";
-  static const String aboutUsLink = "https://webdevelopercg.com/electricity/about-us.php";
-  static const String contactUsLink = "https://webdevelopercg.com/electricity/contact-us.php";
+  static const String termsOfUseLink =
+      "https://webdevelopercg.com/electricity/terms.php";
+  static const String privacyPolicyLink =
+      "https://webdevelopercg.com/electricity/privacy.php";
+  static const String aboutUsLink =
+      "https://webdevelopercg.com/electricity/about-us.php";
+  static const String contactUsLink =
+      "https://webdevelopercg.com/electricity/contact-us.php";
 
   ///reset Password
   static const String resetPassword = "Reset Password";
@@ -172,6 +177,7 @@ class TTexts {
   static const String selectFromDate = "Select From Date";
   static const String selectToDate = "Select To Date";
   static const String apply = "Apply";
+  static const String upload = "Upload";
 
   ///Edit Profile
   static const String openCamera = "Open Camera";
@@ -184,6 +190,7 @@ class TTexts {
   static const String ownersName = "Owners Name";
   static const String changeImageText = "Click here to change\nprofile image";
   static const String editProfile = "Edit Profile";
+  static const String editDeviceDetails = "Edit Device Details";
   static const String saveDetails = "Save Details";
 
   ///Energy Consumption Detail
@@ -203,9 +210,12 @@ class TTexts {
   static const String onPeakSlot = "On Peak Slot";
 
   static const String timeOfDay = "Time of Day Scheme(TOD Scheme)";
-  static const String onPeakSlotDesc = "Timing : 5 PM to 11 PM (current day)Tariff:₹7.32 per unit";
-  static const String offPeakSlotDesc = "Timing : 9 AM to 5 PM (current day)Tariff : ₹4.88 per unit";
-  static const String normalPeakSlotDesc = "Timing :  11 PM (previous day)  to   9 AM (current day)Tariff : ₹6.10 per unit";
+  static const String onPeakSlotDesc =
+      "Timing : 5 PM to 11 PM (current day)Tariff:₹7.32 per unit";
+  static const String offPeakSlotDesc =
+      "Timing : 9 AM to 5 PM (current day)Tariff : ₹4.88 per unit";
+  static const String normalPeakSlotDesc =
+      "Timing :  11 PM (previous day)  to   9 AM (current day)Tariff : ₹6.10 per unit";
 
   /// Cost Estimate Details
   static const String costEstimate = "Cost Estimate";
@@ -222,18 +232,19 @@ class TTexts {
   static const String govtCost = "Govt Cost";
   static const String govtTariffScheme = "Govt Tariff Scheme - Hv4";
 
-  static const String  normalFPPAS = "Normal FPPAS";
-  static const String  tODOfRate = "TOD of Rate \nTariff : ₹6.10 per unit";
+  static const String normalFPPAS = "Normal FPPAS";
+  static const String tODOfRate = "TOD of Rate \nTariff : ₹6.10 per unit";
 
-  static const String  electricityDuty = "Electricity Duty";
-  static const String  tariff4 = "Timing : 9 AM to 5 PM (current day)\nTariff : ₹4.88 per unit";
+  static const String electricityDuty = "Electricity Duty";
+  static const String tariff4 =
+      "Timing : 9 AM to 5 PM (current day)\nTariff : ₹4.88 per unit";
 
-  static const String  cess = "Cess";
-  static const String  tariff7 = "Timing : 5 PM to 11 PM (current day)\nTariff :₹7.32 per unit";
+  static const String cess = "Cess";
+  static const String tariff7 =
+      "Timing : 5 PM to 11 PM (current day)\nTariff :₹7.32 per unit";
 
-  static const String  for33KV = "For 33 KV line The Demand Charges is 500\nThe minimum billed Demand Charges is 80% of 800 KvA";
-
-
+  static const String for33KV =
+      "For 33 KV line The Demand Charges is 500\nThe minimum billed Demand Charges is 80% of 800 KvA";
 
   /// Power Quality
   static const String powerQuality = "Power Quality";
@@ -269,23 +280,18 @@ class TTexts {
   static const String only25 = "Only Rs 2,500/month";
   static const String only3 = "Only Rs 3,000/month";
 
-
-
   /// Alert
   static const String loadAlert = "Alerts - Load Alert";
   static const String loadAlertPower = "Alerts - Power Factor";
   static const String loadAlertPowerOff = "Alerts - Power Off";
-  static const String powerOffAlert = "⚠️ Power Off Alert\n💡 Your power is currently off.\n\nWhat to Do?\n1. 🔌 Check your main power supply.\n2. 📞 Contact your utility provider if the issue persists.\n3. 🛠 Contact customer service if there is problem with the device ";
-  static const String whatIsPower = "What is Power Factor?  \n\nPower Factor (PF) measures how effectively your appliances use electricity. It ranges from 0 to 1, where:   \n1.0 (100%) = Maximum Efficiency\n< 1.0 = Energy Wastage (extra charges may apply!)\n\nWhy Does It Matter?\nReduce Wastage: A low PF increases energy waste.\nAvoid Penalties: Utility companies may charge extra for PF below a threshold (e.g., 0.9).\nSave Money: Improved PF = lower energy bills.\n  \n\nHow to Improve Your Power Factor\n• ⚙️ Install capacitor banks to correct PF.\n• ⏱ Optimize appliance usage during off-peak hours.\n• 🚨 Monitor heavy machinery that may lower PF. \n\nApp Actionable Tip\n🔧 Check the 'Power Factor' tab in the app to:\nIdentify energy-draining devices.\nSet up alerts for low PF.\n\nView recommendations for reducing energy waste.";
-  static const String excessDemandAlert = "⚡ Excess Demand Alert!\nYour energy demand has exceeded the\nthreshold!\nReal-time monitoring shows a spike in power usage.\n\nWhy This Matters\n • 🌟 Avoid Penalties: Excess demand may lead to additional charges.\n • 🔋 Prevent Overloading: Protect your devices and system from potential overloads.\n\n\nTips to Lower Demand\n 1. 🕒 Shift Usage: Reschedule heavy appliances to off-peak hours.\n 2. 🔌 Turn Off Devices: Switch off non-essential appliances.\n 3. ⚙️ Optimize Power: Use energy-efficient settings on equipment.\n\nTake Action Now\n🔧 View Devices: Identify energy-draining appliances. 📊 Analyze Trends: Check hourly usage in the app.";
-
-
+  static const String powerOffAlert =
+      "⚠️ Power Off Alert\n💡 Your power is currently off.\n\nWhat to Do?\n1. 🔌 Check your main power supply.\n2. 📞 Contact your utility provider if the issue persists.\n3. 🛠 Contact customer service if there is problem with the device ";
+  static const String whatIsPower =
+      "What is Power Factor?  \n\nPower Factor (PF) measures how effectively your appliances use electricity. It ranges from 0 to 1, where:   \n1.0 (100%) = Maximum Efficiency\n< 1.0 = Energy Wastage (extra charges may apply!)\n\nWhy Does It Matter?\nReduce Wastage: A low PF increases energy waste.\nAvoid Penalties: Utility companies may charge extra for PF below a threshold (e.g., 0.9).\nSave Money: Improved PF = lower energy bills.\n  \n\nHow to Improve Your Power Factor\n• ⚙️ Install capacitor banks to correct PF.\n• ⏱ Optimize appliance usage during off-peak hours.\n• 🚨 Monitor heavy machinery that may lower PF. \n\nApp Actionable Tip\n🔧 Check the 'Power Factor' tab in the app to:\nIdentify energy-draining devices.\nSet up alerts for low PF.\n\nView recommendations for reducing energy waste.";
+  static const String excessDemandAlert =
+      "⚡ Excess Demand Alert!\nYour energy demand has exceeded the\nthreshold!\nReal-time monitoring shows a spike in power usage.\n\nWhy This Matters\n • 🌟 Avoid Penalties: Excess demand may lead to additional charges.\n • 🔋 Prevent Overloading: Protect your devices and system from potential overloads.\n\n\nTips to Lower Demand\n 1. 🕒 Shift Usage: Reschedule heavy appliances to off-peak hours.\n 2. 🔌 Turn Off Devices: Switch off non-essential appliances.\n 3. ⚙️ Optimize Power: Use energy-efficient settings on equipment.\n\nTake Action Now\n🔧 View Devices: Identify energy-draining appliances. 📊 Analyze Trends: Check hourly usage in the app.";
 
   static const String prefAccessToken = "accessToken";
   static const String prefRefreshToken = "refreshToken";
   static const String prefMobileNumber = "mobileNumber";
-
-
-
-
 }

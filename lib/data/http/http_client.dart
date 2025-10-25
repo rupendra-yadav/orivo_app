@@ -58,8 +58,8 @@ class THttpHelper {
 
     final response = await http.post(
       Uri.parse('$_baseUrl/$endpoint'),
-      headers: accessToken.isEmpty ? {'Content-Type': 'application/x-www-form-urlencoded'} : {
-        'Content-Type': 'application/x-www-form-urlencoded',
+      headers: accessToken.isEmpty ? {'Content-Type': 'application/json'} : {
+       'Content-Type': 'application/json',
         'Authorization': 'Bearer $accessToken'
       },
       body: _encodeFormData(data),

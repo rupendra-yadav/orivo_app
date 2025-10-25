@@ -11,22 +11,25 @@ import '../model/demand_model.dart';
 import 'custom_bars.dart';
 
 class PowerDemandCard extends StatelessWidget {
-  const PowerDemandCard({super.key,
-    required this.demandModel,
-    required this.totalLoad});
+  const PowerDemandCard(
+      {super.key,
+      // required this.demandModel,
+      required this.totalLoad,
+      required this.avg,
+      required this.avgUnit});
 
-  final DemandModel demandModel;
+  // final DemandModel demandModel;
+  final String avg;
+  final String avgUnit;
   final String totalLoad;
 
   @override
   Widget build(BuildContext context) {
-
- /*   double vall = demandModel.currentDemand?.value?.toDouble() ?? 0;
+    /*   double vall = demandModel.currentDemand?.value?.toDouble() ?? 0;
     double total = totalLoad != null ? double.parse(totalLoad) : 0;*/
 
-
-
-    double vall = demandModel.currentDemand?.value?.toDouble() ?? 0;
+    // double vall = demandModel.currentDemand?.value?.toDouble() ?? 0;
+    double vall = avg != null ? double.parse(avg) : 0;
 
 // Check if totalLoad is a valid number before parsing
     double total = 1;
@@ -41,14 +44,14 @@ class PowerDemandCard extends StatelessWidget {
 
     // double total = demandModel.currentDemand?.value?.toInt() ?? 1;
 
-
-    double reVal =  ((vall / total) * 100).toDouble();
+    double reVal = ((vall / total) * 100).toDouble();
     double value = ((reVal / 100) * 33).toDouble();
 
     return GestureDetector(
-      onTap: () => (Get.to(() => const DemandEstimateDetail(isNotify: false,))),
+      onTap: () => (Get.to(() => const DemandEstimateDetail(
+            isNotify: false,
+          ))),
       child: Container(
-
         width: double.infinity,
         padding: EdgeInsets.symmetric(vertical: 10.h),
         decoration: BoxDecoration(
@@ -67,67 +70,75 @@ class PowerDemandCard extends StatelessWidget {
                   fontSize: 20,
                 ),
               ),
-
               SfRadialGauge(
-                axes: <RadialAxis>[RadialAxis(
-                  showTicks: true,
-                  showLabels: true,
-                  canScaleToFit: true,
-                  radiusFactor:0.65.r,
-                  axisLineStyle: const AxisLineStyle(thickness: 20,cornerStyle: CornerStyle.bothCurve),
-                  minimum: 0,
-                  maximum: /*demandModel.currentDemand?.value?.toDouble() ?? 1*/total,
-                  axisLabelStyle: const GaugeTextStyle(
-                    color: Colors.white, // Set text color to white
-                    fontSize: 12, // Optional: Set font size
-                  ),
-
-                  majorTickStyle: const MajorTickStyle(
-                    length: 15, // Length of major ticks
-                    thickness: 2, // Thickness of major ticks
-                    color: Colors.white, // Optional: Set tick color
-                  ),
-                  minorTicksPerInterval: 4, // Number of minor ticks between each major tick
-                  minorTickStyle: const MinorTickStyle(
-                    length: 8, // Length of minor ticks
-                    thickness: 1, // Thickness of minor ticks
-                    color: Colors.white, // Optional: Set tick color
-                  ),
-                  tickOffset: 5,
-                  pointers:  <GaugePointer>[
-                    RangePointer(
-                      enableAnimation: true,
-                      animationType: AnimationType.easeOutBack,
-                      width: 20,
-                      color: Color(0xFF00A8B5),
-                      value: /*demandModel.avgDemand?.value?.toDouble() ?? 0*/vall,
-                      cornerStyle: CornerStyle.bothCurve, // Add rounded corners
-                      gradient: SweepGradient(
-                          colors: <Color>[Color(0xFFC4306E), Color(0xFFE5961E)],
-                          stops: <double>[0.25, 0.75]),
+                axes: <RadialAxis>[
+                  RadialAxis(
+                    showTicks: true,
+                    showLabels: true,
+                    canScaleToFit: true,
+                    radiusFactor: 0.65.r,
+                    axisLineStyle: const AxisLineStyle(
+                        thickness: 20, cornerStyle: CornerStyle.bothCurve),
+                    minimum: 0,
+                    maximum: /*demandModel.currentDemand?.value?.toDouble() ?? 1*/
+                        total,
+                    axisLabelStyle: const GaugeTextStyle(
+                      color: Colors.white, // Set text color to white
+                      fontSize: 12, // Optional: Set font size
                     ),
 
-                    NeedlePointer(
-                        knobStyle: KnobStyle(
-                            color: TColors.white,
-                            knobRadius: 15,
-                            sizeUnit: GaugeSizeUnit.logicalPixel),
-                        needleEndWidth:10,
-                        needleStartWidth: 1,
-                        needleColor:
-                        TColors.dialColor,
-                        needleLength: 0.78,
-                        value:/* demandModel.avgDemand?.value?.toDouble() ?? 0*/vall,
+                    majorTickStyle: const MajorTickStyle(
+                      length: 15, // Length of major ticks
+                      thickness: 2, // Thickness of major ticks
+                      color: Colors.white, // Optional: Set tick color
+                    ),
+                    minorTicksPerInterval:
+                        4, // Number of minor ticks between each major tick
+                    minorTickStyle: const MinorTickStyle(
+                      length: 8, // Length of minor ticks
+                      thickness: 1, // Thickness of minor ticks
+                      color: Colors.white, // Optional: Set tick color
+                    ),
+                    tickOffset: 5,
+                    pointers: <GaugePointer>[
+                      RangePointer(
                         enableAnimation: true,
-                        animationType: AnimationType.easeOutBack),],
-                )
+                        animationType: AnimationType.easeOutBack,
+                        width: 20,
+                        color: Color(0xFF00A8B5),
+                        value: /*demandModel.avgDemand?.value?.toDouble() ?? 0*/
+                            vall,
+                        cornerStyle:
+                            CornerStyle.bothCurve, // Add rounded corners
+                        gradient: SweepGradient(colors: <Color>[
+                          Color(0xFFC4306E),
+                          Color(0xFFE5961E)
+                        ], stops: <double>[
+                          0.25,
+                          0.75
+                        ]),
+                      ),
+                      NeedlePointer(
+                          knobStyle: KnobStyle(
+                              color: TColors.white,
+                              knobRadius: 15,
+                              sizeUnit: GaugeSizeUnit.logicalPixel),
+                          needleEndWidth: 10,
+                          needleStartWidth: 1,
+                          needleColor: TColors.dialColor,
+                          needleLength: 0.78,
+                          value: /* demandModel.avgDemand?.value?.toDouble() ?? 0*/
+                              vall,
+                          enableAnimation: true,
+                          animationType: AnimationType.easeOutBack),
+                    ],
+                  )
                 ],
               ),
-
               Center(
                 child: TextView(
-                  text: "${demandModel.currentDemand?.value?.toString() ?? "NA"} ${demandModel.currentDemand?.unit?.toString() ?? "NA"}",
-
+                  // text: "${demandModel.currentDemand?.value?.toString() ?? "NA"} ${demandModel.currentDemand?.unit?.toString() ?? "NA"}",
+                  text: "${avg ?? "0"} ${avgUnit ?? "KVA"}",
                   bold: true,
                   fontSize: 35,
                 ),
@@ -151,9 +162,10 @@ class PowerDemandCard extends StatelessWidget {
               const SizedBox(height: 8),
               Center(
                 child: TextView(
-                  text: "Avg Demand : ${demandModel.avgDemand?.value?.round().toString() ??
-                          '0'} ${demandModel.avgDemand?.unit?.toString() ?? ''}",
+                  // text:
+                  // "Avg Demand : ${demandModel.avgDemand?.value?.round().toString() ?? '0'} ${demandModel.avgDemand?.unit?.toString() ?? ''}",
                   // Ensure unit is also handled
+                  text: "Avg Demand : ${avg ?? '0'} ${avgUnit ?? 'KVA'}",
                   bold: false,
                   fontSize: 20,
                 ),

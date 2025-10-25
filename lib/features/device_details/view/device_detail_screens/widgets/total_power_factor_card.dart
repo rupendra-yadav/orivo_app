@@ -13,116 +13,118 @@ import '../model/pf_model.dart';
 class TotalPowerFactorsCard extends StatelessWidget {
   const TotalPowerFactorsCard({
     super.key,
-    required this.powerFactorModel,
+    required this.Pf,
+    // required this.powerFactorModel,
   });
 
-  final PfModel powerFactorModel;
+  // final PfModel powerFactorModel;
+  final String Pf;
 
   @override
   Widget build(BuildContext context) {
-
     if (kDebugMode) {
       print("TestFactors");
-      print( powerFactorModel.pf?.value?.toStringAsFixed(3) ?? 'NA');
+      // print( powerFactorModel.pf?.value?.toStringAsFixed(3) ?? 'NA');
+      print(Pf);
     }
 
-    return
-      InkWell(
-        onTap: () => Get.to(() => const PowerQualityDetail(isNotify: false,)),
-        borderRadius: BorderRadius.circular(10.r),
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.symmetric(vertical: 10.h),
-          padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
-
-          decoration: BoxDecoration(
-            color: TColors.primaryDark1,
-            borderRadius: BorderRadius.circular(10.r),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const TextView(
-                text: TTexts.totalPowerFactors,
-                bold: true,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: TextView(
-                      text: powerFactorModel.highestPf?.value?.toStringAsFixed(3) ?? 'NA',
-                      fontSize: 25,
-                      textColor: TColors.green,
-                    ),
+    return InkWell(
+      onTap: () => Get.to(() => const PowerQualityDetail(
+            isNotify: false,
+          )),
+      borderRadius: BorderRadius.circular(10.r),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        margin: EdgeInsets.symmetric(vertical: 10.h),
+        padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
+        decoration: BoxDecoration(
+          color: TColors.primaryDark1,
+          borderRadius: BorderRadius.circular(10.r),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const TextView(
+              text: TTexts.totalPowerFactors,
+              bold: true,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: TextView(
+                    // text: powerFactorModel.highestPf?.value?.toStringAsFixed(3) ?? 'NA',
+                    text: Pf,
+                    fontSize: 25,
+                    textColor: TColors.green,
                   ),
-                  Expanded(
-                    flex: 2,
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          width: 200,  // Explicit fixed width
-                          height: 30,  // Explicit fixed height
-                          child: SfLinearGauge(
-                            minimum: 0,
-                            maximum: 1,  // Set fixed range for gauge
-                            interval: 0.2,
-                            animateRange: true,
-                            animateAxis: true,
-                            showLabels: false,
-                            showTicks: false,
-                            barPointers: [
-                              LinearBarPointer(
-                                value:1,
-                                thickness: 5,
-                                edgeStyle: LinearEdgeStyle.bothCurve,
-                                shaderCallback: (bounds) {
-                                  return const LinearGradient(
-                                    colors: [
-                                      Colors.red,
-                                      Colors.yellow,
-                                      Colors.green,
-                                    ],
-                                  ).createShader(bounds);
-                                },
-                              ),
-                            ],
-                            markerPointers: [
-                              LinearShapePointer(
-                                value: (powerFactorModel.highestPf?.value?.toDouble() ?? 0.0).isFinite
-                                    ? powerFactorModel.highestPf?.value?.toDouble() ?? 0.0
-                                    : 0.0,
-                                shapeType: LinearShapePointerType.rectangle,
-                                color: Colors.green[300],
-                                elevation: 50,
-                                width: 4,  // Fixed width for pointer
-                                height: 20, // Fixed height for pointer
-                              ),
-                            ],
-                          ),
-                        ),
-                        const Row(
-                          children: [
-                            TextView(text: TTexts.bad),
-                            Spacer(),
-                            TextView(text: TTexts.good),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        width: 200, // Explicit fixed width
+                        height: 30, // Explicit fixed height
+                        child: SfLinearGauge(
+                          minimum: 0,
+                          maximum: 1, // Set fixed range for gauge
+                          interval: 0.2,
+                          animateRange: true,
+                          animateAxis: true,
+                          showLabels: false,
+                          showTicks: false,
+                          barPointers: [
+                            LinearBarPointer(
+                              value: 1,
+                              thickness: 5,
+                              edgeStyle: LinearEdgeStyle.bothCurve,
+                              shaderCallback: (bounds) {
+                                return const LinearGradient(
+                                  colors: [
+                                    Colors.red,
+                                    Colors.yellow,
+                                    Colors.green,
+                                  ],
+                                ).createShader(bounds);
+                              },
+                            ),
+                          ],
+                          markerPointers: [
+                            LinearShapePointer(
+                              // value: (powerFactorModel.highestPf?.value?.toDouble() ?? 0.0).isFinite
+                              //     ? powerFactorModel.highestPf?.value?.toDouble() ?? 0.0
+                              //     : 0.0,
+                              value: double.tryParse(Pf) ?? 0.0,
+                              shapeType: LinearShapePointerType.rectangle,
+                              color: Colors.green[300],
+                              elevation: 50,
+                              width: 4, // Fixed width for pointer
+                              height: 20, // Fixed height for pointer
+                            ),
                           ],
                         ),
-                      ],
-                    ),
+                      ),
+                      const Row(
+                        children: [
+                          TextView(text: TTexts.bad),
+                          Spacer(),
+                          TextView(text: TTexts.good),
+                        ],
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              //print(powerFactorModel.pf?.value?.toStringAsFixed(2) ?? 'NA'),
-              TextView(
-                 text:"Avg : ${powerFactorModel.pf?.value?.toStringAsFixed(3) ?? 'NA'}"),
-            ],
-          ),
+                ),
+              ],
+            ),
+            //print(powerFactorModel.pf?.value?.toStringAsFixed(2) ?? 'NA'),
+            TextView(
+                //  text:"Avg : ${powerFactorModel.pf?.value?.toStringAsFixed(3) ?? 'NA'}"),
+                text: "Avg : $Pf"),
+          ],
         ),
-      );
-
-
-
+      ),
+    );
 
     /* Container(
       width: MediaQuery.of(context).size.width,

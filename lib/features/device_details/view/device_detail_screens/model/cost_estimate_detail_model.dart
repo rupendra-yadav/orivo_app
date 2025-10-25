@@ -22,29 +22,29 @@ class CostEstimateDetailModel {
   Demand? totolDemandCost;
   Demand? dutyRate;
 
-  CostEstimateDetailModel(
-      {this.cess,
-        this.demandDistribution,
-        this.cessRate,
-        this.demand,
-        this.demandRate,
-        this.electricityDuty,
-        this.fppsRate,
-        this.govCost,
-        this.normEnergy,
-        this.normEnergyRate,
-        this.normalFpps,
-        this.offPeak,
-        this.offPeakRate,
-        this.onPeak,
-        this.onPeakRate,
-        this.others,
-        this.totalEnergyCost,
-        this.totolDemandCost,
-        this.dutyRate,});
+  CostEstimateDetailModel({
+    this.cess,
+    this.demandDistribution,
+    this.cessRate,
+    this.demand,
+    this.demandRate,
+    this.electricityDuty,
+    this.fppsRate,
+    this.govCost,
+    this.normEnergy,
+    this.normEnergyRate,
+    this.normalFpps,
+    this.offPeak,
+    this.offPeakRate,
+    this.onPeak,
+    this.onPeakRate,
+    this.others,
+    this.totalEnergyCost,
+    this.totolDemandCost,
+    this.dutyRate,
+  });
 
   CostEstimateDetailModel.fromJson(Map<String, dynamic> json) {
-
     if (json['demand_distribution'] != null) {
       demandDistribution = <DemandDistribution>[];
       json['demand_distribution'].forEach((v) {
@@ -52,25 +52,27 @@ class CostEstimateDetailModel {
       });
     }
 
-
-    dutyRate = json['duty_rate'] != null ? new Demand.fromJson(json['duty_rate']) : null;
-
+    dutyRate = json['duty_rate'] != null
+        ? new Demand.fromJson(json['duty_rate'])
+        : null;
 
     cess = json['cess'] != null ? new Demand.fromJson(json['cess']) : null;
-    cessRate =
-    json['cess_rate'] != null ? new Demand.fromJson(json['cess_rate']) : null;
+    cessRate = json['cess_rate'] != null
+        ? new Demand.fromJson(json['cess_rate'])
+        : null;
     demand =
-    json['demand'] != null ? new Demand.fromJson(json['demand']) : null;
+        json['demand'] != null ? new Demand.fromJson(json['demand']) : null;
     demandRate = json['demand_rate'] != null
         ? new Demand.fromJson(json['demand_rate'])
         : null;
     electricityDuty = json['electricity_duty'] != null
         ? new Demand.fromJson(json['electricity_duty'])
         : null;
-    fppsRate =
-    json['fpps_rate'] != null ? new Demand.fromJson(json['fpps_rate']) : null;
+    fppsRate = json['fpps_rate'] != null
+        ? new Demand.fromJson(json['fpps_rate'])
+        : null;
     govCost =
-    json['gov_cost'] != null ? new Demand.fromJson(json['gov_cost']) : null;
+        json['gov_cost'] != null ? new Demand.fromJson(json['gov_cost']) : null;
     normEnergy = json['norm_energy'] != null
         ? new Demand.fromJson(json['norm_energy'])
         : null;
@@ -81,16 +83,17 @@ class CostEstimateDetailModel {
         ? new Demand.fromJson(json['normal_fpps'])
         : null;
     offPeak =
-    json['off_peak'] != null ? new Demand.fromJson(json['off_peak']) : null;
+        json['off_peak'] != null ? new Demand.fromJson(json['off_peak']) : null;
     offPeakRate = json['off_peak_rate'] != null
         ? new Demand.fromJson(json['off_peak_rate'])
         : null;
     onPeak =
-    json['on_peak'] != null ? new Demand.fromJson(json['on_peak']) : null;
+        json['on_peak'] != null ? new Demand.fromJson(json['on_peak']) : null;
     onPeakRate = json['on_peak_rate'] != null
         ? new Demand.fromJson(json['on_peak_rate'])
         : null;
-    others = json['others'] != null ? new Demand.fromJson(json['others']) : null;
+    others =
+        json['others'] != null ? new Demand.fromJson(json['others']) : null;
     totalEnergyCost = json['total_energy_cost'] != null
         ? new Demand.fromJson(json['total_energy_cost'])
         : null;

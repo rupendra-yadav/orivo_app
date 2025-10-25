@@ -58,7 +58,7 @@ android {
         release {
             keyAlias 'key0'
             keyPassword 'Orivo@1234'
-            storeFile file('C:/Shantanu/FlutterProjects/Auro/auro/android/OrivoKeyStore.jks')
+            storeFile file('OrivoKeyStore.jks')
             storePassword 'Orivo@1234'
         }
     }

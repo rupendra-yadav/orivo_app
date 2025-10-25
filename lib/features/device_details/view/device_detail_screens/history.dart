@@ -20,6 +20,7 @@ import '../../../../utils/constant/text_strings.dart';
 import '../../../../utils/styles/spacing_style.dart';
 import '../../controller/device_detail_navigation_controller.dart';
 import 'controller/device_detail_controller.dart';
+import 'model/history_filter_data_model.dart';
 
 class History extends StatefulWidget {
   const History({super.key});
@@ -29,22 +30,25 @@ class History extends StatefulWidget {
 }
 
 class _HistoryState extends State<History> {
-  final DeviceDetailController controller = Get.put(DeviceDetailController());
+  final DeviceDetailedController controller =
+      Get.put(DeviceDetailedController());
   final DeviceDetailNavigationController navigationController =
       DeviceDetailNavigationController.instance;
 
   List<int> selectedIndices = [0]; // Track selected data items
   int selectedTimeIndex = 0; // Track selected time filter
 
-  late String fieldName = controller.historyFieldModel.value.filters![0].id.toString();
-  late String fieldParameter = controller.historyFieldModel.value.filters![0].id.toString();
-   String duration = "-1h";
+  late String fieldName =
+      controller.historyFieldsData.value?.filters![0].name.toString() ?? "";
+  late String fieldParameter =
+      controller.historyFieldsData.value?.filters![0].id.toString() ?? "";
+  String duration = "-1h";
   late String startDate = "";
   late String endDate = "";
   late String pickedDate = "";
-   int indexPos = 0 ;
-   int slot = 1 ;
-  String fieldId =  "";
+  int indexPos = 0;
+  int slot = 1;
+  String fieldId = "";
 
   String _selectedStartDate = TTexts.selectFromDate;
   String _selectedEndDate = TTexts.selectToDate;
@@ -57,15 +61,15 @@ class _HistoryState extends State<History> {
 
     SharedPrefs.setString("MACH_ID", navigationController.deviceId.value);
 
-   // controller.getDeviceDataItems();
+    // controller.getDeviceDataItems();
 
     DateTime now = DateTime.now();
     DateTime utcNow = now.toUtc();
 
-    String formattedDate =
-        DateFormat("yyyy-MM-dd HH:mm:ss").format(utcNow);
+    String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(utcNow);
 
-    controller.getHistoryFields(formattedDate);
+    // controller.getHistoryFields(formattedDate);
+    controller.fetchHistoryFields();
 
     startDate = formattedDate;
 
@@ -79,7 +83,7 @@ class _HistoryState extends State<History> {
       if (selectedIndices.contains(index)) {
         selectedIndices.remove(index);
       } else {
-        if (selectedIndices.length >=3) {
+        if (selectedIndices.length >= 3) {
           selectedIndices.removeAt(0);
         }
         selectedIndices.add(index);
@@ -89,20 +93,30 @@ class _HistoryState extends State<History> {
     if (selectedIndices.contains(index)) {
       DateTime now = DateTime.now();
       DateTime utcNow = now.toUtc();
-      String formattedDate =
-          DateFormat("yyyy-MM-dd HH:mm:ss").format(utcNow);
+      DateTime istNow = utcNow.add(const Duration(hours: 5, minutes: 30));
+      DateTime istMidnight = DateTime(istNow.year, istNow.month, istNow.day);
+      String formattedDateMidnight =
+          DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
+      String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
 
-      if (controller.historyFieldModel.value.filters![index].name != null) {
-         fieldId = controller.historyFieldModel.value.filters![index].id!;
-         fieldParameter = controller.historyFieldModel.value.filters![index].name!;
+      if (controller.historyFieldsData.value?.filters![index].name != null) {
+        fieldId = controller.historyFieldsData.value?.filters![index].id ?? "";
+        fieldParameter =
+            controller.historyFieldsData.value?.filters![index].name ?? "";
         fieldName = fieldId;
 
-        if (slot == 4){
+        if (slot == 4) {
           slot = 1;
         }
-         slot++;
-        controller.getHistory(fieldParameter,"", "", controller.deviceList[0].userDeviceId, fieldId, duration,slot);
-
+        slot++;
+        controller.fetchHistory(fieldName, formattedDateMidnight, formattedDate,
+            "X2024103", fieldId, "", slot);
+        // navigationController.deviceId.value,
+        // startDate,
+        // formattedDate,
+        // fieldName,
+        // duration);
+        // controller.getHistory(fieldParameter,"", "", controller.deviceList[0].userDeviceId, fieldId, duration,slot);
       }
     }
   }
@@ -113,7 +127,250 @@ class _HistoryState extends State<History> {
       indexPos = index; // Initialize indexPos here
     });
 
-    controller.getHistory(fieldParameter,"", "", controller.deviceList[0].userDeviceId, fieldName, timeValue, slot);
+    controller.fetchHistory(
+        fieldName, "", "", "X2024103", fieldId, timeValue, indexPos);
+
+    // controller.getHistory(fieldParameter,"", "", controller.deviceList[0].userDeviceId, fieldName, timeValue, slot);
+  }
+
+  Future<void> showHistoryBottomSheet(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: TColors.primaryDark1,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
+      ),
+      builder: (ctx) {
+        return SafeArea(
+          bottom: true,
+          child: Padding(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(ctx).viewInsets.bottom,
+              left: 16.w,
+              right: 16.w,
+              top: 16.h,
+            ),
+            child: StatefulBuilder(
+              builder: (context, setModalState) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextView(
+                      text: "Custom Parameter",
+                      bold: true,
+                      fontSize: 20.sp,
+                      textColor: TColors.accent,
+                    ),
+
+                    SizedBox(
+                      height: 30.h,
+                    ),
+
+                    /// Start Date
+                    GestureDetector(
+                      onTap: () async {
+                        // Open the DatePicker to pick a single date
+                        DateTime? pickedDate = await showDatePicker(
+                          context: context,
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime(2100),
+                          initialDate: DateTime.now(),
+                          builder: (context, child) {
+                            return Theme(
+                              data: Theme.of(context).copyWith(
+                                colorScheme: const ColorScheme.light(
+                                  primary: TColors.primaryDark2,
+                                  // Header background color
+                                  onPrimary: Colors.white,
+                                  // Header text color
+                                  onSurface: Colors.black, // Body text color
+                                ),
+                                textButtonTheme: TextButtonThemeData(
+                                  style: TextButton.styleFrom(
+                                    foregroundColor: TColors
+                                        .primaryDark1, // Button text color
+                                  ),
+                                ),
+                              ),
+                              child: child!,
+                            );
+                          },
+                        );
+
+                        if (pickedDate != null) {
+                          // Formatting the selected date to the format '1-08-2024'
+                          String formattedDate =
+                              DateFormat('d-MM-yyyy').format(pickedDate);
+                          String sttDate = DateFormat("yyyy-MM-dd HH:mm:ss")
+                              .format(pickedDate);
+
+                          startDate = sttDate;
+
+                          setState(() {
+                            _selectedStartDate = formattedDate;
+                          });
+                        }
+                      },
+                      child: Center(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 6.w),
+                          child: Container(
+                            alignment: Alignment.centerLeft,
+                            decoration: BoxDecoration(
+                              color: TColors.primaryLight1,
+                              borderRadius: BorderRadius.circular(20.r),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 20.h, horizontal: 20.w),
+                              child: Row(
+                                children: [
+                                  const Icon(
+                                    Iconsax.calendar_2,
+                                    color: Colors.white,
+                                  ),
+                                  SizedBox(width: 5.w),
+                                  TextView(
+                                    text: _selectedStartDate,
+                                    fontSize: 20,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(height: 20.h),
+
+                    /// End Date
+                    GestureDetector(
+                      onTap: () async {
+                        // Open the DatePicker to pick a single date
+                        DateTime? pickedDate = await showDatePicker(
+                          context: context,
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime(2100),
+                          initialDate: DateTime.now(),
+                          builder: (context, child) {
+                            return Theme(
+                              data: Theme.of(context).copyWith(
+                                colorScheme: const ColorScheme.light(
+                                  primary: TColors.primaryLight2,
+                                  // Header background color
+                                  onPrimary: Colors.white,
+                                  // Header text color
+                                  onSurface: Colors.black, // Body text color
+                                ),
+                                textButtonTheme: TextButtonThemeData(
+                                  style: TextButton.styleFrom(
+                                    foregroundColor: TColors
+                                        .primaryDark1, // Button text color
+                                  ),
+                                ),
+                              ),
+                              child: child!,
+                            );
+                          },
+                        );
+
+                        if (pickedDate != null) {
+                          // Formatting the selected date to the format '1-08-2024'
+                          String formattedDate =
+                              DateFormat('d-MM-yyyy').format(pickedDate);
+
+                          String edtDate = DateFormat("yyyy-MM-dd HH:mm:ss")
+                              .format(pickedDate);
+
+                          endDate = edtDate;
+
+                          setState(() {
+                            _selectedEndDate = formattedDate;
+                          });
+                        }
+                      },
+                      child: Center(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 6.w),
+                          child: Container(
+                            alignment: Alignment.centerLeft,
+                            decoration: BoxDecoration(
+                              color: TColors.primaryLight1,
+                              borderRadius: BorderRadius.circular(20.r),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 20.h, horizontal: 20.w),
+                              child: Row(
+                                children: [
+                                  const Icon(
+                                    Iconsax.calendar_2,
+                                    color: Colors.white,
+                                  ),
+                                  SizedBox(width: 5.w),
+                                  TextView(
+                                    text: _selectedEndDate,
+                                    fontSize: 20,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(height: 40.h),
+
+                    Button(
+                      height: 45.h,
+                      minWidth: 100.w,
+                      onPressed: () {
+                        // controller.getHistory(
+                        //     fieldParameter,
+                        //     startDate,
+                        //     endDate,
+                        //     controller.deviceList[0].userDeviceId,
+                        //     fieldName,
+                        //     "",
+                        //     indexPos);
+                        controller.fetchHistory(fieldName, startDate, endDate,
+                            "X2024103", fieldId, "", indexPos);
+                      },
+                      title: TTexts.apply,
+                      radius: 10,
+                    ),
+
+                    SizedBox(height: 40.h),
+                  ],
+                );
+              },
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  /// Helper widget for date picker rows
+  Widget _buildDatePickerRow(String text, String label) {
+    return Container(
+      alignment: Alignment.centerLeft,
+      decoration: BoxDecoration(
+        color: TColors.primaryDark1,
+        borderRadius: BorderRadius.circular(20.r),
+      ),
+      padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
+      child: Row(
+        children: [
+          const Icon(Iconsax.calendar_2, color: Colors.white),
+          SizedBox(width: 5.w),
+          TextView(text: text, fontSize: 20),
+        ],
+      ),
+    );
   }
 
   @override
@@ -138,7 +395,10 @@ class _HistoryState extends State<History> {
                       showAction: false);
                 }*/
 
-                return  Graph(name: fieldId, nameType: slot,);
+                return Graph(
+                  name: fieldId,
+                  nameType: slot,
+                );
               }),
 
               /// Graph Filter
@@ -148,7 +408,7 @@ class _HistoryState extends State<History> {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: [
-                     /* TextButtonWithContainer(
+                      /* TextButtonWithContainer(
                         text: TTexts.minute1,
                         isSelected: selectedTimeIndex == 0,
                         onPressed: () {
@@ -188,258 +448,274 @@ class _HistoryState extends State<History> {
                           handleTimeFilterTap(3, "-30d");
                         },
                       ),
+                      // TextButtonWithContainer(
+                      //   text: "1 Year",
+                      //   isSelected: selectedTimeIndex == 3,
+                      //   onPressed: () {
+                      //     duration = "-365d";
+                      //     handleTimeFilterTap(3, "-365d");
+                      //   },
+                      // ),
+                      TextButtonWithContainer(
+                        text: "custom",
+                        isSelected: selectedTimeIndex == 4,
+                        onPressed: () {
+                          duration = "custom";
+                          handleTimeFilterTap(4, "custom");
+                          showHistoryBottomSheet(context);
+                        },
+                      ),
                     ],
                   ),
                 ),
               ),
 
               /// Tabs and TabBarView
-              DefaultTabController(
-                length: 2,
-                child: Column(
-                  children: [
-                    TabBar(
-                      indicatorColor: TColors.secondary,
-                      indicatorSize: TabBarIndicatorSize.tab,
-                      labelColor: TColors.secondary,
-                      unselectedLabelColor: TColors.primaryLight1,
-                      dividerColor: TColors.primaryLight1,
-                      dividerHeight: 2.h,
-                      tabs: const [
-                        Tab(text: TTexts.selectDataItem),
-                        Tab(text: TTexts.parameters),
-                      ],
+              // DefaultTabController(
+              //   length: 2,
+              //   child: Column(
+              //     children: [
+              //       TabBar(
+              //         indicatorColor: TColors.secondary,
+              //         indicatorSize: TabBarIndicatorSize.tab,
+              //         labelColor: TColors.secondary,
+              //         unselectedLabelColor: TColors.primaryLight1,
+              //         dividerColor: TColors.primaryLight1,
+              //         dividerHeight: 2.h,
+              //         tabs: const [
+              //           Tab(text: TTexts.selectDataItem),
+              //           Tab(text: TTexts.parameters),
+              //         ],
+              //       ),
+              //       Container(
+              //         color: TColors.primary,
+              //         height: 400.h, // Adjust height as necessary
+              //         child: TabBarView(
+              //           children: [
+              ///select data items Page
+              Obx(() {
+                if (controller.isHistoryFieldLoading.value) {
+                  return const DeviceItemShimmer();
+                }
+
+                return Padding(
+                  padding: SpacingStyle.paddingWithDefaultSpace,
+                  child: SizedBox(
+                    height: 350.h,
+                    // width: double.infinity,
+                    child: GridView.builder(
+                      scrollDirection: Axis.horizontal,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          mainAxisSpacing: 10.w,
+                          crossAxisSpacing: 10.h,
+                          childAspectRatio: 1),
+                      itemCount:
+                          controller.historyFieldsData.value?.filters?.length !=
+                                  null
+                              ? (controller
+                                  .historyFieldsData.value?.filters?.length)
+                              : 0,
+                      itemBuilder: (_, index) {
+                        return DataItemCard(
+                          colorContainer: TColors.primaryDark2,
+                          dataItems: controller
+                              .historyFieldsData.value!.filters![index],
+                          isSelected: selectedIndices.contains(index),
+                          onTap: () {
+                            handleCardTap(index);
+                          },
+                        );
+                      },
                     ),
-                    Container(
-                      color: TColors.primary,
-                      height: 400.h, // Adjust height as necessary
-                      child: TabBarView(
-                        children: [
-                          ///select data items Page
-                          Obx(() {
-                            if (controller.isHistoryFieldLoading.value) {
-                              return const DeviceItemShimmer();
-                            }
+                  ),
+                );
+              }),
 
-                            return Padding(
-                              padding: SpacingStyle.paddingWithDefaultSpace,
-                              child: SizedBox(
-                                height: 400.h,
-                                child: GridView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 3,
-                                          mainAxisSpacing: 10.w,
-                                          crossAxisSpacing: 10.h,
-                                          childAspectRatio: 1),
-                                  itemCount: controller.historyFieldModel.value.filters?.length != null ? (controller.historyFieldModel.value.filters!.length - 1) : 0,
-                                  itemBuilder: (_, index) {
-                                    return DataItemCard(
-                                      colorContainer: TColors.primaryDark2,
-                                      dataItems: controller.historyFieldModel
-                                          .value.filters![index],
-                                      isSelected:
-                                          selectedIndices.contains(index),
-                                      onTap: () {
-                                        handleCardTap(index);
-                                      },
-                                    );
-                                  },
-                                ),
-                              ),
-                            );
-                          }),
+              // ///Parameters
+              // Padding(
+              //   padding: SpacingStyle.paddingWithDefaultSpace,
+              //   child: Column(
+              //     children: [
+              //       /// Start Date
+              //       GestureDetector(
+              //         onTap: () async {
+              //           // Open the DatePicker to pick a single date
+              //           DateTime? pickedDate = await showDatePicker(
+              //             context: context,
+              //             firstDate: DateTime(2000),
+              //             lastDate: DateTime(2100),
+              //             initialDate: DateTime.now(),
+              //             builder: (context, child) {
+              //               return Theme(
+              //                 data: Theme.of(context).copyWith(
+              //                   colorScheme: const ColorScheme.light(
+              //                     primary: TColors.primaryDark2,
+              //                     // Header background color
+              //                     onPrimary: Colors.white,
+              //                     // Header text color
+              //                     onSurface: Colors.black, // Body text color
+              //                   ),
+              //                   textButtonTheme: TextButtonThemeData(
+              //                     style: TextButton.styleFrom(
+              //                       foregroundColor: TColors
+              //                           .primaryDark1, // Button text color
+              //                     ),
+              //                   ),
+              //                 ),
+              //                 child: child!,
+              //               );
+              //             },
+              //           );
 
-                          ///Parameters
-                          Padding(
-                            padding: SpacingStyle.paddingWithDefaultSpace,
-                            child: Column(
-                              children: [
-                                /// Start Date
-                                GestureDetector(
-                                  onTap: () async {
-                                    // Open the DatePicker to pick a single date
-                                    DateTime? pickedDate = await showDatePicker(
-                                      context: context,
-                                      firstDate: DateTime(2000),
-                                      lastDate: DateTime(2100),
-                                      initialDate: DateTime.now(),
-                                      builder: (context, child) {
-                                        return Theme(
-                                          data: Theme.of(context).copyWith(
-                                            colorScheme:
-                                                const ColorScheme.light(
-                                              primary: TColors.primaryDark2,
-                                              // Header background color
-                                              onPrimary: Colors.white,
-                                              // Header text color
-                                              onSurface: Colors
-                                                  .black, // Body text color
-                                            ),
-                                            textButtonTheme:
-                                                TextButtonThemeData(
-                                              style: TextButton.styleFrom(
-                                                foregroundColor: TColors
-                                                    .primaryDark1, // Button text color
-                                              ),
-                                            ),
-                                          ),
-                                          child: child!,
-                                        );
-                                      },
-                                    );
+              //           if (pickedDate != null) {
+              //             // Formatting the selected date to the format '1-08-2024'
+              //             String formattedDate =
+              //                 DateFormat('d-MM-yyyy').format(pickedDate);
+              //             String sttDate = DateFormat("yyyy-MM-dd HH:mm:ss")
+              //                 .format(pickedDate);
 
-                                    if (pickedDate != null) {
-                                      // Formatting the selected date to the format '1-08-2024'
-                                      String formattedDate = DateFormat('d-MM-yyyy').format(pickedDate);
-                                      String sttDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(pickedDate);
+              //             startDate = sttDate;
 
-                                      startDate = sttDate;
+              //             setState(() {
+              //               _selectedStartDate = formattedDate;
+              //             });
+              //           }
+              //         },
+              //         child: Center(
+              //           child: Padding(
+              //             padding: EdgeInsets.symmetric(horizontal: 20.w),
+              //             child: Container(
+              //               alignment: Alignment.centerLeft,
+              //               decoration: BoxDecoration(
+              //                 color: TColors.primaryDark1,
+              //                 borderRadius: BorderRadius.circular(20.r),
+              //               ),
+              //               child: Padding(
+              //                 padding: EdgeInsets.symmetric(
+              //                     vertical: 20.h, horizontal: 20.w),
+              //                 child: Row(
+              //                   children: [
+              //                     const Icon(
+              //                       Iconsax.calendar_2,
+              //                       color: Colors.white,
+              //                     ),
+              //                     SizedBox(width: 5.w),
+              //                     TextView(
+              //                       text: _selectedStartDate,
+              //                       fontSize: 20,
+              //                     ),
+              //                   ],
+              //                 ),
+              //               ),
+              //             ),
+              //           ),
+              //         ),
+              //       ),
 
-                                      setState(() {
-                                        _selectedStartDate = formattedDate;
-                                      });
-                                    }
-                                  },
-                                  child: Center(
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 20.w),
-                                      child: Container(
-                                        alignment: Alignment.centerLeft,
-                                        decoration: BoxDecoration(
-                                          color: TColors.primaryDark1,
-                                          borderRadius:
-                                              BorderRadius.circular(20.r),
-                                        ),
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 20.h, horizontal: 20.w),
-                                          child: Row(
-                                            children: [
-                                              const Icon(
-                                                Iconsax.calendar_2,
-                                                color: Colors.white,
-                                              ),
-                                              SizedBox(width: 5.w),
-                                              TextView(
-                                                text: _selectedStartDate,
-                                                fontSize: 20,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
+              //       SizedBox(
+              //         height: 20.h,
+              //       ),
 
-                                SizedBox(
-                                  height: 20.h,
-                                ),
+              //       /// End Date
+              //       GestureDetector(
+              //         onTap: () async {
+              //           // Open the DatePicker to pick a single date
+              //           DateTime? pickedDate = await showDatePicker(
+              //             context: context,
+              //             firstDate: DateTime(2000),
+              //             lastDate: DateTime(2100),
+              //             initialDate: DateTime.now(),
+              //             builder: (context, child) {
+              //               return Theme(
+              //                 data: Theme.of(context).copyWith(
+              //                   colorScheme: const ColorScheme.light(
+              //                     primary: TColors.primaryDark2,
+              //                     // Header background color
+              //                     onPrimary: Colors.white,
+              //                     // Header text color
+              //                     onSurface: Colors.black, // Body text color
+              //                   ),
+              //                   textButtonTheme: TextButtonThemeData(
+              //                     style: TextButton.styleFrom(
+              //                       foregroundColor: TColors
+              //                           .primaryDark1, // Button text color
+              //                     ),
+              //                   ),
+              //                 ),
+              //                 child: child!,
+              //               );
+              //             },
+              //           );
 
-                                /// End Date
-                                GestureDetector(
-                                  onTap: () async {
-                                    // Open the DatePicker to pick a single date
-                                    DateTime? pickedDate = await showDatePicker(
-                                      context: context,
-                                      firstDate: DateTime(2000),
-                                      lastDate: DateTime(2100),
-                                      initialDate: DateTime.now(),
-                                      builder: (context, child) {
-                                        return Theme(
-                                          data: Theme.of(context).copyWith(
-                                            colorScheme:
-                                                const ColorScheme.light(
-                                              primary: TColors.primaryDark2,
-                                              // Header background color
-                                              onPrimary: Colors.white,
-                                              // Header text color
-                                              onSurface: Colors
-                                                  .black, // Body text color
-                                            ),
-                                            textButtonTheme:
-                                                TextButtonThemeData(
-                                              style: TextButton.styleFrom(
-                                                foregroundColor: TColors
-                                                    .primaryDark1, // Button text color
-                                              ),
-                                            ),
-                                          ),
-                                          child: child!,
-                                        );
-                                      },
-                                    );
+              //           if (pickedDate != null) {
+              //             // Formatting the selected date to the format '1-08-2024'
+              //             String formattedDate =
+              //                 DateFormat('d-MM-yyyy').format(pickedDate);
 
-                                    if (pickedDate != null) {
-                                      // Formatting the selected date to the format '1-08-2024'
-                                      String formattedDate =
-                                          DateFormat('d-MM-yyyy')
-                                              .format(pickedDate);
+              //             String edtDate = DateFormat("yyyy-MM-dd HH:mm:ss")
+              //                 .format(pickedDate);
 
-                                      String edtDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(pickedDate);
+              //             endDate = edtDate;
 
-                                      endDate = edtDate;
+              //             setState(() {
+              //               _selectedEndDate = formattedDate;
+              //             });
+              //           }
+              //         },
+              //         child: Center(
+              //           child: Padding(
+              //             padding: EdgeInsets.symmetric(horizontal: 20.w),
+              //             child: Container(
+              //               alignment: Alignment.centerLeft,
+              //               decoration: BoxDecoration(
+              //                 color: TColors.primaryDark1,
+              //                 borderRadius: BorderRadius.circular(20.r),
+              //               ),
+              //               child: Padding(
+              //                 padding: EdgeInsets.symmetric(
+              //                     vertical: 20.h, horizontal: 20.w),
+              //                 child: Row(
+              //                   children: [
+              //                     const Icon(
+              //                       Iconsax.calendar_2,
+              //                       color: Colors.white,
+              //                     ),
+              //                     SizedBox(width: 5.w),
+              //                     TextView(
+              //                       text: _selectedEndDate,
+              //                       fontSize: 20,
+              //                     ),
+              //                   ],
+              //                 ),
+              //               ),
+              //             ),
+              //           ),
+              //         ),
+              //       ),
 
-                                      setState(() {
-                                        _selectedEndDate = formattedDate;
-                                      });
-                                    }
-                                  },
-                                  child: Center(
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 20.w),
-                                      child: Container(
-                                        alignment: Alignment.centerLeft,
-                                        decoration: BoxDecoration(
-                                          color: TColors.primaryDark1,
-                                          borderRadius:
-                                              BorderRadius.circular(20.r),
-                                        ),
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 20.h, horizontal: 20.w),
-                                          child: Row(
-                                            children: [
-                                              const Icon(
-                                                Iconsax.calendar_2,
-                                                color: Colors.white,
-                                              ),
-                                              SizedBox(width: 5.w),
-                                              TextView(
-                                                text: _selectedEndDate,
-                                                fontSize: 20,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-
-                                SizedBox(
-                                  height: 40.h,
-                                ),
-                                Button(
-                                    height: 45.h,
-                                    minWidth: 100.w,
-                                    onPressed: () {
-                                      controller.getHistory(fieldParameter,startDate, endDate, controller.deviceList[0].userDeviceId, fieldName, "",indexPos);
-                                    },
-                                    title: TTexts.apply)
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              //       SizedBox(
+              //         height: 40.h,
+              //       ),
+              //       Button(
+              //           height: 45.h,
+              //           minWidth: 100.w,
+              //           onPressed: () {
+              //             // controller.getHistory(
+              //             //     fieldParameter,
+              //             //     startDate,
+              //             //     endDate,
+              //             //     controller.deviceList[0].userDeviceId,
+              //             //     fieldName,
+              //             //     "",
+              //             //     indexPos);
+              //             controller.fetchHistory(fieldName, startDate, endDate,
+              //                 "X2024103", fieldId, "", indexPos);
+              //           },
+              //           title: TTexts.apply)
+              //     ],
+              //   ),
+              // )
             ],
           ),
         ),

@@ -1,3 +1,4 @@
+import 'package:auro/common/widgets/text/text_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -5,129 +6,228 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../../../../../utils/constant/colors.dart';
 import '../../../../../../utils/constant/text_strings.dart';
 
-
 class BreakDownGraphCard extends StatelessWidget {
-  const BreakDownGraphCard({
-    super.key,
-  });
+  const BreakDownGraphCard({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final DateTime now = DateTime.now();
+    final int weekday = now.weekday;
     return Container(
       decoration: BoxDecoration(
-          color: TColors.primaryDark1,
-          borderRadius: BorderRadius.circular(20.r)),
-      child: Padding(
-        padding:  EdgeInsets.symmetric(vertical: 10.h),
-        child: SfCartesianChart(
-          backgroundColor: TColors.primaryDark1,
-          plotAreaBorderWidth: 0,
-          primaryXAxis: CategoryAxis(
-            majorGridLines: const MajorGridLines(width: 0),
-            axisLine: const AxisLine(width: 0),
-            labelStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
-          ),
-          primaryYAxis: NumericAxis(
-            isVisible: false, // Hide the Y axis
-            majorGridLines: const MajorGridLines(width: 0),  // Hide the major grid lines
-            axisLine: const AxisLine(width: 0),  // Hides the axis line
-            labelStyle: const TextStyle(color: Colors.transparent), // Hides the labels
-          ),
-          series: <StackedColumn100Series<ChartData, String>>[
-            StackedColumn100Series<ChartData, String>(
-              dataSource: [
-                ChartData('M', 10),
-                ChartData('M', 40),
-                ChartData('T', 60),
-                ChartData('W', 40),
-                ChartData('W', 10),
-                ChartData('T', 80),
-                ChartData('F', 50),
-                ChartData('F', 70),
-                ChartData('S', 90),
+        color: TColors.primaryDark1,
+        borderRadius: BorderRadius.circular(20.r),
+      ),
+      padding: EdgeInsets.symmetric(vertical: 32.h, horizontal: 8.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // // --- Chart ---
+          // SizedBox(
+          //   height: 300.h,
+          //   child: SfCartesianChart(
+          //     backgroundColor: TColors.primaryDark1,
+          //     plotAreaBorderWidth: 0,
 
-                ChartData('Today', 30),
+          //     primaryXAxis: CategoryAxis(
+          //       majorGridLines: const MajorGridLines(width: 0),
+          //       axisLine: const AxisLine(width: 0),
+          //       labelStyle: TextStyle(color: Colors.white.withOpacity(0.8)),
+          //       labelPlacement: LabelPlacement.onTicks,
+          //     ),
+          //     primaryYAxis: NumericAxis(
+          //       minimum: 0,
+          //       maximum: 24,
+          //       interval: 6,
+          //       isVisible: false,
+          //       majorGridLines: const MajorGridLines(width: 0),
+          //       axisLine: const AxisLine(width: 0),
+          //     ),
+
+          //     // --- Series (two layers: white + orange overlay) ---
+          //     series: [
+          //       // Base white bar (background)
+          //       ColumnSeries<ChartData, String>(
+          //         dataSource: whiteBarData,
+          //         xValueMapper: (ChartData data, _) => data.x,
+          //         yValueMapper: (ChartData data, _) => data.y,
+          //         width: 0.4,
+          //         borderRadius: BorderRadius.circular(10.r),
+          //         color: Colors.white,
+          //       ),
+
+          //       // Overlay orange segments
+          //       ColumnSeries<ChartData, String>(
+          //         dataSource: orangeData,
+          //         xValueMapper: (ChartData data, _) => data.x,
+          //         yValueMapper: (ChartData data, _) => data.y,
+          //         width: 0.25,
+          //         borderRadius: BorderRadius.circular(10.r),
+          //         color: const Color(0xFFFFB300),
+          //       ),
+          //     ],
+          //   ),
+          // ),
+
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                TextView(
+                  text: "Light Off/BreakDown",
+                  bold: true,
+                ),
+                Spacer(),
+                TextView(
+                  text: "100",
+                  bold: true,
+                  textColor: const Color(0xFFFFB300),
+                ),
+                TextView(
+                  text: " hrs",
+                  bold: true,
+                ),
               ],
-              xValueMapper: (ChartData data, _) => data.x,
-              yValueMapper: (ChartData data, _) => data.y,
-              color: TColors.graphBarColor,
-              borderRadius: BorderRadius.circular(100.r),
-              dataLabelSettings: const DataLabelSettings(isVisible: false),
             ),
-          ],
-        ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
 
+          SizedBox(
+            height: 200,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextView(
+                      text: "24:00 PM",
+                      bold: true,
+                      fontSize: 12,
+                    ),
+                    TextView(
+                      text: "12:00 PM",
+                      bold: true,
+                      fontSize: 12,
+                    ),
+                    TextView(
+                      text: "00:00 AM",
+                      bold: true,
+                      fontSize: 12,
+                    ),
+                  ],
+                ),
 
+                SizedBox(
+                  width: 5,
+                ),
 
+                _buildWeeklyTimeLine(
+                  [
+                    [11, 15]
+                  ],
+                  weekday == 1 ? "Today" : "M",
+                ), // 11–3
+                _buildWeeklyTimeLine([
+                  [2, 6]
+                ], weekday == 2 ? "Today" : "T"), // no duration (hidden)
+                _buildWeeklyTimeLine([
+                  [6, 13]
+                ], weekday == 3 ? "Today" : "W"), // 6–1
+                // T — single long downtime
+                _buildWeeklyTimeLine([
+                  [4, 13],
+                  [14, 16],
+                ], weekday == 4 ? "Today" : "T"),
 
+                // F — full workday breakdown
+                _buildWeeklyTimeLine([
+                  [9, 17],
+                ], weekday == 5 ? "Today" : "F"),
 
+                // S — mid-day only
+                _buildWeeklyTimeLine([
+                  [11, 14],
+                ], weekday == 6 ? "Today" : "S"),
 
-
-        //
-        // SfCartesianChart(
-        //
-        //   borderWidth: 0,
-        //   plotAreaBorderWidth: 0,
-        //
-        //   title: const ChartTitle(
-        //     text: TTexts.breakDownCardTitle,
-        //     textStyle: TextStyle(
-        //         color: Colors.white,
-        //         fontSize: 16,
-        //         fontWeight: FontWeight.bold),
-        //   ),
-        //
-        //   primaryXAxis: const CategoryAxis(
-        //     labelStyle: TextStyle(color: Colors.white),
-        //     majorGridLines: MajorGridLines(width: 0),
-        //     axisLine: AxisLine(width: 0),
-        //   ),
-        //   primaryYAxis: const NumericAxis(
-        //     isVisible: false, // Hide Y axis
-        //   ),
-        //
-        //
-        //   series: <SplineSeries<ChartData, String>>[
-        //     SplineSeries<ChartData, String>(
-        //       dataSource: getChartData(),
-        //       xValueMapper: (ChartData data, _) => data.x,
-        //       yValueMapper: (ChartData data, _) => data.y,
-        //       color: TColors.downGraphLine,
-        //       // Line color
-        //       width: 4,
-        //       markerSettings: const MarkerSettings(
-        //         isVisible: false,
-        //         color: TColors.downGraphLine,
-        //         borderWidth: 2,
-        //         borderColor: TColors.downGraphLine,
-        //       ),
-        //     ),
-        //   ],
-        //   tooltipBehavior: TooltipBehavior(
-        //     enable: true,
-        //     header: '',
-        //     format: 'point.x : point.y hrs',
-        //     textStyle: const TextStyle(color: Colors.white),
-        //   ),
-        // ),
+                // Today — evening breakdown
+                _buildWeeklyTimeLine([
+                  [18, 21],
+                ], weekday == 7 ? "Today" : "S"),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
 }
 
-List<ChartData> getChartData() {
-  return [
-    ChartData('Jan', 10),
-    ChartData('Feb', 40),
-    ChartData('Mar', 30),
-    ChartData('April', 20),
-    ChartData('May', 10),
-  ];
-}
-
 class ChartData {
   final String x;
   final double y;
-
   ChartData(this.x, this.y);
 }
+
+Widget _buildWeeklyTimeLine(List<List<double>> ranges, String day) {
+  const double maxHeight = 200; // full bar = 24 hours
+  const double barWidth = 30;
+
+  return Stack(
+    alignment: Alignment.bottomCenter,
+    children: [
+      // Base white bar
+      Container(
+        height: maxHeight,
+        width: barWidth,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(6),
+        ),
+      ),
+
+      // Draw each orange range segment
+      for (var range in ranges)
+        Positioned(
+          bottom: (range[0] / 24) * maxHeight, // start position from bottom
+          child: Container(
+            height: ((range[1] - range[0]) / 24) * maxHeight, // scaled height
+            width: barWidth - 4,
+            decoration: BoxDecoration(
+              color: const Color(0xFFFFB300),
+
+              // gradient: const LinearGradient(
+              //   colors: [Color(0xFFFFB300), Color(0xFFD79B14)],
+              //   begin: Alignment.bottomCenter,
+              //   end: Alignment.topCenter,
+              // ),
+              borderRadius: BorderRadius.circular(6),
+            ),
+          ),
+        ),
+
+      Positioned(
+          bottom: 1,
+          child: TextView(
+            text: day,
+            fontSize: 10,
+            bold: true,
+            textColor: TColors.darkGrey,
+          )),
+    ],
+  );
+}
+
+// String isToday(){
+//   final DateTime now = DateTime.now();
+//     final int weekday = now.weekday;
+//     switch (weekday) {
+//       case 1:
+        
+//         break;
+//       default:
+//     }
+//   return 
+// }

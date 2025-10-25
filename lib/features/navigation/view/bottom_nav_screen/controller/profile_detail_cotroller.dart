@@ -14,14 +14,254 @@ import '../../../../authentication/model/user_detail.dart';
 import '../model/user_detail_model.dart';
 import '../model/user_detail_model2.dart';
 
+// class ProfileDetailController extends GetxController {
+//   static ProfileDetailController get instance => Get.find();
+
+//   final NetworkManager networkManager = Get.find<NetworkManager>();
+//   final _profileRepository = Get.put(ProfileRepository());
+//   RxList<UserModel> userModel = <UserModel>[].obs;
+//   Rx<UserModel2?> userModelData2 = Rx<UserModel2?>(null);
+//   late UserModel userModelData;
+//   // late UserModel2 userModelData2;
+
+//   final isUserDataLoading = false.obs;
+//   final isUserNumberUpdateLoading = false.obs;
+
+//   final TLocalStorage _localStorage = TLocalStorage();
+//   static const String _userDataKey = 'user_data';
+
+//   final TLocalStorage _localStorage1 = TLocalStorage();
+//   static const String _userDataKey1 = 'user_data';
+
+//   final phoneNumber = TextEditingController();
+
+//   // ///use Details
+//   // Future<void> getUserData() async {
+//   //   try {
+//   //     /// this is to Access data
+//   //     Map<String, dynamic> userDataMap =
+//   //         _localStorage.readData(_userDataKey) ?? {};
+//   //     UserDetail user = UserDetail.fromJson(userDataMap);
+//   //     try {
+//   //       isUserDataLoading.value = true;
+//   //       final userModelResponse = await _profileRepository.getUserData2(
+//   //           // user.mCustMobile,
+//   //           SharedPrefs.getString("mobileNumber") ?? "",
+//   //           SharedPrefs.getString(TTexts.prefAccessToken) ?? "");
+//   //       // userModel.assignAll(userModelResponse);
+//   //       // userModelData2 =
+//   //       //     userModelResponse; // Assuming userModelData is of type UserDetail
+
+//   //       // userModelData2 = userModel[0];
+
+//   //       // SharedPrefs.setString(
+//   //       //     "userLoad", userModel[0].custTotalload.toString());
+//   //     } catch (e) {
+//   //       TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+//   //     }
+//   //   } catch (e) {
+//   //     if (kDebugMode) {
+//   //       print(e.toString());
+//   //     }
+//   //   } finally {
+//   //     isUserDataLoading.value = false;
+//   //   }
+//   // }
+
+//   ///update Phone number
+//   Future<void> updatePhone(int typ) async {
+//     final userModelResponse;
+//     try {
+//       /// this is to Access data
+//       Map<String, dynamic> userDataMap =
+//           _localStorage.readData(_userDataKey) ?? {};
+//       UserDetail user = UserDetail.fromJson(userDataMap);
+//       try {
+//         isUserNumberUpdateLoading.value = true;
+//         if (typ == 1) {
+//           userModelResponse = await _profileRepository.updatePhoneNumber(
+//               user.mCustId,
+//               phoneNumber.text.trim(),
+//               user.mCustAltWhatsapp.toString());
+//         } else {
+//           userModelResponse = await _profileRepository.updatePhoneNumber(
+//               user.mCustId,
+//               user.mCustWhatsapp.toString(),
+//               phoneNumber.text.trim());
+//         }
+
+//         userModel.assignAll(userModelResponse);
+//         userModelData = userModel[0];
+
+//         getUserData2();
+
+//         TLoaders.successSnackBar(
+//             title: "Successfully Updated",
+//             message: "Number Updated Successfully");
+//       } catch (e) {
+//         TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+//       }
+//     } catch (e) {
+//       if (kDebugMode) {
+//         print(e.toString());
+//       }
+//     } finally {
+//       isUserNumberUpdateLoading.value = false;
+//     }
+//   }
+
+//   ///update Phone Status
+//   Future<void> updatePhoneStatus(int typ, int active) async {
+//     final userModelResponse;
+//     try {
+//       /// this is to Access data
+//       Map<String, dynamic> userDataMap =
+//           _localStorage.readData(_userDataKey) ?? {};
+//       UserDetail user = UserDetail.fromJson(userDataMap);
+//       try {
+//         isUserNumberUpdateLoading.value = true;
+
+//         if (typ == 0) {
+//           userModelResponse = await _profileRepository.updatePhoneNumberStatus(
+//               user.mCustId,
+//               active.toString(),
+//               userModel[0].mCustWhatsappActive.toString(),
+//               userModel[0].mCustAltWhatsappActive.toString());
+//         } else if (typ == 1) {
+//           userModelResponse = await _profileRepository.updatePhoneNumberStatus(
+//               user.mCustId,
+//               userModel[0].mCustMobileActive.toString(),
+//               active.toString(),
+//               userModel[0].mCustAltWhatsappActive.toString());
+//         } else {
+//           userModelResponse = await _profileRepository.updatePhoneNumberStatus(
+//             user.mCustId,
+//             userModel[0].mCustMobileActive.toString(),
+//             userModel[0].mCustWhatsappActive.toString(),
+//             active.toString(),
+//           );
+//         }
+
+//         userModel.assignAll(userModelResponse);
+//         userModelData = userModel[0];
+
+//         getUserData2();
+
+//         TLoaders.successSnackBar(
+//             title: "Successfully Updated",
+//             message: "Number Status Updated Successfully");
+//       } catch (e) {
+//         TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+//       }
+//     } catch (e) {
+//       if (kDebugMode) {
+//         print(e.toString());
+//       }
+//     } finally {
+//       isUserNumberUpdateLoading.value = false;
+//     }
+//   }
+
+// //////////////////////// Gen 2 /////////////////////////////////////////////////
+//   ///use Details
+//   Future<void> logout() async {
+//     try {
+//       TFullScreenLoader.openLoadingDialog('Logging you Out...');
+
+//       //check internet Connection
+//       final isConnected = await networkManager.isConnected();
+//       if (!isConnected) {
+//         TFullScreenLoader.stopLoading();
+//         return;
+//       }
+//       final response = await _profileRepository.logout(
+//           SharedPrefs.getString("refreshToken") ?? "",
+//           SharedPrefs.getString("UUID") ?? "");
+
+//       TFullScreenLoader.stopLoading();
+
+//       if (response['success'] == true) {
+//         /// to navigate page to Login Screen
+//         TLoaders.successSnackBar(
+//             title: 'Success', message: response['message']);
+//         SharedPrefs.clear();
+//         Get.offAll(() => const Login());
+//       } else {
+//         TLoaders.errorSnackBar(title: 'Error', message: response['message']);
+//         if (kDebugMode) {
+//           print(response['response']);
+//         }
+//       }
+//     } catch (e) {
+//       if (kDebugMode) {
+//         print(e.toString());
+//       }
+//     }
+//   }
+
+//   ///use Details2
+//   // Future<void> getUserData2() async {
+//   //     try {
+//   //       isUserDataLoading.value = true;
+//   //       final userModelResponse = await _profileRepository.getUserData2(SharedPrefs.getString("mobileNumber")??"",SharedPrefs.getString(TTexts.prefAccessToken)??"");
+//   //       userModel.assignAll(userModelResponse as Iterable<UserModel>);
+//   //       userModelData = userModel[0];
+//   //
+//   //       SharedPrefs.setString("userLoad", userModel[0].custTotalload.toString());
+//   //     } catch (e) {
+//   //       TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+//   //     }
+//   //   finally {
+//   //     isUserDataLoading.value = false;
+//   //   }
+//   // }
+
+//   Future<void> getUserData2() async {
+//     try {
+//       isUserDataLoading.value = true;
+
+//       // 1. Get data from local storage (optional)
+//       Map<String, dynamic> userDataMap =
+//           _localStorage.readData(_userDataKey) ?? {};
+//       //UserModel2 user = UserModel2.fromJson(userDataMap); // no need to use local model
+
+//       // 2. Fetch data from the network
+//       try {
+//         final userModelResponse = await _profileRepository.getUserData2(
+//           SharedPrefs.getString("mobileNumber") ?? "",
+//           SharedPrefs.getString(TTexts.prefAccessToken) ?? "",
+//         );
+
+//         userModelData2.value = userModelResponse;
+//         // userModelData2 =
+//         //     userModelResponse; // Directly assign the UserModel2 instance.  No list.
+
+//         // Save user data locally (optional)
+//         //_localStorage.saveData(_userDataKey, userModelData!.toJson());
+
+//         SharedPrefs.setString("userLoad",
+//             userModelData2!.value.toString()); // Access properties like this
+//       } catch (e) {
+//         TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+//       }
+//     } catch (e) {
+//       if (kDebugMode) {
+//         print(e.toString());
+//       }
+//     } finally {
+//       isUserDataLoading.value = false;
+//     }
+//   }
+// }
+
 class ProfileDetailController extends GetxController {
   static ProfileDetailController get instance => Get.find();
 
   final NetworkManager networkManager = Get.find<NetworkManager>();
   final _profileRepository = Get.put(ProfileRepository());
-  RxList<UserModel> userModel = <UserModel>[].obs;
-  late UserModel userModelData;
-  late UserModel2 userModelData2;
+
+  /// Instead of list + late, just use nullable Rx
+  Rx<UserModel2?> userModelData = Rx<UserModel2?>(null);
 
   final isUserDataLoading = false.obs;
   final isUserNumberUpdateLoading = false.obs;
@@ -29,218 +269,111 @@ class ProfileDetailController extends GetxController {
   final TLocalStorage _localStorage = TLocalStorage();
   static const String _userDataKey = 'user_data';
 
-  final TLocalStorage _localStorage1 = TLocalStorage();
-  static const String _userDataKey1 = 'user_data';
-
   final phoneNumber = TextEditingController();
 
-  ///use Details
-  Future<void> getUserData() async {
-    try {
-      /// this is to Access data
-      Map<String, dynamic> userDataMap = _localStorage.readData(_userDataKey) ?? {};
-      UserDetail user = UserDetail.fromJson(userDataMap);
-      try {
-        isUserDataLoading.value = true;
-        final userModelResponse = await _profileRepository.getUserData(user.mCustId);
-        userModel.assignAll(userModelResponse);
-        userModelData = userModel[0];
-
-        SharedPrefs.setString("userLoad", userModel[0].custTotalload.toString());
-      } catch (e) {
-        TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        print(e.toString());
-      }
-    } finally {
-      isUserDataLoading.value = false;
-    }
-  }
-
-  ///update Phone number
+  /// Update Phone number
   Future<void> updatePhone(int typ) async {
-    final userModelResponse;
     try {
-      /// this is to Access data
       Map<String, dynamic> userDataMap =
           _localStorage.readData(_userDataKey) ?? {};
       UserDetail user = UserDetail.fromJson(userDataMap);
-      try {
-        isUserNumberUpdateLoading.value = true;
-        if (typ == 1) {
-          userModelResponse = await _profileRepository.updatePhoneNumber(
-              user.mCustId,
-              phoneNumber.text.trim(),
-              user.mCustAltWhatsapp.toString());
-        } else {
-          userModelResponse = await _profileRepository.updatePhoneNumber(
-              user.mCustId,
-              user.mCustWhatsapp.toString(),
-              phoneNumber.text.trim());
-        }
 
-        userModel.assignAll(userModelResponse);
-        userModelData = userModel[0];
+      isUserNumberUpdateLoading.value = true;
 
-        getUserData();
+      final response = await _profileRepository.updatePhoneNumber(
+        user.mCustId,
+        typ == 1 ? phoneNumber.text.trim() : user.mCustWhatsapp.toString(),
+        typ == 1 ? user.mCustAltWhatsapp.toString() : phoneNumber.text.trim(),
+      );
 
-        TLoaders.successSnackBar(
-            title: "Successfully Updated",
-            message: "Number Updated Successfully");
-      } catch (e) {
-        TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
-      }
+      // userModelData.value = response; // Now safe
+      await getUserData2();
+
+      TLoaders.successSnackBar(
+          title: "Success", message: "Number Updated Successfully");
     } catch (e) {
-      if (kDebugMode) {
-        print(e.toString());
-      }
+      TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     } finally {
       isUserNumberUpdateLoading.value = false;
     }
   }
 
-  ///update Phone Status
-  Future<void> updatePhoneStatus(int typ, int active) async {
-    final userModelResponse;
-    try {
-      /// this is to Access data
-      Map<String, dynamic> userDataMap =
-          _localStorage.readData(_userDataKey) ?? {};
-      UserDetail user = UserDetail.fromJson(userDataMap);
-      try {
-        isUserNumberUpdateLoading.value = true;
+  /// Update Phone status
+  // Future<void> updatePhoneStatus(int typ, int active) async {
+  //   try {
+  //     Map<String, dynamic> userDataMap =
+  //         _localStorage.readData(_userDataKey) ?? {};
+  //     UserDetail user = UserDetail.fromJson(userDataMap);
 
-        if (typ == 0) {
-          userModelResponse = await _profileRepository.updatePhoneNumberStatus(
-              user.mCustId,
-              active.toString(),
-              userModel[0].mCustWhatsappActive.toString(),
-              userModel[0].mCustAltWhatsappActive.toString());
-        } else if (typ == 1) {
-          userModelResponse = await _profileRepository.updatePhoneNumberStatus(
-              user.mCustId,
-              userModel[0].mCustMobileActive.toString(),
-              active.toString(),
-              userModel[0].mCustAltWhatsappActive.toString());
-        } else {
-          userModelResponse = await _profileRepository.updatePhoneNumberStatus(
-            user.mCustId,
-            userModel[0].mCustMobileActive.toString(),
-            userModel[0].mCustWhatsappActive.toString(),
-            active.toString(),
-          );
-        }
+  //     isUserNumberUpdateLoading.value = true;
 
-        userModel.assignAll(userModelResponse);
-        userModelData = userModel[0];
+  //     final response = await _profileRepository.updatePhoneNumberStatus(
+  //       user.mCustId,
+  //       // typ == 0 ? active.toString() : userModelData.value?.mCustMobileActive ?? "0",
+  //       // typ == 1 ? active.toString() : userModelData.value?.mCustWhatsappActive ?? "0",
+  //       // typ == 2 ? active.toString() : userModelData.value?.mCustAltWhatsappActive ?? "0",
+  //     );
 
-        getUserData();
+  //     // userModelData.value = response;
+  //     await getUserData2();
 
-        TLoaders.successSnackBar(
-            title: "Successfully Updated",
-            message: "Number Status Updated Successfully");
-      } catch (e) {
-        TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        print(e.toString());
-      }
-    } finally {
-      isUserNumberUpdateLoading.value = false;
-    }
-  }
-
-//////////////////////// Gen 2 /////////////////////////////////////////////////
-  ///use Details
-  Future<void> logout() async {
-    try {
-
-      TFullScreenLoader.openLoadingDialog('Logging you Out...');
-
-      //check internet Connection
-      final isConnected = await networkManager.isConnected();
-      if (!isConnected) {
-        TFullScreenLoader.stopLoading();
-        return;
-      }
-      final response = await _profileRepository.logout(SharedPrefs.getString("refreshToken")??"",SharedPrefs.getString("UUID")??"");
-
-      TFullScreenLoader.stopLoading();
-
-      if (response['success'] == true) {
-
-        /// to navigate page to Login Screen
-        TLoaders.successSnackBar(title: 'Success', message: response['message']);
-        SharedPrefs.clear();
-        Get.offAll(() => const Login());
-
-      }else{
-        TLoaders.errorSnackBar(title: 'Error', message: response['message']);
-        if (kDebugMode) {
-          print(response['response']);
-        }
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        print(e.toString());
-      }
-    }
-  }
-
-  ///use Details2
-  // Future<void> getUserData2() async {
-  //     try {
-  //       isUserDataLoading.value = true;
-  //       final userModelResponse = await _profileRepository.getUserData2(SharedPrefs.getString("mobileNumber")??"",SharedPrefs.getString(TTexts.prefAccessToken)??"");
-  //       userModel.assignAll(userModelResponse as Iterable<UserModel>);
-  //       userModelData = userModel[0];
-  //
-  //       SharedPrefs.setString("userLoad", userModel[0].custTotalload.toString());
-  //     } catch (e) {
-  //       TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
-  //     }
-  //   finally {
-  //     isUserDataLoading.value = false;
+  //     TLoaders.successSnackBar(
+  //         title: "Success", message: "Number Status Updated Successfully");
+  //   } catch (e) {
+  //     TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+  //   } finally {
+  //     isUserNumberUpdateLoading.value = false;
   //   }
   // }
 
-
-
+  /// Fetch User Data
   Future<void> getUserData2() async {
     try {
       isUserDataLoading.value = true;
 
-      // 1. Get data from local storage (optional)
-      Map<String, dynamic> userDataMap = _localStorage.readData(_userDataKey) ?? {};
-      //UserModel2 user = UserModel2.fromJson(userDataMap); // no need to use local model
+      final response = await _profileRepository.getUserData2(
+        SharedPrefs.getString("mobileNumber") ?? "",
+        SharedPrefs.getString(TTexts.prefAccessToken) ?? "",
+      );
 
-      // 2. Fetch data from the network
-      try {
-        final userModelResponse = await _profileRepository.getUserData2(SharedPrefs.getString("mobileNumber") ?? "", SharedPrefs.getString(TTexts.prefAccessToken) ?? "",);
+      userModelData.value = response;
 
-        userModelData2 = userModelResponse;  // Directly assign the UserModel2 instance.  No list.
-
-        // Save user data locally (optional)
-        //_localStorage.saveData(_userDataKey, userModelData!.toJson());
-
-        SharedPrefs.setString("userLoad", userModelData2!.name.toString());  // Access properties like this
-      } catch (e) {
-        TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
-      }
-
+      // SharedPrefs.setString("userLoad",
+      //     userModelData.value?.custTotalload.toString() ?? "0");
     } catch (e) {
-      if (kDebugMode) {
-        print(e.toString());
-      }
+      TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     } finally {
       isUserDataLoading.value = false;
     }
   }
+
+  /// Logout
+  Future<void> logout() async {
+    try {
+      TFullScreenLoader.openLoadingDialog('Logging you Out...');
+
+      if (!await networkManager.isConnected()) {
+        TFullScreenLoader.stopLoading();
+        return;
+      }
+
+      final response = await _profileRepository.logout(
+        SharedPrefs.getString("refreshToken") ?? "",
+        SharedPrefs.getString("UUID") ?? "",
+      );
+
+      TFullScreenLoader.stopLoading();
+
+      if (response['success'] == true) {
+        TLoaders.successSnackBar(
+            title: 'Success', message: response['message']);
+        SharedPrefs.clear();
+        Get.offAll(() => const Login());
+      } else {
+        TLoaders.errorSnackBar(title: 'Error', message: response['message']);
+      }
+    } catch (e) {
+      if (kDebugMode) print(e.toString());
+    }
+  }
 }
-
-
-
-

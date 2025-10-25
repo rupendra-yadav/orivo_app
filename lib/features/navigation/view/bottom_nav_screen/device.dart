@@ -63,7 +63,8 @@ class _DeviceState extends State<Device> {
               id: 10,
               channelKey: "basic_chanel",
               title: "Change Password..!",
-              body: "For your account’s safety,Update your password.\nClick on the Change Password in Profile."));
+              body:
+                  "For your account’s safety,Update your password.\nClick on the Change Password in Profile."));
     }
   }
 
@@ -74,6 +75,12 @@ class _DeviceState extends State<Device> {
     controller.loadDeviceListFromPrefs();
     timer();
     passwordResetNotification();
+
+    /// to fix later
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // controller.getDeviceList2();
+      // controller.updateFcm();
+    });
 
     super.initState();
   }

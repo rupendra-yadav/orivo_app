@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:auro/features/navigation/view/bottom_nav_screen/model/user_detail_model.dart';
@@ -15,34 +16,35 @@ class ProfileRepository extends GetxController {
   static ProfileRepository get instance => Get.find();
 
   ///Get user data
-  Future<List<UserModel>> getUserData(String userId) async {
-    try {
-      Map<String, dynamic> request = {'user_id': userId};
+  // Future<List<UserModel>> getUserData(String userId) async {
+  //   try {
+  //     Map<String, dynamic> request = {'user_id': userId};
 
-      Map<String, dynamic> response =
-          await THttpHelper.post(APIKeys.userDetailsEND, request);
+  //     Map<String, dynamic> response =
+  //         await THttpHelper.post(APIKeys.userDetailsEND, request);
 
-      if (kDebugMode) {
-        print('user_details  Response: $response');
-      }
+  //     if (kDebugMode) {
+  //       print('user_details  Response: $response');
+  //     }
 
-      if (response['response'] == 'success') {
-        List<dynamic> useData = response['data'];
+  //     if (response['response'] == 'success') {
+  //       List<dynamic> useData = response['data'];
 
-        List<UserModel> userDetails =
-            useData.map((data) => UserModel.fromJson(data)).toList();
+  //       List<UserModel> userDetails =
+  //           useData.map((data) => UserModel.fromJson(data)).toList();
 
-        return userDetails;
-      } else {
-        throw Exception(response['message']);
-      }
-    } catch (e) {
-      throw Exception(e.toString());
-    }
-  }
+  //       return userDetails;
+  //     } else {
+  //       throw Exception(response['message']);
+  //     }
+  //   } catch (e) {
+  //     throw Exception(e.toString());
+  //   }
+  // }
 
   ///Update Password
-  Future<Map<String, dynamic>> updatePassword(String userId, userPass, userConPass) async {
+  Future<Map<String, dynamic>> updatePassword(
+      String userId, userPass, userConPass) async {
     try {
       Map<String, dynamic> request = {
         'user_id': userId,
@@ -69,10 +71,22 @@ class ProfileRepository extends GetxController {
   }
 
   ///Update user data
-  Future<List<UserModel>> updateUserData(String userId, String userName, String userState, String userCity, String userAddress, String userCompany, String userCompanyType, String userOwnerName, String userGstNo, File userPic) async {
+  Future<List<UserModel>> updateUserData(
+      String userId,
+      String userName,
+      String userState,
+      String userCity,
+      String userAddress,
+      String userCompany,
+      String userCompanyType,
+      String userOwnerName,
+      String userGstNo,
+      File userPic) async {
     try {
       var request = http.MultipartRequest(
-          'POST', Uri.parse('https://webdevelopercg.com/electricity/myadmin/Api/update_profile'));
+          'POST',
+          Uri.parse(
+              'https://webdevelopercg.com/electricity/myadmin/Api/update_profile'));
 
       // Add text fields to the request
       request.fields['user_id'] = userId;
@@ -86,7 +100,8 @@ class ProfileRepository extends GetxController {
       request.fields['user_gstno'] = userGstNo;
 
       // Add the image file to the request
-      request.files.add(await http.MultipartFile.fromPath('user_pic', userPic.path));
+      request.files
+          .add(await http.MultipartFile.fromPath('user_pic', userPic.path));
 
       // Send the request and get the response
       var response = await request.send();
@@ -102,7 +117,8 @@ class ProfileRepository extends GetxController {
 
         if (jsonResponse['response'] == 'success') {
           List<dynamic> useData = jsonResponse['data'];
-          List<UserModel> userDetails = useData.map((data) => UserModel.fromJson(data)).toList();
+          List<UserModel> userDetails =
+              useData.map((data) => UserModel.fromJson(data)).toList();
           return userDetails;
         } else {
           throw Exception(jsonResponse['message']);
@@ -116,7 +132,8 @@ class ProfileRepository extends GetxController {
   }
 
   ///update Phone Number
-  Future<List<UserModel>> updatePhoneNumber(String userId,String whatsApp, String altWhatsApp) async {
+  Future<List<UserModel>> updatePhoneNumber(
+      String userId, String whatsApp, String altWhatsApp) async {
     try {
       Map<String, dynamic> request = {
         'user_id': userId,
@@ -125,7 +142,7 @@ class ProfileRepository extends GetxController {
       };
 
       Map<String, dynamic> response =
-      await THttpHelper.post(APIKeys.updateContacts, request);
+          await THttpHelper.post(APIKeys.updateContacts, request);
 
       if (kDebugMode) {
         print('user_details  Response: $response');
@@ -135,7 +152,7 @@ class ProfileRepository extends GetxController {
         List<dynamic> useData = response['data'];
 
         List<UserModel> userDetails =
-        useData.map((data) => UserModel.fromJson(data)).toList();
+            useData.map((data) => UserModel.fromJson(data)).toList();
 
         return userDetails;
       } else {
@@ -147,7 +164,8 @@ class ProfileRepository extends GetxController {
   }
 
   ///update Phone Number status
-  Future<List<UserModel>> updatePhoneNumberStatus(String userId,String status1, String status2,String status3) async {
+  Future<List<UserModel>> updatePhoneNumberStatus(
+      String userId, String status1, String status2, String status3) async {
     try {
       Map<String, dynamic> request = {
         'user_id': userId,
@@ -157,7 +175,7 @@ class ProfileRepository extends GetxController {
       };
 
       Map<String, dynamic> response =
-      await THttpHelper.post(APIKeys.updateNotificationContact, request);
+          await THttpHelper.post(APIKeys.updateNotificationContact, request);
 
       if (kDebugMode) {
         print('user_details  Response: $response');
@@ -167,7 +185,7 @@ class ProfileRepository extends GetxController {
         List<dynamic> useData = response['data'];
 
         List<UserModel> userDetails =
-        useData.map((data) => UserModel.fromJson(data)).toList();
+            useData.map((data) => UserModel.fromJson(data)).toList();
 
         return userDetails;
       } else {
@@ -178,13 +196,10 @@ class ProfileRepository extends GetxController {
     }
   }
 
-
-
   //////////////////////////////////Gen2////////////////////////////////////////
 
-
   ///Get user data
-  Future<Map<String, dynamic>> logout(String reFreshToken ,String uuid) async {
+  Future<Map<String, dynamic>> logout(String reFreshToken, String uuid) async {
     try {
       Map<String, dynamic> request = {'refresh_token': reFreshToken};
 
@@ -192,7 +207,8 @@ class ProfileRepository extends GetxController {
         'device_id': uuid,
       };
 
-      Map<String, dynamic> response = await THttpHelper3.post(APIKeys.authLogout, queryParams,request);
+      Map<String, dynamic> response =
+          await THttpHelper3.post(APIKeys.authLogout, queryParams, request);
 
       if (kDebugMode) {
         print('authLogout  Response: $response');
@@ -200,14 +216,11 @@ class ProfileRepository extends GetxController {
 
       if (response['message'] == 'Logged out from this device') {
         return {'success': true, 'message': response['message']};
-      }else{
+      } else {
         return {'success': true, 'message': response['message']};
       }
 
-
-
-
-     /* if (response['response'] == 'success') {
+      /* if (response['response'] == 'success') {
         List<dynamic> useData = response['data'];
 
         List<UserModel> userDetails =
@@ -222,16 +235,19 @@ class ProfileRepository extends GetxController {
     }
   }
 
-
   ///Get user data
   Future<UserModel2> getUserData2(String mobileNo, String accessToken) async {
     try {
-      Map<String, dynamic> request = {'mobile_no': mobileNo};
+      Map<String, dynamic> request = {'mobile_no': "+91$mobileNo"};
 
-      Map<String, dynamic> response =
-      await THttpHelper3.postRaw(APIKeys.userProfile, null, request, accessToken: accessToken);
+      Map<String, dynamic> response = await THttpHelper3.postRaw(
+          APIKeys.userProfile, null, request,
+          accessToken: accessToken);
 
-      if (response['response'] == 200) {  // Check for 200 instead of 'success' and change response type to Int in Backend
+      log(response.toString());
+
+      if (response['response'] == 200) {
+        // Check for 200 instead of 'success' and change response type to Int in Backend
         // Extract the user data from the "data" field
         Map<String, dynamic> userData = response['data'];
 
@@ -246,7 +262,6 @@ class ProfileRepository extends GetxController {
       throw Exception(e.toString());
     }
   }
-
 
   ///Update user data
   // Future<List<UserModel>> updateUserData2(String token, String mobileNumber, String companyName, String city, String state, String address, String pinCode, String companyType, String gstNumber,) async {
@@ -294,6 +309,4 @@ class ProfileRepository extends GetxController {
   //     throw Exception(e.toString());
   //   }
   // }
-
-
 }

@@ -1,3 +1,4 @@
+import 'package:auro/features/device_details/view/device_detail_screens/model/energy_consumption_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -9,10 +10,11 @@ import 'bar_graph.dart';
 
 class MultipleBarGraphCard extends StatelessWidget {
   const MultipleBarGraphCard({
-    super.key, required this.consumptionDetail,
+    super.key,
+    required this.graphConsumption,
   });
 
-  final ConsumptionDetail consumptionDetail;
+  final List<GraphPeriod> graphConsumption;
 
   @override
   Widget build(BuildContext context) {
@@ -25,38 +27,70 @@ class MultipleBarGraphCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
-          /// Normal Bar Graph
-          const Row(
-            children: [
-              TextView(text: TTexts.normal),
-              Expanded(child: TextView(text: TTexts.normalTimeRange)),
-            ],
+          TextView(
+            text: TTexts.energyConsumption,
+            fontSize: 18.sp,
           ),
-           BarGraph(onPeakGraph: consumptionDetail.normalGraph),
           SizedBox(height: 10.h),
-
-          /// Off-Peak Bar Graph
-          const Row(
-            children: [
-              TextView(text: TTexts.offPeak),
-              TextView(text:  TTexts.offTimeRange),
-            ],
+          ListView.builder(
+            itemBuilder: (context, index) {
+              return _buildBarGraph(
+                graphConsumption[index],
+                _formatcolor(graphConsumption[index].periodName),
+              );
+            },
+            itemCount: graphConsumption.length,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
           ),
-          BarGraph(onPeakGraph: consumptionDetail.offPeakGraph),
-          SizedBox(height: 10.h),
-
-          /// On-Peak Bar Graph
-          const Row(
-            children: [
-              TextView(text: TTexts.onPeak),
-              TextView(text: TTexts.onTimeRange),
-            ],
-          ),
-          BarGraph(onPeakGraph: consumptionDetail.onPeakGraph),
-
         ],
       ),
     );
   }
 }
+
+Widget _buildBarGraph(GraphPeriod graphPeriod, Color color) {
+  return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+    TextView(text: _formatLabel(graphPeriod.periodName)),
+    TextView(text: TTexts.normalTimeRange, fontSize: 12.sp),
+    BarGraph(
+      onPeakGraph: graphPeriod.dataPoints,
+      color: color,
+    ),
+    SizedBox(height: 10.h),
+  ]);
+}
+
+// Helper for nicer labels
+String _formatLabel(String key) {
+  switch (key.toLowerCase()) {
+    case "normal":
+      return "Normal";
+    case "off_peak":
+      return "OFF Peak";
+    case "on_peak":
+      return "On Peak";
+    default:
+      return key; // fallback (API may add new ones)
+  }
+}
+
+// Helper for nicer labels
+Color _formatcolor(String color) {
+  switch (color) {
+    case "normal":
+      return chartColors[0];
+    case "off_peak":
+      return chartColors[1];
+    case "on_peak":
+      return chartColors[2];
+    default:
+      return Colors.white; // fallback (API may add new ones)
+  }
+}
+
+final List<Color> chartColors = [
+  const Color(0xFFFEB546),
+  const Color(0xFFFFC0BB),
+  const Color(0XFF344BFD),
+];

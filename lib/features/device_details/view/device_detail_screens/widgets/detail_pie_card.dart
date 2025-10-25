@@ -1,3 +1,5 @@
+import 'package:auro/features/device_details/view/device_detail_screens/model/energy_consumption_detail.dart';
+import 'package:auro/utils/helpers/number_formaters.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,25 +18,26 @@ class DetailPieCard extends StatelessWidget {
     required this.onPressed,
     this.showLegendsInRow = false,
     required this.consumptionDetail,
+    required this.totalCountUnit,
   });
 
   final double totalCount;
+  final String totalCountUnit;
   final void Function() onPressed;
   final bool showLegendsInRow;
-  final ConsumptionDetail consumptionDetail;
+  final List<Period> consumptionDetail;
 
   // final LegendPosition legendPosition;
 
   @override
   Widget build(BuildContext context) {
-    Map<String, double> originalDataMap = {
-      "On Peak": consumptionDetail.onPeakUnit?.value ?? 0.0,
-      // Handle null with ?? 0.0
-      "Off Peak": consumptionDetail.offPeakUnit?.value ?? 0.0,
-      // Same for Off Peak
-      "Normal": consumptionDetail.normalUnit?.value ?? 0.0,
-      // Same for Normal
-    };
+    final Map<String, double> originalDataMap = {};
+
+    for (var period in consumptionDetail) {
+      originalDataMap[period.periodName] = period.consumption.value;
+    }
+
+    print(consumptionDetail.toString());
 
     Map<String, double> updatedDataMap = {};
 
@@ -47,13 +50,15 @@ class DetailPieCard extends StatelessWidget {
       print(updatedDataMap);
     }
 
-    final List<ChartData> chartData = [
-      ChartData('USA', 10, '80%', const Color(0xFFFEB546)),
-      ChartData('INDIA', 11, '85%', const Color(0xFFFFC0BB)),
-      ChartData('Russia', 9, '75%', const Color(0xFF344BFD)),
-      ChartData('Germany', 10, '80%', const Color(0xFF00820D))
-    ];
+    final List<ChartData> chartData = buildChartData(originalDataMap);
+    print("chart data" + chartData.toString());
 
+    // final List<ChartData> chartData = [
+    //   ChartData('USA', 10, '80%', const Color(0xFFFEB546)),
+    //   ChartData('INDIA', 11, '85%', const Color(0xFFFFC0BB)),
+    //   ChartData('Russia', 9, '75%', const Color(0xFF344BFD)),
+    //   ChartData('Germany', 10, '80%', const Color(0xFF00820D))
+    // ];
 
     infoDialog(BuildContext context) async {
       return showDialog<void>(
@@ -63,40 +68,111 @@ class DetailPieCard extends StatelessWidget {
         builder: (BuildContext context) {
           return Dialog(
             backgroundColor: TColors.primaryDark1,
-            insetPadding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 10.h),
-            child:  Padding(
-              padding:  EdgeInsets.symmetric(horizontal: 30.w,vertical: 10.h),
+            insetPadding:
+                EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 10.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Center(child: TextView(text: TTexts.energyConsumption, textColor: TColors.white, fontSize: 18, bold: true,)),
+                  Center(
+                      child: TextView(
+                    text: TTexts.energyConsumption,
+                    textColor: TColors.white,
+                    fontSize: 18,
+                    bold: true,
+                  )),
 
-                  SizedBox(height: 15.h,),
+                  SizedBox(
+                    height: 15.h,
+                  ),
 
-                  TextView(text: TTexts.timeOfDay, textColor: TColors.white, fontSize: 18, bold: true,),
-                  SizedBox(height: 15.h,),
-                  TextView(text: "1. ${TTexts.normalSlot}", textColor: TColors.white, fontSize: 18, bold: true,),
-                  SizedBox(height: 5.h,),
-                  Padding(padding:  EdgeInsets.only(left: 15.w), child: TextView(text: TTexts.normalPeakSlotDesc, textColor: TColors.white, fontSize: 18, bold: true,),),
-                  SizedBox(height: 15.h,),
-                  TextView(text: "2. ${TTexts.offPeakSlot}", textColor: TColors.white, fontSize: 18, bold: true,),
-                  SizedBox(height: 5.h,),
-                  Padding(padding:  EdgeInsets.only(left: 15.w), child: TextView(text: TTexts.offPeakSlotDesc, textColor: TColors.white, fontSize: 18, bold: true,),),
-                  SizedBox(height: 15.h,),
-                  TextView(text: '3. ${TTexts.onPeakSlot}', textColor: TColors.white, fontSize: 18, bold: true,),
-                  SizedBox(height: 5.h,),
-                  Padding(padding:  EdgeInsets.only(left: 15.w), child: TextView(text: TTexts.onPeakSlotDesc, textColor: TColors.white, fontSize: 18, bold: true,),),
-                  SizedBox(height: 20.h,),
-
+                  TextView(
+                    text: TTexts.timeOfDay,
+                    textColor: TColors.white,
+                    fontSize: 18,
+                    bold: true,
+                  ),
+                  SizedBox(
+                    height: 15.h,
+                  ),
+                  TextView(
+                    text: "1. ${TTexts.normalSlot}",
+                    textColor: TColors.white,
+                    fontSize: 18,
+                    bold: true,
+                  ),
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 15.w),
+                    child: TextView(
+                      text: TTexts.normalPeakSlotDesc,
+                      textColor: TColors.white,
+                      fontSize: 18,
+                      bold: true,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15.h,
+                  ),
+                  TextView(
+                    text: "2. ${TTexts.offPeakSlot}",
+                    textColor: TColors.white,
+                    fontSize: 18,
+                    bold: true,
+                  ),
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 15.w),
+                    child: TextView(
+                      text: TTexts.offPeakSlotDesc,
+                      textColor: TColors.white,
+                      fontSize: 18,
+                      bold: true,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15.h,
+                  ),
+                  TextView(
+                    text: '3. ${TTexts.onPeakSlot}',
+                    textColor: TColors.white,
+                    fontSize: 18,
+                    bold: true,
+                  ),
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 15.w),
+                    child: TextView(
+                      text: TTexts.onPeakSlotDesc,
+                      textColor: TColors.white,
+                      fontSize: 18,
+                      bold: true,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
 
                   /// Close OK
                   Center(
                     child: InkWell(
-                      onTap: (){
+                      onTap: () {
                         Navigator.pop(context);
                       },
-                      child: TextView(text: TTexts.dialogOk, textColor: TColors.white, fontSize: 18, bold: true,),
+                      child: TextView(
+                        text: TTexts.dialogOk,
+                        textColor: TColors.white,
+                        fontSize: 18,
+                        bold: true,
+                      ),
                     ),
                   ),
                 ],
@@ -122,7 +198,7 @@ class DetailPieCard extends StatelessWidget {
               // const TextView(text: TTexts.energyConsumption),
 
               Padding(
-                padding:  EdgeInsets.symmetric(horizontal: 10.h,vertical: 10.w),
+                padding: EdgeInsets.symmetric(horizontal: 10.h, vertical: 10.w),
                 child: InkWell(
                   onTap: () {
                     infoDialog(context);
@@ -234,14 +310,21 @@ class DetailPieCard extends StatelessWidget {
                           // Pass the data
                           xValueMapper: (ChartData data, _) => data.x,
                           yValueMapper: (ChartData data, _) => data.y,
-                          pointRadiusMapper: (ChartData data, _) => data.size,
+                          // pointRadiusMapper: (ChartData data, _) => data.size,
                           pointColorMapper: (ChartData data, _) => data.color,
                           cornerStyle: CornerStyle.bothFlat,
                           radius: '60%',
                           innerRadius: '30%',
-                          dataLabelSettings:
-                              DataLabelSettings(isVisible: false),
-                          enableTooltip: false,
+                          dataLabelSettings: DataLabelSettings(
+                              overflowMode: OverflowMode.none,
+                              isVisible: false,
+                              labelPosition: ChartDataLabelPosition.outside,
+                              textStyle: const TextStyle(
+                                color: TColors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 10,
+                              )),
+                          enableTooltip: true,
                         )
                       ],
                     ),
@@ -258,15 +341,17 @@ class DetailPieCard extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             TextView(
-                              text: '6870',
+                              text: NumberFormater()
+                                  .numberComma(number: totalCount),
                               textColor: TColors.textPrimary,
-                              fontSize: 20,
+                              fontSize: 16,
                               bold: true,
+                              i: 1,
                             ),
                             TextView(
-                              text: 'Total',
+                              text: totalCountUnit,
                               textColor: TColors.textSecondary,
-                              fontSize: 15,
+                              fontSize: 13,
                               bold: true,
                             ),
                           ],
@@ -283,125 +368,22 @@ class DetailPieCard extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(top: 4.h),
-                                child: Container(
-                                  height: 10.h,
-                                  width: 10.w,
-                                  decoration: BoxDecoration(
-                                    color: TColors.multiGraphBarColor1,
-                                    borderRadius: BorderRadius.circular(100.r),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 4.w,
-                              ),
-                              Column(
-                                children: [
-                                  TextView(
-                                    text: 'Normal',
-                                  ),
-                                  SizedBox(
-                                    height: 4.h,
-                                  ),
-                                  TextView(
-                                    text: '132456',
-                                    bold: true,
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                    _buildBottomText(
+                      chartColors[2],
+                      _formatLabel(consumptionDetail[2].periodName),
+                      consumptionDetail[2].consumption.value.toString(),
                     ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(top: 4.h),
-                                child: Container(
-                                  height: 10.h,
-                                  width: 10.w,
-                                  decoration: BoxDecoration(
-                                    color: TColors.multiGraphBarColor2,
-                                    borderRadius: BorderRadius.circular(100.r),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 4.w,
-                              ),
-                              Column(
-                                children: [
-                                  TextView(
-                                    text: 'Off Peak',
-                                  ),
-                                  SizedBox(
-                                    height: 4.h,
-                                  ),
-                                  TextView(
-                                    text: '132456',
-                                    bold: true,
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                    SizedBox(width: 10.w),
+                    _buildBottomText(
+                      chartColors[1],
+                      _formatLabel(consumptionDetail[1].periodName),
+                      consumptionDetail[1].consumption.value.toString(),
                     ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(top: 4.h),
-                                child: Container(
-                                  height: 10.h,
-                                  width: 10.w,
-                                  decoration: BoxDecoration(
-                                    color: TColors.multiGraphBarColor3,
-                                    borderRadius: BorderRadius.circular(100.r),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 4.w,
-                              ),
-                              Column(
-                                children: [
-                                  TextView(
-                                    text: 'On Peak',
-                                  ),
-                                  SizedBox(
-                                    height: 4.h,
-                                  ),
-                                  TextView(
-                                    text: '132456',
-                                    bold: true,
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                    SizedBox(width: 10.w),
+                    _buildBottomText(
+                      chartColors[0],
+                      _formatLabel(consumptionDetail[0].periodName),
+                      consumptionDetail[0].consumption.value.toString(),
                     ),
                   ],
                 ),
@@ -425,4 +407,90 @@ class ChartData {
   final double y;
   final String size;
   final Color color;
+}
+
+// Example colors (cycled if more periods exist)
+final List<Color> chartColors = [
+  const Color(0xFFFEB546),
+  const Color(0xFFFFC0BB),
+  const Color(0XFF344BFD),
+];
+
+List<ChartData> buildChartData(Map<String, double> consumptionMap) {
+  final total = consumptionMap.values.fold(0.0, (a, b) => a + b);
+
+  int colorIndex = 0; // keep track of colors
+
+  return consumptionMap.entries.map((entry) {
+    final percentage = total == 0
+        ? "0%"
+        : "${((entry.value / total) * 100).toStringAsFixed(1)}%";
+
+    final chartData = ChartData(
+      _formatLabel(entry.key), // label (x)
+      entry.value, // value (y)
+      percentage, // size (percentage)
+      chartColors[colorIndex], // pick color
+    );
+
+    colorIndex++; // move to next color
+    return chartData;
+  }).toList();
+}
+
+// Helper for nicer labels
+String _formatLabel(String key) {
+  switch (key.toLowerCase()) {
+    case "normal":
+      return "Normal";
+    case "off_peak":
+      return "Off Peak";
+    case "on_peak":
+      return "On Peak";
+    default:
+      return key; // fallback (API may add new ones)
+  }
+}
+
+Widget _buildBottomText(Color color, String label, String value) {
+  return Expanded(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(top: 4.h),
+              child: Container(
+                height: 10.h,
+                width: 10.w,
+                decoration: BoxDecoration(
+                  color: color,
+                  borderRadius: BorderRadius.circular(100.r),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 4.w,
+            ),
+            Column(
+              children: [
+                TextView(
+                  text: label,
+                ),
+                SizedBox(
+                  height: 4.h,
+                ),
+                TextView(
+                  text: value,
+                  bold: true,
+                )
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
 }

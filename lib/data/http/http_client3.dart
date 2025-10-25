@@ -5,11 +5,17 @@ import 'package:http/http.dart' as http;
 import '../../utils/constant/api_constants.dart';
 
 class THttpHelper3 {
-  static const String _baseUrl = tBaseUrl3;
+  static const String _baseUrl = tBaseUrl;
 
   /// Helper method to make a GET request
-  static Future<Map<String, dynamic>> get(String endpoint, {String accessToken = "", Map<String, dynamic>? queryParams, dynamic data,}) async {
-    final uri = Uri.parse('$_baseUrl$endpoint').replace(queryParameters: queryParams,
+  static Future<Map<String, dynamic>> get(
+    String endpoint, {
+    String accessToken = "",
+    Map<String, dynamic>? queryParams,
+    dynamic data,
+  }) async {
+    final uri = Uri.parse('$_baseUrl$endpoint').replace(
+      queryParameters: queryParams,
     );
 
     if (kDebugMode) {
@@ -19,12 +25,11 @@ class THttpHelper3 {
     final response = await http.get(
       uri,
       headers: accessToken.isEmpty
-          ? {'Content-Type': 'application/x-www-form-urlencoded'}
+          ? {'Content-Type': 'application/json'}
           : {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': 'Bearer $accessToken'
-      },
-
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer $accessToken'
+            },
     );
 
     if (kDebugMode) {
@@ -42,7 +47,8 @@ class THttpHelper3 {
     return _handleResponse(response);
   }
 
-  static Future<Map<String, dynamic>> redirectPost(String endpoint, dynamic data,
+  static Future<Map<String, dynamic>> redirectPost(
+      String endpoint, dynamic data,
       {String accessToken = ""}) async {
     if (kDebugMode) {
       print('POST Request: $_baseUrl$endpoint');
@@ -52,7 +58,7 @@ class THttpHelper3 {
     Uri uri = Uri.parse('$_baseUrl$endpoint');
     int redirectCount = 0;
     bool redirect = true;
-    http.Response? response;  // Initialize response as nullable
+    http.Response? response; // Initialize response as nullable
 
     while (redirect && redirectCount < 5) {
       response = await http.post(
@@ -60,10 +66,10 @@ class THttpHelper3 {
         headers: accessToken.isEmpty
             ? {'Content-Type': 'application/x-www-form-urlencoded'}
             : {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Authorization': 'Bearer $accessToken'
-        },
-        body: _encodeFormData(data),  // Ensure form URL encoding
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': 'Bearer $accessToken'
+              },
+        body: _encodeFormData(data), // Ensure form URL encoding
       );
 
       if (kDebugMode) {
@@ -71,7 +77,9 @@ class THttpHelper3 {
       }
 
       // Handle redirect status codes (3xx)
-      if (response.statusCode == 308 || response.statusCode == 301 || response.statusCode == 302) {
+      if (response.statusCode == 308 ||
+          response.statusCode == 301 ||
+          response.statusCode == 302) {
         String? redirectUrl = response.headers['location'];
         if (redirectUrl != null) {
           uri = Uri.parse(redirectUrl);
@@ -96,9 +104,12 @@ class THttpHelper3 {
   }
 
   /// Helper method to make a POST request
-  static Future<Map<String, dynamic>> post(String endpoint,Map<String, dynamic>? queryParams, dynamic data, {String accessToken = ""}) async {
+  static Future<Map<String, dynamic>> post(
+      String endpoint, Map<String, dynamic>? queryParams, dynamic data,
+      {String accessToken = ""}) async {
     if (kDebugMode) {
-      print('POST Request: $_baseUrl$endpoint${Uri(queryParameters:queryParams)}');
+      print(
+          'POST Request: $_baseUrl$endpoint${Uri(queryParameters: queryParams)}');
       print('POST Data: $data');
     }
 
@@ -108,17 +119,17 @@ class THttpHelper3 {
     //   body: json.encode(data),
     // );
 
-    final response = await http.post(Uri.parse('$_baseUrl$endpoint').replace(queryParameters:queryParams),
+    final response = await http.post(
+      Uri.parse('$_baseUrl$endpoint').replace(queryParameters: queryParams),
 
       headers: accessToken.isEmpty
           ? {'Content-Type': 'application/x-www-form-urlencoded'}
           : {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': 'Bearer $accessToken'
-
-      },
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'Authorization': 'Bearer $accessToken'
+            },
       body: _encodeFormData(data),
-        // Set a reasonable limit for redirects
+      // Set a reasonable limit for redirects
     );
 
     if (kDebugMode) {
@@ -130,24 +141,31 @@ class THttpHelper3 {
 
   /// Helper method to make a POST Raw request
 
-  static Future<Map<String, dynamic>> postRaw(String endpoint, Map<String, dynamic>? queryParams, dynamic data, {String accessToken = ""}) async {
+  static Future<Map<String, dynamic>> postRaw(
+      String endpoint, Map<String, dynamic>? queryParams, dynamic data,
+      {String accessToken = ""}) async {
     if (kDebugMode) {
-      print('POST Request: $_baseUrl$endpoint${Uri(queryParameters:queryParams)}');
+      print(
+          'POST Request: $_baseUrl$endpoint${Uri(queryParameters: queryParams)}');
       print('Authorization: $accessToken');
       print('POST RequestBody: ${jsonEncode(data)}');
-
     }
 
     Uri uri = Uri.parse('$_baseUrl$endpoint');
 
-    if (queryParams != null && queryParams.isNotEmpty) { // Add this check
+    if (queryParams != null && queryParams.isNotEmpty) {
+      // Add this check
       uri = uri.replace(queryParameters: queryParams);
     }
 
-    final response = await http.post(uri,
+    final response = await http.post(
+      uri,
       headers: accessToken.isEmpty
           ? {"Content-Type": "application/json"}
-          : {"Content-Type": "application/json", 'Authorization': 'Bearer $accessToken'},
+          : {
+              "Content-Type": "application/json",
+              'Authorization': 'Bearer $accessToken'
+            },
       body: jsonEncode(data),
       // Set a reasonable limit for redirects
     );
@@ -160,9 +178,10 @@ class THttpHelper3 {
     return _handleResponse(response);
   }
 
-
   /// Helper method to make a PATCH request with form data
-  static Future<Map<String, dynamic>> patchFormData(String endpoint, dynamic data, {String accessToken = ""}) async {
+  static Future<Map<String, dynamic>> patchFormData(
+      String endpoint, dynamic data,
+      {String accessToken = ""}) async {
     if (kDebugMode) {
       print('PATCH Request: $_baseUrl/$endpoint');
       print('PATCH FormData: $data');
@@ -173,9 +192,9 @@ class THttpHelper3 {
       headers: accessToken.isEmpty
           ? {'Content-Type': 'application/x-www-form-urlencoded'}
           : {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': 'Bearer $accessToken'
-      },
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'Authorization': 'Bearer $accessToken'
+            },
       body: data,
     );
 
@@ -206,10 +225,13 @@ class THttpHelper3 {
     return _handleResponse(response);
   }
 
-
-
   /// Helper method to make a PATCH request
-  static Future<Map<String, dynamic>> patch(String endpoint, {String accessToken = "", Map<String, dynamic>? queryParams, dynamic data,}) async {
+  static Future<Map<String, dynamic>> patch(
+    String endpoint, {
+    String accessToken = "",
+    Map<String, dynamic>? queryParams,
+    dynamic data,
+  }) async {
     final uri = Uri.parse('$_baseUrl/$endpoint').replace(
       queryParameters: queryParams,
     );
@@ -219,15 +241,14 @@ class THttpHelper3 {
       print('PATCH FormData: $data');
     }
 
-
     final response = await http.patch(
       uri,
       headers: accessToken.isEmpty
           ? {'Content-Type': 'application/x-www-form-urlencoded'}
           : {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': 'Bearer $accessToken'
-      },
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'Authorization': 'Bearer $accessToken'
+            },
       body: data,
     );
 
@@ -246,11 +267,13 @@ class THttpHelper3 {
     return _handleResponse(response);
   }
 
-
-
-
   /// Helper method to make a DELETE request
-  static Future<Map<String, dynamic>> delete(String endpoint, {String accessToken = "", Map<String, dynamic>? queryParams, dynamic data,}) async {
+  static Future<Map<String, dynamic>> delete(
+    String endpoint, {
+    String accessToken = "",
+    Map<String, dynamic>? queryParams,
+    dynamic data,
+  }) async {
     final uri = Uri.parse('$_baseUrl/$endpoint').replace(
       queryParameters: queryParams,
     );
@@ -264,10 +287,9 @@ class THttpHelper3 {
       headers: accessToken.isEmpty
           ? {'Content-Type': 'application/x-www-form-urlencoded'}
           : {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': 'Bearer $accessToken'
-      },
-
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'Authorization': 'Bearer $accessToken'
+            },
     );
 
     if (kDebugMode) {
@@ -301,7 +323,6 @@ class THttpHelper3 {
   // }
 
   // Handle the HTTP response
-
 
   static Map<String, dynamic> _handleResponse(http.Response response) {
     switch (response.statusCode) {
@@ -337,5 +358,4 @@ class THttpHelper3 {
         .map((e) => '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value.toString())}')
         .join('&');
   }*/
-
 }

@@ -52,6 +52,7 @@ class LoginController extends GetxController {
       TFullScreenLoader.stopLoading();
 
       if (response['success'] == true) {
+        SharedPrefs.setString("mobileNumber", phoneNumber.text.trim());
         /// this is to Access data
         Map<String, dynamic> userDataMap =
             _localStorage.readData(_userDataKey) ?? {};

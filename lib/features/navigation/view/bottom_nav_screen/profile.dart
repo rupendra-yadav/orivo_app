@@ -63,13 +63,12 @@ class _ProfileState extends State<Profile> {
     return packageInfo.version;
   }
 
-
-
   ///LogoutDialog
   logoutAlertDialog(BuildContext context) async {
     return showDialog<void>(
       context: context,
-      barrierDismissible: true, // Prevents closing the dialog by tapping outside
+      barrierDismissible:
+          true, // Prevents closing the dialog by tapping outside
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: TColors.primaryLight1,
@@ -119,17 +118,12 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-
-
   @override
   Widget build(BuildContext context) {
-
-
     final TLocalStorage _localStorage = TLocalStorage();
 
     controller.getUserData2();
     //controller.logout();
-
 
     return Scaffold(
       backgroundColor: TColors.primary,
@@ -154,15 +148,17 @@ class _ProfileState extends State<Profile> {
                   children: [
                     Expanded(
                       child: Obx(() {
-                         if (controller.isUserDataLoading.value) {
+                        if (controller.isUserDataLoading.value) {
                           return ClipRRect(
                             borderRadius: BorderRadius.circular(50.r),
                             child: TShimmerEffect(width: 80.w, height: 80.h),
                           );
                         }
 
-                        String imageUrl  = controller.userModelData2 != null ? controller.userModelData2.name: "";
-                      
+                        String imageUrl =
+                            "controller.userModelData != null ? controller.userModelData.value.address:"
+                            "";
+
                         return ClipRRect(
                           borderRadius: BorderRadius.circular(50.r),
                           child: CachedNetworkImage(
@@ -190,30 +186,40 @@ class _ProfileState extends State<Profile> {
                     SizedBox(width: 10.w),
                     Expanded(
                       child: Obx(() {
-                          if (controller.isUserDataLoading.value) {
+                        if (controller.isUserDataLoading.value) {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               TShimmerEffect(width: 66.w, height: 15.h),
-                              SizedBox(height: 10.h,),
+                              SizedBox(
+                                height: 10.h,
+                              ),
                               TShimmerEffect(width: 33.w, height: 10.h),
                             ],
                           );
                         }
-                      
+
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               maxLines: 1,
-                              controller.userModelData2!= null ? controller.userModelData2.name :"Name" ,
+                              controller.userModelData != null
+                                  ? controller.userModelData.value?.name ??
+                                      "Name"
+                                  : "Name",
                               style: const TextStyle(
-                                  color: TColors.white, fontSize: 24,fontWeight:FontWeight.bold),
+                                  color: TColors.white,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              controller.userModelData2!= null ?controller.userModelData2.companyName:"Company",
+                              controller.userModelData.value?.companyName ??
+                                  "Company",
                               style: const TextStyle(
-                                  color: TColors.secondary, fontSize: 12,),
+                                color: TColors.secondary,
+                                fontSize: 12,
+                              ),
                             ),
                           ],
                         );
@@ -222,9 +228,18 @@ class _ProfileState extends State<Profile> {
                     const Spacer(),
                     Expanded(
                       child: IconButton(
-                        onPressed: () => Get.to(() => EditProfile(
-                              userModel: controller.userModelData,
-                            )),
+                        onPressed: () {
+                          final userModel = controller.userModelData.value;
+                          if (userModel != null) {
+                            Get.to(() => EditProfile(userModel: userModel));
+                          } else {
+                            // Optionally show an error or fallback
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text('User data not loaded')),
+                            );
+                          }
+                        },
                         icon: const Icon(
                           Iconsax.edit_2,
                           color: TColors.white,
@@ -341,7 +356,8 @@ class _ProfileState extends State<Profile> {
                   onPressed: () {
                     _localStorage.clearAll();
 
-                    logoutAlertDialog(context); // Show the dialog when button is pressed
+                    logoutAlertDialog(
+                        context); // Show the dialog when button is pressed
                   },
                 ),
 
@@ -349,9 +365,10 @@ class _ProfileState extends State<Profile> {
                 ProfileOptions(
                   title: TTexts.logoutFromAllDevices,
                   onPressed: () {
-                   _localStorage.clearAll();
+                    _localStorage.clearAll();
 
-                   logoutAlertDialog(context); // Show the dialog when button is pressed
+                    logoutAlertDialog(
+                        context); // Show the dialog when button is pressed
                   },
                 ),
               ],
@@ -364,7 +381,7 @@ class _ProfileState extends State<Profile> {
             child: Padding(
               padding: EdgeInsets.only(
                   top: TDeviceUtils.getBottomNavigationBarHeight()),
-              child:  Text(
+              child: Text(
                 'Version $version \n${TTexts.versionAndDevelopedBy}',
                 textAlign: TextAlign.center,
                 style: TextStyle(color: TColors.primaryLight1, fontSize: 10),
@@ -376,5 +393,3 @@ class _ProfileState extends State<Profile> {
     );
   }
 }
-
-

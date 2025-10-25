@@ -30,7 +30,6 @@ class VerifyOtpController extends GetxController {
 
   Future<void> verifyOtp(int resetPassword) async {
     try {
-
       TFullScreenLoader.openLoadingDialog('Verifying OTP...!');
 
       //check internet Connection
@@ -46,7 +45,8 @@ class VerifyOtpController extends GetxController {
         TFullScreenLoader.stopLoading();
         return;
       }
-      Map<String, dynamic> userDataMap = _localStorage.readData(_userDataKey) ?? {};
+      Map<String, dynamic> userDataMap =
+          _localStorage.readData(_userDataKey) ?? {};
       UserDetail user = UserDetail.fromJson(userDataMap);
       try {
         if (kDebugMode) {
@@ -59,28 +59,27 @@ class VerifyOtpController extends GetxController {
         }
       }
 
-      final response = await _repository.verifyOtp( SharedPrefs.getString("mobileNumber"), otp.text.trim());
+      final response = await _repository.verifyOtp(
+          SharedPrefs.getString("mobileNumber"), otp.text.trim());
 
       TFullScreenLoader.stopLoading();
 
       SharedPrefs.setString("mobileNumber", "");
 
-
-
-
       if (response['success'] == true) {
-
-
         TLoaders.successSnackBar(
             title: 'Success', message: response['message']);
         if (resetPassword == 1) {
-          Get.offAll(() =>  ResetPassword(flow: resetPassword,));
-        } else if(resetPassword == 2){
-          Get.offAll(() =>  ResetPassword(flow: resetPassword,));
+          Get.offAll(() => ResetPassword(
+                flow: resetPassword,
+              ));
+        } else if (resetPassword == 2) {
+          Get.offAll(() => ResetPassword(
+                flow: resetPassword,
+              ));
         } else {
           Get.offAll(() => const NavigationScreen());
         }
-
       } else {
         TLoaders.errorSnackBar(title: 'Error', message: response['message']);
         if (kDebugMode) {
@@ -96,7 +95,6 @@ class VerifyOtpController extends GetxController {
 
   Future<void> verifyOtp2(int resetPassword) async {
     try {
-
       TFullScreenLoader.openLoadingDialog('Verifying OTP...!');
 
       //check internet Connection
@@ -112,7 +110,8 @@ class VerifyOtpController extends GetxController {
         TFullScreenLoader.stopLoading();
         return;
       }
-      Map<String, dynamic> userDataMap = _localStorage.readData(_userDataKey) ?? {};
+      Map<String, dynamic> userDataMap =
+          _localStorage.readData(_userDataKey) ?? {};
       UserDetail user = UserDetail.fromJson(userDataMap);
       try {
         if (kDebugMode) {
@@ -125,23 +124,31 @@ class VerifyOtpController extends GetxController {
         }
       }
 
-      final response = await _repository.verifyOtp2(SharedPrefs.getString("mobileNumber")??"", otp.text.trim() ,SharedPrefs.getString("UUID")??"");
+      final response = await _repository.verifyOtp2(
+          SharedPrefs.getString("mobileNumber") ?? "",
+          otp.text.trim(),
+          SharedPrefs.getString("UUID") ?? "",
+          SharedPrefs.getString("FCM_TOKEN").toString(),
+          SharedPrefs.getString("device_type") ?? "");
 
       TFullScreenLoader.stopLoading();
 
-      SharedPrefs.setString("mobileNumber", "");
+      // SharedPrefs.setString("mobileNumber", "");
 
       if (response['success'] == true) {
-
-        TLoaders.successSnackBar(title: 'Success', message: response['message']);
+        TLoaders.successSnackBar(
+            title: 'Success', message: response['message']);
         if (resetPassword == 1) {
-          Get.offAll(() =>  ResetPassword(flow: resetPassword,));
-        } else if(resetPassword == 2){
-          Get.offAll(() =>  ResetPassword(flow: resetPassword,));
+          Get.offAll(() => ResetPassword(
+                flow: resetPassword,
+              ));
+        } else if (resetPassword == 2) {
+          Get.offAll(() => ResetPassword(
+                flow: resetPassword,
+              ));
         } else {
           Get.offAll(() => const NavigationScreen());
         }
-
       } else {
         TLoaders.errorSnackBar(title: 'Error', message: response['message']);
         if (kDebugMode) {
@@ -154,5 +161,4 @@ class VerifyOtpController extends GetxController {
       }
     }
   }
-
 }

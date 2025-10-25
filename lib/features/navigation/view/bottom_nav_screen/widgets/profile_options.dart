@@ -16,8 +16,7 @@ class ProfileOptions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:
-      const EdgeInsets.only(left: 20.0, top: 10, bottom: 10),
+      padding: const EdgeInsets.only(left: 20.0, top: 10, bottom: 10),
       child: InkWell(
         onTap: onPressed,
         child: Row(
@@ -25,12 +24,17 @@ class ProfileOptions extends StatelessWidget {
             Text(
               title,
               style: const TextStyle(
-                  color: TColors.primaryLight1, fontSize: 16),
+                  color: TColors.primaryLight1,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500),
             ),
             const Spacer(),
             IconButton(
                 onPressed: onPressed,
-                icon: const Icon(Iconsax.arrow_right_3,color: TColors.primaryLight1,))
+                icon: const Icon(
+                  Iconsax.arrow_right_3,
+                  color: TColors.primaryLight1,
+                ))
           ],
         ),
       ),

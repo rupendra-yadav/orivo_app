@@ -4,12 +4,13 @@ import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../../utils/constant/colors.dart';
+import '../../model/demand_analysis_respponse.dart';
 import '../../model/demand_value_modle.dart';
 
 class DemandTimelineGraph extends StatelessWidget {
   const DemandTimelineGraph({super.key, this.timeline});
 
-  final List<Value>? timeline;
+  final List<TimelineData>? timeline;
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +18,8 @@ class DemandTimelineGraph extends StatelessWidget {
 
     timeline?.forEach((graph) {
       chartData.add(ChartData(
-        x: graph.y ?? 0.0,
-        y: DateTime.parse(graph.x ?? ""),
+        y: graph.y ?? 0.0,
+        x: DateTime.parse(graph.x ?? ""),
       ));
     });
 
@@ -27,8 +28,7 @@ class DemandTimelineGraph extends StatelessWidget {
           enable: true,
           tooltipAlignment: ChartAlignment.center,
           activationMode: ActivationMode.singleTap,
-          tooltipDisplayMode: TrackballDisplayMode.groupAllPoints
-      ),
+          tooltipDisplayMode: TrackballDisplayMode.groupAllPoints),
       backgroundColor: Colors.transparent,
       primaryXAxis: DateTimeAxis(
         interval: 1,
@@ -36,8 +36,8 @@ class DemandTimelineGraph extends StatelessWidget {
         labelStyle: const TextStyle(color: Colors.white),
         majorGridLines: const MajorGridLines(width: 0),
         axisLine: const AxisLine(width: 0),
-       isVisible: false,
-       /* autoScrollingDelta: 5,
+        isVisible: false,
+        /* autoScrollingDelta: 5,
         autoScrollingMode: AutoScrollingMode.start,*/
       ),
       primaryYAxis: const NumericAxis(
@@ -47,17 +47,16 @@ class DemandTimelineGraph extends StatelessWidget {
         minorTickLines: MinorTickLines(size: 0),
       ),
 
-    /*  zoomPanBehavior: ZoomPanBehavior(
+      /*  zoomPanBehavior: ZoomPanBehavior(
         enablePanning: true,
         zoomMode: ZoomMode.x,
       ),*/
       series: <CartesianSeries>[
-
         LineSeries<ChartData, DateTime>(
           name: TTexts.demandTimeLine,
           dataSource: chartData,
-          xValueMapper: (ChartData data, _) => data.y,
-          yValueMapper: (ChartData data, _) => data.x,
+          xValueMapper: (ChartData data, _) => data.x,
+          yValueMapper: (ChartData data, _) => data.y,
           color: TColors.demandGraphLine,
           width: 3,
         ),
@@ -81,8 +80,8 @@ class DemandTimelineGraph extends StatelessWidget {
 }
 
 class ChartData {
-  final double x; // The numeric value (y-axis)
-  final DateTime y; // The date (x-axis)
+  final DateTime x; // The date (x-axis)
+  final double y; // The numeric value (y-axis)
 
   ChartData({required this.x, required this.y});
 }

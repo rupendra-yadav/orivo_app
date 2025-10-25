@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import 'package:auro/features/device_details/view/device_detail_screens/controller/device_detail_controller.dart';
+import 'package:auro/features/navigation/view/bottom_nav_screen/controller/device_list_controller.dart';
+import 'package:auro/features/navigation/view/navigation_screen.dart';
 import 'package:auro/utils/constant/colors.dart';
 import 'package:auro/utils/constant/image_string.dart';
 import 'package:auro/utils/device/device_utility.dart';
@@ -8,6 +11,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:in_app_update/in_app_update.dart';
+import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../myapp.dart';
@@ -27,6 +31,9 @@ class Splash extends StatefulWidget {
 
 class _SplashState extends State<Splash> {
   final splashController = Get.put(SplashController());
+  final DeviceListController controller = Get.put(DeviceListController());
+  final DeviceDetailedController devicecontroller =
+      Get.put(DeviceDetailedController());
 
   late Map<String, String> arguments;
 
@@ -67,6 +74,27 @@ class _SplashState extends State<Splash> {
     _checkOs();
 
     super.initState();
+    firstCall();
+  }
+
+  void firstCall() {
+    controller.getDeviceList2();
+    // userController.getUserData2();
+
+    DateTime now = DateTime.now();
+    DateTime utcNow = now.toUtc();
+    DateTime istNow = utcNow.add(const Duration(hours: 5, minutes: 30));
+    DateTime istMidnight = DateTime(istNow.year, istNow.month, istNow.day);
+    String formattedDateMidnight =
+        DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
+    String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
+
+    devicecontroller.fetchDeviceDetail(
+        "X2024103", formattedDateMidnight, formattedDate);
+    devicecontroller.fetchEnergyConsumptionDetail(
+        "X2024103", formattedDateMidnight, formattedDate);
+    devicecontroller.fetchCostEstimateDetail(
+        "X2024103", formattedDateMidnight, formattedDate);
   }
 
   String generateUuid() {
@@ -86,32 +114,31 @@ class _SplashState extends State<Splash> {
           return;
         }
       }
-      //splashController.screenRedirect();
+      splashController.screenRedirect();
 
       reFresh();
-
     } catch (e) {
       debugPrint('Error checking for updates: $e');
       reFresh();
-     // splashController.screenRedirect();
+      splashController.screenRedirect();
     }
   }
 
-
-  void _checkOs(){
-    if(Platform.isIOS){
+  void _checkOs() {
+    if (Platform.isIOS) {
+      SharedPrefs.setString("device_type", "ios");
       if (kDebugMode) {
         print("OS is IOS");
       }
-    }else{
+    } else {
+      SharedPrefs.setString("device_type", "android");
       if (kDebugMode) {
         print("OS is Android");
       }
     }
   }
 
-  void reFresh (){
-
+  void reFresh() {
     if (SharedPrefs.getString("UUID") == null) {
       generateUuid();
       if (kDebugMode) {
@@ -123,13 +150,15 @@ class _SplashState extends State<Splash> {
       }
     }
 
-    if (SharedPrefs.getString(TTexts.prefRefreshToken) != null && SharedPrefs.getString(TTexts.prefAccessToken) != null) {
+    if (SharedPrefs.getString(TTexts.prefRefreshToken) != null &&
+        SharedPrefs.getString(TTexts.prefAccessToken) != null) {
       splashController.refreshToken(
-          SharedPrefs.getString(TTexts.prefRefreshToken)??"",
-          SharedPrefs.getString((TTexts.prefAccessToken))??"",
-          SharedPrefs.getString("UUID")??"");
-    }else{
+          SharedPrefs.getString(TTexts.prefRefreshToken) ?? "",
+          SharedPrefs.getString((TTexts.prefAccessToken)) ?? "",
+          SharedPrefs.getString("UUID") ?? "");
+    } else {
       Get.offAll(const Login());
+      // Get.offAll(const NavigationScreen());
     }
   }
 

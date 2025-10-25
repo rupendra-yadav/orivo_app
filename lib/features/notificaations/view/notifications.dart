@@ -14,13 +14,11 @@ import '../../navigation/view/bottom_nav_screen/widgets/device_list_shimmer.dart
 import '../widgets/notification_card.dart';
 import '../widgets/notification_list_shimmer.dart';
 
-
 class Notifications extends StatelessWidget {
   const Notifications({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     final NotificationController controller = Get.put(NotificationController());
     // controller.getNotificationList();
     controller.getNotificationList2();
@@ -35,34 +33,32 @@ class Notifications extends StatelessWidget {
           child: Column(
             children: [
               /// Notification Card
-              Obx((){
-
+              Obx(() {
                 if (controller.isNotificationLoading.value) {
                   return NotificationListShimmer();
                 }
 
                 if (controller.notificationList.isEmpty) {
                   return const TImageLoaderWidget(
-                      text: 'Whoops! No Device available...!',
+                      text: 'No Notifications yet!',
                       animation: TImages.imgLoginBgNew1,
                       showAction: false);
                 }
 
-                return  SizedBox(
-                  height:  MediaQuery.of(context).size.height,
+                return SizedBox(
+                  height: MediaQuery.of(context).size.height,
                   child: ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                    scrollDirection: Axis.vertical,
-                    itemCount: controller.notificationList.length,
-                    itemBuilder: (context,index){
-                      return NotificationCard(deviceListModel: controller.notificationList[index],
-                      );
-                    }),
+                      scrollDirection: Axis.vertical,
+                      itemCount: controller.notificationList.length,
+                      itemBuilder: (context, index) {
+                        return NotificationCard(
+                          deviceListModel: controller.notificationList[index],
+                        );
+                      }),
                 );
-              })
-
-              ,
+              }),
             ],
           ),
         ),
@@ -70,7 +66,3 @@ class Notifications extends StatelessWidget {
     );
   }
 }
-
-
-
-

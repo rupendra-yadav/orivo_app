@@ -1,5 +1,6 @@
 import 'package:auro/features/device_details/view/device_detail_screens/history.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/home.dart';
+import 'package:auro/features/device_details/view/device_detail_screens/electricity_bill.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/setting.dart';
 import 'package:get/get.dart';
 
@@ -7,6 +8,10 @@ class DeviceDetailNavigationController extends GetxController {
   static DeviceDetailNavigationController get instance => Get.find();
 
   final RxString deviceId = "".obs;
+  final RxString deviceName = "".obs;
+  final RxString deviceInstallationDate = "".obs;
+  final RxString deviceModel = "".obs;
+  final RxString deviceDesc = "".obs;
 
   final Rx<int> selectedIndex = 0.obs;
 
@@ -32,8 +37,7 @@ class DeviceDetailNavigationController extends GetxController {
   final screens = [
     const Home(),
     const History(),
-    // const Insights(),
+    const Insights(),
     const Setting(),
-
   ];
 }

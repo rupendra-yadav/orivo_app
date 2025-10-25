@@ -19,13 +19,21 @@ class DeviceDetailsNavigationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(DeviceDetailNavigationController());
+    // controller.deviceId.value = deviceListModel.userDeviceId;
+    controller.deviceName.value = deviceListModel.name;
+    controller.deviceInstallationDate.value =
+        deviceListModel.installationDate ?? "";
+    controller.deviceModel.value = deviceListModel.model ?? "";
     controller.deviceId.value = deviceListModel.userDeviceId;
+    controller.deviceDesc.value = deviceListModel.description ?? "";
+
     return Scaffold(
       backgroundColor: TColors.primaryDark1,
 
       /// App Bar
       appBar: DeviceDetailsAppBar(
-        title: deviceListModel.name, deviceId: deviceListModel.userDeviceId,
+        title: deviceListModel.name,
+        deviceId: deviceListModel.userDeviceId,
       ),
 
       /// Bottom Navigation
@@ -54,10 +62,10 @@ class DeviceDetailsNavigationScreen extends StatelessWidget {
                   icon: Icon(Iconsax.note_14),
                   label: TTexts.history,
                   tooltip: TTexts.history),
-
-              /*  BottomNavigationBarItem(
-                      icon: Icon(Icons.stacked_bar_chart), label: TTexts.insights,tooltip: TTexts.insights),*/
-
+              BottomNavigationBarItem(
+                  icon: Icon(Iconsax.document4),
+                  label: TTexts.insights,
+                  tooltip: TTexts.insights),
               BottomNavigationBarItem(
                   icon: Icon(Iconsax.setting_2),
                   label: TTexts.settings,

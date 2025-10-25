@@ -11,25 +11,29 @@ import '../detali_pages/cost_estimate_detail.dart';
 import '../home.dart';
 import '../model/cost_estimate_model.dart';
 
-
 class CostEstimateCard extends StatelessWidget {
   const CostEstimateCard({
     super.key,
     required this.totalCount,
-    required this.costEstimateModel,
+    required this.energy,
+    required this.govt,
+    required this.demand,
+    // required this.costEstimateModel,
   });
 
   final double totalCount;
-  final CostEstimateModel costEstimateModel;
+  final double energy;
+  final double govt;
+  final double demand;
+  // final CostEstimateModel costEstimateModel;
 
   @override
   Widget build(BuildContext context) {
-
     Map<String, double> originalDataMap = {
-      "Energy": costEstimateModel.totalEnergyCost?.value ?? 0.0,
-      "Govt": costEstimateModel.govCost?.value ?? 0.0,
-      "Demand": costEstimateModel.demand?.value ?? 0.0,
-     /* "Other": costEstimateModel.other?.value ?? 0.0,*/
+      "Energy": energy,
+      "Govt": govt,
+      "Demand": demand,
+      /* "Other": costEstimateModel.other?.value ?? 0.0,*/
     };
 
     Map<String, double> updatedDataMap = {};
@@ -43,7 +47,9 @@ class CostEstimateCard extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10.h),
       child: InkWell(
-        onTap: () => Get.to(() => const CostEstimate(isNotify: false,)),
+        onTap: () => Get.to(() => const CostEstimate(
+              isNotify: false,
+            )),
         child: Container(
             height: 320.h,
             decoration: BoxDecoration(
@@ -52,11 +58,13 @@ class CostEstimateCard extends StatelessWidget {
             ),
             width: double.infinity,
             child: Padding(
-              padding: EdgeInsets.symmetric(
-                  vertical: 20.h, horizontal: 10.w),
+              padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 10.w),
               child: Column(
                 children: [
-                  const TextView(text: TTexts.costEstimation),
+                  const TextView(
+                    text: TTexts.costEstimation,
+                    bold: true,
+                  ),
 
                   SizedBox(
                     height: 20.h,
@@ -66,11 +74,9 @@ class CostEstimateCard extends StatelessWidget {
 
                   PieChart(
                     dataMap: updatedDataMap,
-                    animationDuration:
-                    const Duration(milliseconds: 800),
+                    animationDuration: const Duration(milliseconds: 800),
                     chartLegendSpacing: 32.w,
-                    chartRadius:
-                    MediaQuery.of(context).size.width / 3.2,
+                    chartRadius: MediaQuery.of(context).size.width / 3.2,
                     colorList: colorList,
                     initialAngleInDegree: 0,
                     chartType: ChartType.ring,
@@ -81,12 +87,11 @@ class CostEstimateCard extends StatelessWidget {
                       height: 90.h,
                       decoration: BoxDecoration(
                           color: TColors.primaryDark1,
-                          borderRadius:
-                          BorderRadius.circular(100.r)),
+                          borderRadius: BorderRadius.circular(100.r)),
                       child: Center(
                         child: TextView(
                           text:
-                          "${NumberFormater().numberComma( number: totalCount)} Rs",
+                              "${NumberFormater().numberComma(number: totalCount)} Rs",
                           textColor: Colors.white,
                           bold: true,
                           fontSize: 11,
@@ -102,14 +107,12 @@ class CostEstimateCard extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           color: TColors.primaryLight1),
                     ),
-                    chartValuesOptions:
-                    const ChartValuesOptions(
+                    chartValuesOptions: const ChartValuesOptions(
                       showChartValueBackground: true,
                       showChartValues: false,
                       showChartValuesInPercentage: false,
                       showChartValuesOutside: false,
-                      chartValueBackgroundColor:
-                      TColors.primary,
+                      chartValueBackgroundColor: TColors.primary,
                       decimalPlaces: 1,
                     ),
                     // gradientList: ---To add gradient colors---
@@ -122,6 +125,7 @@ class CostEstimateCard extends StatelessWidget {
     );
   }
 }
+
 final colorList = <Color>[
   const Color(0xff3dd598),
   const Color(0xff0062ff),

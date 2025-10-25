@@ -21,16 +21,21 @@ class TextButtonWithContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
+      style: TextButton.styleFrom(
+          padding: EdgeInsets.all(4), minimumSize: Size(0, 0)),
       onPressed: onPressed,
       child: Container(
+        margin: EdgeInsets.only(right: 0.w),
         decoration: BoxDecoration(
-            color: containerColor,
+            color: !isSelected ? containerColor : TColors.accent,
             borderRadius: BorderRadius.circular(20.r)),
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
           child: Text(
             text,
-            style: TextStyle(color: isSelected ? TColors.accent : textColor),
+            style: TextStyle(
+                color: !isSelected ? textColor : TColors.primary,
+                fontSize: 12.sp),
           ),
         ),
       ),

@@ -5,18 +5,27 @@ import 'package:iconsax/iconsax.dart';
 import '../../../../../../utils/constant/colors.dart';
 
 class DropDownCard extends StatefulWidget {
-  const DropDownCard({super.key,
-    required this.cardTitle,
-    required this.field1,
-    required this.field2,
-    required this.field3,
-    required this.field4,
-    required this.value1,
-    required this.value2,
-    required this.value3,
-    required this.value4});
+  const DropDownCard(
+      {super.key,
+      required this.cardTitle,
+      required this.field1,
+      required this.field2,
+      required this.field3,
+      required this.field4,
+      required this.value1,
+      required this.value2,
+      required this.value3,
+      required this.value4});
 
-  final String cardTitle ,field1,field2,field3,field4,value1,value2,value3,value4;
+  final String cardTitle,
+      field1,
+      field2,
+      field3,
+      field4,
+      value1,
+      value2,
+      value3,
+      value4;
 
   @override
   _DropDownCardState createState() => _DropDownCardState();
@@ -28,26 +37,27 @@ class _DropDownCardState extends State<DropDownCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: TColors.primaryDark1,borderRadius: BorderRadius.circular(20.r) ),
-     
+      decoration: BoxDecoration(
+          color: TColors.primaryDark1,
+          borderRadius: BorderRadius.circular(20.r)),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 10.h),
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
         child: Column(
           children: [
             /// Main card header
             Row(
               children: [
                 Text(
-                  "KVAH Info",
+                  widget.cardTitle,
                   style: TextStyle(
-                    fontSize: 20.sp,
+                    fontSize: 16.sp,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 const Spacer(),
-                if(_isDetailVisible)
-                const Icon(Icons.info_outline, color: Colors.white),
+                if (_isDetailVisible)
+                  const Icon(Icons.info_outline, color: Colors.white),
                 IconButton(
                   onPressed: () {
                     setState(() {
@@ -73,13 +83,14 @@ class _DropDownCardState extends State<DropDownCard> {
                   borderRadius: BorderRadius.circular(10.r),
                 ),
                 child: Padding(
-                  padding:  EdgeInsets.symmetric(vertical: 10.h,horizontal: 10.w),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
                   child: Column(
                     children: [
-                      _buildInfoRow("On Peak M.D", "0.456"),
-                      _buildInfoRow("Off Peak M.D", "0.720"),
-                      _buildInfoRow("Normal M.D", "0.300"),
-                      _buildInfoRow("Units", "456720"),
+                      _buildInfoRow(widget.field1, widget.value1),
+                      _buildInfoRow(widget.field2, widget.value2),
+                      _buildInfoRow(widget.field3, widget.value3),
+                      _buildInfoRow(widget.field4, widget.value4),
                     ],
                   ),
                 ),
@@ -99,23 +110,25 @@ class _DropDownCardState extends State<DropDownCard> {
           Text(
             label,
             style: TextStyle(
-              fontSize: 16.sp,
+              fontSize: 12.sp,
               color: Colors.white,
             ),
           ),
-          SizedBox(width: 5.w,),
+          SizedBox(
+            width: 5.w,
+          ),
           Text(
             ":",
             style: TextStyle(
-              fontSize: 16.sp,
+              fontSize: 12.sp,
               color: Colors.white70,
             ),
           ),
-        const Spacer(),
+          const Spacer(),
           Text(
             value,
             style: TextStyle(
-              fontSize: 16.sp,
+              fontSize: 12.sp,
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
@@ -125,4 +138,3 @@ class _DropDownCardState extends State<DropDownCard> {
     );
   }
 }
-

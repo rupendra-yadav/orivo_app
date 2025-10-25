@@ -1,18 +1,18 @@
-
-const String tBaseUrl = "https://webdevelopercg.com/electricity/myadmin";
-const String tBaseUrl2 = "http://3.232.30.235:5001/api/v1/";
-const String tBaseUrl3 = "http://3.232.30.235:5002/api/v1/";
+// const String tBaseUrl = "https://webdevelopercg.com/electricity/myadmin";
+const String tBaseUrl =
+    "https://jbrzivlj0f.execute-api.ap-south-1.amazonaws.com/api/v1/";
+// const String tBaseUrl2 = "http://3.232.30.235:5001/api/v1/";
+// const String tBaseUrl3 = "http://3.232.30.235:5002/api/v1/";
 const String tBaseImageUrl = "";
 
-
 ///End Keys
-class APIKeys{
+class APIKeys {
   static const String userLoginEND = "Api/user_login";
   static const String signupUserEND = "Api/signup_user";
   static const String sendOtpEND = "Api/send_otp";
   static const String verifyOtpEND = "Api/verify_otp";
 
-  static const String userDetailsEND = "Api/user_details";
+  // static const String userDetailsEND = "Api/user_details";
   static const String updatePasswordEND = "Api/update_password";
 
   static const String machineEND = "Api/machine";
@@ -23,7 +23,8 @@ class APIKeys{
   static const String updateFcm = "Api/update_fcm";
 
   static const String updateContacts = "Api/update_contact";
-  static const String updateNotificationContact = "Api/update_notification_contact";
+  static const String updateNotificationContact =
+      "Api/update_notification_contact";
 
   static const String machineDetailsDataItemsEND = "readflux.php";
   static const String machineDetailsGraphDataEND = "readfieldwisedata.php";
@@ -32,32 +33,44 @@ class APIKeys{
 
   ///Auth
   static const String refresh = "auth/refresh";
-  static const String login = "auth/login";
-  static const String otpSend = "otp/send";
-  static const String otpVerify = "otp/verify";
-  static const String authLogout = "auth/logout";
+  static const String login = "auth/login"; //
+  static const String otpSend = "otp/send"; //
+  static const String otpVerify = "otp/verify"; //
+  static const String authLogout = "auth/logout"; //
 
   ///DeviceList
-  static const String userDevices = "user/devices";
+  static const String userDevices = "user/devices"; //
 
   /// user
-  static const String userProfile = "user/profile";
+  static const String userProfile = "user/profile"; //
   static const String userEditProfile = "user/edit-profile";
 
   /// Notifications
   static const String notificationsList = "notification/list-notifications";
+  static const String deviceAlertList = "notification/list-device-alerts";
 
+  /// energy-meter
+  static const String homeScreen = "energy-meter/home-screen"; //
+  static const String energyConsumptionDetails =
+      "energy-meter/energy-consumption-details"; //
+  static const String costEstimate = "energy-meter/cost-estimate-details"; //
+  static const String demandAnalysis = "energy-meter/demand-analysis";
+  static const String baseMetric = "energy-meter/base-metric";
+  static const String historyFields = "energy-meter/history-field";
+  static const String history = "energy-meter/history";
 
+  /// device
+  static const String editDeviceDetails = "device/edit-device-details"; //
 }
 
 ///End Keys
-class APIKeys2{
+class APIKeys2 {
   static const String energyConsumption = "energy-consumption";
-  static const String energyConsumptionDetails = "energy-consumption-details";
+  // static const String energyConsumptionDetails = "energy-consumption-details";
   static const String demand = "demand";
   static const String demandDetail = "demand-analysis";
   static const String pf = "pf";
-  static const String costEstimate = "cost-estimate";
+  // static const String costEstimate = "cost-estimate";
   static const String costEstimateDetail = "cost-estimate-details";
   static const String historyFields = "history-field";
   static const String history = "history";
@@ -66,8 +79,4 @@ class APIKeys2{
   static const String currentDetails = "current-details";
   static const String baseMetric = "base-metric";
   static const String pfDetails = "pf-details";
-
 }
-
-
-

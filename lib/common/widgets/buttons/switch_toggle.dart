@@ -6,24 +6,22 @@ import '../../../features/navigation/view/bottom_nav_screen/controller/profile_d
 import '../../../utils/constant/colors.dart';
 
 class SwitchToggle extends StatefulWidget {
-  final int type,activeStatus;
-  const SwitchToggle({super.key, required this.type, required this.activeStatus});
+  final int type, activeStatus;
+  const SwitchToggle(
+      {super.key, required this.type, required this.activeStatus});
 
   @override
   State<SwitchToggle> createState() => _SwitchToggleState();
 }
 
 class _SwitchToggleState extends State<SwitchToggle> {
-
   bool light = false;
-
-
 
   @override
   Widget build(BuildContext context) {
     final WidgetStateProperty<Color?> trackColor =
-    WidgetStateProperty.resolveWith<Color?>(
-          (Set<WidgetState> states) {
+        WidgetStateProperty.resolveWith<Color?>(
+      (Set<WidgetState> states) {
         // Track color when the switch is selected.
         if (states.contains(WidgetState.selected)) {
           return TColors.secondary;
@@ -36,8 +34,8 @@ class _SwitchToggleState extends State<SwitchToggle> {
     );
 
     final WidgetStateProperty<Color?> overlayColor =
-    WidgetStateProperty.resolveWith<Color?>(
-          (Set<WidgetState> states) {
+        WidgetStateProperty.resolveWith<Color?>(
+      (Set<WidgetState> states) {
         // Material color when switch is selected.
         if (states.contains(WidgetState.selected)) {
           return Colors.amber.withOpacity(0.54);
@@ -54,9 +52,9 @@ class _SwitchToggleState extends State<SwitchToggle> {
     );
 
     final userController = Get.put(ProfileDetailController());
-    if(widget.activeStatus == 1){
+    if (widget.activeStatus == 1) {
       light = true;
-    }else{
+    } else {
       light = false;
     }
 
@@ -70,8 +68,7 @@ class _SwitchToggleState extends State<SwitchToggle> {
         setState(() {
           light = value;
 
-          userController.updatePhoneStatus(widget.type,light?1:0);
-
+          // userController.updatePhoneStatus(widget.type,light?1:0);
         });
       },
     );

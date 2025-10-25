@@ -42,7 +42,7 @@ class SendOtpController extends GetxController {
       SharedPrefs.setString("mobileNumber", mobileNumber.text.trim());
       TFullScreenLoader.stopLoading();
 
-      if (response['success'] == true) {
+      if (response['success'] == true) {  
         TLoaders.successSnackBar(
             title: 'Success', message: response['message']);
         Get.to(() =>  VerifyOtp(resetPass: redirect,));

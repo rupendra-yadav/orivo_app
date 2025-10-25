@@ -1,3 +1,4 @@
+import 'package:auro/features/device_details/view/device_detail_screens/model/base_metric_response_model.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/widgets/multilene_voltage_graph.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,12 +14,12 @@ import 'multi_line_total_power_factor_graph.dart';
 class VoltageCard extends StatelessWidget {
   const VoltageCard({
     super.key,
-    required this.voltageDetailModel, required this.dateType,
-
+    required this.voltageMetric,
+    required this.dateType,
   });
 
-  final VoltageDetailModel voltageDetailModel;
-  final int dateType ;
+  final VoltageMetrics voltageMetric;
+  final int dateType;
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +28,8 @@ class VoltageCard extends StatelessWidget {
           color: TColors.primaryDark1,
           borderRadius: BorderRadius.circular(20.r)),
       child: Padding(
-        padding:
-        EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
-        child:  Column(
+        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextView(
@@ -39,22 +39,25 @@ class VoltageCard extends StatelessWidget {
             ),
 
             TextView(
-              text:voltageDetailModel.volt?.value?.toStringAsFixed(2) ?? "NA",
+              text: voltageMetric.current?.value?.toStringAsFixed(2) ?? "NA",
               fontSize: 30,
               bold: true,
               textColor: TColors.green,
             ),
 
             TextView(
-              text:"Average Voltage ------ ${voltageDetailModel.avgVolt?.value?.toStringAsFixed(2) ?? "NA"}",
+              text:
+                  "Average Voltage ------ ${voltageMetric.average?.value?.toStringAsFixed(2) ?? "NA"}",
               fontSize: 20,
               bold: true,
             ),
 
             ///Multile Graph
-        MultiLineVoltageGraph(onPeakGraph: voltageDetailModel.voltageTimeline?.value ?? [],dateType: dateType,),
-
-        ],
+            MultiLineVoltageGraph(
+              onPeakGraph: voltageMetric.timeline ?? [],
+              dateType: dateType,
+            ),
+          ],
         ),
       ),
     );

@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 
+import '../../../controller/device_detail_navigation_controller.dart';
 import '../controller/device_detail_controller.dart';
 import '../widgets/detail_pie_card.dart';
 import '../widgets/device_detail_shimmer.dart';
@@ -36,7 +37,10 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
 
   late String endDate;
 
-  final DeviceDetailController controller = Get.put(DeviceDetailController());
+  final DeviceDetailedController controller =
+      Get.put(DeviceDetailedController());
+  final DeviceDetailNavigationController navigationcontroller =
+      Get.put(DeviceDetailNavigationController());
 
   String _selectedDateRange = TTexts.chooseDateRange;
   String formattedEndDateInYears = "";
@@ -49,7 +53,7 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
     if (widget.isNotify == true) {
       args = ModalRoute.of(context)!.settings.arguments as Map<String, String>;
 
-      deviceId = args['deviceId'] ?? controller.deviceList[0].userDeviceId;
+      // deviceId = args['deviceId'] ?? controller.deviceList[0].userDeviceId;
       DateTime now = DateTime.now();
       DateTime utcNow = now.toUtc();
       DateTime istNow = utcNow.add(const Duration(hours: 5, minutes: 30));
@@ -60,6 +64,7 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
           args['endDate'] ?? DateFormat("yyyy-MM-dd HH:mm:ss").format(now);
 
       // controller.getEnergyDetailsConsumption(startDate, deviceId, endDate);
+      // controller.fetchEnergyConsumptionDetail(deviceId);
     } else {
       DateTime now = DateTime.now();
       DateTime utcNow = now.toUtc();
@@ -73,17 +78,36 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
       // deviceId = controller.deviceList[0].mMachineUniqueId;
 
       // controller.getEnergyDetailsConsumption(startDate, deviceId, endDate);
+      // controller.fetchEnergyConsumptionDetail(deviceId);
     }
   }
 
+  @override
+  initState() {
+    super.initState();
+    DateTime now = DateTime.now();
+    DateTime utcNow = now.toUtc();
+    DateTime istNow = utcNow.add(const Duration(hours: 5, minutes: 30));
+    DateTime istMidnight = DateTime(istNow.year, istNow.month, istNow.day);
+    String formattedDateMidnight =
+        DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
+    startDate = formattedDateMidnight;
+    String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
+    endDate = formattedDate;
 
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   controller.fetchEnergyConsumptionDetail(
+    //       navigationcontroller.deviceId.value, startDate, endDate);
+    // });
+  }
 
   @override
   Widget build(BuildContext context) {
     //controller.getEnergyDetailsConsumption("2024-08-01", "3071123300001", "2024-08-03");
     return Scaffold(
-      appBar:
-          const DeviceCardDetailsAppBar(title: TTexts.energyConsumptionDetail),
+      appBar: const DeviceCardDetailsAppBar(
+        title: TTexts.energyConsumptionDetail,
+      ),
       backgroundColor: TColors.primary,
       body: Padding(
         padding: SpacingStyle.paddingWithDefaultSpace,
@@ -150,13 +174,16 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
 
                     setState(() {
                       _selectedDateRange =
-                          "From $formattedStartDate To $formattedEndDate";
+                          "From $formattedStartDate \n To $formattedEndDate";
 
                       startDate = formattedStartDateInYears;
                       endDate = formattedEndDateInYears;
-
-                      controller.getEnergyDetailsConsumption(
-                          startDate, deviceId, endDate);
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        controller.fetchEnergyConsumptionDetail(
+                            navigationcontroller.deviceId.value,
+                            formattedStartDateInYears,
+                            formattedEndDateInYears);
+                      });
                     });
                   }
                 },
@@ -174,6 +201,7 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
                             vertical: 5.h, horizontal: 10.w),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
                           children: [
                             const Icon(
                               Iconsax.calendar_2,
@@ -182,7 +210,16 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
                             SizedBox(
                               width: 5.w,
                             ),
-                            TextView(text: _selectedDateRange),
+                            Flexible(
+                              child: Text(
+                                _selectedDateRange,
+                                maxLines: 2,
+                                overflow: TextOverflow
+                                    .ellipsis, // Optional: adds "..." if too long
+                                style: const TextStyle(
+                                    color: Colors.white, fontSize: 16),
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -192,20 +229,23 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
               ),
 
               Obx(() {
+                final energyData = controller.energyConsumptionData.value;
+                print(energyData.toString());
+
                 if (controller.isEnergyConsumptionDetailLoading.value) {
                   return const DeviceDetailShimmer();
                 }
 
-                double onPeak =
-                    controller.consumptionDetails.value.onPeakUnit?.value ??
-                        0.0;
-                double offPeak =
-                    controller.consumptionDetails.value.offPeakUnit?.value ??
-                        0.0;
-                double normal =
-                    controller.consumptionDetails.value.normalUnit?.value ??
-                        0.0;
-                double totalCount = onPeak + offPeak + normal;
+                // double onPeak =
+                //     controller.consumptionDetails.value.onPeakUnit?.value ??
+                //         0.0;
+                // double offPeak =
+                //     controller.consumptionDetails.value.offPeakUnit?.value ??
+                //         0.0;
+                // double normal =
+                //     controller.consumptionDetails.value.normalUnit?.value ??
+                //         0.0;
+                // double totalCount = onPeak + offPeak + normal;
 
                 /* if (controller.energyConsumptionData.value.normalUnit != null) {
                         return const TImageLoaderWidget(
@@ -220,24 +260,26 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
 
                     /// Pie Chart Section
                     DetailPieCard(
-                      totalCount: totalCount,
+                      totalCount: energyData?.totalConsumption.value ?? 0.0,
+                      totalCountUnit: energyData?.totalConsumption.unit ?? "",
                       // legendPosition: pie_chart.LegendPosition.bottom,
                       showLegendsInRow: true,
                       onPressed: () {},
-                      consumptionDetail: controller.consumptionDetails.value,
+                      consumptionDetail: energyData?.periods ?? [],
                     ),
 
                     SizedBox(height: 20.h),
 
-                    /// Bar Graphs Section
+                    // / Bar Graphs Section
                     MultipleBarGraphCard(
-                      consumptionDetail: controller.consumptionDetails.value,
+                      graphConsumption: energyData?.graphData ?? [],
                     ),
 
                     SizedBox(height: 20.h),
 
                     /// Breakdown Card
                     const BreakDownGraphCard(),
+                    // LightOffBarGraph(),
                   ],
                 );
               }),

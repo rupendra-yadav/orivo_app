@@ -4,15 +4,29 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../../common/widgets/text/text_view.dart';
 import '../../../../../../utils/constant/colors.dart';
 import '../../../../../../utils/constant/text_strings.dart';
+import '../../model/demand_analysis_respponse.dart';
 import '../../model/demand_detail_model.dart';
 import 'demand_time_line_graph.dart';
 
 class DemandTimeLineCard extends StatelessWidget {
   const DemandTimeLineCard({
-    super.key, required this.demandDetailModel,
+    super.key,
+    required this.demandTimeline,
+    required this.average,
+    required this.averageUnit,
+    required this.highest,
+    required this.highestUnit,
+    required this.loadFactor,
+    required this.loadFactorUnit,
   });
 
-  final DemandDetailModel demandDetailModel;
+  final DemandTimeline demandTimeline;
+  final String average;
+  final String averageUnit;
+  final String highest;
+  final String highestUnit;
+  final String loadFactor;
+  final String loadFactorUnit;
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +35,12 @@ class DemandTimeLineCard extends StatelessWidget {
           color: TColors.primaryDark1,
           borderRadius: BorderRadius.circular(20.r)),
       child: Padding(
-        padding:
-        EdgeInsets.symmetric(vertical: 20.h),
+        padding: EdgeInsets.symmetric(vertical: 20.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal:10.w),
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
               child: const TextView(
                 text: TTexts.demandTimeLine,
                 bold: true,
@@ -37,32 +50,43 @@ class DemandTimeLineCard extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-            DemandTimelineGraph(timeline: demandDetailModel.demandTimeline?.value??[],),
-
+            DemandTimelineGraph(
+              timeline: demandTimeline.data ?? [],
+            ),
             SizedBox(
               height: 20.h,
             ),
             Padding(
-              padding:  EdgeInsets.symmetric(horizontal: 10.w),
-              child: TextView(text: "Average ${demandDetailModel.avgDemand?.unit?.toString() ?? ''} : ${demandDetailModel.avgDemand?.value?.round().toString() ?? ''} ${demandDetailModel.avgDemand?.unit?.toString() ?? ''}",fontSize: 20,),
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              child: TextView(
+                text: "Average $averageUnit : $average $averageUnit",
+                // "Average ${demandTimeline.avgDemand?.unit?.toString() ?? ''} : ${demandTimeline.avgDemand?.value?.round().toString() ?? ''} ${demandTimeline.avgDemand?.unit?.toString() ?? ''}",
+                fontSize: 20,
+              ),
             ),
-
             SizedBox(
               height: 10.h,
             ),
             Padding(
-              padding:  EdgeInsets.symmetric(horizontal: 10.w),
-              child: TextView(text: "Highest ${demandDetailModel.highestDemand?.unit?.toString() ?? ''} : ${demandDetailModel.highestDemand?.value?.round().toString() ?? ''} ${demandDetailModel.highestDemand?.unit?.toString() ?? ''}",fontSize: 20,),
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              child: TextView(
+                text: "Highest $highestUnit : $highest $highestUnit",
+                // "Highest ${demandTimeline.highestDemand?.unit?.toString() ?? ''} : ${demandTimeline.highestDemand?.value?.round().toString() ?? ''} ${demandTimeline.highestDemand?.unit?.toString() ?? ''}",
+                fontSize: 20,
+              ),
             ),
-
             SizedBox(
               height: 10.h,
             ),
             Padding(
-              padding:  EdgeInsets.symmetric(horizontal: 10.w),
-              child: TextView(text: "Load Factor : ${demandDetailModel.loadFactor?.value?.round().toString() ?? ''} ${demandDetailModel.loadFactor?.unit?.toString() ?? ''}",fontSize: 20,),
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              child: TextView(
+                text:
+                    "Load Factor $loadFactorUnit : $loadFactor $loadFactorUnit",
+                // "Load Factor : ${demandTimeline.loadFactor?.value?.round().toString() ?? ''} ${demandTimeline.loadFactor?.unit?.toString() ?? ''}",
+                fontSize: 20,
+              ),
             ),
-
           ],
         ),
       ),

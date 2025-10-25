@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import '../../utils/constant/api_constants.dart';
 
 class THttpHelper2 {
-  static const String _baseUrl = tBaseUrl2;
+  static const String _baseUrl = tBaseUrl;
 
   /// Helper method to make a GET request
   static Future<Map<String, dynamic>> get(String endpoint, {String accessToken = "", Map<String, dynamic>? queryParams, dynamic data,}) async {

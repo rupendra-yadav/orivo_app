@@ -2,6 +2,7 @@ import 'package:auro/features/device_details/view/device_detail_screens/detali_p
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/legend_name_card.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/lrgend_name_card_demand.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/lrgend_name_card_govt.dart';
+import 'package:auro/features/device_details/view/device_detail_screens/model/cost_estimate_details_model.dart';
 import 'package:auro/utils/constant/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -42,10 +43,10 @@ class _CostEstimateState extends State<CostEstimate> {
 
   late String endDate;
 
-  final DeviceDetailController controller = Get.put(DeviceDetailController());
+  final DeviceDetailedController controller =
+      Get.put(DeviceDetailedController());
 
   String _selectedDateRange = TTexts.chooseDateRange;
-
 
   @override
   void didChangeDependencies() {
@@ -55,33 +56,35 @@ class _CostEstimateState extends State<CostEstimate> {
       args = ModalRoute.of(context)!.settings.arguments as Map<String, String>;
 
       // Initialize values safely
-      deviceId = args['deviceId'] ?? controller.deviceList[0].userDeviceId;
-      deviceName =  TTexts.costEstimate;
-      DateTime now = DateTime.now().toUtc().add(const Duration(hours: 5, minutes: 30));
-      DateTime midnight = DateTime(now.year, now.month, now.day);
-
-      startDate = args['startDate'] ?? DateFormat("yyyy-MM-dd HH:mm:ss").format(midnight);
-      endDate = args['endDate'] ?? DateFormat("yyyy-MM-dd HH:mm:ss").format(now);
-
-      // Fetch data
-      controller.getCostEstimateDetails(
-        startDate,
-        deviceId,
-        endDate,
-        SharedPrefs.getString("userLoad").toString(),
-      );
-    }else{
-      //deviceId = controller.deviceList[0].mMachineUniqueId;
-      deviceName =  TTexts.costEstimate;
-
+      // deviceId = args['deviceId'] ?? controller.deviceList[0].userDeviceId;
+      deviceName = TTexts.costEstimate;
       DateTime now =
-      DateTime.now().toUtc().add(const Duration(hours: 5, minutes: 30));
+          DateTime.now().toUtc().add(const Duration(hours: 5, minutes: 30));
       DateTime midnight = DateTime(now.year, now.month, now.day);
 
-      startDate =
+      startDate = args['startDate'] ??
           DateFormat("yyyy-MM-dd HH:mm:ss").format(midnight);
       endDate =
-           DateFormat("yyyy-MM-dd HH:mm:ss").format(now);
+          args['endDate'] ?? DateFormat("yyyy-MM-dd HH:mm:ss").format(now);
+
+      // Fetch data
+      controller.fetchCostEstimateDetail("X2024103", startDate, endDate);
+      // controller.getCostEstimateDetails(
+      //   startDate,
+      //   deviceId,
+      //   endDate,
+      //   SharedPrefs.getString("userLoad").toString(),
+      // );
+    } else {
+      //deviceId = controller.deviceList[0].mMachineUniqueId;
+      deviceName = TTexts.costEstimate;
+
+      DateTime now =
+          DateTime.now().toUtc().add(const Duration(hours: 5, minutes: 30));
+      DateTime midnight = DateTime(now.year, now.month, now.day);
+
+      startDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(midnight);
+      endDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(now);
 
       // Fetch data
       // controller.getCostEstimateDetails(
@@ -93,6 +96,19 @@ class _CostEstimateState extends State<CostEstimate> {
     }
   }
 
+  @override
+  void initState() {
+    super.initState();
+    DateTime now =
+        DateTime.now().toUtc().add(const Duration(hours: 5, minutes: 30));
+    DateTime midnight = DateTime(now.year, now.month, now.day);
+
+    startDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(midnight);
+    endDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(now);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // controller.fetchCostEstimateDetail(startDate, endDate);
+    });
+  }
 
 /*  @override
   void initState() {
@@ -137,7 +153,6 @@ class _CostEstimateState extends State<CostEstimate> {
         SharedPrefs.getString("userLoad").toString());
   }*/
 
-
   infoDialog(BuildContext context) async {
     return showDialog<void>(
       context: context,
@@ -146,40 +161,110 @@ class _CostEstimateState extends State<CostEstimate> {
       builder: (BuildContext context) {
         return Dialog(
           backgroundColor: TColors.primaryDark1,
-          insetPadding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 10.h),
-          child:  Padding(
-            padding:  EdgeInsets.symmetric(horizontal: 30.w,vertical: 10.h),
+          insetPadding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 10.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Center(child: TextView(text: "Example ## ${TTexts.energyConsumption}", textColor: TColors.white, fontSize: 18, bold: true,)),
+                Center(
+                    child: TextView(
+                  text: "Example ## ${TTexts.energyConsumption}",
+                  textColor: TColors.white,
+                  fontSize: 18,
+                  bold: true,
+                )),
 
-                SizedBox(height: 15.h,),
+                SizedBox(
+                  height: 15.h,
+                ),
 
-                TextView(text: TTexts.timeOfDay, textColor: TColors.white, fontSize: 18, bold: true,),
-                SizedBox(height: 15.h,),
-                TextView(text: "1. ${TTexts.normalSlot}", textColor: TColors.white, fontSize: 18, bold: true,),
-                SizedBox(height: 5.h,),
-                Padding(padding:  EdgeInsets.only(left: 15.w), child: TextView(text: TTexts.normalPeakSlotDesc, textColor: TColors.white, fontSize: 18, bold: true,),),
-                SizedBox(height: 15.h,),
-                TextView(text: "2. ${TTexts.offPeakSlot}", textColor: TColors.white, fontSize: 18, bold: true,),
-                SizedBox(height: 5.h,),
-                Padding(padding:  EdgeInsets.only(left: 15.w), child: TextView(text: TTexts.offPeakSlotDesc, textColor: TColors.white, fontSize: 18, bold: true,),),
-                SizedBox(height: 15.h,),
-                TextView(text: '3. ${TTexts.onPeakSlot}', textColor: TColors.white, fontSize: 18, bold: true,),
-                SizedBox(height: 5.h,),
-                Padding(padding:  EdgeInsets.only(left: 15.w), child: TextView(text: TTexts.onPeakSlotDesc, textColor: TColors.white, fontSize: 18, bold: true,),),
-                SizedBox(height: 25.h,),
-
+                TextView(
+                  text: TTexts.timeOfDay,
+                  textColor: TColors.white,
+                  fontSize: 18,
+                  bold: true,
+                ),
+                SizedBox(
+                  height: 15.h,
+                ),
+                TextView(
+                  text: "1. ${TTexts.normalSlot}",
+                  textColor: TColors.white,
+                  fontSize: 18,
+                  bold: true,
+                ),
+                SizedBox(
+                  height: 5.h,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 15.w),
+                  child: TextView(
+                    text: TTexts.normalPeakSlotDesc,
+                    textColor: TColors.white,
+                    fontSize: 18,
+                    bold: true,
+                  ),
+                ),
+                SizedBox(
+                  height: 15.h,
+                ),
+                TextView(
+                  text: "2. ${TTexts.offPeakSlot}",
+                  textColor: TColors.white,
+                  fontSize: 18,
+                  bold: true,
+                ),
+                SizedBox(
+                  height: 5.h,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 15.w),
+                  child: TextView(
+                    text: TTexts.offPeakSlotDesc,
+                    textColor: TColors.white,
+                    fontSize: 18,
+                    bold: true,
+                  ),
+                ),
+                SizedBox(
+                  height: 15.h,
+                ),
+                TextView(
+                  text: '3. ${TTexts.onPeakSlot}',
+                  textColor: TColors.white,
+                  fontSize: 18,
+                  bold: true,
+                ),
+                SizedBox(
+                  height: 5.h,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 15.w),
+                  child: TextView(
+                    text: TTexts.onPeakSlotDesc,
+                    textColor: TColors.white,
+                    fontSize: 18,
+                    bold: true,
+                  ),
+                ),
+                SizedBox(
+                  height: 25.h,
+                ),
 
                 /// Close OK
                 Center(
                   child: InkWell(
-                    onTap: (){
+                    onTap: () {
                       Navigator.pop(context);
                     },
-                    child: TextView(text: TTexts.dialogOk, textColor: TColors.white, fontSize: 18, bold: true,),
+                    child: TextView(
+                      text: TTexts.dialogOk,
+                      textColor: TColors.white,
+                      fontSize: 18,
+                      bold: true,
+                    ),
                   ),
                 ),
               ],
@@ -265,11 +350,8 @@ class _CostEstimateState extends State<CostEstimate> {
                       _selectedDateRange =
                           "From $formattedStartDate To $formattedEndDate";
 
-                      controller.getCostEstimateDetails(
-                          formattedStartDate1,
-                          deviceId,
-                          formattedEndDate1,
-                          SharedPrefs.getString("userLoad").toString());
+                      controller.fetchCostEstimateDetail(
+                          "X2024103", formattedStartDate1, formattedEndDate1);
                     });
                   }
                 },
@@ -295,7 +377,16 @@ class _CostEstimateState extends State<CostEstimate> {
                             SizedBox(
                               width: 5.w,
                             ),
-                            TextView(text: _selectedDateRange),
+                            Flexible(
+                              child: Text(
+                                _selectedDateRange,
+                                maxLines: 2,
+                                overflow: TextOverflow
+                                    .ellipsis, // Optional: adds "..." if too long
+                                style: const TextStyle(
+                                    color: Colors.white, fontSize: 16),
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -310,50 +401,31 @@ class _CostEstimateState extends State<CostEstimate> {
                   return const DeviceDetailShimmer();
                 }
 
-                Map<String, double> originalDataMap = {
-                  "Energy": controller.costEstimateDetailsModel.value
-                          .totalEnergyCost?.value ??
-                      0.0,
-                  "Govt": controller
-                          .costEstimateDetailsModel.value.govCost?.value ??
-                      0.0,
-                  "Demand": controller.costEstimateDetailsModel.value
-                          .totolDemandCost?.value ??
-                      0.0,
-                };
+                final data = controller.costEstimateData.value;
 
-                Map<String, double> updatedDataMap2 = {};
+                final double totalCount =
+                    double.parse(data?.totalCost?.value ?? "0.0");
 
-                originalDataMap.forEach((key, value) {
-                  updatedDataMap2['$key: $value'] = value;
-                });
-
-                double onPeak = controller.costEstimateDetailsModel.value
-                        .totolDemandCost?.value ??
-                    0.0;
-                double offPeak = controller.costEstimateDetailsModel.value
-                        .totalEnergyCost?.value ??
-                    0.0;
-                double normal =
-                    controller.costEstimateDetailsModel.value.govCost?.value ??
+                final double energyCost =
+                    double.tryParse(data?.totalEnergyCost?.value ?? "0.0") ??
                         0.0;
-                double totalCount = onPeak + offPeak + normal;
+                final double govtCost = double.tryParse(
+                        data?.governmentCosts?.total?.value ?? "0.0") ??
+                    0.0;
+                final double demandCost =
+                    double.tryParse(data?.demandCosts?.total?.value ?? "0.0") ??
+                        0.0;
+                final double otherCost =
+                    double.tryParse(data?.otherCosts?.value ?? "0.0") ?? 0.0;
 
-                List<MapEntry<String, Color>> getSortedColors(
-                    Map<String, double> dataMap, List<Color> colorList) {
-                  if (dataMap.isEmpty || colorList.isEmpty) return [];
+// final double totalCount = energyCost + govtCost + demandCost;
 
-                  // Combine dataMap keys and values with colors
-                  List<MapEntry<String, double>> dataEntries =
-                      dataMap.entries.toList();
-
-                  // Sort data entries by value in descending order
-                  dataEntries.sort((a, b) => b.value.compareTo(a.value));
-
-                  // Map the sorted data entries to colors
-                  return List<MapEntry<String, Color>>.generate(dataEntries.length, (index) => MapEntry(dataEntries[index].key, colorList[index]),
-                  );
-                }
+                Map<String, double> dataMap = {
+                  "Energy": energyCost,
+                  "Govt": govtCost,
+                  "Demand": demandCost,
+                  "other": otherCost,
+                };
 
                 return Padding(
                   padding: EdgeInsets.symmetric(vertical: 20.h),
@@ -365,16 +437,14 @@ class _CostEstimateState extends State<CostEstimate> {
                     width: double.infinity,
                     child: Padding(
                       padding: EdgeInsets.symmetric(
-
-                        horizontal: 10.w,
-                        vertical: 10.h
-                      ),
+                          horizontal: 10.w, vertical: 10.h),
                       child: Column(
                         children: [
                           Padding(
-                            padding:  EdgeInsets.symmetric(horizontal: 10.h,vertical: 10.w),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10.h, vertical: 10.w),
                             child: InkWell(
-                              onTap: (){
+                              onTap: () {
                                 infoDialog(context);
                               },
                               child: Align(
@@ -387,16 +457,21 @@ class _CostEstimateState extends State<CostEstimate> {
                           ),
                           // SizedBox(height: 20.h),
                           PieChart(
-                            dataMap: updatedDataMap2,
+                            dataMap: dataMap,
                             animationDuration:
                                 const Duration(milliseconds: 800),
                             chartLegendSpacing: 32.w,
                             chartRadius:
                                 MediaQuery.of(context).size.width / 3.2,
-                            colorList: colorList2,
+                            colorList: [
+                              fixedColors["Energy"]!,
+                              fixedColors["Govt"]!,
+                              fixedColors["Demand"]!,
+                              fixedColors["other"]!,
+                            ],
                             initialAngleInDegree: 0,
                             chartType: ChartType.ring,
-                            ringStrokeWidth: 10.w,
+                            ringStrokeWidth: 15.w,
                             centerWidget: Container(
                               width: 87.w,
                               height: 87.w,
@@ -431,18 +506,18 @@ class _CostEstimateState extends State<CostEstimate> {
                           // Assign colors based on sorted data
                           Builder(
                             builder: (context) {
-                              final sortedColors =
-                                  getSortedColors(updatedDataMap2, colorList2);
+                              // final sortedColors =
+                              //     getSortedColors(updatedDataMap2, colorList2);
 
                               return Column(
                                 children: [
                                   // Majority
                                   LegendNameCard(
-                                    costEstimateDetailModel: controller
-                                        .costEstimateDetailsModel.value,
-                                    colo: sortedColors.isNotEmpty
-                                        ? sortedColors[0].value
-                                        : Colors.transparent,
+                                    totalEnergyCost:
+                                        data?.totalEnergyCost?.value ?? "0.0",
+                                    tariffBreakdown:
+                                        data?.tariffBreakdown ?? [],
+                                    colo: fixedColors["Energy"]!,
                                   ),
 
                                   SizedBox(
@@ -450,22 +525,41 @@ class _CostEstimateState extends State<CostEstimate> {
                                   ),
                                   // Secondary
                                   LegendNameCardGovt(
-                                    costEstimateDetailModel: controller
-                                        .costEstimateDetailsModel.value,
-                                    color: sortedColors.length > 1
-                                        ? sortedColors[1].value
-                                        : Colors.transparent,
+                                    governmentCosts: data?.governmentCosts ??
+                                        GovernmentCosts(),
+                                    color: fixedColors["Govt"]!,
                                   ),
                                   SizedBox(
                                     height: 15.h,
                                   ),
                                   // Least
                                   LegendNameCardDemand(
-                                    costEstimateDetailModel: controller
-                                        .costEstimateDetailsModel.value,
-                                    color: sortedColors.length > 2
-                                        ? sortedColors[2].value
-                                        : Colors.transparent,
+                                    demandCosts:
+                                        data?.demandCosts ?? DemandCosts(),
+                                    color: fixedColors["Demand"]!,
+                                  ),
+                                  SizedBox(
+                                    height: 15.h,
+                                  ),
+
+                                  /// OTHER COSTS
+                                  OtherCostsWidget(
+                                    value: data?.otherCosts?.value,
+                                    unit: data?.otherCosts?.unit,
+                                    color: fixedColors["other"]!,
+                                  ),
+
+                                  SizedBox(
+                                    height: 15.h,
+                                  ),
+
+                                  CostDistributionCard(
+                                    color: TColors.white,
+                                    costDistribution: data?.costDistribution ??
+                                        CostDistribution(),
+                                  ),
+                                  SizedBox(
+                                    height: 15.h,
                                   ),
                                 ],
                               );
@@ -485,8 +579,9 @@ class _CostEstimateState extends State<CostEstimate> {
   }
 }
 
-final colorList2 = <Color>[
-  const Color(0xff3dd598),
-  const Color(0xff0062ff),
-  const Color(0xffff974a),
-];
+final Map<String, Color> fixedColors = {
+  "Energy": const Color(0xff3dd598),
+  "Govt": const Color(0xff0062ff),
+  "Demand": const Color(0xffff974a),
+  "other": const Color(0xffffc542),
+};

@@ -25,7 +25,6 @@ class DemandEstimateDetail extends StatefulWidget {
 }
 
 class _DemandEstimateDetailState extends State<DemandEstimateDetail> {
-
   late Map<String, String> args;
 
   late String deviceId;
@@ -36,33 +35,32 @@ class _DemandEstimateDetailState extends State<DemandEstimateDetail> {
 
   late String endDate;
 
-  final DeviceDetailController controller = Get.put(DeviceDetailController());
+  final DeviceDetailedController controller =
+      Get.put(DeviceDetailedController());
   final userController = Get.put(ProfileDetailController());
-
 
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-    userController.getUserData();
+    userController.getUserData2();
     if (widget.isNotify == true) {
-
       args = ModalRoute.of(context)!.settings.arguments as Map<String, String>;
 
       // Initialize values safely
-      deviceId = args['deviceId'] ?? controller.deviceList[0].userDeviceId;
+      // deviceId = args['deviceId'] ?? controller.deviceList[0].userDeviceId;
 
       DateTime now =
-      DateTime.now().toUtc().add(const Duration(hours: 5, minutes: 30));
+          DateTime.now().toUtc().add(const Duration(hours: 5, minutes: 30));
       DateTime midnight = DateTime(now.year, now.month, now.day);
 
-      startDate = args['startDate'] ?? DateFormat("yyyy-MM-dd HH:mm:ss").format(midnight);
-      endDate = args['endDate'] ?? DateFormat("yyyy-MM-dd HH:mm:ss").format(now);
+      startDate = args['startDate'] ??
+          DateFormat("yyyy-MM-dd HH:mm:ss").format(midnight);
+      endDate =
+          args['endDate'] ?? DateFormat("yyyy-MM-dd HH:mm:ss").format(now);
 
-      controller.getDemandDetail(startDate, deviceId, endDate);
-
-
-    }else {
+      // controller.getDemandDetail(startDate, deviceId, endDate);
+    } else {
       DateTime now = DateTime.now();
       DateTime utcNow = now.toUtc();
 
@@ -73,22 +71,42 @@ class _DemandEstimateDetailState extends State<DemandEstimateDetail> {
       DateTime istMidnight = DateTime(istNow.year, istNow.month, istNow.day);
 
       // Format the date and time to the desired format
-      String formattedDateMidnight = DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
+      String formattedDateMidnight =
+          DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
       startDate = formattedDateMidnight;
       String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
       endDate = formattedDate;
 
-      deviceId = controller.deviceList[0].userDeviceId;
+      // deviceId = controller.deviceList[0].userDeviceId;
       // Call the API with the current date
-      controller.getDemandDetail(startDate, deviceId, endDate);
+      // controller.getDemandDetail(startDate, deviceId, endDate);
     }
   }
 
-/*  @override
+  @override
   void initState() {
-    super.initState();
-
     DateTime now = DateTime.now();
+    DateTime utcNow = now.toUtc();
+
+    // Convert UTC date and time to IST
+    DateTime istNow = utcNow.add(const Duration(hours: 5, minutes: 30));
+
+    // Set the time to 00:00:00 (midnight) in IST for the same date
+    DateTime istMidnight = DateTime(istNow.year, istNow.month, istNow.day);
+
+    // Format the date and time to the desired format
+    String formattedDateMidnight =
+        DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
+    startDate = formattedDateMidnight;
+    String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
+    endDate = formattedDate;
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.fetchDemandAnalysis(startDate, endDate);
+    });
+  }
+
+  /*   DateTime now = DateTime.now();
     DateTime utcNow = now.toUtc();
 
     // Convert UTC date and time to IST
@@ -109,7 +127,7 @@ class _DemandEstimateDetailState extends State<DemandEstimateDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     appBar: const DeviceCardDetailsAppBar(title: TTexts.demandEstimate),
+      appBar: const DeviceCardDetailsAppBar(title: TTexts.demandEstimate),
       backgroundColor: TColors.primary,
       body: Padding(
         padding: SpacingStyle.paddingWithDefaultSpace,
@@ -149,17 +167,26 @@ class _DemandEstimateDetailState extends State<DemandEstimateDetail> {
 
                   if (pickedDateRange != null) {
                     // Formatting the date to 1-08-2024 format
-                    String formattedStartDate = DateFormat('d-MM-yyyy').format(pickedDateRange.start);
-                    String formattedStartDateInYears = DateFormat("yyyy-MM-dd HH:mm:ss").format(pickedDateRange.start);
+                    String formattedStartDate =
+                        DateFormat('d-MM-yyyy').format(pickedDateRange.start);
+                    String formattedStartDateInYears =
+                        DateFormat("yyyy-MM-dd HH:mm:ss")
+                            .format(pickedDateRange.start);
 
-                    String formattedEndDate = DateFormat('d-MM-yyyy').format(pickedDateRange.end);
-                    String formattedEndDateInYears = DateFormat("yyyy-MM-dd HH:mm:ss").format(pickedDateRange.end);
-
+                    String formattedEndDate =
+                        DateFormat('d-MM-yyyy').format(pickedDateRange.end);
+                    String formattedEndDateInYears =
+                        DateFormat("yyyy-MM-dd HH:mm:ss")
+                            .format(pickedDateRange.end);
 
                     if (formattedStartDate == formattedEndDate) {
-                      DateTime pickedDateRange = DateTime.parse(formattedEndDateInYears);
-                      DateTime updatedDateTime = pickedDateRange.copyWith(hour: 23, minute: 59, second: 59);
-                      formattedEndDateInYears = DateFormat('yyyy-MM-dd HH:mm:ss').format(updatedDateTime);
+                      DateTime pickedDateRange =
+                          DateTime.parse(formattedEndDateInYears);
+                      DateTime updatedDateTime = pickedDateRange.copyWith(
+                          hour: 23, minute: 59, second: 59);
+                      formattedEndDateInYears =
+                          DateFormat('yyyy-MM-dd HH:mm:ss')
+                              .format(updatedDateTime);
 
                       print("Start and End dates are the same.");
                     } else {
@@ -167,13 +194,15 @@ class _DemandEstimateDetailState extends State<DemandEstimateDetail> {
                     }
 
                     setState(() {
-                      _selectedDateRange = "From $formattedStartDate To $formattedEndDate";
+                      _selectedDateRange =
+                          "From $formattedStartDate To $formattedEndDate";
 
                       endDate = formattedEndDateInYears;
                       startDate = formattedStartDateInYears;
 
-                      controller.getDemandDetail(startDate, deviceId, endDate);
-
+                      // controller.getDemandDetail(startDate, deviceId, endDate);
+                      controller.fetchDemandAnalysis(
+                          formattedStartDateInYears, formattedEndDateInYears);
                     });
                   }
                 },
@@ -181,14 +210,14 @@ class _DemandEstimateDetailState extends State<DemandEstimateDetail> {
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.w),
                     child: Container(
-
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         color: TColors.primaryDark1,
                         borderRadius: BorderRadius.circular(20.r),
                       ),
                       child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 5.h,horizontal: 10.w),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 5.h, horizontal: 10.w),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -199,7 +228,16 @@ class _DemandEstimateDetailState extends State<DemandEstimateDetail> {
                             SizedBox(
                               width: 5.w,
                             ),
-                            TextView(text: _selectedDateRange),
+                            Flexible(
+                              child: Text(
+                                _selectedDateRange,
+                                maxLines: 2,
+                                overflow: TextOverflow
+                                    .ellipsis, // Optional: adds "..." if too long
+                                style: const TextStyle(
+                                    color: Colors.white, fontSize: 16),
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -213,25 +251,46 @@ class _DemandEstimateDetailState extends State<DemandEstimateDetail> {
               ),
 
               /// Demand Estimate
-              Obx((){
+              Obx(() {
+                final data = controller.demandAnalysisData.value;
 
                 if (controller.isDemandDetailLoading.value) {
                   return const DeviceDetailShimmer();
                 }
-                return DemandEstimateCard(demandDetailModel: controller.demandDetailModel.value, totalLoad: double.tryParse(userController.userModel[0].custTotalload ?? '1.0') ?? 1.0,);
+                if (data == null) {
+                  return const SizedBox.shrink();
+                }
+                return DemandEstimateCard(
+                  demandData: data,
+                  totalLoad: double.tryParse(
+                          data.factoryCapacity.value.toString() ?? '1.0') ??
+                      1.0,
+                );
               }),
-
 
               SizedBox(
                 height: 20.h,
               ),
 
               /// Demand Time Line
-              Obx((){
+              Obx(() {
+                final data = controller.demandAnalysisData.value;
                 if (controller.isDemandDetailLoading.value) {
                   return const DeviceDetailShimmer();
                 }
-                return DemandTimeLineCard(demandDetailModel: controller.demandDetailModel.value,);
+                final demandTimeline = data?.demandTimeline;
+                if (demandTimeline == null) {
+                  return const SizedBox.shrink();
+                }
+                return DemandTimeLineCard(
+                  demandTimeline: demandTimeline,
+                  average: data?.averageDemand.value.toString() ?? "",
+                  highest: data?.highestDemand.value.toString() ?? "",
+                  loadFactor: data?.loadFactor.value.toString() ?? "",
+                  averageUnit: data?.averageDemand.unit.toString() ?? "",
+                  highestUnit: data?.highestDemand.unit.toString() ?? "",
+                  loadFactorUnit: data?.loadFactor.unit.toString() ?? "",
+                );
               })
             ],
           ),

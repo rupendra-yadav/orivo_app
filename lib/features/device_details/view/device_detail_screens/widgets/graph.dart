@@ -1,4 +1,4 @@
-
+import 'package:auro/features/device_details/view/device_detail_screens/model/historical_data_response_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -20,16 +20,9 @@ class Graph extends StatelessWidget {
 
   final int nameType;
 
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(DeviceDetailController());
-
-
+    final controller = Get.put(DeviceDetailedController());
 
 /*
     if(nameType == 1 ){
@@ -46,15 +39,14 @@ class Graph extends StatelessWidget {
       padding: SpacingStyle.paddingWithDefaultSpace,
       child: SfCartesianChart(
         trackballBehavior: TrackballBehavior(
-          lineColor: TColors.errorLight,
+            lineColor: TColors.errorLight,
             enable: true,
             tooltipAlignment: ChartAlignment.center,
             activationMode: ActivationMode.singleTap,
-            tooltipDisplayMode: TrackballDisplayMode.groupAllPoints
-        ),
+            tooltipDisplayMode: TrackballDisplayMode.groupAllPoints),
         tooltipBehavior: TooltipBehavior(enable: true),
         plotAreaBorderColor: TColors.primaryLight2,
-       /* zoomPanBehavior: ZoomPanBehavior(
+        /* zoomPanBehavior: ZoomPanBehavior(
           enablePinching: true, // Enables pinch zooming
           enablePanning: true, // Enables panning
           enableDoubleTapZooming: true, // Enables double-tap zooming
@@ -73,12 +65,13 @@ class Graph extends StatelessWidget {
         ),
         series: <CartesianSeries>[
           // Graph1
-          SplineSeries<Filters, String>(
+          SplineSeries<HistoricalPoint, String>(
             name: controller.name1,
             animationDuration: 2000,
-            dataSource: controller.historyModel.value.filters,
-            xValueMapper: (Filters sales, _) => sales.x,
-            yValueMapper: (Filters sales, _) => sales.y,
+            dataSource: controller.historicalData.value?.value,
+            xValueMapper: (HistoricalPoint sales, _) =>
+                sales.x?.toString() ?? '',
+            yValueMapper: (HistoricalPoint sales, _) => sales.y,
             color: TColors.graphLine,
 
             /// marker Setting to get dots in the graph
@@ -93,12 +86,12 @@ class Graph extends StatelessWidget {
             ),
           ),
 
-          SplineSeries<Filters, String>(
+          SplineSeries<HistoricalPoint, String>(
             name: controller.name2,
             animationDuration: 2000,
-            dataSource: controller.historyModel1.value.filters,
-            xValueMapper: (Filters sales, _) => sales.x,
-            yValueMapper: (Filters sales, _) => sales.y,
+            dataSource: controller.historyModel1.value?.value,
+            xValueMapper: (HistoricalPoint sales, _) => sales.x.toString(),
+            yValueMapper: (HistoricalPoint sales, _) => sales.y,
             color: TColors.primaryLight2,
 
             /// marker Setting to get dots in the graph
@@ -113,12 +106,12 @@ class Graph extends StatelessWidget {
             ),
           ),
 
-          SplineSeries<Filters, String>(
+          SplineSeries<HistoricalPoint, String>(
             name: controller.name3,
             animationDuration: 2000,
-            dataSource: controller.historyModel2.value.filters,
-            xValueMapper: (Filters sales, _) => sales.x,
-            yValueMapper: (Filters sales, _) => sales.y,
+            dataSource: controller.historyModel2.value.value,
+            xValueMapper: (HistoricalPoint sales, _) => sales.x.toString(),
+            yValueMapper: (HistoricalPoint sales, _) => sales.y,
             color: TColors.secondary,
 
             /// marker Setting to get dots in the graph
@@ -133,11 +126,11 @@ class Graph extends StatelessWidget {
             ),
           ),
 
-          SplineSeries<Filters, String>(
+          SplineSeries<HistoricalPoint, String>(
             animationDuration: 2000,
-            dataSource: controller.historyModel3.value.filters,
-            xValueMapper: (Filters sales, _) => sales.x,
-            yValueMapper: (Filters sales, _) => sales.y,
+            dataSource: controller.historyModel3.value.value,
+            xValueMapper: (HistoricalPoint sales, _) => sales.x.toString(),
+            yValueMapper: (HistoricalPoint sales, _) => sales.y,
             color: TColors.error,
 
             /// marker Setting to get dots in the graph
@@ -151,9 +144,7 @@ class Graph extends StatelessWidget {
               borderColor: TColors.error,
             ),
           ),
-
         ],
-
       ),
     );
   }
