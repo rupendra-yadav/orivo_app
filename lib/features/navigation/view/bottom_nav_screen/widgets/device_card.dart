@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auro/features/navigation/view/bottom_nav_screen/model/device_list_model.dart';
 import 'package:auro/utils/constant/image_string.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -42,7 +44,9 @@ class DeviceCard extends StatelessWidget {
     // googleDriveImageUrl =
     // 'https://drive.usercontent.google.com/download?id=${extractDriveFileId(deviceListModel.imagePath)}&export=view';
     googleDriveImageUrl =
-        'https://drive.usercontent.google.com/download?id=${deviceListModel.imagePath}&export=view';
+        'https://drive.usercontent.google.com/download?id=${extractDriveFileId(deviceListModel.imagePath)}&export=view';
+
+    log(deviceListModel.imagePath);
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0),
@@ -59,9 +63,7 @@ class DeviceCard extends StatelessWidget {
                 Expanded(
                   flex: 1,
                   child: CachedNetworkImage(
-                    // imageUrl:"https://drive.usercontent.google.com/download?id=1V2Lkj2hPA3KQEGxxJveIDGmQKJqApIbW&export=view", // Provide a fallback empty string if null or empty
-                    imageUrl: googleDriveImageUrl ??
-                        "", // Provide a fallback empty string if null or empty
+                    imageUrl: googleDriveImageUrl,
                     width: 100.w,
                     height: 100.h,
                     fit: BoxFit.fill,

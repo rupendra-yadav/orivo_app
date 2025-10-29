@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:auro/data/http/http_client.dart';
@@ -8,6 +9,7 @@ import 'package:auro/features/device_details/view/device_detail_screens/model/hi
 import 'package:auro/features/navigation/view/bottom_nav_screen/model/device_list_model.dart';
 import 'package:auro/utils/constant/api_constants.dart';
 import 'package:auro/utils/constant/text_strings.dart';
+import 'package:auro/utils/local_storage/storage_utility.dart';
 import 'package:auro/utils/preferences/cache_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -53,7 +55,7 @@ class DeviceRepository extends GetxController {
   Future<List<DeviceListModel>> getDeviceList2(
       String mobile, String accessToken) async {
     try {
-      Map<String, dynamic> request = {"mobile_no": "+91$mobile"};
+      Map<String, dynamic> request = {"mobile_no": "$mobile"};
 
       Map<String, dynamic> response = await THttpHelper3.postRaw(
           APIKeys.userDevices, null, request,
@@ -65,6 +67,13 @@ class DeviceRepository extends GetxController {
         List<DeviceListModel> deviceList = deviceListData
             .map((data) => DeviceListModel.fromJson(data))
             .toList();
+
+        // ✅ Save to local storage
+        final TLocalStorage _localStorage = TLocalStorage();
+        await _localStorage.saveData(
+          "device_list",
+          jsonEncode(deviceList.map((e) => e.toJson()).toList()),
+        );
 
         return deviceList;
       } else {
@@ -167,12 +176,13 @@ class DeviceRepository extends GetxController {
 
   ////////////////////////////////////NEW APIS//////////////////////////////////////
   ///
-  Future<DeviceDetailData> getDeviceDetail(
-      String deviceId, String tariff, String start, String stop) async {
+  Future<DeviceDetailData> getDeviceDetail(String deviceId, String tariff,
+      String contractDemand, String start, String stop) async {
     try {
       Map<String, dynamic> request = {
         "device_id": deviceId,
         "tariff_plan": tariff,
+        "contract_demand": cleanContractDemand(contractDemand),
         "start": start,
         "stop": stop
       };
@@ -198,12 +208,13 @@ class DeviceRepository extends GetxController {
   }
 
   ///Energy Consumption
-  Future<EnergyConsumptionData> getEnergyConsumption(
-      String deviceId, String tariff, String start, String end) async {
+  Future<EnergyConsumptionData> getEnergyConsumption(String deviceId,
+      String tariff, String contractDemand, String start, String end) async {
     try {
       Map<String, dynamic> request = {
-        "device_id": "X2024103",
+        "device_id": deviceId,
         "tariff_plan": tariff,
+        "contract_demand": cleanContractDemand(contractDemand),
         "start": start,
         "stop": end
       };
@@ -242,12 +253,13 @@ class DeviceRepository extends GetxController {
   }
 
   ///Cost Estimate
-  Future<CostEstimateData> fetchCostEstimate(
-      String deviceId, String tariff, String start, String end) async {
+  Future<CostEstimateData> fetchCostEstimate(String deviceId, String tariff,
+      String contractDemand, String start, String end) async {
     try {
       Map<String, dynamic> request = {
-        "device_id": "X2024103",
+        "device_id": deviceId,
         "tariff_plan": tariff,
+        "contract_demand": cleanContractDemand(contractDemand),
         "start": start,
         "stop": end
       };
@@ -286,12 +298,13 @@ class DeviceRepository extends GetxController {
   }
 
   ///DEMAND ANALYSIS
-  Future<DemandData> fetchDemandAnalysis(
-      String deviceId, String tariff, String start, String end) async {
+  Future<DemandData> fetchDemandAnalysis(String deviceId, String tariff,
+      String contractDemand, String start, String end) async {
     try {
       Map<String, dynamic> request = {
-        "device_id": "X2024103",
+        "device_id": deviceId,
         "tariff_plan": tariff,
+        "contract_demand": cleanContractDemand(contractDemand),
         "start": start,
         "stop": end
       };
@@ -330,12 +343,13 @@ class DeviceRepository extends GetxController {
   }
 
   /// BASE METRIC
-  Future<MetricData> fetchBaseMetric(
-      String deviceId, String tariff, String start, String end) async {
+  Future<MetricData> fetchBaseMetric(String deviceId, String tariff,
+      String contractDemand, String start, String end) async {
     try {
       Map<String, dynamic> request = {
-        "device_id": "X2024103",
+        "device_id": deviceId,
         "tariff_plan": tariff,
+        "contract_demand": cleanContractDemand(contractDemand),
         "start": start,
         "stop": end
       };
@@ -1043,4 +1057,14 @@ class DeviceRepository extends GetxController {
       throw Exception(e.toString());
     }
   }
+}
+
+// Ensure contract_demand has no trailing .00
+String cleanContractDemand(String value) {
+  // Convert to double then remove .0 if not needed
+  final numValue = double.tryParse(value) ?? 0;
+  if (numValue == numValue.toInt()) {
+    return numValue.toInt().toString(); // e.g. "800"
+  }
+  return numValue.toString(); // e.g. "800.5" stays as is
 }

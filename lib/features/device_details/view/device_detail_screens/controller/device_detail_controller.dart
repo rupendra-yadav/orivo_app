@@ -519,14 +519,14 @@ class DeviceDetailedController extends GetxController {
   var isHistoryLoading = false.obs;
 
   // Fetch device detail method
-  Future<void> fetchDeviceDetail(
-      String deviceId, String start, String stop) async {
+  Future<void> fetchDeviceDetail(String deviceId, String tariff,
+      String contractDemand, String start, String stop) async {
     try {
       isDeviceDetailLoading.value = true;
       errorMessage.value = "";
 
-      final data =
-          await repository.getDeviceDetail(deviceId, "HV4", start, stop);
+      final data = await repository.getDeviceDetail(
+          deviceId, tariff, contractDemand, start, stop);
       log("repo level" + data.toString());
       deviceDetailData.value = data;
     } catch (e, stacktrace) {
@@ -542,14 +542,14 @@ class DeviceDetailedController extends GetxController {
   }
 
   // Method: Fetch energy consumption detail
-  Future<void> fetchEnergyConsumptionDetail(
-      String deviceId, String start, String end) async {
+  Future<void> fetchEnergyConsumptionDetail(String deviceId, String tariff,
+      String contractload, String start, String end) async {
     try {
       isEnergyConsumptionDetailLoading.value = true;
       errorMessage.value = "";
 
-      final data =
-          await repository.getEnergyConsumption(deviceId, "HV4", start, end);
+      final data = await repository.getEnergyConsumption(
+          deviceId, tariff, contractload, start, end);
       log("Energy consumption repo level: ${data.toJson()}");
       energyConsumptionData.value = data;
     } catch (e, stacktrace) {
@@ -565,14 +565,14 @@ class DeviceDetailedController extends GetxController {
   }
 
 // Method: Fetch Cost estimate detail
-  Future<void> fetchCostEstimateDetail(
-      String deviceId, String start, String end) async {
+  Future<void> fetchCostEstimateDetail(String deviceId, String tariff,
+      String contractload, String start, String end) async {
     try {
       isCostEstimateDetailLoading.value = true;
       errorMessage.value = "";
 
-      final data =
-          await repository.fetchCostEstimate(deviceId, "HV4", start, end);
+      final data = await repository.fetchCostEstimate(
+          deviceId, tariff, contractload, start, end);
       log("Energy consumption repo level: ${data.toJson()}");
       costEstimateData.value = data;
     } catch (e, stacktrace) {
@@ -588,13 +588,14 @@ class DeviceDetailedController extends GetxController {
   }
 
   // Method: Fetch Demand Analysis  detail
-  Future<void> fetchDemandAnalysis(String start, String end) async {
+  Future<void> fetchDemandAnalysis(String deviceId, String tariff,
+      String contractload, String start, String end) async {
     try {
       isDemandDetailLoading.value = true;
       errorMessage.value = "";
 
       final data = await repository.fetchDemandAnalysis(
-          "O/EMS/2025/07/0001", "HV4", start, end);
+          deviceId, tariff, contractload, start, end);
       log("Demand Analysis repo level: ${data.toJson()}");
       demandAnalysisData.value = data;
     } catch (e, stacktrace) {
@@ -610,13 +611,14 @@ class DeviceDetailedController extends GetxController {
   }
 
   // Method: Fetch BASE_METRIC  detail
-  Future<void> fetchBaseMeric(String start, String end) async {
+  Future<void> fetchBaseMeric(String deviceId, String tariff,
+      String contractload, String start, String end) async {
     try {
       isBaseMetricLoading.value = true;
       errorMessage.value = "";
 
       final data = await repository.fetchBaseMetric(
-          "O/EMS/2025/07/0001", "HV4", start, end);
+          deviceId, tariff, contractload, start, end);
       log("Base Metric repo level: ${data.toJson()}");
       baseMetricData.value = data;
     } catch (e, stacktrace) {

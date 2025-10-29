@@ -219,9 +219,9 @@ class EditProfile extends StatelessWidget {
                     ),
                     PrefixInputText(
                       keyboardType: TextInputType.text,
-                      controller: editProfileController.ownersName,
+                      controller: editProfileController.pinCode,
                       validator: Validate.validateEmptyText,
-                      hint: TTexts.ownersName,
+                      hint: "Pincode",
                       preFixIcon: const Icon(Icons.beenhere),
                     ),
 

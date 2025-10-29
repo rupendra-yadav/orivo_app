@@ -74,6 +74,11 @@ class EditDeviceDetailController extends GetxController {
         model: '',
         installationDate: '',
         status: '',
+        internalDeviceId: '',
+        tariffPlanName: '',
+        contactLoad: '',
+        factoryId: '',
+        bpNumber: '',
       );
 
       // Call repo

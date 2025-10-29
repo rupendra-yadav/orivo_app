@@ -71,60 +71,56 @@ class ProfileRepository extends GetxController {
   }
 
   ///Update user data
-  Future<List<UserModel>> updateUserData(
-      String userId,
-      String userName,
-      String userState,
-      String userCity,
-      String userAddress,
-      String userCompany,
-      String userCompanyType,
-      String userOwnerName,
-      String userGstNo,
-      File userPic) async {
+  Future<String> updateUserData(
+      String mobileNo,
+      String name,
+      String companyName,
+      String city,
+      String state,
+      String address,
+      String pincode,
+      String companyType,
+      String gstNo,
+      String accessToken,
+      File profilePic) async {
     try {
-      var request = http.MultipartRequest(
-          'POST',
-          Uri.parse(
-              'https://webdevelopercg.com/electricity/myadmin/Api/update_profile'));
+      Map<String, dynamic> request = {
+        "mobile_no": mobileNo,
+        "name": name,
+        // "profile_image_path": "https://ems-ota.s3.amazonaws.com/profile_images/11.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIARRV6RGOVYM5DJU6L%2F20251029%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20251029T093637Z&X-Amz-Expires=360000&X-Amz-SignedHeaders=host&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEBkaCmFwLXNvdXRoLTEiRjBEAiAdysr5JrjPELJzjhJABQ6jexoTG2HUsM1UqJ9QR4N3DQIgLiUlFdOy%2B2jzfdZ1sX4s14AK3%2BcQfZqYv%2BLZAvXyuegq7gII0%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgwxMDY3MDAwMjY3OTUiDOSNZlb8zerJg%2FSgGirCAuAPamT3RjNjlSQH2YzKuar9jFFYTpnHNctjOkIKp7OkMk0lBxTjXJYVBuVHxnO5W1yWZjpIPWZrJjKGUtVy41owIVlF5fUESIh9o1tfO0QNghYWjU%2BXPMpaABSZAt6HF5pxVyfEimNJN3EOLoIl%2FFU5XjNQuxrmYlGrn4eoXGvx3IgrfZSvnLloT9V4fKjmOQVjESbfTn5%2BkTBB1e8lQOr76J40Pkf7EizFB6LwNa%2Fo%2BZx5Mjl1JxQsnr4juFJ0Vl7br%2FH10YM1yKKev2veBWIGKuj881SxMDYFNb8P7AqME358%2BiWaPsDOFFRb7BWOe7UHQqfriy6D8qlsK8ux3YdSUqBvWP2QCocmyxRYBu5Sjq%2BeuQllV63mbWrOadQ0E3FEIPziB4RTc00Md0UALDKLshk6910UPbMYl0OX7%2FskGz8wwL2HyAY6nwHcGTip3V9n6NuiCZaPxSCR7UCf5y0DfyJ5%2F3dP2UDaF7MP0RwyDCsF9%2B5f9JVLA3nTMNGwOhzIQN1Z1Digk1eYeM9syGI5AQeTSsMq%2B1hlRoJd61fHp%2BRdeFktXXEXhuKV0DZhOhogOFVx43Jr8DZYkXZrYgIPfFuwrOagM9zfKAG1hHJ1t2WFXITAuMReDyCbVGczQVbYwkWkhZP%2FERE%3D&X-Amz-Signature=40170f78c07178b2a7d71e4ce1af7df792b3c17fae1fa5cb5ef2b8209bc3f110",
+        "company_name": companyName,
+        // "city": city,
+        // "state": state,
+        // "address": address,
+        // "pincode": pincode,
+        // "company_type": companyType,
+        // "gst_no": gstNo
+      };
 
-      // Add text fields to the request
-      request.fields['user_id'] = userId;
-      request.fields['user_name'] = userName;
-      request.fields['user_state'] = userState;
-      request.fields['user_city'] = userCity;
-      request.fields['user_address'] = userAddress;
-      request.fields['user_company'] = userCompany;
-      request.fields['user_company_type'] = userCompanyType;
-      request.fields['user_owner_name'] = userOwnerName;
-      request.fields['user_gstno'] = userGstNo;
+      Map<String, String> photoRequest = {
+        "mobile_no": mobileNo,
+      };
 
-      // Add the image file to the request
-      request.files
-          .add(await http.MultipartFile.fromPath('user_pic', userPic.path));
+      Map<String, dynamic> profileresponse = await THttpHelper3.postMultipart(
+        APIKeys.userPhotoUpload,
+        queryParams: photoRequest,
+        file: profilePic, // can be null
+        // fileField: "profile_image_path", // <-- backend field name
+        accessToken: accessToken,
+      );
+      Map<String, dynamic> response = await THttpHelper3.postRaw(
+          APIKeys.userEditProfile, null, request,
+          accessToken: accessToken);
+      // Make multipart request
 
-      // Send the request and get the response
-      var response = await request.send();
+      log(profileresponse.toString());
 
-      // Check for response status and handle the response
-      if (response.statusCode == 200) {
-        var responseData = await response.stream.bytesToString();
-        var jsonResponse = json.decode(responseData);
-
-        if (kDebugMode) {
-          print('update_profile Response: $jsonResponse');
-        }
-
-        if (jsonResponse['response'] == 'success') {
-          List<dynamic> useData = jsonResponse['data'];
-          List<UserModel> userDetails =
-              useData.map((data) => UserModel.fromJson(data)).toList();
-          return userDetails;
-        } else {
-          throw Exception(jsonResponse['message']);
-        }
+      if (response['response'] == 200) {
+        return response['message']; // Return a single UserModel2 object
+        // Check for 200 instead of 'success' and change response type to Int in Backend
+        // Extract the user data from the "data" field
       } else {
-        throw Exception('Failed to update profile');
+        throw Exception(response['message']);
       }
     } catch (e) {
       throw Exception(e.toString());
@@ -238,7 +234,7 @@ class ProfileRepository extends GetxController {
   ///Get user data
   Future<UserModel2> getUserData2(String mobileNo, String accessToken) async {
     try {
-      Map<String, dynamic> request = {'mobile_no': "+91$mobileNo"};
+      Map<String, dynamic> request = {'mobile_no': "$mobileNo"};
 
       Map<String, dynamic> response = await THttpHelper3.postRaw(
           APIKeys.userProfile, null, request,

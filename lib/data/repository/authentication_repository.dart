@@ -98,7 +98,7 @@ class AuthenticationRepository extends GetxController {
   Future<Map<String, dynamic>> sendOtp(mobileNumber) async {
     try {
       Map<String, dynamic> data = {
-        'mobile_no': "+91$mobileNumber",
+        'mobile_no': "$mobileNumber",
       };
 
       Map<String, dynamic> response = await THttpHelper.post(
@@ -167,7 +167,7 @@ class AuthenticationRepository extends GetxController {
       String uuid, String fcmToken, String deviceType) async {
     try {
       Map<String, dynamic> data = {
-        'username': "+91$mobileNumber",
+        'username': "$mobileNumber",
         "password": password
       };
 
@@ -281,7 +281,7 @@ class AuthenticationRepository extends GetxController {
       String mobileNumber, String uuid) async {
     try {
       Map<String, dynamic> data = {
-        'mobile_no': "+91$mobileNumber",
+        'mobile_no': "$mobileNumber",
       };
 
       Map<String, dynamic> queryParams = {
@@ -312,7 +312,7 @@ class AuthenticationRepository extends GetxController {
       String uuid, String fcm, String deviceType) async {
     try {
       Map<String, dynamic> data = {
-        'mobile_no': "+91$userId",
+        'mobile_no': "$userId",
         'otp': otp,
         'device_id': uuid,
         'device_fcm_token': fcm,

@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:auro/features/navigation/view/navigation_screen.dart';
+import 'package:auro/utils/constant/text_strings.dart';
+import 'package:auro/utils/preferences/cache_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,7 +32,7 @@ class EditProfileController extends GetxController {
   final companyName = TextEditingController();
   final companyType = TextEditingController();
   final gstNumber = TextEditingController();
-  final ownersName = TextEditingController();
+  final pinCode = TextEditingController();
 
   final TLocalStorage _localStorage = TLocalStorage();
   static const String _userDataKey = 'user_data';
@@ -39,9 +41,6 @@ class EditProfileController extends GetxController {
 
   // File? imageData;
   Rx<File?> imageData = Rx<File?>(null);
-
-
-
 
   Future<void> updateProfile() async {
     //check internet Connection
@@ -60,7 +59,6 @@ class EditProfileController extends GetxController {
         _localStorage.readData(_userDataKey) ?? {};
     UserDetail user = UserDetail.fromJson(userDataMap);
     try {
-
       /* final File? imageFile = imageData.value;
 
       if (imageFile == null) {
@@ -71,21 +69,31 @@ class EditProfileController extends GetxController {
       }*/
 
       final response = await _repository.updateUserData(
-          user.mCustId,
-          name.text.trim().isEmpty?user.mCustName:name.text.trim(),
-          state.text.trim().isEmpty?user.mCustState:state.text.trim(),
-          city.text.trim().isEmpty?user.mCustCity:city.text.trim(),
-          address.text.trim().isEmpty?user.mCustAddress:address.text.trim(),
-          companyName.text.trim().isEmpty?user.mCustCompany:companyName.text.trim(),
-          companyType.text.trim().isEmpty?user.mCustCompanyType:companyType.text.trim(),
-          ownersName.text.trim().isEmpty?user.mCustOwnerName:ownersName.text.trim(),
-          gstNumber.text.trim().isEmpty?user.mCustGstno:gstNumber.text.trim(),
+          // user.mCustId,
+          "9470092352",
+          name.text.trim().isEmpty ? user.mCustName : name.text.trim(),
+          companyName.text.trim().isEmpty
+              ? user.mCustCompany
+              : companyName.text.trim(),
+          city.text.trim().isEmpty ? user.mCustCity : city.text.trim(),
+          state.text.trim().isEmpty ? user.mCustState : state.text.trim(),
+          address.text.trim().isEmpty ? user.mCustAddress : address.text.trim(),
+          companyType.text.trim().isEmpty
+              ? user.mCustCompanyType
+              : companyType.text.trim(),
+          pinCode.text.trim().isEmpty
+              ? user.mCustOwnerName
+              : pinCode.text.trim(),
+          gstNumber.text.trim().isEmpty
+              ? user.mCustGstno
+              : gstNumber.text.trim(),
+          SharedPrefs.getString(TTexts.prefAccessToken) ?? "",
           imageData.value!);
 
       TFullScreenLoader.stopLoading();
 
-      userModel.assignAll(response);
-      TLoaders.successSnackBar(title: "Success",message: "Profile Updated successfully...!");
+      // userModel.assignAll(response);
+      TLoaders.successSnackBar(title: "Success", message: "$response");
       Get.offAll(const NavigationScreen());
     } catch (e) {
       if (kDebugMode) {
@@ -105,11 +113,9 @@ class EditProfileController extends GetxController {
         print("Camera permission granted");
       }
       sendImageMessage(true);
-    }
-    else if(permissionStatus.isPermanentlyDenied){
+    } else if (permissionStatus.isPermanentlyDenied) {
       openAppSettings();
-    }
-    else {
+    } else {
       if (kDebugMode) {
         print("Requesting camera permission");
       }
@@ -143,11 +149,9 @@ class EditProfileController extends GetxController {
         print("Gallery permission granted");
       }
       await sendImageMessage(false);
-    }
-    else if(permissionStatus.isPermanentlyDenied){
+    } else if (permissionStatus.isPermanentlyDenied) {
       openAppSettings();
-    }
-    else {
+    } else {
       if (kDebugMode) {
         print("Requesting gallery permission");
       }
@@ -170,7 +174,6 @@ class EditProfileController extends GetxController {
     }
   }
 
-
   Future<void> sendImageMessage(bool isCamera) async {
     if (kDebugMode) {
       print("Opening ${isCamera ? 'camera' : 'gallery'}");
@@ -188,7 +191,9 @@ class EditProfileController extends GetxController {
         print("Image selected: ${image.path}");
       }
       imageData.value = File(image.path);
-      TLoaders.successSnackBar(title: "Image Selected..!", message: "Image Selected Successfully..!");
+      TLoaders.successSnackBar(
+          title: "Image Selected..!",
+          message: "Image Selected Successfully..!");
       // Correctly cast to File
     } else {
       if (kDebugMode) {

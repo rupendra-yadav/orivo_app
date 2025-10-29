@@ -24,6 +24,29 @@ class DeviceListController extends GetxController {
   final isDeviceLoading = false.obs;
   final isFCMLoading = false.obs;
 
+  // 🔹 Load from local storage, else fetch from API
+  Future<void> loadDeviceListFromPrefs() async {
+    isDeviceLoading.value = true;
+    try {
+      final String? jsonString = await _localStorage.readData("device_list");
+
+      if (jsonString != null && jsonString.isNotEmpty) {
+        final List<dynamic> jsonList = jsonDecode(jsonString);
+        deviceList.value =
+            jsonList.map((e) => DeviceListModel.fromJson(e)).toList();
+        isDeviceLoading.value = false;
+      } else {
+        await getDeviceList2(); // fallback if nothing cached
+        if (kDebugMode) {
+          print("No Cached data fetching from api");
+        }
+      }
+    } catch (e) {
+      print("Error loading cached device list: $e");
+      await getDeviceList2();
+    }
+  }
+
   ///--------Device List
   Future<void> getDeviceList() async {
     /// this is to Access data
@@ -88,8 +111,6 @@ class DeviceListController extends GetxController {
 
   ////////////////////////////////Gen 2 API/////////////////////////////////////
 
-
-
   Future<void> getDeviceList2() async {
     /// this is to Access data
 
@@ -103,7 +124,6 @@ class DeviceListController extends GetxController {
       deviceList.assignAll(deviceLis);
 
       await saveDeviceListToPrefs(deviceLis);
-
     } catch (e) {
       isDeviceLoading.value = false;
       // TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
@@ -114,21 +134,20 @@ class DeviceListController extends GetxController {
     }
   }
 
-
-
   // Helper function to save the list of DeviceListModel to SharedPreferences
   Future<void> saveDeviceListToPrefs(List<DeviceListModel> deviceList) async {
     // Convert the list of DeviceListModel to a list of JSON strings
-    final List<String> deviceListJson = deviceList.map((device) => jsonEncode(device.toJson())).toList();
+    final List<String> deviceListJson =
+        deviceList.map((device) => jsonEncode(device.toJson())).toList();
 
     // Store the list of JSON strings in SharedPreferences
     await SharedPrefs.setStringList('deviceList', deviceListJson);
   }
 
-
   // Helper function to retrieve the list of DeviceListModel from SharedPreferences
   Future<List<DeviceListModel>> getDeviceListFromPrefs() async {
-    final List<String>? deviceListJson = SharedPrefs.getStringList('deviceList');
+    final List<String>? deviceListJson =
+        SharedPrefs.getStringList('deviceList');
 
     if (deviceListJson == null) {
       return []; // Return an empty list if no data is stored
@@ -142,30 +161,19 @@ class DeviceListController extends GetxController {
     return deviceList;
   }
 
+  // Future<void> loadDeviceListFromPrefs() async {
+  //   try {
 
-  Future<void> loadDeviceListFromPrefs() async {
-    try {
-
-      final storedDeviceList = await getDeviceListFromPrefs();
-      deviceList.assignAll(storedDeviceList);
-      if(deviceList.isEmpty){
-        getDeviceList2();
-      }
-    }
-    catch (e){
-      if (kDebugMode) {
-        print("DEVICE LIST ERROR: ${e.toString()}");
-      }
-    }
-  }
-
-
-
-
-
-
-
-
-
-
+  //     final storedDeviceList = await getDeviceListFromPrefs();
+  //     deviceList.assignAll(storedDeviceList);
+  //     if(deviceList.isEmpty){
+  //       getDeviceList2();
+  //     }
+  //   }
+  //   catch (e){
+  //     if (kDebugMode) {
+  //       print("DEVICE LIST ERROR: ${e.toString()}");
+  //     }
+  //   }
+  // }
 }

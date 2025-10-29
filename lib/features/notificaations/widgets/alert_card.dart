@@ -196,7 +196,7 @@ class AlertCard extends StatelessWidget {
         ///Date
         TextView(
             text: DateHelper().formatDateToday(
-                deviceAlertNotificationModel.mNotifDate.toString())),
+                deviceAlertNotificationModel.createdAt.toString())),
         SizedBox(
           height: 5.h,
         ),
@@ -220,7 +220,7 @@ class AlertCard extends StatelessWidget {
                 width: 5.w,
               ),
               TextView(
-                text: deviceAlertNotificationModel.mNotifTitle.toString(),
+                text: deviceAlertNotificationModel.title.toString(),
                 bold: true,
                 fontSize: 18,
               ),
@@ -252,13 +252,13 @@ class AlertCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextView(
-                text: deviceAlertNotificationModel.mNotifMessage.toString(),
+                text: deviceAlertNotificationModel.message.toString(),
                 bold: true,
                 fontSize: 18,
               ),
               SizedBox(height: 8.0),
               TextView(
-                text: deviceAlertNotificationModel.mNotifSubText.toString(),
+                text: "",
                 fontSize: 14,
                 textColor: TColors.secondary,
               ),
@@ -266,7 +266,7 @@ class AlertCard extends StatelessWidget {
                 alignment: Alignment.bottomRight,
                 child: TextView(
                   text: DateHelper().getTime(
-                      deviceAlertNotificationModel.mNotifAddedon.toString()),
+                      deviceAlertNotificationModel.createdAt.toString()),
                   bold: true,
                   fontSize: 14,
                   textColor: TColors.primaryLight1,

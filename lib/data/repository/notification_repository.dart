@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auro/features/notificaations/Model/notification_model.dart';
 import 'package:auro/utils/constant/text_strings.dart';
 import 'package:auro/utils/preferences/cache_manager.dart';
@@ -43,34 +45,44 @@ class NotificationRepository extends GetxController {
     }
   }
 
-  ///Device Alert Notification List
   Future<List<DeviceAlertNotificationModel>> getDeviceAlertNotificationList(
       String machineId) async {
     try {
-      Map<String, dynamic> queryParams = {"limit": 50, "offset": 0};
+      Map<String, dynamic> queryParams = {"limit": "50", "offset": "0"};
       Map<String, dynamic> request = {"user_device_id": machineId};
 
       Map<String, dynamic> response = await THttpHelper3.postRaw(
-          APIKeys.deviceAlertList, queryParams, request,
-          accessToken: SharedPrefs.getString(TTexts.prefAccessToken) ?? "");
+        APIKeys.deviceAlertList,
+        queryParams,
+        request,
+        accessToken: SharedPrefs.getString(TTexts.prefAccessToken) ?? "",
+      );
 
       if (kDebugMode) {
-        print('machine  Response: $response');
+        log('🔹 Device Alert API Response: $response');
       }
 
-      if (response['response'] == 'success') {
-        List<dynamic> deviceListData = response['data'];
+      if (response['response'] == 200) {
+        final dynamic data = response['data'];
 
-        List<DeviceAlertNotificationModel> deviceList = deviceListData
-            .map((data) => DeviceAlertNotificationModel.fromJson(data))
-            .toList();
-
-        return deviceList;
+        // ✅ Check if 'data' is actually a list
+        if (data is List) {
+          return data
+              .map((item) => DeviceAlertNotificationModel.fromJson(item))
+              .toList();
+        } else {
+          // Unexpected data type, log and return empty list
+          log('⚠️ Unexpected data format in response["data"]: ${data.runtimeType}');
+          log('⚠️ Raw data: $data');
+          return [];
+        }
       } else {
-        throw Exception(response['message']);
+        throw Exception(response['message'] ?? 'Unknown API error');
       }
-    } catch (e) {
-      throw Exception(e.toString());
+    } catch (e, stack) {
+      log('❌ Error in getDeviceAlertNotificationList: $e');
+      log('📜 Stack: $stack');
+      throw Exception('Failed to load Device Alert Notifications: $e');
     }
   }
 

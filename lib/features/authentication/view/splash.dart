@@ -1,11 +1,15 @@
+import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:auro/features/device_details/view/device_detail_screens/controller/device_detail_controller.dart';
 import 'package:auro/features/navigation/view/bottom_nav_screen/controller/device_list_controller.dart';
+import 'package:auro/features/navigation/view/bottom_nav_screen/model/device_list_model.dart';
 import 'package:auro/features/navigation/view/navigation_screen.dart';
 import 'package:auro/utils/constant/colors.dart';
 import 'package:auro/utils/constant/image_string.dart';
 import 'package:auro/utils/device/device_utility.dart';
+import 'package:auro/utils/local_storage/storage_utility.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -74,28 +78,35 @@ class _SplashState extends State<Splash> {
     _checkOs();
 
     super.initState();
-    firstCall();
+    // firstCall();
   }
 
-  void firstCall() {
-    controller.getDeviceList2();
-    // userController.getUserData2();
+  // void firstCall() {
+  //   controller.getDeviceList2();
+  //   // userController.getUserData2();
+  //   log(getSavedDeviceList().toString());
 
-    DateTime now = DateTime.now();
-    DateTime utcNow = now.toUtc();
-    DateTime istNow = utcNow.add(const Duration(hours: 5, minutes: 30));
-    DateTime istMidnight = DateTime(istNow.year, istNow.month, istNow.day);
-    String formattedDateMidnight =
-        DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
-    String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
+  //   DateTime now = DateTime.now();
+  //   DateTime utcNow = now.toUtc();
+  //   DateTime istNow = utcNow.add(const Duration(hours: 5, minutes: 30));
+  //   DateTime istMidnight = DateTime(istNow.year, istNow.month, istNow.day);
+  //   String formattedDateMidnight =
+  //       DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
+  //   String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
 
-    devicecontroller.fetchDeviceDetail(
-        "X2024103", formattedDateMidnight, formattedDate);
-    devicecontroller.fetchEnergyConsumptionDetail(
-        "X2024103", formattedDateMidnight, formattedDate);
-    devicecontroller.fetchCostEstimateDetail(
-        "X2024103", formattedDateMidnight, formattedDate);
-  }
+  //   devicecontroller.fetchDeviceDetail(
+  //       "X2024103", "HV4", "800", formattedDateMidnight, formattedDate);
+  //   devicecontroller.fetchEnergyConsumptionDetail(
+  //       "X2024103", formattedDateMidnight, formattedDate);
+  //   devicecontroller.fetchCostEstimateDetail(
+  //       "X2024103", formattedDateMidnight, formattedDate);
+
+  //   //      "device_id": "X2024103",
+  //   // "tariff_plan": "HV4",
+  //   // "contract_demand": "800",
+  //   // "start": "2025-10-17 00:00:00",
+  //   // "stop": "2025-10-17 23:59:59"
+  // }
 
   String generateUuid() {
     final uuid = Uuid();
@@ -159,6 +170,18 @@ class _SplashState extends State<Splash> {
     } else {
       Get.offAll(const Login());
       // Get.offAll(const NavigationScreen());
+    }
+  }
+
+  Future<List<DeviceListModel>> getSavedDeviceList() async {
+    final TLocalStorage _localStorage = TLocalStorage();
+    final String? jsonString = await _localStorage.readData("device_list");
+
+    if (jsonString != null && jsonString.isNotEmpty) {
+      final List<dynamic> jsonList = jsonDecode(jsonString);
+      return jsonList.map((e) => DeviceListModel.fromJson(e)).toList();
+    } else {
+      return [];
     }
   }
 

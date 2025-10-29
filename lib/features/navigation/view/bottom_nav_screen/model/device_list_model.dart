@@ -1,47 +1,67 @@
 class DeviceListModel {
   String userDeviceId;
   String publicDeviceId;
+  String internalDeviceId;
   String imagePath;
   String model;
   String name;
   String description;
   String installationDate;
   String status;
+  String tariffPlanName;
+  String contactLoad;
+  String factoryId;
+  String bpNumber;
 
   DeviceListModel({
     required this.userDeviceId,
     required this.publicDeviceId,
+    required this.internalDeviceId,
     required this.imagePath,
     required this.model,
     required this.name,
     required this.description,
     required this.installationDate,
     required this.status,
+    required this.tariffPlanName,
+    required this.contactLoad,
+    required this.factoryId,
+    required this.bpNumber,
   });
 
   factory DeviceListModel.fromJson(Map<String, dynamic> json) {
     return DeviceListModel(
-      userDeviceId: json['user_device_id'] ?? '',
+      userDeviceId: json['device_id']?.toString() ?? '',
       publicDeviceId: json['public_device_id'] ?? '',
+      internalDeviceId: json['internal_device_id'] ?? '',
       imagePath: json['image_path'] ?? '',
       model: json['model'] ?? '',
       name: json['name'] ?? '',
       description: json['description'] ?? '',
       installationDate: json['installation_date'] ?? '',
       status: json['status'] ?? '',
+      tariffPlanName: json['tariff_plan_name'] ?? '',
+      contactLoad: json['contact_load']?.toString() ?? '',
+      factoryId: json['factory_id'].toString() ?? '',
+      bpNumber: json['bp_number'] ?? '',
     );
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['user_device_id'] = userDeviceId;
+    data['device_id'] = userDeviceId;
     data['public_device_id'] = publicDeviceId;
+    data['internal_device_id'] = internalDeviceId;
     data['image_path'] = imagePath;
     data['model'] = model;
     data['name'] = name;
     data['description'] = description;
     data['installation_date'] = installationDate;
     data['status'] = status;
+    data['tariff_plan_name'] = tariffPlanName;
+    data['contact_load'] = contactLoad;
+    data['factory_id'] = factoryId;
+    data['bp_number'] = bpNumber;
     return data;
   }
 }

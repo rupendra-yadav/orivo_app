@@ -44,10 +44,13 @@ class APIKeys {
   /// user
   static const String userProfile = "user/profile"; //
   static const String userEditProfile = "user/edit-profile";
+  static const String userPhotoUpload = "user/update-profile-pic";
 
   /// Notifications
   static const String notificationsList = "notification/list-notifications";
   static const String deviceAlertList = "notification/list-device-alerts";
+  static const String setupWhatsappAlerts =
+      "notification/setup-whatsapp-alerts";
 
   /// energy-meter
   static const String homeScreen = "energy-meter/home-screen"; //
@@ -60,7 +63,19 @@ class APIKeys {
   static const String history = "energy-meter/history";
 
   /// device
-  static const String editDeviceDetails = "device/edit-device-details"; //
+  static const String editDeviceDetails = "device/edit-device-details";
+
+  // /// whatsapp toggles
+  // static const String whatsappToggles = "device/edit-device-details";
+
+  /// electricity bills
+  static const String billUpload = "energy-meter/consumer-bill/upload";
+  static const String bills = "energy-meter/consumer-bill/bills"; // factory/5
+  static const String billDetails = "energy-meter/consumer-bill/bill-details";
+
+  static const String billDownloadById = "energy-meter/consumer-bill/download";
+  static const String billDownloadByFactory =
+      "energy-meter/consumer-bill/download-by-factory";
 }
 
 ///End Keys

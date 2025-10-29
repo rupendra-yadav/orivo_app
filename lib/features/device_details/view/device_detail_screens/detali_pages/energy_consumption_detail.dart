@@ -181,6 +181,8 @@ class _EnergyConsumptionDetailState extends State<EnergyConsumptionDetail> {
                       WidgetsBinding.instance.addPostFrameCallback((_) {
                         controller.fetchEnergyConsumptionDetail(
                             navigationcontroller.deviceId.value,
+                            navigationcontroller.deviceTariff.value,
+                            navigationcontroller.deviceContractDemand.value,
                             formattedStartDateInYears,
                             formattedEndDateInYears);
                       });

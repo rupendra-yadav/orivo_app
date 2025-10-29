@@ -12,6 +12,9 @@ class DeviceDetailNavigationController extends GetxController {
   final RxString deviceInstallationDate = "".obs;
   final RxString deviceModel = "".obs;
   final RxString deviceDesc = "".obs;
+  final RxString deviceTariff = "".obs;
+  final RxString deviceContractDemand = "".obs;
+  final RxString deviceBPNumber = "".obs;
 
   final Rx<int> selectedIndex = 0.obs;
 

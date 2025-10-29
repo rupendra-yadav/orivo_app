@@ -67,7 +67,9 @@ class NotificationController extends GetxController {
             await _deviceReposotory.getDeviceAlertNotificationList(mid);
 
         deviceAlertNotificationList.assignAll(deviceLis);
+        print(deviceLis);
       } catch (e) {
+        print(e.toString());
         TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
       }
     } catch (e) {

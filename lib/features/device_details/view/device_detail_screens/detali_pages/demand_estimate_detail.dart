@@ -1,3 +1,4 @@
+import 'package:auro/features/device_details/controller/device_detail_navigation_controller.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/demand_estimate_card.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/demand_tiem_line_card.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/device_card_details_app_bar.dart';
@@ -38,6 +39,9 @@ class _DemandEstimateDetailState extends State<DemandEstimateDetail> {
   final DeviceDetailedController controller =
       Get.put(DeviceDetailedController());
   final userController = Get.put(ProfileDetailController());
+
+  final DeviceDetailNavigationController navigationcontroller =
+      Get.put(DeviceDetailNavigationController());
 
   @override
   void didChangeDependencies() {
@@ -85,24 +89,24 @@ class _DemandEstimateDetailState extends State<DemandEstimateDetail> {
 
   @override
   void initState() {
-    DateTime now = DateTime.now();
-    DateTime utcNow = now.toUtc();
+    // DateTime now = DateTime.now();
+    // DateTime utcNow = now.toUtc();
 
-    // Convert UTC date and time to IST
-    DateTime istNow = utcNow.add(const Duration(hours: 5, minutes: 30));
+    // // Convert UTC date and time to IST
+    // DateTime istNow = utcNow.add(const Duration(hours: 5, minutes: 30));
 
-    // Set the time to 00:00:00 (midnight) in IST for the same date
-    DateTime istMidnight = DateTime(istNow.year, istNow.month, istNow.day);
+    // // Set the time to 00:00:00 (midnight) in IST for the same date
+    // DateTime istMidnight = DateTime(istNow.year, istNow.month, istNow.day);
 
-    // Format the date and time to the desired format
-    String formattedDateMidnight =
-        DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
-    startDate = formattedDateMidnight;
-    String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
-    endDate = formattedDate;
+    // // Format the date and time to the desired format
+    // String formattedDateMidnight =
+    //     DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
+    // startDate = formattedDateMidnight;
+    // String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
+    // endDate = formattedDate;
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller.fetchDemandAnalysis(startDate, endDate);
+      // controller.fetchDemandAnalysis(startDate, endDate);
     });
   }
 
@@ -202,7 +206,11 @@ class _DemandEstimateDetailState extends State<DemandEstimateDetail> {
 
                       // controller.getDemandDetail(startDate, deviceId, endDate);
                       controller.fetchDemandAnalysis(
-                          formattedStartDateInYears, formattedEndDateInYears);
+                          navigationcontroller.deviceId.value,
+                          navigationcontroller.deviceTariff.value,
+                          navigationcontroller.deviceContractDemand.value,
+                          formattedStartDateInYears,
+                          formattedEndDateInYears);
                     });
                   }
                 },

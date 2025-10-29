@@ -1,3 +1,4 @@
+import 'package:auro/features/device_details/controller/device_detail_navigation_controller.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/current_card.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/device_card_details_app_bar.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/frequency_card.dart';
@@ -41,6 +42,10 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
 
   final DeviceDetailedController controller =
       Get.put(DeviceDetailedController());
+
+  final DeviceDetailNavigationController navigationcontroller =
+      Get.put(DeviceDetailNavigationController());
+
   String _selectedDateRange = TTexts.chooseDateRange;
   int sameDate = 0;
   String EndDate = "";
@@ -150,7 +155,7 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
         DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
     String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller.fetchBaseMeric(formattedDateMidnight, formattedDate);
+      // controller.fetchBaseMeric(formattedDateMidnight, formattedDate);
     });
   }
 
@@ -243,7 +248,11 @@ class _PowerQualityDetailState extends State<PowerQualityDetail> {
                     //     StartDate, deviceId, EndDate);
 
                     controller.fetchBaseMeric(
-                        formattedStartDate, formattedEndDate);
+                        navigationcontroller.deviceId.value,
+                        navigationcontroller.deviceTariff.value,
+                        navigationcontroller.deviceContractDemand.value,
+                        formattedStartDate,
+                        formattedEndDate);
                   }
                 },
                 child: Center(

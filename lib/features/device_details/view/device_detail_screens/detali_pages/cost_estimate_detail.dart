@@ -1,3 +1,4 @@
+import 'package:auro/features/device_details/controller/device_detail_navigation_controller.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/device_card_details_app_bar.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/legend_name_card.dart';
 import 'package:auro/features/device_details/view/device_detail_screens/detali_pages/widgets/lrgend_name_card_demand.dart';
@@ -32,6 +33,9 @@ class CostEstimate extends StatefulWidget {
 }
 
 class _CostEstimateState extends State<CostEstimate> {
+  final DeviceDetailNavigationController navigationcontroller =
+      Get.put(DeviceDetailNavigationController());
+
   // late String deviceId;
   late Map<String, String> args;
 
@@ -68,7 +72,12 @@ class _CostEstimateState extends State<CostEstimate> {
           args['endDate'] ?? DateFormat("yyyy-MM-dd HH:mm:ss").format(now);
 
       // Fetch data
-      controller.fetchCostEstimateDetail("X2024103", startDate, endDate);
+      controller.fetchCostEstimateDetail(
+          navigationcontroller.deviceId.value,
+          navigationcontroller.deviceTariff.value,
+          navigationcontroller.deviceContractDemand.value,
+          startDate,
+          endDate);
       // controller.getCostEstimateDetails(
       //   startDate,
       //   deviceId,
@@ -351,7 +360,11 @@ class _CostEstimateState extends State<CostEstimate> {
                           "From $formattedStartDate To $formattedEndDate";
 
                       controller.fetchCostEstimateDetail(
-                          "X2024103", formattedStartDate1, formattedEndDate1);
+                          navigationcontroller.deviceId.value,
+                          navigationcontroller.deviceTariff.value,
+                          navigationcontroller.deviceContractDemand.value,
+                          formattedStartDate1,
+                          formattedEndDate1);
                     });
                   }
                 },

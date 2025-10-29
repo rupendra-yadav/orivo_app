@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
+import 'package:mime/mime.dart';
 
 import '../../utils/constant/api_constants.dart';
 
@@ -265,6 +268,66 @@ class THttpHelper3 {
     }
 
     return _handleResponse(response);
+  }
+
+  static Future<Map<String, dynamic>> postMultipart(
+    String endpoint, {
+    Map<String, String>? fields,
+    Map<String, String>? queryParams,
+    File? file,
+    String fileField = "file",
+    String accessToken = "",
+  }) async {
+    try {
+      // Build URL with query params if any
+      final uri =
+          Uri.parse("$_baseUrl$endpoint").replace(queryParameters: queryParams);
+
+      if (kDebugMode) {
+        print("MULTIPART Request: $uri");
+        print("Fields: $fields");
+        print("Query Params: $queryParams");
+        print("File: ${file?.path}");
+      }
+
+      final request = http.MultipartRequest("POST", uri);
+
+      // Add Authorization header
+      if (accessToken.isNotEmpty) {
+        request.headers["Authorization"] = "Bearer $accessToken";
+      }
+
+      // Add other fields
+      if (fields != null) {
+        request.fields.addAll(fields);
+      }
+
+      // ✅ Detect file type and include proper MIME type
+      if (file != null) {
+        final mimeType =
+            lookupMimeType(file.path) ?? 'application/octet-stream';
+        request.files.add(await http.MultipartFile.fromPath(
+          fileField,
+          file.path,
+          contentType: MediaType.parse(mimeType),
+        ));
+      }
+
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+
+      if (kDebugMode) {
+        print("MULTIPART Response Code: ${response.statusCode}");
+        print("MULTIPART Response Body: ${response.body}");
+      }
+
+      return _handleResponse(response);
+    } catch (e) {
+      if (kDebugMode) {
+        print("Multipart Error: $e");
+      }
+      throw Exception("Multipart upload failed: $e");
+    }
   }
 
   /// Helper method to make a DELETE request

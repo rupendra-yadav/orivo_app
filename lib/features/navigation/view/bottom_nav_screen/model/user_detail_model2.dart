@@ -1,17 +1,19 @@
 class UserModel2 {
-  String mobileNo;
-  String name;
-  String companyName;
-  String city;
-  String state;
-  String address;
-  String pinCode;
-  String companyType;
-  String gstNo;
+  final String mobileNo;
+  final String name;
+  final String profileImagePath;
+  final String companyName;
+  final String city;
+  final String state;
+  final String address;
+  final String pinCode;
+  final String companyType;
+  final String gstNo;
 
   UserModel2({
     required this.mobileNo,
     required this.name,
+    required this.profileImagePath,
     required this.companyName,
     required this.city,
     required this.state,
@@ -25,6 +27,7 @@ class UserModel2 {
     return UserModel2(
       mobileNo: json['mobile_no'] ?? '',
       name: json['name'] ?? '',
+      profileImagePath: json['profile_image_path'] ?? '',
       companyName: json['company_name'] ?? '',
       city: json['city'] ?? '',
       state: json['state'] ?? '',
@@ -36,17 +39,17 @@ class UserModel2 {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['mobile_no'] = mobileNo;
-    data['name'] = name;
-    data['company_name'] = companyName;
-    data['city'] = city;
-    data['state'] = state;
-    data['address'] = address;
-    data['pincode'] = pinCode;
-    data['company_type'] = companyType;
-    data['gst_no'] = gstNo;
-
-    return data;
+    return {
+      'mobile_no': mobileNo,
+      'name': name,
+      'profile_image_path': profileImagePath,
+      'company_name': companyName,
+      'city': city,
+      'state': state,
+      'address': address,
+      'pincode': pinCode,
+      'company_type': companyType,
+      'gst_no': gstNo,
+    };
   }
 }

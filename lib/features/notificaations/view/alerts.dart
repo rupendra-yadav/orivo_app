@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auro/common/widgets/text/text_view.dart';
 import 'package:auro/features/notificaations/widgets/alert_card.dart';
 import 'package:auro/features/notificaations/widgets/notification_appa_bar.dart';
@@ -17,17 +19,18 @@ import '../widgets/notification_card.dart';
 class Alerts extends StatelessWidget {
   const Alerts({super.key, required this.id});
 
-final String id ;
+  final String id;
 
   @override
   Widget build(BuildContext context) {
-
     final NotificationController controller = Get.put(NotificationController());
     controller.getDeviceAlertNotificationList(id);
 
     return Scaffold(
       backgroundColor: TColors.primary,
-      appBar: const NotificationAppBar(title: "Device Alerts",),
+      appBar: const NotificationAppBar(
+        title: "Device Alerts",
+      ),
       body: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
         child: Column(
@@ -36,9 +39,9 @@ final String id ;
 
             Padding(
               padding: SpacingStyle.paddingWithDefaultSpace,
-              child: Obx((){
-
-                if (controller.isDeviceAlertNotificationLoading.value) return const DeviceListShimmer();
+              child: Obx(() {
+                if (controller.isDeviceAlertNotificationLoading.value)
+                  return const DeviceListShimmer();
 
                 if (controller.deviceAlertNotificationList.isEmpty) {
                   return const TImageLoaderWidget(
@@ -47,25 +50,25 @@ final String id ;
                       showAction: false);
                 }
 
-                return  SizedBox(
+                return SizedBox(
                   height: MediaQuery.of(context).size.height,
                   child: ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       scrollDirection: Axis.vertical,
                       itemCount: controller.deviceAlertNotificationList.length,
-                      itemBuilder: (context,index){
-                        return AlertCard(deviceAlertNotificationModel: controller.deviceAlertNotificationList[index],);
+                      itemBuilder: (context, index) {
+                        return AlertCard(
+                          deviceAlertNotificationModel:
+                              controller.deviceAlertNotificationList[index],
+                        );
                       }),
-                ) ;
+                );
               }),
             ),
-
           ],
         ),
       ),
     );
   }
 }
-
-

@@ -155,14 +155,18 @@ class _ProfileState extends State<Profile> {
                           );
                         }
 
-                        String imageUrl =
-                            "controller.userModelData != null ? controller.userModelData.value.address:"
-                            "";
+                        String imageUrl = controller.userModelData != null
+                            ? controller
+                                    .userModelData.value?.profileImagePath ??
+                                "Name"
+                            : "Name";
+                        // "controller.userModelData != null ? controller.userModelData.value.address:"
+                        // "";
 
                         return ClipRRect(
                           borderRadius: BorderRadius.circular(50.r),
                           child: CachedNetworkImage(
-                            imageUrl: TImages.userImagePath + imageUrl,
+                            imageUrl: imageUrl,
                             // Provide a fallback empty string if null or empty
                             width: 80.w,
                             height: 80.h,

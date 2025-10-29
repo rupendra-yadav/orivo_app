@@ -70,14 +70,11 @@ class _DeviceState extends State<Device> {
 
   @override
   void initState() {
-    // TODO: implement initState
-
-    controller.loadDeviceListFromPrefs();
     timer();
     passwordResetNotification();
 
-    /// to fix later
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.loadDeviceListFromPrefs();
       // controller.getDeviceList2();
       // controller.updateFcm();
     });

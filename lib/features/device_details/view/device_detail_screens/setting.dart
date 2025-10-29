@@ -157,15 +157,16 @@ class _SettingState extends State<Setting> {
                             // ),
                             SettingDeviceDetailCard(
                               title: "Contract Load",
-                              text: "800 Kva",
+                              text: navigationController
+                                  .deviceContractDemand.value,
                             ),
                             SettingDeviceDetailCard(
                               title: "Tariff Plan",
-                              text: "HV4",
+                              text: navigationController.deviceTariff.value,
                             ),
                             SettingDeviceDetailCard(
                               title: "BP Number",
-                              text: "1002345",
+                              text: navigationController.deviceBPNumber.value,
                             ),
                             SizedBox(
                               height: 20.h,

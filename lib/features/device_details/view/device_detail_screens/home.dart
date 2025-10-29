@@ -46,11 +46,18 @@ class _HomeState extends State<Home> {
 
   String timeStamp = "";
 
+  String deviceid = '';
+  String deviceTariff = '';
+  String deviceContractLoad = '';
+
   @override
   void initState() {
+    super.initState();
     //_refreshData();
     // firstCall();
-    super.initState();
+    deviceid = navigationController.deviceId.toString();
+    deviceTariff = navigationController.deviceTariff.toString();
+    deviceContractLoad = navigationController.deviceContractDemand.toString();
   }
 
   void firstCall() {
@@ -67,13 +74,8 @@ class _HomeState extends State<Home> {
     setState(() {
       timeStamp = DateFormat("d MMMM h:mm a").format(istNow);
     });
-    devicecontroller.fetchDeviceDetail(
-        "X2024103", formattedDateMidnight, formattedDate);
-    // controller.getDeviceDetail(
-    //     navigationController.deviceId.value,
-    //     formattedDate,
-    //     formattedDateMidnight,
-    //     SharedPrefs.getString("userLoad") ?? "0");
+    devicecontroller.fetchDeviceDetail(deviceid, deviceTariff,
+        deviceContractLoad, formattedDateMidnight, formattedDate);
   }
 
   // Refresh method
@@ -91,8 +93,8 @@ class _HomeState extends State<Home> {
     setState(() {
       timeStamp = DateFormat("d MMMM h:mm a").format(istNow);
     });
-    devicecontroller.fetchDeviceDetail(
-        "X2024103", formattedDateMidnight, formattedDate);
+    devicecontroller.fetchDeviceDetail(deviceid, deviceTariff,
+        deviceContractLoad, formattedDateMidnight, formattedDate);
 
     // controller.getDeviceDetail(
     //     "navigationController.deviceId.value",
@@ -104,9 +106,9 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    originalDataMap2.forEach((key, value) {
-      updatedDataMap2['$key: $value'] = value;
-    });
+    // originalDataMap2.forEach((key, value) {
+    //   updatedDataMap2['$key: $value'] = value;
+    // });
 
     return Scaffold(
       backgroundColor: TColors.primary,
@@ -400,9 +402,9 @@ final colorList = <Color>[
   const Color(0XFF344BFD),
 ];
 
-Map<String, double> originalDataMap2 = {
-  "On Peak": 30,
-  "Off Peak": 50,
-  "Normal": 70,
-};
-Map<String, double> updatedDataMap2 = {};
+// Map<String, double> originalDataMap2 = {
+//   "On Peak": 30,
+//   "Off Peak": 50,
+//   "Normal": 70,
+// };
+// Map<String, double> updatedDataMap2 = {};

@@ -1,8 +1,10 @@
 import 'package:auro/features/device_details/controller/device_detail_navigation_controller.dart';
+import 'package:auro/features/device_details/view/device_detail_screens/controller/device_detail_controller.dart';
 import 'package:auro/features/device_details/view/widgets/device_details_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:intl/intl.dart';
 
 import '../../../utils/constant/colors.dart';
 import '../../../utils/constant/text_strings.dart';
@@ -19,13 +21,58 @@ class DeviceDetailsNavigationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(DeviceDetailNavigationController());
+    final DeviceDetailedController devicecontroller =
+        Get.put(DeviceDetailedController());
+
     // controller.deviceId.value = deviceListModel.userDeviceId;
     controller.deviceName.value = deviceListModel.name;
     controller.deviceInstallationDate.value =
         deviceListModel.installationDate ?? "";
     controller.deviceModel.value = deviceListModel.model ?? "";
-    controller.deviceId.value = deviceListModel.userDeviceId;
+    controller.deviceId.value = deviceListModel.internalDeviceId;
     controller.deviceDesc.value = deviceListModel.description ?? "";
+    controller.deviceTariff.value = deviceListModel.tariffPlanName ?? "";
+    controller.deviceContractDemand.value = deviceListModel.contactLoad ?? "";
+    controller.deviceBPNumber.value = deviceListModel.bpNumber ?? "";
+
+    DateTime now = DateTime.now();
+    DateTime utcNow = now.toUtc();
+    DateTime istNow = utcNow.add(const Duration(hours: 5, minutes: 30));
+    DateTime istMidnight = DateTime(istNow.year, istNow.month, istNow.day);
+    String formattedDateMidnight =
+        DateFormat("yyyy-MM-dd HH:mm:ss").format(istMidnight);
+    String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(istNow);
+
+    devicecontroller.fetchDeviceDetail(
+        deviceListModel.internalDeviceId,
+        deviceListModel.tariffPlanName ?? "",
+        deviceListModel.contactLoad ?? "",
+        formattedDateMidnight,
+        formattedDate);
+    devicecontroller.fetchEnergyConsumptionDetail(
+        deviceListModel.internalDeviceId,
+        deviceListModel.tariffPlanName ?? "",
+        deviceListModel.contactLoad ?? "",
+        formattedDateMidnight,
+        formattedDate);
+    devicecontroller.fetchCostEstimateDetail(
+        deviceListModel.internalDeviceId,
+        deviceListModel.tariffPlanName ?? "",
+        deviceListModel.contactLoad ?? "",
+        formattedDateMidnight,
+        formattedDate);
+    devicecontroller.fetchDemandAnalysis(
+        deviceListModel.internalDeviceId,
+        deviceListModel.tariffPlanName ?? "",
+        deviceListModel.contactLoad ?? "",
+        formattedDateMidnight,
+        formattedDate);
+    devicecontroller.fetchBaseMeric(
+        deviceListModel.internalDeviceId,
+        deviceListModel.tariffPlanName ?? "",
+        deviceListModel.contactLoad ?? "",
+        formattedDateMidnight,
+        formattedDate);
 
     return Scaffold(
       backgroundColor: TColors.primaryDark1,
